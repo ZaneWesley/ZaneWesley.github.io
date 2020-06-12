@@ -19,6 +19,19 @@
 		border-radius: 10px;
 		text-align: center;
 	}
+	.content1 {
+		position:relative;
+		animation:animatetop 0.4s
+	}
+	@keyframes animatetop {
+		from {
+			top:-300px;
+			opacity:0
+		} to {
+			top:0;
+			opacity:1
+		}
+	}
 	.content2 {
 		width: 50%;
 		padding: 12px;
@@ -29,6 +42,16 @@
 		transform: translateX(-50%);
 		border-radius: 10px;
 		text-align: center;
+	}
+	.content2 {
+		animation:animatezoom 0.6s
+	}
+	@keyframes animatezoom {
+		from {
+			transform:scale(0)
+		} to {
+			transform:scale(1)
+		}
 	}
 	h1 {
 		text-align: center;
@@ -60,7 +83,7 @@
 		<div class="alerts-container">
 			<h2>News and Alerts</h2>
 			<div class="alerts">
-				<p>No Alerts or News</p>
+				<p>No News or Alerts</p>
 			</div>
 		</div>
 	</div>
