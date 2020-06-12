@@ -1,0 +1,314 @@
+
+<html>
+<head>
+  <title>Corey</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="va/trigger.js"></script>
+  <script>
+    var $speechInput,
+      $recBtn,
+      recognition,
+      messageRecording = "Listening...",
+      messageCouldntHear = "I couldn't hear you, could you say that again?",
+      messageInternalError = "Uh Oh! There's an internal server error. Please try again later.",
+      messageSorry = "I'm sorry, I don't have the answer to that yet.";
+
+    $(document).ready(function() {
+      $speechInput = $("#speech");
+      $recBtn = $("#rec");
+
+      $speechInput.keypress(function(event) {
+        if (event.which == 13) {
+          event.preventDefault();
+          if ($speechInput.val() !== "" && $speechInput.val() !== null) {
+          	send();
+          } else {
+	        var useri = {
+	    		user: "Empty request",
+	    		corey: "Oops! You didn\'t ask me anything."
+	    	};
+
+    		var debugJSON = JSON.stringify(useri, undefined, 2)
+          	respond("Oops! You didn\'t ask me anything.");
+          	debugRespond(debugJSON);
+
+          }
+        }
+      });
+      $recBtn.on("click", function(event) {
+        switchRecognition();
+      });
+      $(".debug__btn").on("click", function() {
+        $(this).next().toggleClass("is-active");
+        return false;
+      });
+    });
+
+    function startRecognition() {
+      recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+          recognition.interimResults = false;
+
+      recognition.onstart = function(event) {
+        respond(messageRecording);
+        updateRec();
+      };
+      recognition.onresult = function(event) {
+        recognition.onend = null;
+        
+        var text = "";
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+            text += event.results[i][0].transcript;
+          }
+          setInput(text);
+        stopRecognition();
+      };
+      recognition.onend = function() {
+        respond(messageCouldntHear);
+        stopRecognition();
+      };
+      recognition.lang = "en-US";
+      recognition.start();
+    }
+  
+    function stopRecognition() {
+      if (recognition) {
+        recognition.stop();
+        recognition = null;
+      }
+      updateRec();
+    }
+
+    function switchRecognition() {
+      if (recognition) {
+        stopRecognition();
+      } else {
+        startRecognition();
+      }
+    }
+
+    function setInput(text) {
+      $speechInput.val(text);
+      send();
+    }
+
+    function updateRec() {
+      $recBtn.text(recognition ? "Stop" : "Speak");
+    }
+
+    function send() {
+      var text = $speechInput.val();
+      prepareResponse(text);
+    }
+
+    function prepareResponse(val) {
+      var response, returned = false;
+
+      var filterVal = val.toLowerCase().replace(/[^\w\s\d]/gi, "");
+      filterVal = filterVal.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "");
+
+      switch(filterVal) {
+      	case "what time is it":
+      		response = timeResponseArr[Math.floor(Math.random()*timeResponseArr.length)] + new Date().toLocaleTimeString();
+      		returned = true;
+      		break;
+      	case "what is the time":
+      		response = timeResponseArr[Math.floor(Math.random()*timeResponseArr.length)] + new Date().toLocaleTimeString();
+      		returned = true;
+      		break;
+      	case "tell me the time":
+      		response = timeResponseArr[Math.floor(Math.random()*timeResponseArr.length)] + new Date().toLocaleTimeString();
+      		returned = true;
+      		break;
+      	case "what is todays date":
+      		response = dateResponseArr[Math.floor(Math.random()*dateResponseArr.length)] + new Date().toLocaleDateString();
+      		returned = true;
+      		break;
+      	case "what is the date":
+      		response = dateResponseArr[Math.floor(Math.random()*dateResponseArr.length)] + new Date().toLocaleDateString();
+      		returned = true;
+      		break;
+      	case "what is today":
+      		response = dateResponseArr[Math.floor(Math.random()*dateResponseArr.length)] + new Date().toLocaleDateString();
+      		returned = true;
+      		break;
+      	case "tell me the date":
+      		response = dateResponseArr[Math.floor(Math.random()*dateResponseArr.length)] + new Date().toLocaleDateString();
+      		returned = true;
+      		break;
+      	case "what is the weather":
+      		response = "";
+      		returned = true;
+      		break;
+      }
+
+      if(returned === false) {
+      	response = getAnswer(filterVal);
+      }
+
+      var useri = {
+    		user: val,
+    		corey: response
+    	};
+
+    var debugJSON = JSON.stringify(useri, undefined, 2),
+        spokenResponse = response;
+
+      respond(spokenResponse);
+      debugRespond(debugJSON);
+    }
+
+    function debugRespond(val) {
+      $("#response").append("\n\n" + val);
+    }
+
+    function respond(val) {
+      if (val == "") {
+        val = messageSorry;
+      }
+
+      if (val !== messageRecording) {
+        var msg = new SpeechSynthesisUtterance();
+        msg.voiceURI = "native";
+        msg.text = val;
+        msg.lang = "en-US";
+        window.speechSynthesis.speak(msg);
+      }
+
+      $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
+    }
+
+    function getAnswer(text) {
+      	var response = compare(text);
+      	return response;
+    }
+
+    function compare(string){
+      	var item;
+      	for(var x=0; x<trigger.length; x++){
+      		for(var y=0; y<reply.length; y++){
+      			if(trigger[x][y] == string){
+      				var items = reply[x];
+      				item =  items[Math.floor(Math.random()*items.length)];
+      			}
+      		}
+      	}
+      	return item;
+	}
+
+    var timeResponseArr = ["It's ", "Right now it's ", "The time is "];
+    var dateResponseArr = ["Today is ", "Today's date is "];
+  </script>
+  <style type="text/css">
+    html {
+      box-sizing: border-box;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+    body {
+      background-color: #192837;
+      font-family: "Titillium Web", Arial, sans-serif;
+      font-size: 20px;
+      margin: 0;
+    }
+    .container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+    }
+    input {
+      background-color: #126077;
+      border: 1px solid #3F7F93;
+      color: #A6CAE6;
+      font-family: "Titillium Web";
+      font-size: 20px;
+      line-height: 43px;
+      padding: 0 0.75em;
+      width: 400px;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    textarea {
+      background-color: #070F24;
+      border: 1px solid #122435;
+      color: #606B88;
+      padding: 0.5em;
+      width: 100%;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    input:active, input:focus, textarea:active, textarea:focus {
+      outline: 1px solid #48788B;
+    }
+    .btn {
+      background-color: #126178;
+      border: 1px solid #549EAF;
+      color: #549EAF;
+      cursor: pointer;
+      display: inline-block;
+      font-family: "Titillium Web";
+      font-size: 20px;
+      line-height: 43px;
+      padding: 0 0.75em;
+      text-align: center;
+      text-transform: uppercase;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    .btn:hover {
+      background-color: #1888A9;
+      color: #183035;
+    }
+    .debug {
+      bottom: 0;
+      position: fixed;
+      right: 0;
+    }
+    .debug__content {
+      font-size: 14px;
+      max-height: 0;
+      overflow: hidden;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    .debug__content.is-active {
+      display: block;
+      max-height: 500px;
+    }
+    .debug__btn {
+      width: 100%;
+    }
+    .spoken-response {
+      max-height: 0;
+      overflow: hidden;
+      -webkit-transition: all 0.35s ease-in;
+    }
+    .spoken-response.is-active {
+      max-height: 400px;
+    }
+    .spoken-response__text {
+      background-color: #040E23;
+      color: #7584A2;
+      padding: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input id="speech" type="text">
+    <button id="rec" class="btn">Speak</button>
+    <div id="spokenResponse" class="spoken-response">
+      <div class="spoken-response__text"></div>
+    </div>
+  </div>
+  <div class="debug">
+    <div class="debug__btn btn">
+      Debug JSON results
+    </div>
+    <div class="debug__content">
+      <textarea id="response" cols="40" rows="20"></textarea>
+    </div>
+  </div>
+
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css">
+</body>
+</html>
