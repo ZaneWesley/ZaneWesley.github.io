@@ -229,24 +229,46 @@
       		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
       		var fox_music = document.getElementById("wdtfs-audio");
       		fox_music.pause();
+      		fox_music.currentTime = 0;
       		returned = true;
       		break;
       	case "stop playing music":
       		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
       		var fox_music = document.getElementById("wdtfs-audio");
       		fox_music.pause();
+      		fox_music.currentTime = 0;
       		returned = true;
       		break;
       	case "stop the music":
       		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
       		var fox_music = document.getElementById("wdtfs-audio");
       		fox_music.pause();
+      		fox_music.currentTime = 0;
       		returned = true;
       		break;
       	case "stop playing the music":
       		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
       		var fox_music = document.getElementById("wdtfs-audio");
       		fox_music.pause();
+      		fox_music.currentTime = 0;
+      		returned = true;
+      		break;
+      	case "pause the music":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.pause();
+      		returned = true;
+      		break;
+      	case "pause":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.pause();
+      		returned = true;
+      		break;
+      	case "play":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.play();
       		returned = true;
       		break;
       }
