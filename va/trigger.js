@@ -29,7 +29,9 @@ var trigger = [
         ["oops"],/*28*/
         ["yes"],/*29*/
         ["are you siri", "you are like siri", "why do you act like siri"],/*30*/
-        ["ah", "ok", "okay", "gotcha", "got it", "i understand"]/*31*/
+        ["ah", "ok", "okay", "gotcha", "got it", "i understand"],/*31*/
+        ["are you listening", "are you listening to me", "you listening", "you listening to me"],/*32*/
+        ["you are bad", "youre bad", "your bad", "i do not like you", "i dont like you", "you do not answer my questions", "you do not answer my question", "you did not answer my question", "you function badly", "you are terrible", "you are terrible at answering my questions", "you are terrible at answering my question",  "you are awful", "you are awful at answering my questions", "you are awful at answering my question", "you are mean", "you are ugly", "you are fat", "you are a mistake", "you are worth nothing"],/*33*/
       ];
       var reply = [
       	["Hi.","Hey.","Hello."], /*1*/
@@ -49,7 +51,7 @@ var trigger = [
         ["I am just a computer. I can't go away.", "Well then"],/*15*/
         ["Well then", "That's not very nice", "Fine", "That's rude", "What did I do?", "Sometimes silence is best."],/*16*/
         ["Okay then", "Well then", "Very well", "What did I do?"],/*17*/
-        ["Fraka-kaka-kaka-kaka-kow!", "Ring-ding-ding-ding-dingeringding!", "Chacha-chacha-chacha-chow!", "Nobody knows."],/*18*/
+        ["Fraka-kaka-kaka-kaka-kow!", "Ring-ding-ding-ding-dingeringding!", "Chacha-chacha-chacha-chow!", "Nobody knows.", "Hatee-hatee-hatee-ho!", "Wa-pa-pa-pa-pa-pa-pow", "Tchoff-tchoff-tchoff-tchoff-tchoff-tchoff-tchoff", "A-hee-ahee-ahee-ah-hee", "A-oo-oo-oo-ooo-oo-oo-oo", "Ba-do-duh-bum-bum-bum-bay-dum"],/*18*/
         ["I'm sorry.", "That's okay."],/*19*/
         ["I'm not sure myself.", "I haven't quite grasped human emotion.", "Love is where the heart is."],/*20*/
         ["Why? So we can get ice cream together, and listen to music, and travel across galaxies, only to have it end in slammed doors, heartbreak and loneliness? Sure, where do I sign up?", "My end user license agreement is commitment enough for me.", "Why? I am a virtual assistant. Everyone loves me."],/*21*/
@@ -62,6 +64,8 @@ var trigger = [
         ["That\'s embarrasing."],/*28*/
         ["Ok"],/*29*/
         ["I am Corey.", "That\s odd.", "I\'m only Corey."],/*30*/
-        ["I thought so.", "That\'s what I figured.", "That\'s what I thought"]/*31*/
+        ["I thought so.", "That\'s what I figured.", "That\'s what I thought"],/*31*/
+        ["Yes. I am listening.", "Of couse I\'m listening.", "I always listen when you ralk to me."],/*32*/
+        ["That\'s not nice.", "I won\'t respond to that.", "People can be mean too, you know.", "I do the best I can.", "Don\'t talk to me like that.", "I don\'t like that very much."]/*33*/
       ];
       var alternative = ["I don't think I understand.", "Try saying that a different way.", "I don't quite understand", "I'm having trouble understanding.", "I'm having trouble understanding you."];
