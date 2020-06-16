@@ -5,9 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="va/trigger.js"></script>
-  <link href="CSS/spectrum.css" rel="stylesheet">
-  <script src="JS/spectrum.js"></script>
+  <link href="css/spectrum.css" rel="stylesheet">
+  <script src="js/spectrum.js"></script>
   <script>
     var $speechInput,
       $recBtn,
@@ -83,6 +82,7 @@
       	$('#response').css('color', '#ffffff');
       	$('.debug__btn').css('background-color', $('#input-color').val()).css('color', '#ffffff');
       	$('.spoken-response__text').css('color', '#ffffff');
+      	preferences.username = $('#username').val();
       	var backgroundColorArray = $('#input-color').val().split(', ');
         // The background color's luminance value is in the third array item
         // Parse that value as an integer and then subtract 20
@@ -207,6 +207,42 @@
       		response = "";
       		returned = true;
       		break;
+      	case "play what does the fox say":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.play();
+      		returned = true;
+      		break;
+      	case "play what does the fox say by ylvis":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.play();
+      		returned = true;
+      		break;
+      	case "play the fox by ylvis":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.play();
+      		returned = true;
+      		break;
+      	case "stop playing":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.pause();
+      		returned = true;
+      		break;
+      	case "stop playing music":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.pause();
+      		returned = true;
+      		break;
+      	case "stop playing the music":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.pause();
+      		returned = true;
+      		break;
       }
 
       if(returned === false) {
@@ -246,8 +282,11 @@
     }
 
     function getAnswer(text) {
-      	var response = compare(text);
-      	return response;
+	    var responseText = compare(text);
+      	if(responseText == "" || responseText == null || responseText == undefined) {
+      			responseText = alternative[Math.floor(Math.random()*alternative.length)];
+      		}
+	    return responseText;
     }
 
     function compare(string){
@@ -265,6 +304,7 @@
 
     var timeResponseArr = ["It's ", "Right now it's ", "The time is "];
     var dateResponseArr = ["Today is ", "Today's date is "];
+    var accomplishedResponseArr = ["Done.", "Ok. It\'s done.", "Ok.", "I did it."];
 
     function openMenu() {
 	  document.getElementById("sidebar").style.width = "250px";
@@ -293,6 +333,11 @@
 		localStorage.setItem('corey-preferences-data', JSON.stringify(preferences));
 	}
 
+	function resetPreferences() {
+		localStorage.removeItem('corey-preferences-data');
+		window.location=window.location;
+	}
+
 	function setPreferences(preferences) {
 		$('body').css('background-color', preferences.bodyBackgroundColor);
 		$('#speech').css('background-color', preferences.iptBackgroundColor);
@@ -308,6 +353,7 @@
         $('.spoken-response__text').css('background-color', preferences.responseBackgroundColor);
         $('#bg-color').spectrum('set', preferences.bodyBackgroundColor);
         $('#input-color').spectrum('set', preferences.iptBackgroundColor);
+        $('#username').val(preferences.username);
 	}
 
 	function initializeColorPickers() {
@@ -398,8 +444,8 @@
     	font-weight: bold;
     }
     input#speech {
-      background-color: #126077;
-      border: 1px solid #3F7F93;
+      background-color: /*#126077;*/rgb(59, 119, 216);
+      border: 1px solid /*#3F7F93;*/rgb(29, 73, 145);
       color: #A6CAE6;
       font-family: "Titillium Web";
       font-size: 20px;
@@ -550,30 +596,35 @@
 	  </div>
   </div>
 
-  	<div id="use-dialog" class="dialog">
+  	<div id="use-dialog" class="dialog" style="display: none;">
   		<h2>How To Use</h2>
   		<br><br>
   		<button class="dialog-btn" onclick="openDialog();">Close</button>
   	</div>
 
-  	<div id="preferences-dialog" class="dialog" class="dialog">
+  	<div id="preferences-dialog" class="dialog" class="dialog" style="display: none;">
   		<h2>Preferences</h2>
   		<div id="direct-styles-wrapper">
+  			<label for="username">Your Name: </label>
+  			<input id="username" type="text">
+  			<br><br>
   			<label for="bg-color">Background Color: </label>
   			<input id="bg-color" type="text">
   			<br><br>
   			<label for="input-color">Command Background Color: </label>
   			<input id="input-color" type="text">
   			<br><br>
-  			<button class="dialog-btn" onclick="openDialog(); savePreferences()">Close</button>
+  			<button class="dialog-btn" onclick="openDialog(); resetPreferences()">Reset</button><span> <b>This action cannot be undone!</b></span>
+  			<br>
+  			<button class="dialog-btn" onclick="openDialog(); savePreferences()">Close & Save</button>
   		</div>
   	</div>
 
   	<div id="version-dialog" class="dialog" style="display: none;">
   		<h2>Version</h2>
-  		<p><b>Current Version: </b>1.0.0</p>
-  		<p><b>Newest Version: </b>1.0.0</p>
-  		<p><b>Previous Versions: </b>None</p>
+  		<p><b>Current Version: </b>2.4.1</p>
+  		<p><b>Newest Version: </b>2.4.1</p>
+  		<p><b>Previous Versions: </b>1.0.0, 1.1.0, 1.1.3, 1.1.4, 1.2.0, 1.3.1, 1.3.3, 1.3.4, 1.4.1, 1.4.2, 2.0.0, 2.1.0, 2.1.8, 2.2.1, 2.2.3, 2.2.4, 2.3.1, 2.3.4, 2.3.5, 2.3.7, 2.4.0, <b>2.4.1 (Current)</b></p>
   		<button class="dialog-btn" onclick="openDialog();">Close</button>
   	</div>
 
@@ -593,6 +644,9 @@
 		</div>
 	</span>
 
+	<audio id="wdtfs-audio" autoplay="false" controls="false" src="va/wdtfs.mp3" loop="false" preload="true" style="display: none;">
+
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css">
+  <script src="va/trigger.js"></script>
 </body>
 </html>
