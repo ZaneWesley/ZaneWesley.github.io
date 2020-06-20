@@ -4,17 +4,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<title>Manage Totes</title>
 
 	<style>
+		* {
+		  box-sizing: border-box;
+		}
 		body {
 		  margin: 0;
 		  min-width: 250px;
 		  font-family: Calibri, sans-serif;
-		}
-		* {
-		  box-sizing: border-box;
+		  transition: background-color 0.5s;
 		}
 		h1 {
 			text-align: center;
@@ -146,12 +148,84 @@
 			padding: 16px;
 		}
 
-		@media (max-width:775px) {
+		#settings-gear {
+			position:absolute;
+			left: 0.3em;
+			top: 0.4em;
+			font-size: 40px;
+			color: darkgrey;
+		}
+
+		.left-col {
+			position:relative;
+			animation: animateleft 0.4s;
+		}
+		@keyframes animateleft {
+			from{
+				left:-300px;
+				opacity:0
+			} to {
+				left:0;
+				opacity:1
+			}
+		}
+
+		.settings-panel {
+		  height: 100%;
+		  width: 0;
+		  position: fixed;
+		  z-index: 1;
+		  top: 0;
+		  left: 0;
+		  background-color: #111;
+		  overflow-x: hidden;
+		  transition: 0.5s;
+		  padding-top: 60px;
+		}
+
+		.settings-panel a {
+		  padding: 8px 8px 8px 32px;
+		  text-decoration: none;
+		  font-size: 25px;
+		  color: #818181;
+		  display: block;
+		  transition: 0.3s;
+		}
+
+		.settings-panel a:hover {
+		  color: #f1f1f1;
+		}
+
+		.settings-panel .closebtn {
+		  position: absolute;
+		  top: 0;
+		  right: 25px;
+		  font-size: 36px;
+		  margin-left: 50px;
+		}
+
+		@media screen and (max-height: 450px) {
+		  .settings-panel {padding-top: 15px;}
+		  .settings-panel a {font-size: 18px;}
+		}
+
+		@media (max-width:755px) {
 			.left-col {
 				display: block;
+				width: 100%;
+				float: none;
+				animation: none;
+			}
+			.right-col {
+				display: block;
+				width: 100%;
+				float: none;
 			}
 			#tote-img {
 				display: none;
+			}
+			.card {
+				box-shadow: none;
 			}
 		}
 	</style>
@@ -159,6 +233,7 @@
 <body>
 	<div id="header" class="header">
 		<h1 style="margin:5px" id="title">Tote Manager</h1>
+		<span class="fa fa-cog fa-fw" id="settings-gear" title="Settings" onclick="openMenu()"></span>
 	</div>
 	<div class="left-col">
 		<div class="card">
@@ -275,6 +350,13 @@
 		</div>
 	</div>
 
+	<div id="settings-panel" class="settings-panel">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+		<a href="javascript:void(0)">About</a>
+		<a href="javascript:void(0)">Services</a>
+		<a href="javascript:void(0)" onclick="resetData(); closeMenu()">Reset App</a>
+	</div>
+
 	<script>
 		var toteData = localStorage.getItem('tote-data');
 		if(toteData) {
@@ -282,6 +364,20 @@
 		} else {
 			$('#rank-wrapper').hide();
 			$('#recent-wrapper').hide();
+		}
+
+		function openMenu() {
+			if($('body').width() > 755) {
+				document.getElementById("settings-panel").style.width = "33.333333%";
+			} else {
+				document.getElementById("settings-panel").style.width = "100%";
+			}
+			document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+		}
+
+		function closeMenu() {
+			document.getElementById("settings-panel").style.width = "0";
+			document.body.style.backgroundColor = "white";
 		}
 	</script>
 </body>
