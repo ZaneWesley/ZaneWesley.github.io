@@ -17,6 +17,7 @@
 		  min-width: 250px;
 		  font-family: Calibri, sans-serif;
 		  transition: background-color 0.5s;
+		  overflow: none;
 		}
 		h1 {
 			text-align: center;
@@ -247,6 +248,10 @@
 		}
 
 		@media (max-width:755px) {
+			body {
+				overflow-x: none;
+				overflow-y: auto;
+			}
 			.left-col {
 				display: block;
 				width: 100%;
