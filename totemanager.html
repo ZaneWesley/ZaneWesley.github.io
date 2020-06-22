@@ -23,10 +23,11 @@
 		}
 		/* Style the header */
 		.header {
-		  background-color: /*#f44336 /*<--Red*/#2196F3;
+		  background-color: #2196F3;
 		  padding: 30px 40px;
 		  color: white;
 		  text-align: center;
+		  transition: background-color 0.5s;
 		}
 
 		/* Clear floats after the header */
@@ -97,8 +98,9 @@
 		  outline: 0;
 		  box-shadow: none;
 		  border: 0 !important;
-		  background: #97c3e6;
+		  background: /*#97c3e6*/#2196F3;
 		  background-image: none;
+		  transition: background-color 0.5s;
 		}
 		/* Remove IE arrow */
 		select::-ms-expand {
@@ -111,7 +113,7 @@
 		  width: 20em;
 		  height: 3em;
 		  line-height: 3;
-		  background: #97c3e6;
+		  background: /*#97c3e6*/#2196F3;
 		  overflow: hidden;
 		  border-radius: .25em;
 		}
@@ -204,6 +206,41 @@
 		  margin-left: 50px;
 		}
 
+		.btn {
+			border:none;
+			display:inline-block;
+			padding: 8px 16px;
+			vertical-align:middle;
+			overflow:hidden;
+			outline: none;
+			text-decoration:none;
+			color: #ffffff;
+			background-color: #2196F3;
+			text-align:center;
+			transition: all 0.5s;
+			cursor:pointer;
+			white-space:nowrap;
+			height: 48px;
+		}
+		.btn:hover {
+			box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+		}
+		.btn {
+			-webkit-touch-callout:none;
+			-webkit-user-select:none;
+			-khtml-user-select:none;
+			-moz-user-select:none;
+			-ms-user-select:none;
+			user-select:none
+		}
+		.btn:disabled {
+			cursor:not-allowed;
+			opacity:0.3
+		}
+		.btn:disabled:hover {
+			box-shadow:none;
+		}
+
 		@media screen and (max-height: 450px) {
 		  .settings-panel {padding-top: 15px;}
 		  .settings-panel a {font-size: 18px;}
@@ -226,6 +263,9 @@
 			}
 			.card {
 				box-shadow: none;
+			}
+			button {
+				width:100%;
 			}
 		}
 	</style>
@@ -347,13 +387,16 @@
 				</div>
 			</div>
 			<div class="container padding"></div>
+			<div class="container padding">
+				<button class="btn">Submit and Save</button>
+			</div>
 		</div>
 	</div>
 
 	<div id="settings-panel" class="settings-panel">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
 		<a href="javascript:void(0)">About</a>
-		<a href="javascript:void(0)">Services</a>
+		<a href="javascript:void(0)">View Log</a>
 		<a href="javascript:void(0)" onclick="resetData(); closeMenu()">Reset App</a>
 	</div>
 
@@ -373,11 +416,13 @@
 				document.getElementById("settings-panel").style.width = "100%";
 			}
 			document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+			$('#header, select, .btn').css('background-color', '#91c5ee');
 		}
 
 		function closeMenu() {
 			document.getElementById("settings-panel").style.width = "0";
 			document.body.style.backgroundColor = "white";
+			$('#header, select, .btn').css('background-color', '#2196F3');
 		}
 	</script>
 </body>
