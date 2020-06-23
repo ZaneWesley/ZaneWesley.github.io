@@ -133,6 +133,7 @@
 		  padding: 0 1em;
 		  background: #97c3e6;
 		  cursor: pointer;
+		  color: #2196F3;
 		  pointer-events: none;
 		  -webkit-transition: .25s all ease;
 		  -o-transition: .25s all ease;
@@ -140,7 +141,7 @@
 		}
 		/* Transition */
 		.select:hover::after {
-		  color: #2196F3;
+		  color: #ffffff;
 		}
 
 		.card {
@@ -242,6 +243,39 @@
 			box-shadow:none;
 		}
 
+		#log-wrapper {
+		    z-index: 3;
+		    display: none;
+		    padding-top: 100px;
+		    position: fixed;
+		    left: 0;
+		    top: 0;
+		    width: 100%;
+		    height: 100%;
+		    overflow: auto;
+		    background-color: rgba(0,0,0,0.4);
+		}
+		#tote-log {
+			display: none;
+		    margin: auto;
+		    background-color: #fff;
+		    position: relative;
+		    padding: 0;
+		    outline: 0;
+		    width: 900px;
+		}
+
+		#cover {
+			background-color: #ffffff;
+			/*display: none;*/
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 900;
+		}
+
 		@media screen and (max-height: 450px) {
 		  .settings-panel {padding-top: 15px;}
 		  .settings-panel a {font-size: 18px;}
@@ -272,6 +306,9 @@
 			button {
 				width:100%;
 			}
+			#tote-log {
+				width: 100%;
+			}
 		}
 	</style>
 </head>
@@ -283,7 +320,7 @@
 	<div class="left-col">
 		<div class="card">
 			<div id="tote-img"></div>
-			<div class="container">
+			<!--<div class="container">
 				<h3>Most Used Totes:</h3>
 				<div id="rank-wrapper">
 					<ul>
@@ -310,22 +347,22 @@
 						</li>
 					</ul>
 				</div>
-			</div>
+			</div>-->
 			
 			<div class="container">
 				<h3>Most Recent Totes:</h3>
 				<div id="recent-wrapper">
 					<ul>
-						<li>
-							<b>Tote <span id="recent-1"></span></b>
+						<li id="recent-li-1">
+							<b>Tote <span class="recent-1"></span></b>
 							<span class="list-rank">1</span>
 						</li>
-						<li>
-							<b>Tote <span id="recent-2"></span></b>
+						<li id="recent-li-2">
+							<b>Tote <span class="recent-2"></span></b>
 							<span class="list-rank">2</span>
 						</li>
-						<li>
-							<b>Tote <span id="recent-3"></span></b>
+						<li id="recent-li-3">
+							<b>Tote <span class="recent-3"></span></b>
 							<span class="list-rank">3</span>
 						</li>
 					</ul>
@@ -347,22 +384,22 @@
 			<div id="tote-down-log-wrapper" class="container">
 				<h2>Bring Down a Tote:</h2>
 				<div class="container">
-					<label for="select-tote">Bring Down</label>
+					<label for="select-tote-down">Bring Down</label>
 					<div class="select">
-						<select id="select-tote">
+						<select id="select-tote-down">
 							<option selected disabled>Choose a tote</option>
-							<option value="1">Tote 1</option>
-							<option value="2">Tote 2</option>
-							<option value="3">Tote 3</option>
-							<option value="4">Tote 4</option>
-							<option value="5">Tote 5</option>
-							<option value="6">Tote 6</option>
-							<option value="7">Tote 7</option>
-							<option value="8">Tote 8</option>
-							<option value="9">Tote 9</option>
-							<option value="10">Tote 10</option>
-							<option value="11">Tote 11</option>
-							<option value="12">Tote 12</option>
+							<option value="tote1">Tote 1</option>
+							<option value="tote2">Tote 2</option>
+							<option value="tote3">Tote 3</option>
+							<option value="tote4">Tote 4</option>
+							<option value="tote5">Tote 5</option>
+							<option value="tote6">Tote 6</option>
+							<option value="tote7">Tote 7</option>
+							<option value="tote8">Tote 8</option>
+							<option value="tote9">Tote 9</option>
+							<option value="tote10">Tote 10</option>
+							<option value="tote11">Tote 11</option>
+							<option value="tote12">Tote 12</option>
 						</select>
 					</div>
 				</div>
@@ -371,47 +408,132 @@
 			<div id="tote-up-log-wrapper" class="container">
 				<h2>Take Up a Tote:</h2>
 				<div class="container">
-					<label for="select-tote">Take Up</label>
+					<label for="select-tote-up">Take Up</label>
 					<div class="select">
-						<select id="select-tote">
+						<select id="select-tote-up">
 							<option selected disabled>Choose a tote</option>
-							<option value="1">Tote 1</option>
-							<option value="2">Tote 2</option>
-							<option value="3">Tote 3</option>
-							<option value="4">Tote 4</option>
-							<option value="5">Tote 5</option>
-							<option value="6">Tote 6</option>
-							<option value="7">Tote 7</option>
-							<option value="8">Tote 8</option>
-							<option value="9">Tote 9</option>
-							<option value="10">Tote 10</option>
-							<option value="11">Tote 11</option>
-							<option value="12">Tote 12</option>
+							<option value="tote1">Tote 1</option>
+							<option value="tote2">Tote 2</option>
+							<option value="tote3">Tote 3</option>
+							<option value="tote4">Tote 4</option>
+							<option value="tote5">Tote 5</option>
+							<option value="tote6">Tote 6</option>
+							<option value="tote7">Tote 7</option>
+							<option value="tote8">Tote 8</option>
+							<option value="tote9">Tote 9</option>
+							<option value="tote10">Tote 10</option>
+							<option value="tote11">Tote 11</option>
+							<option value="tote12">Tote 12</option>
 						</select>
 					</div>
 				</div>
 			</div>
 			<div class="container padding"></div>
 			<div class="container padding">
-				<button class="btn">Submit and Save</button>
+				<button class="btn" onclick="saveData()">Submit and Save</button>
 			</div>
 		</div>
 	</div>
 
+	<div id="log-wrapper">
+		<div id="tote-log">
+			<div class="header" style="padding: 10px 20px;">
+				<h2>Tote Log</h2>
+			</div>
+			<ul>
+				<li id="log-li-pre">
+					<h4 style="display: inline-block;">Tote</h4>
+					<h4 style="display: inline-block;" class="list-rank">Date</h4>
+				</li>
+				<li id="log-li-1">
+					<span>Tote <span class="recent-1"></span></span>
+					<span id="recent-1-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-2">
+					<span>Tote <span class="recent-2"></span></span>
+					<span id="recent-2-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-3">
+					<span>Tote <span class="recent-3"></span></span>
+					<span id="recent-3-date" class="list-rank"></span>
+				</li>
+			</ul>
+			<div class="container padding">
+				<span id="tote-day"></span>
+			</div>
+			<div class="container padding">
+				<button class="btn" onclick="$('#log-wrapper').fadeOut(); $('#tote-log').fadeOut()">Close</button>
+			</div>
+			<div class="container padding"></div>
+		</div>
+	</div>
+
+	<!--<div id="cover">
+		<div class="header">
+			<h1 style="margin:5px" id="title">Tote Manager</h1>
+		</div>
+		<div class="container">
+			<h2>Your name is required to set up your account</h2>
+			<p>Please enter your name to use this app.</p>
+		</div>
+		<div class="container">
+			<button id="reload-btn" class="btn" onclick="window.location.reload()" style="display: none;">Try Again</button>
+		</div>
+	</div>-->
+
 	<div id="settings-panel" class="settings-panel">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
 		<a href="javascript:void(0)">About</a>
-		<a href="javascript:void(0)">View Log</a>
-		<a href="javascript:void(0)" onclick="resetData(); closeMenu()">Reset App</a>
+		<a href="javascript:void(0)" onclick="closeMenu(); viewLog()">View Log</a>
+		<a href="javascript:void(0)" onclick="closeMenu(); resetData()">Reset App</a>
 	</div>
 
 	<script>
 		var toteData = localStorage.getItem('tote-data');
-		if(toteData) {
-			$('.no-data-msg').hide();
-		} else {
-			$('#rank-wrapper').hide();
-			$('#recent-wrapper').hide();
+		var useriniData = localStorage.getItem('tote-userini-data');
+		var userini = {};
+		var toteManager = {};
+		ini();
+
+		function ini() {
+			if(toteData) {
+				$('.no-data-msg').hide();
+				toteManager = JSON.parse(toteData);
+				setData();
+			} else {
+				$('#rank-wrapper').hide();
+				$('#recent-wrapper').hide();
+			}
+			/*if(useriniData) {
+				userini = JSON.parse(useriniData);
+				if(userini.ini === false || userini.ini === null) {
+					userini.username = prompt("Please enter your name:");
+					if(userini.username !== null) {
+						userini.ini = true;
+						localStorage.setItem('tote-userini-data', JSON.stringify(userini));
+						iniuser();
+						$('#cover').hide();
+					} else {
+						$('#cover').show();
+						$('#reload-btn').show();
+						localStorage.removeItem('tote-userini-data');
+					}
+				} else {
+					$('#cover').hide();
+				}
+			} else {
+				userini.username = prompt("Please enter your name:");
+				if(userini.username !== null) {
+					userini.ini = true;
+					localStorage.setItem('tote-userini-data', JSON.stringify(userini));
+					iniuser();
+					$('#cover').hide();
+				} else {
+					$('#cover').show();
+					$('#reload-btn').show();
+					localStorage.removeItem('tote-userini-data');
+				}
+			}*/
 		}
 
 		function openMenu() {
@@ -429,6 +551,87 @@
 			document.body.style.backgroundColor = "white";
 			$('#header, select, .btn').css('background-color', '#2196F3');
 		}
+
+		function iniuser() {
+			console.log("Hello " + userini.username);
+		}
+
+		function viewLog() {
+			$('#log-wrapper').fadeIn();
+			$('#tote-log').fadeIn();
+		}
+
+		function resetData() {
+			var resetConfirmation = confirm("Are you sure you want to reset the app? This will remove all tracking data and preferences. This action cannot be undone!");
+			if(resetConfirmation == true) {
+				localStorage.removeItem('tote-data');
+				localStorage.removeItem('tote-userini-data');
+				console.log('App Reset');
+				window.location.reload();
+			}
+		}
+
+		function setData() {
+			var textVar;
+			if(toteManager.recent1) {
+				textVar = toteManager.recent1.replace("tote", "");
+				$('.recent-1').text(textVar);
+				$('#recent-1-date').text(toteManager.recent1DownDate);
+				$('#recent-li-1').show();
+				$('#select-tote-up').val(toteManager.recent1);
+			} else {
+				$('#recent-li-1').hide();
+				$('.no-data-msg').show();
+			}
+			if(toteManager.recent2) {
+				textVar = toteManager.recent2.replace("tote", "");
+				$('.recent-2').text(textVar);
+				$('#recent-2-date').text(toteManager.recent2DownDate);
+				$('#recent-li-2').show();
+			} else {
+				$('#recent-li-2').hide();
+			}
+			if(toteManager.recent3) {
+				textVar = toteManager.recent3.replace("tote", "");
+				$('.recent-3').text(textVar);
+				$('#recent-3-date').text(toteManager.recent3DownDate);
+				$('#recent-li-3').show();
+			} else {
+				$('#recent-li-3').hide();
+			}
+		}
+
+		function saveData() {
+			if($('select-tote-up').val() !== null || $('select-tote-down').val() !== null) {
+				toteManager.toteUp = $('#select-tote-up').val();
+				toteManager.toteDown = $('#select-tote-down').val();
+				toteManager.toteDownDate = Date();
+				toteManager.toteUpDate = Date();
+				toteManager.recent3 = toteManager.recent2;
+				toteManager.recent3DownDate = toteManager.recent2DownDate;
+				toteManager.recent2 = toteManager.recent1;
+				toteManager.recent2DownDate = toteManager.recent1DownDate;
+				toteManager.recent1 = toteManager.toteDown;
+				toteManager.recent1DownDate = toteManager.toteDownDate;
+				localStorage.setItem('tote-data', JSON.stringify(toteManager));
+				setData();
+				ini();
+				window.location.reload();
+			} else {
+				console.log('Empty Totes! Sorry!');
+			}
+		}
+		var toteDayDown = new Date(toteManager.toteDownDate).getTime();
+		var toteDayNow = new Date().getTime();
+		var distance = toteDayNow - toteDayDown;
+		var toteDay = Math.floor(distance / (1000 * 60 * 60 * 24));
+		var dayPart;
+		if(toteDay == 0 || toteDay > 1) {
+			dayPart = " days";
+		} else {
+			dayPart = " day";
+		}
+		$('#tote-day').text(toteManager.recent1.replace("tote", "Tote ") + " has been down for " + toteDay + dayPart);
 	</script>
 </body>
 </html>
