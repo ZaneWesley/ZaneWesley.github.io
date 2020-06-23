@@ -605,8 +605,8 @@
 			if($('select-tote-up').val() !== null || $('select-tote-down').val() !== null) {
 				toteManager.toteUp = $('#select-tote-up').val();
 				toteManager.toteDown = $('#select-tote-down').val();
-				toteManager.toteDownDate = Date().formatMMDDYYYY();
-				toteManager.toteUpDate = Date().formatMMDDYYYY();
+				toteManager.toteDownDate = new Date().formatMMDDYYYY();
+				toteManager.toteUpDate = new Date().formatMMDDYYYY();
 				toteManager.recent3 = toteManager.recent2;
 				toteManager.recent3DownDate = toteManager.recent2DownDate;
 				toteManager.recent2 = toteManager.recent1;
