@@ -605,8 +605,8 @@
 			if($('select-tote-up').val() !== null || $('select-tote-down').val() !== null) {
 				toteManager.toteUp = $('#select-tote-up').val();
 				toteManager.toteDown = $('#select-tote-down').val();
-				toteManager.toteDownDate = Date();
-				toteManager.toteUpDate = Date();
+				toteManager.toteDownDate = Date().formatMMDDYYYY();
+				toteManager.toteUpDate = Date().formatMMDDYYYY();
 				toteManager.recent3 = toteManager.recent2;
 				toteManager.recent3DownDate = toteManager.recent2DownDate;
 				toteManager.recent2 = toteManager.recent1;
@@ -620,7 +620,12 @@
 			} else {
 				console.log('Empty Totes! Sorry!');
 			}
-		}
+		} 
+Date.prototype.formatMMDDYYYY = function(){
+    return (this.getMonth() + 1) + 
+    "/" +  this.getDate() +
+    "/" +  this.getFullYear();
+}
 		var toteDayDown = new Date(toteManager.toteDownDate).getTime();
 		var toteDayNow = new Date().getTime();
 		var distance = toteDayNow - toteDayDown;
