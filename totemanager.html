@@ -160,6 +160,16 @@
 			color: darkgrey;
 		}
 
+		#log-close {
+			position:absolute;
+			right: 0.3em;
+			top: 0.4em;
+			font-size: 40px;
+			color: #ffffff;
+			cursor: pointer;
+			user-select: none;
+		}
+
 		.left-col {
 			position:relative;
 			animation: animateleft 0.4s;
@@ -309,6 +319,9 @@
 			#tote-log {
 				width: 100%;
 			}
+			#log-wrapper {
+				padding-top: 0;
+			}
 		}
 	</style>
 </head>
@@ -354,15 +367,15 @@
 				<div id="recent-wrapper">
 					<ul>
 						<li id="recent-li-1">
-							<b>Tote <span class="recent-1"></span></b>
+							<b><span class="recent-1"></span></b>
 							<span class="list-rank">1</span>
 						</li>
 						<li id="recent-li-2">
-							<b>Tote <span class="recent-2"></span></b>
+							<b><span class="recent-2"></span></b>
 							<span class="list-rank">2</span>
 						</li>
 						<li id="recent-li-3">
-							<b>Tote <span class="recent-3"></span></b>
+							<b><span class="recent-3"></span></b>
 							<span class="list-rank">3</span>
 						</li>
 					</ul>
@@ -400,6 +413,29 @@
 							<option value="tote10">Tote 10</option>
 							<option value="tote11">Tote 11</option>
 							<option value="tote12">Tote 12</option>
+							<option value="Baby Dolls">Baby Dolls</option>
+							<option value="Barbies">Barbies</option>
+							<option value="Baby Stuff">Baby Stuff</option>
+							<option value="Cars">Cars Tote</option>
+							<option value="Dress Up 1">Dress Up 1</option>
+							<option value="Dress Up 2">Dress Up 2</option>
+							<option value="Educational Games">Educational Games</option>
+							<option value="Educational Stuff">Educational Stuff</option>
+							<option value="Electric Train">Electric Train</option>
+							<option value="Farm Sets">Farm Sets</option>
+							<option value="Kitchen">Kitchen</option>
+							<option value="Little People">Little People</option>
+							<option value="Magic">Magic</option>
+							<option value="Marble Run">Marble Run</option>
+							<option value="Paw Patrol">Paw Patrol</option>
+							<option value="Science Kits">Science Kits</option>
+							<option value="Stuffed Animals">Stuffed Animals</option>
+							<option value="Tents">Tents</option>
+							<option value="Tools">Tools</option>
+							<option value="Toy Story">Toy Story</option>
+							<option value="Vtech Cars">Vtech Cars</option>
+							<option value="Wooden Train">Wooden Train</option>
+							<option value="Other">Other</option>
 						</select>
 					</div>
 				</div>
@@ -424,6 +460,29 @@
 							<option value="tote10">Tote 10</option>
 							<option value="tote11">Tote 11</option>
 							<option value="tote12">Tote 12</option>
+							<option value="Baby Dolls">Baby Dolls</option>
+							<option value="Barbies">Barbies</option>
+							<option value="Baby Stuff">Baby Stuff</option>
+							<option value="Cars">Cars Tote</option>
+							<option value="Dress Up 1">Dress Up 1</option>
+							<option value="Dress Up 2">Dress Up 2</option>
+							<option value="Educational Games">Educational Games</option>
+							<option value="Educational Stuff">Educational Stuff</option>
+							<option value="Electric Train">Electric Train</option>
+							<option value="Farm Sets">Farm Sets</option>
+							<option value="Kitchen">Kitchen</option>
+							<option value="Little People">Little People</option>
+							<option value="Magic">Magic</option>
+							<option value="Marble Run">Marble Run</option>
+							<option value="Paw Patrol">Paw Patrol</option>
+							<option value="Science Kits">Science Kits</option>
+							<option value="Stuffed Animals">Stuffed Animals</option>
+							<option value="Tents">Tents</option>
+							<option value="Tools">Tools</option>
+							<option value="Toy Story">Toy Story</option>
+							<option value="Vtech Cars">Vtech Cars</option>
+							<option value="Wooden Train">Wooden Train</option>
+							<option value="Other">Other</option>
 						</select>
 					</div>
 				</div>
@@ -439,6 +498,7 @@
 		<div id="tote-log">
 			<div class="header" style="padding: 10px 20px;">
 				<h2>Tote Log</h2>
+				<span id="log-close" onclick="$('#log-wrapper').fadeOut(); $('#tote-log').fadeOut()">&times;</span>
 			</div>
 			<ul>
 				<li id="log-li-pre">
@@ -446,17 +506,86 @@
 					<h4 style="display: inline-block;" class="list-rank">Date</h4>
 				</li>
 				<li id="log-li-1">
-					<span>Tote <span class="recent-1"></span></span>
+					<span class="recent-1"></span>
 					<span id="recent-1-date" class="list-rank"></span>
 				</li>
 				<li id="log-li-2">
-					<span>Tote <span class="recent-2"></span></span>
+					<span class="recent-2"></span>
 					<span id="recent-2-date" class="list-rank"></span>
 				</li>
 				<li id="log-li-3">
-					<span>Tote <span class="recent-3"></span></span>
+					<span class="recent-3"></span>
 					<span id="recent-3-date" class="list-rank"></span>
 				</li>
+				<li id="log-li-4">
+					<span class="recent-4"></span>
+					<span id="recent-4-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-5">
+					<span class="recent-5"></span>
+					<span id="recent-5-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-6">
+					<span class="recent-6"></span>
+					<span id="recent-6-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-7">
+					<span class="recent-7"></span>
+					<span id="recent-7-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-8">
+					<span class="recent-8"></span>
+					<span id="recent-8-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-9">
+					<span class="recent-9"></span>
+					<span id="recent-9-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-10">
+					<span class="recent-10"></span>
+					<span id="recent-10-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-11">
+					<span class="recent-11"></span>
+					<span id="recent-11-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-12">
+					<span class="recent-12"></span>
+					<span id="recent-12-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-13">
+					<span class="recent-13"></span>
+					<span id="recent-13-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-14">
+					<span class="recent-14"></span>
+					<span id="recent-14-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-15">
+					<span class="recent-15"></span>
+					<span id="recent-15-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-16">
+					<span class="recent-16"></span>
+					<span id="recent-16-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-17">
+					<span class="recent-17"></span>
+					<span id="recent-17-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-18">
+					<span class="recent-18"></span>
+					<span id="recent-18-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-19">
+					<span class="recent-19"></span>
+					<span id="recent-19-date" class="list-rank"></span>
+				</li>
+				<li id="log-li-20">
+					<span class="recent-20"></span>
+					<span id="recent-20-date" class="list-rank"></span>
+				</li>
+
 			</ul>
 			<div class="container padding">
 				<span id="tote-day"></span>
@@ -574,7 +703,7 @@
 		function setData() {
 			var textVar;
 			if(toteManager.recent1) {
-				textVar = toteManager.recent1.replace("tote", "");
+				textVar = toteManager.recent1.replace("tote", "Tote ");
 				$('.recent-1').text(textVar);
 				$('#recent-1-date').text(toteManager.recent1DownDate);
 				$('#recent-li-1').show();
@@ -584,7 +713,7 @@
 				$('.no-data-msg').show();
 			}
 			if(toteManager.recent2) {
-				textVar = toteManager.recent2.replace("tote", "");
+				textVar = toteManager.recent2.replace("tote", "Tote ");
 				$('.recent-2').text(textVar);
 				$('#recent-2-date').text(toteManager.recent2DownDate);
 				$('#recent-li-2').show();
@@ -592,12 +721,148 @@
 				$('#recent-li-2').hide();
 			}
 			if(toteManager.recent3) {
-				textVar = toteManager.recent3.replace("tote", "");
+				textVar = toteManager.recent3.replace("tote", "Tote ");
 				$('.recent-3').text(textVar);
 				$('#recent-3-date').text(toteManager.recent3DownDate);
 				$('#recent-li-3').show();
 			} else {
 				$('#recent-li-3').hide();
+			}
+			if(toteManager.recent4) {
+				textVar = toteManager.recent4.replace("tote", "Tote ");
+				$('.recent-4').text(textVar);
+				$('#recent-4-date').text(toteManager.recent4DownDate);
+				$('#recent-li-4').show();
+			} else {
+				$('#recent-li-4').hide();
+			}
+			if(toteManager.recent5) {
+				textVar = toteManager.recent5.replace("tote", "Tote ");
+				$('.recent-5').text(textVar);
+				$('#recent-5-date').text(toteManager.recent5DownDate);
+				$('#recent-li-5').show();
+			} else {
+				$('#recent-li-5').hide();
+			}
+			if(toteManager.recent6) {
+				textVar = toteManager.recent6.replace("tote", "Tote ");
+				$('.recent-6').text(textVar);
+				$('#recent-6-date').text(toteManager.recent6DownDate);
+				$('#recent-li-6').show();
+			} else {
+				$('#recent-li-6').hide();
+			}
+			if(toteManager.recent7) {
+				textVar = toteManager.recent7.replace("tote", "Tote ");
+				$('.recent-7').text(textVar);
+				$('#recent-7-date').text(toteManager.recent7DownDate);
+				$('#recent-li-7').show();
+			} else {
+				$('#recent-li-7').hide();
+			}
+			if(toteManager.recent8) {
+				textVar = toteManager.recent8.replace("tote", "Tote ");
+				$('.recent-8').text(textVar);
+				$('#recent-8-date').text(toteManager.recent8DownDate);
+				$('#recent-li-8').show();
+			} else {
+				$('#recent-li-8').hide();
+			}
+			if(toteManager.recent9) {
+				textVar = toteManager.recent9.replace("tote", "Tote ");
+				$('.recent-9').text(textVar);
+				$('#recent-9-date').text(toteManager.recent9DownDate);
+				$('#recent-li-9').show();
+			} else {
+				$('#recent-li-9').hide();
+			}
+			if(toteManager.recent10) {
+				textVar = toteManager.recent10.replace("tote", "Tote ");
+				$('.recent-10').text(textVar);
+				$('#recent-10-date').text(toteManager.recent10DownDate);
+				$('#recent-li-10').show();
+			} else {
+				$('#recent-li-10').hide();
+			}
+			if(toteManager.recent11) {
+				textVar = toteManager.recent11.replace("tote", "Tote ");
+				$('.recent-11').text(textVar);
+				$('#recent-11-date').text(toteManager.recent11DownDate);
+				$('#recent-li-11').show();
+			} else {
+				$('#recent-li-11').hide();
+			}
+			if(toteManager.recent12) {
+				textVar = toteManager.recent12.replace("tote", "Tote ");
+				$('.recent-12').text(textVar);
+				$('#recent-12-date').text(toteManager.recent12DownDate);
+				$('#recent-li-12').show();
+			} else {
+				$('#recent-li-12').hide();
+			}
+			if(toteManager.recent13) {
+				textVar = toteManager.recent13.replace("tote", "Tote ");
+				$('.recent-13').text(textVar);
+				$('#recent-13-date').text(toteManager.recent13DownDate);
+				$('#recent-li-13').show();
+			} else {
+				$('#recent-li-13').hide();
+			}
+			if(toteManager.recent14) {
+				textVar = toteManager.recent14.replace("tote", "Tote ");
+				$('.recent-14').text(textVar);
+				$('#recent-14-date').text(toteManager.recent14DownDate);
+				$('#recent-li-14').show();
+			} else {
+				$('#recent-li-14').hide();
+			}
+			if(toteManager.recent15) {
+				textVar = toteManager.recent15.replace("tote", "Tote ");
+				$('.recent-15').text(textVar);
+				$('#recent-15-date').text(toteManager.recent15DownDate);
+				$('#recent-li-15').show();
+			} else {
+				$('#recent-li-15').hide();
+			}
+			if(toteManager.recent16) {
+				textVar = toteManager.recent16.replace("tote", "Tote ");
+				$('.recent-16').text(textVar);
+				$('#recent-16-date').text(toteManager.recent16DownDate);
+				$('#recent-li-16').show();
+			} else {
+				$('#recent-li-16').hide();
+			}
+			if(toteManager.recent17) {
+				textVar = toteManager.recent17.replace("tote", "Tote ");
+				$('.recent-17').text(textVar);
+				$('#recent-17-date').text(toteManager.recent17DownDate);
+				$('#recent-li-17').show();
+			} else {
+				$('#recent-li-17').hide();
+			}
+			if(toteManager.recent18) {
+				textVar = toteManager.recent18.replace("tote", "Tote ");
+				$('.recent-18').text(textVar);
+				$('#recent-18-date').text(toteManager.recent18DownDate);
+				$('#recent-li-18').show();
+			} else {
+				$('#recent-li-18').hide();
+			}
+			if(toteManager.recent19) {
+				textVar = toteManager.recent19.replace("tote", "Tote ");
+				$('.recent-19').text(textVar);
+				$('#recent-19-date').text(toteManager.recent19DownDate);
+				$('#recent-li-19').show();
+			} else {
+				$('#recent-li-19').hide();
+			}
+			if(toteManager.recent20) {
+				textVar = toteManager.recent20.replace("tote", "Tote ");
+				$('.recent-20').text(textVar);
+				$('#recent-20-date').text(toteManager.recent20DownDate);
+				$('#recent-li-20').show();
+			} else {
+				$('#recent-li-20').hide();
 			}
 		}
 
@@ -607,6 +872,40 @@
 				toteManager.toteDown = $('#select-tote-down').val();
 				toteManager.toteDownDate = new Date().formatMMDDYYYY();
 				toteManager.toteUpDate = new Date().formatMMDDYYYY();
+				toteManager.recent20 = toteManager.recent19;
+				toteManager.recent20DownDate = toteManager.recent19DownDate;
+				toteManager.recent19 = toteManager.recent18;
+				toteManager.recent19DownDate = toteManager.recent18DownDate;
+				toteManager.recent18 = toteManager.recent17;
+				toteManager.recent18DownDate = toteManager.recent17DownDate;
+				toteManager.recent17 = toteManager.recent16;
+				toteManager.recent17DownDate = toteManager.recent16DownDate;
+				toteManager.recent16 = toteManager.recent15;
+				toteManager.recent16DownDate = toteManager.recent15DownDate;
+				toteManager.recent15 = toteManager.recent14;
+				toteManager.recent15DownDate = toteManager.recent14DownDate;
+				toteManager.recent14 = toteManager.recent13;
+				toteManager.recent14DownDate = toteManager.recent13DownDate;
+				toteManager.recent13 = toteManager.recent12;
+				toteManager.recent13DownDate = toteManager.recent12DownDate;
+				toteManager.recent12 = toteManager.recent11;
+				toteManager.recent12DownDate = toteManager.recent11DownDate;
+				toteManager.recent11 = toteManager.recent10;
+				toteManager.recent11DownDate = toteManager.recent10DownDate;
+				toteManager.recent10 = toteManager.recent9;
+				toteManager.recent10DownDate = toteManager.recent9DownDate;
+				toteManager.recent9 = toteManager.recent8;
+				toteManager.recent9DownDate = toteManager.recent8DownDate;
+				toteManager.recent8 = toteManager.recent7;
+				toteManager.recent8DownDate = toteManager.recent7DownDate;
+				toteManager.recent7 = toteManager.recent6;
+				toteManager.recent7DownDate = toteManager.recent6DownDate;
+				toteManager.recent6 = toteManager.recent5;
+				toteManager.recent6DownDate = toteManager.recent5DownDate;
+				toteManager.recent5 = toteManager.recent4;
+				toteManager.recent5DownDate = toteManager.recent4DownDate;
+				toteManager.recent4 = toteManager.recent3;
+				toteManager.recent4DownDate = toteManager.recent3DownDate;
 				toteManager.recent3 = toteManager.recent2;
 				toteManager.recent3DownDate = toteManager.recent2DownDate;
 				toteManager.recent2 = toteManager.recent1;
@@ -620,12 +919,12 @@
 			} else {
 				console.log('Empty Totes! Sorry!');
 			}
-		} 
-Date.prototype.formatMMDDYYYY = function(){
-    return (this.getMonth() + 1) + 
-    "/" +  this.getDate() +
-    "/" +  this.getFullYear();
-}
+		}
+
+		Date.prototype.formatMMDDYYYY = function() {
+		    return (this.getMonth() + 1) + "/" +  this.getDate() + "/" +  this.getFullYear();
+		}
+
 		var toteDayDown = new Date(toteManager.toteDownDate).getTime();
 		var toteDayNow = new Date().getTime();
 		var distance = toteDayNow - toteDayDown;
@@ -636,7 +935,9 @@ Date.prototype.formatMMDDYYYY = function(){
 		} else {
 			dayPart = " day";
 		}
-		$('#tote-day').text(toteManager.recent1.replace("tote", "Tote ") + " has been down for " + toteDay + dayPart);
+		if(toteManager.recent1) {
+			$('#tote-day').text(toteManager.recent1.replace("tote", "Tote ") + " has been down for " + toteDay + dayPart);
+		}
 	</script>
 </body>
 </html>
