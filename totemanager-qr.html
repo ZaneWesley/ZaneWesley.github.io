@@ -48,101 +48,8 @@
 		  /* make the list title cursor 'text' */
 		  cursor: text;
 		}
-		.left-col {
-			float: left;
-			width: 33.33333%;
-			padding: 0 8px;
-		}
-		.right-col {
-			float: left;
-			width: 66.66666%;
-			padding: 0 8px;
-		}
-		#tote-img {
-			width: 100%;
-			height: 300px;
-			background-image: url('images/tote.png');
-			background-size: cover;
-			background-position: center center;
-		}
 		.container {
 			padding: 0.01em 16px;
-		}
-
-		label {
-			cursor: text;
-			font-weight: bold;
-			font-size: 20px;
-		}
-
-		ul {
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-		}
-		li {
-			padding: 8px 16px;
-			border-bottom: 1px solid #ddd;
-		}
-		li:last-child {
-			border-bottom: none;
-		}
-		.list-rank {
-			float: right;
-		}
-
-		/* Reset Select */
-		select {
-		  -webkit-appearance: none;
-		  -moz-appearance: none;
-		  -ms-appearance: none;
-		  appearance: none;
-		  outline: 0;
-		  box-shadow: none;
-		  border: 0 !important;
-		  background: /*#97c3e6*/#2196F3;
-		  background-image: none;
-		  transition: background-color 0.5s;
-		}
-		/* Remove IE arrow */
-		select::-ms-expand {
-		  display: none;
-		}
-		/* Custom Select */
-		.select {
-		  position: relative;
-		  display: flex;
-		  width: 20em;
-		  height: 3em;
-		  line-height: 3;
-		  background: /*#97c3e6*/#2196F3;
-		  overflow: hidden;
-		  border-radius: .25em;
-		}
-		select {
-		  flex: 1;
-		  padding: 0 .5em;
-		  color: #fff;
-		  cursor: pointer;
-		}
-		/* Arrow */
-		.select::after {
-		  content: '\25BC';
-		  position: absolute;
-		  top: 0;
-		  right: 0;
-		  padding: 0 1em;
-		  background: #97c3e6;
-		  cursor: pointer;
-		  color: #2196F3;
-		  pointer-events: none;
-		  -webkit-transition: .25s all ease;
-		  -o-transition: .25s all ease;
-		  transition: .25s all ease;
-		}
-		/* Transition */
-		.select:hover::after {
-		  color: #ffffff;
 		}
 
 		.card {
@@ -161,17 +68,7 @@
 			color: darkgrey;
 		}
 
-		#log-close {
-			position:absolute;
-			right: 0.3em;
-			top: 0.4em;
-			font-size: 40px;
-			color: #ffffff;
-			cursor: pointer;
-			user-select: none;
-		}
-
-		.left-col {
+		#wrapper {
 			position:relative;
 			animation: animateleft 0.4s;
 		}
@@ -246,47 +143,9 @@
 			-ms-user-select:none;
 			user-select:none
 		}
-		/*button, .btn:disabled {
-			cursor:not-allowed;
-			opacity:0.3
-		}*/
 		button, .btn:disabled:hover {
 			box-shadow:none;
 		}
-
-		#log-wrapper {
-		    z-index: 3;
-		    display: none;
-		    padding-top: 100px;
-		    position: fixed;
-		    left: 0;
-		    top: 0;
-		    width: 100%;
-		    height: 100%;
-		    overflow: auto;
-		    background-color: rgba(0,0,0,0.4);
-		}
-		#tote-log {
-			display: none;
-		    margin: auto;
-		    background-color: #fff;
-		    position: relative;
-		    padding: 0;
-		    outline: 0;
-		    width: 900px;
-		}
-
-		#cover {
-			background-color: #ffffff;
-			/*display: none;*/
-			width: 100%;
-			height: 100%;
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index: 900;
-		}
-
 		#reader {
 			width: 500px;
 			left: 50%;
@@ -303,31 +162,17 @@
 				overflow-x: none;
 				overflow-y: auto;
 			}
-			.left-col {
+			.#wrapper {
 				display: block;
 				width: 100%;
 				float: none;
 				animation: none;
-			}
-			.right-col {
-				display: block;
-				width: 100%;
-				float: none;
-			}
-			#tote-img {
-				display: none;
 			}
 			.card {
 				box-shadow: none;
 			}
 			button {
 				width:100%;
-			}
-			#tote-log {
-				width: 100%;
-			}
-			#log-wrapper {
-				padding-top: 0;
 			}
 			#reader {
 				width: 100%;
@@ -340,7 +185,7 @@
 		<h1 style="margin:5px" id="title">Tote Manager</h1>
 		<span class="fa fa-cog fa-fw" id="settings-gear" title="Settings" onclick="openMenu()"></span>
 	</div>
-	<div class="card">
+	<div class="card" id="wrapper">
 		<div class="container">
 			<h2>Scan a QR Code</h2>
 		</div>
@@ -352,7 +197,7 @@
 
 	<div id="settings-panel" class="settings-panel">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
-		<a href="totemanager.html">Back to Manager</a>
+		<a href="tote-manager.html">Back to Manager</a>
 	</div>
 
 	<script>
