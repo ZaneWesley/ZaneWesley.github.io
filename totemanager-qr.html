@@ -151,6 +151,14 @@
 			left: 50%;
 			transform: translateX(-50%);
 		}
+		#code-results {
+			width: 500px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		iframe {
+			border: none;
+		}
 
 		@media screen and (max-height: 450px) {
 		  .settings-panel {padding-top: 15px;}
@@ -192,6 +200,9 @@
 		<div class="container">
 			<div id="reader"></div>
 		</div>
+		<div class="container">
+			<iframe id="code-results" src=""></iframe>
+		</div>
 		<div class="container padding"></div>
 	</div>
 
@@ -203,7 +214,7 @@
 	<script>
 		function onScanSuccess(qrCodeMessage) {
 			// Message Handler
-			console.log(qrCodeMessage);
+			$('#code-results').prop('src', qrCodeMessage);
 		}
 
 		var scanner = new Html5QrcodeScanner(
