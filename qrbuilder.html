@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Builder</title>
+
+    <!-- External CSS Files -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro|" rel="stylesheet">
+    <link href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.css" rel="stylesheet">
+    <!--<link href="builder-css/spectrum.css" rel="stylesheet">-->
+    <link href="css/qrbuilder-styles.css" rel="stylesheet">
+
+    <!-- External JavaScript Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    <!--<script src="builder-js/spectrum.js"></script>
+    <script src="builder-js/clipboard.min.js"></script>-->
+    <script src='JS/qrcode.min.js'></script>
+    <script src="JS/buttonbuilder-code.js"></script>
+    
+    <script>
+        var currSection = 'text-settings';
+        
+        $(document).ready(function() {
+            
+            //initializeColorPickers();
+            
+            generateCode();
+
+            disableClicks();
+            
+            // Event handler for the Collapsible widget's expand event
+            $('div[data-role=collapsible]').on('collapsibleexpand', function(e) {
+                
+                // Only collapse if it's a different Collpsible
+                if(e.target.id !== currSection) {
+                    
+                    // Collapse the currently expanded section
+                    $('#' + currSection).collapsible('collapse');
+                    
+                    // Save the ID of the new expanded section
+                    currSection = e.target.id;
+                }
+            });
+            
+            // Event handler for the <input> and <select> tags' blur, change, input, and keyup events
+            // Also handle the contextmenu event to avoid the "tap-and-hold" default action
+            $('input, select').on('blur change input keyup contextmenu', function(e) {
+                
+                // Prevent the default whatever
+                e.preventDefault();
+                
+                generateCode();
+            });
+            
+            // Event handler for the Save Your QR command
+            $('#save-qr').click(function() {
+                
+                // Get the button's control values
+                //
+                
+                // Save them
+                //
+            });
+
+            // Event handler for the Reset Your QR command
+            $('#reset-qr').click(function() {
+                
+                // Rebuild the QR using the default CSS values
+                generateCodeReset();
+            });
+
+            // Instantiate Clipboard.js for the Copy the Button CSS command
+                /*var buttonCSSClipboard = new Clipboard('#copy-button', {
+                    text: function(trigger) {
+                    var textToCopy = $('#css-code').text();
+                    return textToCopy;
+                    }
+                });
+                
+            // Handle a successful copy (testing purposes only)
+            buttonCSSClipboard.on('success', function(e) {
+                console.log(e.text);
+            });*/
+        });
+    </script>
+</head>
+<body>
+    <main role="main" data-role="page" class="ui-responsive-panel">
+        <header data-role="header" data-position="fixed">
+            <h1>QR Code Builder</h1>
+            <a href="#menu-panel" data-icon="bars" data-iconpos="left" style="height: 3rem; background-color: #e8e8e8; border: none; box-shadow: none;"></a>
+            <div id="qr-preview" class="control-row qr-preview-wrapper">
+                <label for="qrcode">Preview:</label>
+                <div id="qrcode" class="qrcode"></div>
+            </div>
+        </header><!-- /header -->
+        
+        <article role="contentinfo" class="ui-content">
+            
+            <!-- Value Settings -->
+            <div id="value-settings-collapsible" data-role="collapsible" data-inset="false">
+                <h2>Value Settings</h2>
+                <section>
+                    <div class="control-row">
+                        <label for="code-type">Code Type</label>
+                        <select id="code-type" data-role="selectmenu" aria-label="Select a code type">
+                            <option value="text">Text</option>
+                            <option value="url">URL Redirect</option>
+                            <option value="email">Email Address</option>
+                            <option value="phone">Phone Number</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label id="qr-text-label" for="qr-text">QR Code text:</label>
+                        <input id="qr-text" type="text" value="QR Code" aria-label="Enter the QR code text">
+                    </div>
+                </section>
+            </div> <!-- /Value Settings -->
+            
+            <!-- Box Settings -->
+            <div id="box-settings-collapsible" data-role="collapsible" data-inset="false">
+                <h2>Box Styles</h2>
+                <section>
+                    <div class="control-row">
+                        <label for="padding-top">Padding top (px):</label>
+                        <input id="padding-top" type="range" min="0" max="60" step="1" data-unit="px"aria-label="Enter the top padding">
+                    </div>
+                    <div class="control-row">
+                        <label for="padding-right">Padding right (px):</label>
+                        <input id="padding-right" type="range" min="0" max="60" step="1" data-unit="px"aria-label="Enter the right padding">
+                    </div>
+                    <div class="control-row">
+                        <label for="padding-bottom">Padding bottom (px):</label>
+                        <input id="padding-bottom" type="range" min="0" max="60" step="1" data-unit="px"aria-label="Enter the bottom padding">
+                    </div>
+                    <div class="control-row">
+                        <label for="padding-left">Padding left (px):</label>
+                        <input id="padding-left" type="range" min="0" max="60" step="1" data-unit="px"aria-label="Enter the left padding">
+                    </div>
+                    <div class="control-row">
+                        <label for="border-radius">Border radius (px):</label>
+                        <input id="border-radius" type="range" min="0" max="25" step="1" data-unit="px"aria-label="Enter the border radius">
+                    </div>
+                    <div class="control-row">
+                        <label for="border-width">Border width (px):</label>
+                        <input id="border-width" type="range" min="0" max="10" step="1" data-unit="px" aria-label="Enter the border width">
+                    </div>
+                    <div class="control-row">
+                        <label for="border-style">Border style:</label>
+                        <select id="border-style" data-role="selectmenu" aria-label="Select a border style">
+                            <option value="solid">solid</option>
+                            <option value="dashed">dashed</option>
+                            <option value="dotted">dotted</option>
+                            <option value="double">double</option>                            
+                        </select>
+                    </div>
+                </section>
+            </div> <!-- /Box Settings -->
+            
+            <!-- Color Settings -->
+            <!--<div id="color-settings-collapsible" data-role="collapsible" data-inset="false">
+                <h2>Color Styles</h2>
+                <section>
+                    <div class="control-row">
+                        <label for="color">Text color:</label>
+                        <input id="color" type="text" aria-label="Select a text color">
+                    </div>
+                    <div class="control-row">
+                        <label for="background-color">Background color:</label>
+                        <input id="background-color" type="text" aria-label="Select a background color">
+                    </div>
+                    <div class="control-row">
+                        <label for="border-color">Border color:</label>
+                        <input id="border-color" type="text" aria-label="Select a border color">
+                    </div>
+                    <div class="control-row">
+                        <label for="gradient">Gradient:</label>
+                        <input id="gradient" type="checkbox" data-role="flipswitch" aria-label="Toggle the background gradient on or off" checked>
+                    </div>
+                    <div class="control-row">
+                        <label for="hover">Hover effect:</label>
+                        <input id="hover" type="checkbox" data-role="flipswitch" aria-label="Toggle the hover effect on or off" checked>
+                    </div>
+                </section>
+            </div>-->
+
+            <!-- Embed Code -->
+            <div id="embed-code-collapsible" data-role="collapsible" data-inset="false">
+                <h2>Embed Code</h2>
+                <section id="embed-code" class="embed-code">
+                    &lt;img src="<span id="code-src"></span>" alt="QR Code">
+                </section>
+            </div> <!-- /Embed Code -->
+        </article><!-- /content -->
+        
+        <aside id="menu-panel" role="complementary" data-role="panel" data-display="overlay" data-theme="a">
+            <ul data-role="listview">
+                <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
+                    <li data-icon="check"><a id="save-qr" href="#" data-rel="close">Save Your QR Code</a></li>
+                    <li data-icon="action"><a id="copy-qr" href="#" data-rel="close">Copy the QR Code</a></li>
+                    <li data-icon="recycle"><a id="reset-qr" href="#" data-rel="close">Reset the QR Code</a></li>
+            </ul>
+        </aside><!-- /menu-panel -->
+        
+    </main> <!-- /page -->
+</body>
+</html>
