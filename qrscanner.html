@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Builder</title>
+
+    <!-- External CSS Files -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro|" rel="stylesheet">
+    <link href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.css" rel="stylesheet">
+    <!--<link href="builder-css/spectrum.css" rel="stylesheet">-->
+    <link href="css/qrbuilder-styles.css" rel="stylesheet">
+
+    <!-- External JavaScript Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    <!--<script src="builder-js/spectrum.js"></script>
+    <script src="builder-js/clipboard.min.js"></script>-->
+    <script src='JS/qrscanner.min.js'></script>
+    <script src="JS/qrbuilder-code.js"></script>
+    
+    <script>
+        var currSection = 'text-settings';
+        
+        $(document).ready(function() {
+            
+            $('#back').click(function(e) {
+                e.preventDefault();
+                $('main').removeClass('fadeIn').addClass('moveLeft');
+                $('header').removeClass('fadeIn').addClass('moveLeft');
+                $('article').removeClass('fadeIn').addClass('moveLeft');
+                setTimeout(function(e) {
+                    window.location="qrbuilder.html";
+                }, 500);
+            });
+
+            function onScanSuccess(qrCodeMessage) {
+                // Message Handler
+                $('#code-results').prop('src', qrCodeMessage);
+            }
+
+            var scanner = new Html5QrcodeScanner(
+                "reader", { 
+                    fps: 10,
+                    qrbox: 250
+            });
+            scanner.render(onScanSuccess);
+
+            $('button').addClass('ui-btn ui-shadow ui-corner-all');
+            if($('body').width() > 755) {
+                $('input').css('width', '250px');
+            } else {
+                $('input').css('width', 'auto');
+                $('#reader__dashboard_section_fsr').css('display', 'block');
+                $('#reader__dashboard_section_fsr').css('display', 'none');
+            }
+            $('#reader__dashboard_section_fsr span').css('padding', '0');
+            $('#reader').css({
+                border: 'none'
+            });
+        });
+    </script>
+</head>
+<body>
+    <main role="main" data-role="page" class="ui-responsive-panel" class="fadeIn">
+        <header data-role="header" data-position="fixed" class="fadeIn">
+            <h1>QR Code Scanner</h1>
+            <a href="#menu-panel" data-icon="bars" data-iconpos="left" style="height: 3rem; background-color: #e8e8e8; border: none; box-shadow: none;"></a>
+        </header><!-- /header -->
+        
+        <article role="contentinfo" class="ui-content fadeIn">
+            <div id="reader"></div>
+        </article><!-- /content -->
+        
+        <aside id="menu-panel" role="complementary" data-role="panel" data-display="overlay" data-theme="a">
+            <ul data-role="listview">
+                <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
+                <li data-icon="back"><a id="back" href="#" data-rel="close">Back</a></li>
+            </ul>
+        </aside><!-- /menu-panel -->
+        
+    </main> <!-- /page -->
+</body>
+</html>
