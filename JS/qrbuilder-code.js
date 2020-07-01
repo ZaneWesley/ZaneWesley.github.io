@@ -53,19 +53,19 @@ function generateCode() {
     switch($('#code-type').val()) {
         case 'text':
             $('#qr-text-label').text("QR code text:");
-            $('#qr-text').val('QR Code');
+            //$('#qr-text').val('QR Code');
             break;
         case 'url':
             $('#qr-text-label').text("QR code url:");
-            $('#qr-text').val('https://example.com');
+            //$('#qr-text').val('https://example.com');
             break;
         case 'email':
             $('#qr-text-label').text("QR code email address:");
-            $('#qr-text').val('user@example.com');
+            //$('#qr-text').val('user@example.com');
             break;
         case 'phone':
             $('#qr-text-label').text("QR code phone number:");
-            $('#qr-text').val('123-456-7890');
+            //$('#qr-text').val('123-456-7890');
             break;
     }
 
