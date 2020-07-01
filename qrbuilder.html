@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro|" rel="stylesheet">
     <link href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.css" rel="stylesheet">
     <!--<link href="builder-css/spectrum.css" rel="stylesheet">-->
-    <link href="CSS/qrbuilder-styles.css" rel="stylesheet">
+    <link href="css/qrbuilder-styles.css" rel="stylesheet">
 
     <!-- External JavaScript Files -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -64,6 +64,15 @@
                 //
             });
 
+            $('#scan-qr').click(function() {
+                $('main').removeClass('fadeIn').addClass('moveRight');
+                $('header').removeClass('fadeIn').addClass('moveRight');
+                $('article').removeClass('fadeIn').addClass('moveRight');
+                setTimeout(function(e) {
+                    window.location="qrscanner.html";
+                }, 500);
+            });
+
             // Event handler for the Reset Your QR command
             $('#reset-qr').click(function() {
                 
@@ -87,8 +96,8 @@
     </script>
 </head>
 <body>
-    <main role="main" data-role="page" class="ui-responsive-panel">
-        <header data-role="header" data-position="fixed">
+    <main role="main" data-role="page" class="ui-responsive-panel" class="fadeIn">
+        <header data-role="header" data-position="fixed" class="fadeIn">
             <h1>QR Code Builder</h1>
             <a href="#menu-panel" data-icon="bars" data-iconpos="left" style="height: 3rem; background-color: #e8e8e8; border: none; box-shadow: none;"></a>
             <div id="qr-preview" class="control-row qr-preview-wrapper">
@@ -97,11 +106,11 @@
             </div>
         </header><!-- /header -->
         
-        <article role="contentinfo" class="ui-content">
+        <article role="contentinfo" class="ui-content" class="fadeIn">
             
             <!-- Value Settings -->
             <div id="value-settings-collapsible" data-role="collapsible" data-inset="false">
-                <h2>Value Settings</h2>
+                <h2>Code Settings</h2>
                 <section>
                     <div class="control-row">
                         <label for="code-type">Code Type</label>
@@ -198,9 +207,11 @@
         <aside id="menu-panel" role="complementary" data-role="panel" data-display="overlay" data-theme="a">
             <ul data-role="listview">
                 <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
-                    <li data-icon="check"><a id="save-qr" href="#" data-rel="close">Save Your QR Code</a></li>
-                    <li data-icon="action"><a id="copy-qr" href="#" data-rel="close">Copy the QR Code</a></li>
-                    <li data-icon="recycle"><a id="reset-qr" href="#" data-rel="close">Reset the QR Code</a></li>
+                <li data-icon="grid"><a id="scan-qr" href="#" data-rel="close">QR Code Scanner</a></li>
+                <li data-icon="check"><a id="save-qr" href="#" data-rel="close">Save Your QR Code</a></li>
+                <li data-icon="action"><a id="copy-qr" href="#" data-rel="close">Copy the QR Code</a></li>
+                <li data-icon="recycle"><a id="reset-qr" href="#" data-rel="close">Reset the QR Code</a></li>
+                <!-- Icons: https://demos.jquerymobile.com/1.4.5/icons/ -->
             </ul>
         </aside><!-- /menu-panel -->
         
