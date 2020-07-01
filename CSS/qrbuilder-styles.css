@@ -54,6 +54,36 @@ canvas {
     white-space: pre;
     overflow-x: auto;
 }
+.moveRight {
+    position: relative;
+    animation: moveright 1s 1 ease-in-out;
+    /*animation: name durration timing moving-type */
+    animation-fill-mode: both;
+    overflow: hidden;
+}
+.moveLeft {
+    position: relative;
+    animation: moveleft 1s 1 ease-in-out;
+    /*animation: name durration timing moving-type */
+    animation-fill-mode: both;
+    overflow: hidden;
+}
+.fadeIn {
+    animation: fadeIn 0.5s 1 ease-in-out;
+    /*animation: name durration timing moving-type */
+    animation-fill-mode: both;
+}
+@keyframes moveright {
+    from {left: 0;}
+    to {left: 110%;}
+}
+@keyframes moveleft {
+    to {left: -110%;}
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
 /*
  * ============== *
  * QR Preview *
