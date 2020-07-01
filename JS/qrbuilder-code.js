@@ -28,10 +28,8 @@ function disableClicks() {
 
 /*
  * =========================================================== *
- * generateButtonValues(button)                                *
- *     button - A button object                                *
- *     This function takes the data from the button object and *
- *     uses them to generate the button's custom CSS code.     *
+ *     generate functions                                      *
+ *     generates the qr code, and the embed code               *
  * =========================================================== *
  */
 function generateCode() {
@@ -42,27 +40,32 @@ function generateCode() {
     
     var qrText = $('#qr-text').val();
         
-        if (!$('#qr-text').val()) {
-            $('#qr-text').focus();
-            return;
-        } else {
-            qrcode.makeCode($('#qr-text').val());
-        }
-    $('#code-src').text();
+    if (!$('#qr-text').val()) {
+        $('#qr-text').focus();
+        return;
+    } else {
+        qrcode.makeCode($('#qr-text').val());
+    }
+
     disableClicks();
+    generateEmbedCode();
 
     switch($('#code-type').val()) {
         case 'text':
             $('#qr-text-label').text("QR code text:");
+            $('#qr-text').val('QR Code');
             break;
         case 'url':
             $('#qr-text-label').text("QR code url:");
+            $('#qr-text').val('https://example.com');
             break;
         case 'email':
             $('#qr-text-label').text("QR code email address:");
+            $('#qr-text').val('user@example.com');
             break;
         case 'phone':
             $('#qr-text-label').text("QR code phone number:");
+            $('#qr-text').val('123-456-7890');
             break;
     }
 
@@ -86,6 +89,10 @@ function generateCodeReset() {
     // Adjust the <article> padding-top so that it clears the new header size
     $('article').css('padding-top', $('header').height() + 2);
 }
+
+ function generateEmbedCode() {
+    //
+ }
 
 /*
  * ========================================================= *
