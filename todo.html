@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="js/jqueryui.touch-punch.min.js"></script>
+	<script src="js/jqueryui.complete.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro|" rel="stylesheet">
+
+	<link id="icon" href="images/checkbox_checked.png" type="icon/png" rel="icon">
+
+	<title>To Do List</title>
 <style>
 body {
   margin: 0;
@@ -96,6 +107,11 @@ ul li.checked::before {
   clear: both;
 }
 
+/* Make List title non-selectable */
+#listTitle {
+	user-select: none;
+}
+
 /* Style the input */
 input {
   margin: 0;
@@ -105,6 +121,11 @@ input {
   padding: 10px;
   float: left;
   font-size: 16px;
+  outline: none;
+}
+#newTitle {
+	border: 1px solid #ccc;
+	width: 100%;
 }
 
 /* Style the "Add" button */
@@ -119,34 +140,57 @@ input {
   cursor: pointer;
   transition: 0.3s;
   border-radius: 0;
+  outline: none;
 }
 
 .addBtn:hover {
   background-color: #bbb;
 }
+
+.ui-state-highlight { height: 46px; line-height: 1.2em; }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+	border: 1px solid #888888;
+	background: #a0a0a0;
+	color: #777620;
+}
+
+.dialog-width {
+	width: auto;
+	height: auto;
+}
+
+@media (max-width:755px) {
+	body {
+		overflow-x: none;
+		overflow-y: auto;
+	}
+	.dialog-width {
+		width: 100%;
+		height: 100%;
+	}
 </style>
 </head>
 <body>
 
-<div id="myDIV" class="header">
-  <h2 style="margin:5px">To Do List</h2>
-  <input type="text" id="myInput" placeholder="New Item">
-  <span onclick="newElement()" class="addBtn" id="addBtn">Add</span>
+<div id="header" class="header">
+  <h2 style="margin:5px" id="listTitle">To Do List</h2>
+  <input type="text" id="addItemInput" placeholder="New Item">
+  <span onclick="newListItem()" class="addBtn" id="addBtn">Add</span>
 </div>
 
-<ul id="myUL">
+<ul id="list">
 </ul>
 
 <script>
 // Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
+var listNode = document.getElementsByTagName("LI");
 var i;
-for (i = 0; i < myNodelist.length; i++) {
+for (i = 0; i < listNode.length; i++) {
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
   span.className = "close";
   span.appendChild(txt);
-  myNodelist[i].appendChild(span);
+  listNode[i].appendChild(span);
 }
 
 // Click on a close button to hide the current list item
@@ -167,43 +211,18 @@ list.addEventListener('click', function(ev) {
   }
 }, false);
 
-//Trigger newElement on enter (13)
-document.getElementById("myInput").addEventListener('keypress', function(e) {
-	if(e.which === 13) {
-		e.preventDefault();
-		newElement();
-	}
-});
-
-//Change title when doubble clicked
-document.querySelector("h2").addEventListener('dblclick', function(e) {
-	e.preventDefault();
-	document.querySelector("h2").contentEditable=true;
-	document.getElementById("myInput").disabled=true;
-	document.getElementById("addBtn").onclick="";
-});
-//Close title edit on enter
-document.querySelector("h2").addEventListener('keypress', function(e) {
-	if(e.which === 13) {
-		e.preventDefault();
-		document.querySelector("h2").contentEditable=false;
-		document.getElementById("myInput").disabled=false;
-		document.getElementById("addBtn").onclick=newElement();
-	}
-});
-
 // Create a new list item when clicking on the "Add" button
-function newElement() {
+function newListItem() {
   var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
+  var inputValue = document.getElementById("addItemInput").value;
   var t = document.createTextNode(inputValue);
   li.appendChild(t);
   if (inputValue === '') {
     alert("You must write something!");
   } else {
-    document.getElementById("myUL").appendChild(li);
+    document.getElementById("list").appendChild(li);
   }
-  document.getElementById("myInput").value = "";
+  document.getElementById("addItemInput").value = "";
 
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
@@ -218,6 +237,77 @@ function newElement() {
     }
   }
 }
+
+//Changing the Title
+$('#listTitle').on('dblclick', function(e) {
+	e.preventDefault();
+	changeTitle();
+});
+function changeTitle() {
+	var dialog = document.createElement('div');
+	dialog.title="Change List Title";
+	dialog.innerHTML = "<input type='text' id='newTitle'>";
+	document.body.appendChild(dialog);
+	$('#newTitle').val($('#listTitle').text());
+	//Change title on enter
+	$('#newTitle').on('keypress', function(e) {
+		if(e.which === 13) {
+			e.preventDefault();
+			if($('#newTitle').val() !== "" && $('#newTitle').val() !== null) {
+		    	$(dialog).dialog("close");
+		    	$('#listTitle').text($('#newTitle').val());
+		    	$('title').text($('#newTitle').val() + " | To Do List");
+		    	$(dialog).remove();
+		    } else {
+		    	$('#newTitle').focus();
+		    }
+		}
+	});
+	//Create dialog
+	$(dialog).dialog({
+		modal: true,
+		closeOnEscape: false,
+		autoOpen: true,
+		classes: {
+            "ui-dialog": "dialog-width"
+        },
+		buttons: [
+	    {
+	    	text: "Cancel",
+	    	click: function() {
+	    		$( this ).dialog("close");
+	     	}
+	    },
+	    {
+	    	text: "Change",
+	    	click: function() {
+	    		if($('#newTitle').val() !== "" && $('#newTitle').val() !== null) {
+		    		$(this).dialog("close");
+		    		$('#listTitle').text($('#newTitle').val());
+		    		$('title').text($('#newTitle').val() + " | To Do List");
+		    		$(this).remove();
+		    	} else {
+		    		$('#newTitle').focus();
+		    	}
+	    	}
+	    }
+	  ]
+	});
+}
+
+//Make list sortable
+$("#list").sortable({
+    placeholder: "ui-state-highlight"
+});
+$("#list").disableSelection();
+
+//Add item on enter
+$('#addItemInput').on('keypress', function(e) {
+	if(e.which === 13) {
+		e.preventDefault();
+		newListItem();
+	}
+});
 </script>
 
 </body>
