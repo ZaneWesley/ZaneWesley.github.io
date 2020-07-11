@@ -63,9 +63,9 @@ var ref = getWebGLContext(canvas);
 var gl = ref.gl;
 var ext = ref.ext;
 
-if (isMobile()) {
+/*if (isMobile()) {
     config.DYE_RESOLUTION = 512;
-}
+}*/
 if (!ext.supportLinearFiltering) {
     config.DYE_RESOLUTION = 512;
     config.SHADING = false;
