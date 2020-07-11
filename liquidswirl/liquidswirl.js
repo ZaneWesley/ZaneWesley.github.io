@@ -63,9 +63,9 @@ var ref = getWebGLContext(canvas);
 var gl = ref.gl;
 var ext = ref.ext;
 
-/*if (isMobile()) {
+if (isMobile()) {
     config.DYE_RESOLUTION = 512;
-}*/
+}
 if (!ext.supportLinearFiltering) {
     config.DYE_RESOLUTION = 512;
     config.SHADING = false;
@@ -75,7 +75,7 @@ if (!ext.supportLinearFiltering) {
 
 
 function getWebGLContext (canvas) {
-    var params = { alpha: true, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
+    var params = { /*alpha: true,*/ depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
 
     var gl = canvas.getContext('webgl2', params);
     var isWebGL2 = !!gl;
