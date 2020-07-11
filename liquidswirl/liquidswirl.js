@@ -41,6 +41,9 @@ var config = {
         canvas.opacity = 1;
     }, 1000);
 }, 3000);*/
+setTimeout(function(e) {
+    config.SPLATRADIUS = 0.25;
+}, 2000);
 
 function pointerPrototype () {
     this.id = -1;
