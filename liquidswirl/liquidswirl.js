@@ -14,7 +14,7 @@ var config = {
     PRESSURE: 1,//0.8
     PRESSURE_ITERATIONS: 20,//20
     CURL: 30,//30
-    SPLAT_RADIUS: 1,//0.25
+    SPLAT_RADIUS: 0.25,//0.25
     SPLAT_FORCE: 6000,//6000
     SHADING: true,//true
     COLORFUL: true,//true
@@ -41,9 +41,6 @@ var config = {
         canvas.opacity = 1;
     }, 1000);
 }, 3000);*/
-setTimeout(function(e) {
-    config.SPLAT_RADIUS = 0.25;
-}, 2000);
 
 function pointerPrototype () {
     this.id = -1;
