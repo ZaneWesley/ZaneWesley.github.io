@@ -75,7 +75,7 @@ if (!ext.supportLinearFiltering) {
 
 
 function getWebGLContext (canvas) {
-    var params = { /*alpha: true,*/ depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
+    var params = { alpha: true, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
 
     var gl = canvas.getContext('webgl2', params);
     var isWebGL2 = !!gl;
@@ -92,7 +92,7 @@ function getWebGLContext (canvas) {
         supportLinearFiltering = gl.getExtension('OES_texture_half_float_linear');
     }
 
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clearColor(0.0, 0.0, 0.0, 0.0);//gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
     var halfFloatTexType = isWebGL2 ? gl.HALF_FLOAT : halfFloat.HALF_FLOAT_OES;
     var formatRGBA;
