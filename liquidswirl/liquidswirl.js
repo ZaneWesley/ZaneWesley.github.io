@@ -22,14 +22,14 @@ var config = {
     PAUSED: false,//false
     /*BACK_COLOR: { r: 0, g: 0, b: 0 },*/
     BACK_COLOR: { r: 255, g: 255, b: 255 },
-    TRANSPARENT: true,//false
+    TRANSPARENT: false,//false
     BLOOM: false,//true
     BLOOM_ITERATIONS: 8,//8
     BLOOM_RESOLUTION: 256,//256
     BLOOM_INTENSITY: 0.2,//0.8
     BLOOM_THRESHOLD: 0.6,//0.6
     BLOOM_SOFT_KNEE: 0.7,//0.7
-    SUNRAYS: true,//true
+    SUNRAYS: false,//true
     SUNRAYS_RESOLUTION: 196,//196
     SUNRAYS_WEIGHT: 1.0,//1.0
 }
@@ -744,7 +744,7 @@ function render (target) {
     if (!config.TRANSPARENT)
         { drawColor(fbo, normalizeColor(config.BACK_COLOR)); }
     if (target == null && config.TRANSPARENT)
-        { /*drawCheckerboard(fbo);*//*Begin added*/drawColor(fbo, normalizeColor(config.BACK_COLOR));/*End Added*/ }
+        { /**/drawCheckerboard(fbo);/*Begin added*//*drawColor(fbo, normalizeColor(config.BACK_COLOR));/*End Added*/ }
     drawDisplay(fbo, width, height);
 }
 
