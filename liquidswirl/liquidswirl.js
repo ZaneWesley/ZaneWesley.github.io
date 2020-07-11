@@ -42,7 +42,7 @@ var config = {
     }, 1000);
 }, 3000);*/
 setTimeout(function(e) {
-    config.SPLATRADIUS = 0.25;
+    config.SPLAT_RADIUS = 0.25;
 }, 2000);
 
 function pointerPrototype () {
