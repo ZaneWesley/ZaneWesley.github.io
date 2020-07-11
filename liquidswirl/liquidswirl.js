@@ -29,9 +29,9 @@ var config = {
     BLOOM_INTENSITY: 0.2,//0.8
     BLOOM_THRESHOLD: 0.6,//0.6
     BLOOM_SOFT_KNEE: 0.7,//0.7
-    SUNRAYS: false,//true
+    SUNRAYS: true,//true
     SUNRAYS_RESOLUTION: 196,//196
-    SUNRAYS_WEIGHT: 1.0,//1.0
+    SUNRAYS_WEIGHT: 2.0,//1.0
 }
 
 /*setTimeout(function(e) {
