@@ -22,7 +22,7 @@ var config = {
     PAUSED: false,//false
     /*BACK_COLOR: { r: 0, g: 0, b: 0 },*/
     BACK_COLOR: { r: 255, g: 255, b: 255 },
-    TRANSPARENT: false,//false
+    TRANSPARENT: true,//false
     BLOOM: false,//true
     BLOOM_ITERATIONS: 8,//8
     BLOOM_RESOLUTION: 256,//256
@@ -92,7 +92,7 @@ function getWebGLContext (canvas) {
         supportLinearFiltering = gl.getExtension('OES_texture_half_float_linear');
     }
 
-    gl.clearColor(0.0, 0.0, 0.0, 0.0);//gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
     var halfFloatTexType = isWebGL2 ? gl.HALF_FLOAT : halfFloat.HALF_FLOAT_OES;
     var formatRGBA;
@@ -744,7 +744,7 @@ function render (target) {
     if (!config.TRANSPARENT)
         { drawColor(fbo, normalizeColor(config.BACK_COLOR)); }
     if (target == null && config.TRANSPARENT)
-        { drawCheckerboard(fbo); }
+        { /*drawCheckerboard(fbo);*//*Begin added*/drawColor(fbo, normalizeColor(config.BACK_COLOR));/*End Added*/ }
     drawDisplay(fbo, width, height);
 }
 
