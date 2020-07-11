@@ -29,6 +29,7 @@
                 position: fixed;
                 width: 100%;
                 height: 100%;
+                font-family: Calibri, sans-serif;
             }
 
             canvas {
@@ -82,12 +83,14 @@
             <!--<button onclick="multipleSplats(parseInt(Math.random() * 20) + 5);">Mix</button>-->
             <!--<span id="background">Background Color</span>-->
             <span id="mode" onclick="toggleMode()">Dark Mode</span>
+            <span id="pause" onclick="toggleSwirl()">Pause Swirling</span>
             <span id="reset" onclick="window.location.reload()">Reset</span>
         </div>
 
         <script src="liquidswirl.js"></script>
         <script>
             var mode = "default";
+            var swirl = "on";
             function toggleMode() {
                 if(mode === "default") {
                     modeDark();
@@ -99,6 +102,17 @@
                     document.getElementById('mode').innerText="Dark Mode";
                 }
             }
+            function toggleSwirl() {
+                if(swirl === "on") {
+                    pauseSwirl();
+                    swirl = "off";
+                    document.getElementById('pause').innerText="Start Swirling";
+                } else {
+                    unpauseSwirl();
+                    swirl = "on";
+                    document.getElementById('pause').innerText="Pause Swirling";
+                }
+            }
             function modeDark() {
                 config.BACK_COLOR.r=0;
                 config.BACK_COLOR.g=0;
@@ -108,6 +122,12 @@
                 config.BACK_COLOR.r=255;
                 config.BACK_COLOR.g=255;
                 config.BACK_COLOR.b=255;
+            }
+            function pauseSwirl() {
+                config.PAUSED = true;
+            }
+            function unpauseSwirl() {
+                config.PAUSED = false;
             }
         </script>
     </body>
