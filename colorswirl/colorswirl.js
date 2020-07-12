@@ -178,7 +178,7 @@ function captureScreenshot () {
 
     var captureCanvas = textureToCanvas(texture, target.width, target.height);
     var datauri = captureCanvas.toDataURL();
-    downloadURI('fluid.png', datauri);
+    downloadURI('swirl.png', datauri);
     URL.revokeObjectURL(datauri);
 }
 
