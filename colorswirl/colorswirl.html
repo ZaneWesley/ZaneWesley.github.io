@@ -40,6 +40,7 @@
             }
 
             .appear {
+                display: block;
                 animation: appear 0.35s ease-out;
             }
 
@@ -112,9 +113,10 @@
             }
             #swingySign {
                 position:absolute;
-                top:33;
+                top:0px;
                 left:calc(50% + 160px);
                 z-index:1000;
+                display: none;
             }
             @media (max-width: 775px) {
                 #swingySign {
@@ -136,15 +138,15 @@
             <!--<button onclick="multipleSplats(parseInt(Math.random() * 20) + 5);">Mix</button>-->
             <!--<span id="background">Background Color</span>-->
             <span id="mode" onclick="toggleMode()">Dark Mode</span>
-            <span id="reset" onclick="window.location.reload()">Reset</span>
+            <span id="reset" onclick="reset()">Reset</span>
             <span id="more" onclick="openMenu()">More</span>
         </div>
 
         <div id="more-menu" class="more-menu">
             <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
-            <a href="javascript:void(0)" id="pause" onclick="toggleSwirl()">Pause Swirling</a>
-            <a href="javascript:void(0)" id="addcolor" onclick="addColor()">Add Color</a>
-            <a href="javascript:void(0)" id="screenshot" onclick="captureScreenshot()">Screenshot Swirl</a>
+            <a href="javascript:void(0)" id="pause" onclick="closeMenu(); toggleSwirl()">Pause Swirling</a>
+            <a href="javascript:void(0)" id="addcolor" onclick="closeMenu(); addColor()">Add Color</a>
+            <a href="javascript:void(0)" id="screenshot" onclick="closeMenu(); captureScreenshot()">Screenshot Swirl</a>
         </div>
 
 
@@ -154,10 +156,6 @@
             var preferences = {};
             var mode = "default";
             var swirl = "on";
-            if(preferencesData) {
-                preferences = JSON.parse(preferencesData);
-                setPreferences();
-            }
 
             function setPreferences() {
                 if(preferences.mode == "default") {
@@ -171,13 +169,36 @@
                     pauseSwirl();
                 }
                 if(preferences.visit === true) {
-                    document.getElementById("swingySign").style.display="none";
+                    //
+                }
+                var query = window.location.search;
+                var urlParams = new URLSearchParams(query);
+                if(urlParams.has('reset')) {
+                    if(urlParams.get('reset') !== "false" && urlParams.get('reset') !== null && urlParams.get('reset') !== "") {
+                        document.querySelector('#swingySign').classList.remove('appear');
+                        document.querySelector('#swingySign').style.display='none';
+                    }
+                } else {
+                    document.querySelector('#swingySign').style.display='block';
                 }
             }
+            window.addEventListener('load', function() {
+                if(preferencesData) {
+                    preferences = JSON.parse(preferencesData);
+                    setPreferences();
+                }
+            });
             function savePreferences() {
                 preferences.mode = mode;
                 preferences.swirl = swirl;
                 localStorage.setItem('swirl-data', JSON.stringify(preferences));
+            }
+            function reset() {
+                if(window.location.hostname) {
+                    window.location = 'colorswirl?reset=true';
+                } else {
+                    window.location = 'colorswirl.html?reset=true';
+                }
             }
             function toggleMode() {
                 if(mode === "default") {
