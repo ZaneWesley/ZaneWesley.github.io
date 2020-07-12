@@ -155,32 +155,49 @@
             var mode = "default";
             var swirl = "on";
             if(preferencesData) {
-                toteManager = JSON.parse(toteData);
+                preferences = JSON.parse(preferencesData);
                 setPreferences();
-            } else {
-                //
+            }
+
+            function setPreferences() {
+                if(preferences.mode == "default") {
+                    modeDefault();
+                } else {
+                    modeDark();
+                }
+                if(preferences.swirl === "on") {
+                    unpauseSwirl();
+                } else {
+                    pauseSwirl();
+                }
+                if(preferences.visit === true) {
+                    document.getElementById("swingySign").style.display="none";
+                }
+            }
+            function savePreferences() {
+                preferences.mode = mode;
+                preferences.swirl = swirl;
+                localStorage.setItem('swirl-data', JSON.stringify(preferences));
             }
             function toggleMode() {
                 if(mode === "default") {
                     modeDark();
                     mode = "dark";
-                    document.getElementById('mode').innerText="Light Mode";
                 } else {
                     modeDefault();
                     mode = "default";
-                    document.getElementById('mode').innerText="Dark Mode";
                 }
+                savePreferences();
             }
             function toggleSwirl() {
                 if(swirl === "on") {
                     pauseSwirl();
                     swirl = "off";
-                    document.getElementById('pause').innerText="Start Swirling";
                 } else {
                     unpauseSwirl();
                     swirl = "on";
-                    document.getElementById('pause').innerText="Pause Swirling";
                 }
+                savePreferences();
             }
             function addColor() {
                 multipleSplats(parseInt(Math.random() * 20) + 5);
@@ -189,17 +206,21 @@
                 config.BACK_COLOR.r=0;
                 config.BACK_COLOR.g=0;
                 config.BACK_COLOR.b=0;
+                document.getElementById('mode').innerText="Light Mode";
             }
             function modeDefault() {
                 config.BACK_COLOR.r=255;
                 config.BACK_COLOR.g=255;
                 config.BACK_COLOR.b=255;
+                document.getElementById('mode').innerText="Dark Mode";
             }
             function pauseSwirl() {
                 config.PAUSED = true;
+                document.getElementById('pause').innerText="Start Swirling";
             }
             function unpauseSwirl() {
                 config.PAUSED = false;
+                document.getElementById('pause').innerText="Pause Swirling";
             }
             function openMenu() {
                 if(!isMobile()) {
