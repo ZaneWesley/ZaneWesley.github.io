@@ -68,6 +68,42 @@
                 background-color: #ddd;
                 color: black;
             }
+
+            #more-menu, .more-menu {
+              height: 0%;
+              width: 100%;
+              position: fixed;
+              z-index: 1;
+              bottom: 0;
+              left: 0;
+              background-color: #111;
+              overflow-x: hidden;
+              transition: 0.5s;
+            }
+            .more-menu-open {
+                padding-top: 60px;
+            }
+
+            .more-menu a {
+              padding: 8px 8px 8px 32px;
+              text-decoration: none;
+              font-size: 25px;
+              color: #818181;
+              display: block;
+              transition: 0.3s;
+            }
+
+            .more-menu a:hover {
+              color: #f1f1f1;
+            }
+
+            .more-menu .closebtn {
+              position: absolute;
+              top: 0;
+              right: 25px;
+              font-size: 36px;
+              margin-left: 50px;
+            }
         </style>
         <script>
             window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -83,9 +119,15 @@
             <!--<button onclick="multipleSplats(parseInt(Math.random() * 20) + 5);">Mix</button>-->
             <!--<span id="background">Background Color</span>-->
             <span id="mode" onclick="toggleMode()">Dark Mode</span>
-            <span id="pause" onclick="toggleSwirl()">Pause Swirling</span>
-            <span id="addcolor" onclick="addColor()">Add Color</span>
             <span id="reset" onclick="window.location.reload()">Reset</span>
+            <span id="more" onclick="openMenu()">More</span>
+        </div>
+
+        <div id="more-menu" class="more-menu">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+            <a href="javascript:void(0)" id="pause" onclick="toggleSwirl()">Pause Swirling</a>
+            <a href="javascript:void(0)" id="addcolor" onclick="addColor()">Add Color</a>
+            <a href="javascript:void(0)" id="screenshot" onclick="captureScreenshot()">Screenshot Swirl</a>
         </div>
 
         <script src="colorswirl.js"></script>
@@ -132,6 +174,19 @@
             }
             function unpauseSwirl() {
                 config.PAUSED = false;
+            }
+            function openMenu() {
+                if(!isMobile()) {
+                    document.getElementById("more-menu").style.height = "50%";
+                } else {
+                    document.getElementById("more-menu").style.height = "50%";
+                }
+                document.getElementById("more-menu").classList.add('more-menu-open');
+            }
+
+            function closeMenu() {
+                document.getElementById("more-menu").style.height = "0";
+                document.getElementById("more-menu").classList.remove('more-menu-open');
             }
         </script>
     </body>
