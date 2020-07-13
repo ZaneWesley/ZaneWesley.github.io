@@ -118,9 +118,28 @@
                 z-index:1000;
                 display: none;
             }
+            #colorpicker {
+                display: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                width: 75%;
+                height: 75%;
+                background-color: #fff;
+                transition: all 1s;
+            }
             @media (max-width: 775px) {
                 #swingySign {
                     left: 25%;
+                }
+                #colorpicker {
+                    top: 0;
+                    left: 0;
+                    transform: none;
+                    width: 100%;
+                    height: 100%;
+                    background-color: #fff;
                 }
             }
         </style>
@@ -147,16 +166,46 @@
         <div class="settings-panel">
             <!--<button onclick="multipleSplats(parseInt(Math.random() * 20) + 5);">Mix</button>-->
             <!--<span id="background">Background Color</span>-->
-            <span id="mode" onclick="toggleMode()">Dark Mode</span>
+            <span id="pause" onclick="toggleSwirl()">Pause Swirling</span>
             <span id="reset" onclick="reset()">Reset</span>
             <span id="more" onclick="openMenu()">More</span>
         </div>
 
         <div id="more-menu" class="more-menu">
             <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
-            <a href="javascript:void(0)" id="pause" onclick="closeMenu(); toggleSwirl()">Pause Swirling</a>
+            <a  href="javascript:void(0)" id="mode" onclick="closeMenu(); changeMode()">Change Mode</span>
             <a href="javascript:void(0)" id="addcolor" onclick="closeMenu(); addColor()">Add Color</a>
             <a href="javascript:void(0)" id="screenshot" onclick="closeMenu(); captureScreenshot()">Screenshot Swirl</a>
+        </div>
+
+        <div id="colorpicker">
+            <h2>Change Background Color</h2>
+            <table style="width:100%">
+                <tr>
+                    <th>Red</th>
+                    <th>Green</th>
+                    <th>Blue</th>
+                </tr>
+                <tr>
+                    <td id="red" style="height:50px;background-color:red"></td>
+                    <td id="green" style="background-color:green"></td>
+                    <td id="blue" style="background-color:blue"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideRed" name="slideRed" min="0" max="255">
+                    </td>
+                    <td>
+                        <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideGreen" name="slideGreen" min="0" max="255">
+                    </td>
+                    <td>
+                        <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideBlue" name="slideBlue" min="0" max="255">
+                    </td>
+                </tr>
+            </table>
+            <div id="change" style="height:50px"></div>
+            <div style="padding-bottom: 20px"></div>
+            <button id="saveColor" onclick="saveColor()">Change</button>
         </div>
 
 
@@ -164,15 +213,11 @@
         <script>
             var preferencesData = localStorage.getItem('swirl-data');
             var preferences = {};
-            var mode = "default";
+            var mode = "rgb(225,225,225)";
             var swirl = "on";
 
             function setPreferences() {
-                if(preferences.mode == "default") {
-                    modeDefault();
-                } else {
-                    modeDark();
-                }
+                setMode(preferences.mode);
                 if(preferences.swirl === "on") {
                     unpauseSwirl();
                 } else {
@@ -183,14 +228,14 @@
                 }
                 var query = window.location.search;
                 var urlParams = new URLSearchParams(query);
-                if(urlParams.has('reset')) {
+                /*if(urlParams.has('reset')) {
                     if(urlParams.get('reset') !== "false" && urlParams.get('reset') !== null && urlParams.get('reset') !== "") {
                         document.querySelector('#swingySign').classList.remove('appear');
                         document.querySelector('#swingySign').style.display='none';
                     }
                 } else {
                     document.querySelector('#swingySign').style.display='block';
-                }
+                }*/
             }
             window.addEventListener('load', function() {
                 if(preferencesData) {
@@ -210,14 +255,41 @@
                     window.location = 'colorswirl.html?reset=true';
                 }
             }
-            function toggleMode() {
-                if(mode === "default") {
-                    modeDark();
-                    mode = "dark";
-                } else {
-                    modeDefault();
-                    mode = "default";
-                }
+            function changeMode() {
+                document.querySelector('#colorpicker').style.display="block";
+                savePreferences();
+            }
+            function changeAll() {
+                var r = document.getElementById('slideRed').value;
+                var g = document.getElementById('slideGreen').value;
+                var b = document.getElementById('slideBlue').value;
+                document.getElementById('change').style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+            }
+            function setColorpickerVal(modeColor) {
+                var modeColorFil = modeColor.replace("rgb(", "").replace(")", "");
+                modeColorFil = modeColorFil.split(',');
+                document.getElementById('slideRed').value = modeColorFil[0];
+                document.getElementById('slideGreen').value = modeColorFil[1];
+                document.getElementById('slideBlue').value = modeColorFil[2];
+                document.getElementById('change').style.backgroundColor = modeColor;
+            }
+            function setMode(modeColor) {
+                var modeColorFil = modeColor.replace("rgb(", "").replace(")", "");
+                modeColorFil = modeColorFil.split(',');
+                config.BACK_COLOR.r=modeColorFil[0];
+                config.BACK_COLOR.g=modeColorFil[1];
+                config.BACK_COLOR.b=modeColorFil[2];
+                setColorpickerVal(modeColor);
+            }
+            function saveColor() {
+                var modeColor = document.querySelector("#change").style.backgroundColor;
+                var modeColorFil = modeColor.replace("rgb(", "").replace(")", "");
+                modeColorFil = modeColorFil.split(',');
+                config.BACK_COLOR.r=modeColorFil[0];
+                config.BACK_COLOR.g=modeColorFil[1];
+                config.BACK_COLOR.b=modeColorFil[2];
+                mode = modeColor;
+                document.querySelector('#colorpicker').style.display="none";
                 savePreferences();
             }
             function toggleSwirl() {
@@ -232,18 +304,6 @@
             }
             function addColor() {
                 multipleSplats(parseInt(Math.random() * 20) + 5);
-            }
-            function modeDark() {
-                config.BACK_COLOR.r=0;
-                config.BACK_COLOR.g=0;
-                config.BACK_COLOR.b=0;
-                document.getElementById('mode').innerText="Light Mode";
-            }
-            function modeDefault() {
-                config.BACK_COLOR.r=255;
-                config.BACK_COLOR.g=255;
-                config.BACK_COLOR.b=255;
-                document.getElementById('mode').innerText="Dark Mode";
             }
             function pauseSwirl() {
                 config.PAUSED = true;
@@ -267,7 +327,7 @@
                 document.getElementById("more-menu").classList.remove('more-menu-open');
             }
         </script>
-
+<!--
         <svg id="swingySign" class="appear" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
     x="0px" y="0px" width="240px" height="240px" viewBox="-120 0 240 240">
             <defs>
@@ -455,6 +515,6 @@
                         c0,0.2-0.2,0.7-0.6,1.4c-0.5,0.9-0.7,1.4-0.8,1.5L78,192.7z" />
                 </g>
             </g>
-        </svg>
+        </svg>-->
     </body>
 </html>
