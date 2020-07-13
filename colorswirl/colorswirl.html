@@ -225,8 +225,10 @@
                 setMode(preferences.mode);
                 if(preferences.swirl === "on") {
                     unpauseSwirl();
+                    swirl = "on";
                 } else {
                     pauseSwirl();
+                    swirl = "off";
                 }
                 if(preferences.visit === true) {
                     //
@@ -323,6 +325,13 @@
             function resetApp() {
                 if(confirm("Are you sure you want to reset this app? This can\'t be undone!")) {
                     localStorage.clear();
+                    document.body.style.cursor = "wait";
+                    config.PAUSED = true;
+                    setTimeout(function() {
+                        alert("App reset. The app will now refresh.");
+                        window.location.reload();
+                    }, 2000);
+                    
                 }
             }
             function openMenu() {
