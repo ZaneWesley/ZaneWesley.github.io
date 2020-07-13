@@ -127,7 +127,22 @@
                 width: 75%;
                 height: 75%;
                 background-color: #fff;
-                transition: all 1s;
+                transition: display 1s;
+                padding: 2em;
+            }
+            .colorpicker-container {
+                display: block;
+                float: none;
+                clear: both;
+                width: 100%;
+                max-width: 100%;
+                min-width: 100%;
+            }
+            .colorpicker-container-item {
+                float: left;
+                width: 25%;
+                height: 50px;
+                display: inline-block;
             }
             @media (max-width: 775px) {
                 #swingySign {
@@ -173,39 +188,29 @@
 
         <div id="more-menu" class="more-menu">
             <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
-            <a  href="javascript:void(0)" id="mode" onclick="closeMenu(); changeMode()">Change Mode</span>
+            <a  href="javascript:void(0)" id="mode" onclick="closeMenu(); changeMode()">Change Background Color</span>
             <a href="javascript:void(0)" id="addcolor" onclick="closeMenu(); addColor()">Add Color</a>
             <a href="javascript:void(0)" id="screenshot" onclick="closeMenu(); captureScreenshot()">Screenshot Swirl</a>
+            <a href="javascript:void(0)" id="resetApp" onclick="closeMenu(); resetApp()">Reset App</a>
         </div>
 
         <div id="colorpicker">
             <h2>Change Background Color</h2>
-            <table style="width:100%">
-                <tr>
-                    <th>Red</th>
-                    <th>Green</th>
-                    <th>Blue</th>
-                </tr>
-                <tr>
-                    <td id="red" style="height:50px;background-color:red"></td>
-                    <td id="green" style="background-color:green"></td>
-                    <td id="blue" style="background-color:blue"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideRed" name="slideRed" min="0" max="255">
-                    </td>
-                    <td>
-                        <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideGreen" name="slideGreen" min="0" max="255">
-                    </td>
-                    <td>
-                        <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideBlue" name="slideBlue" min="0" max="255">
-                    </td>
-                </tr>
-            </table>
-            <div id="change" style="height:50px"></div>
-            <div style="padding-bottom: 20px"></div>
-            <button id="saveColor" onclick="saveColor()">Change</button>
+            <div class="colorpicker-container">
+                <div id="red" class="colorpicker-container-item" style="background-color:red"></div>
+                <div id="green" class="colorpicker-container-item" style="background-color:green"></div>
+                <div id="blue" class="colorpicker-container-item" style="background-color:blue"></div>
+            </div>
+            <div class="colorpicker-container">
+                <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideRed" class="colorpicker-container-item" name="slideRed" min="0" max="255">
+                <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideGreen" class="colorpicker-container-item" name="slideGreen" min="0" max="255">
+                <input oninput="changeAll()" onchange="changeAll()" type="range" id="slideBlue" class="colorpicker-container-item" name="slideBlue" min="0" max="255">
+            </div>
+            <div class="colorpicker-container">
+                <div id="change" style="height:50px; width: 75%"></div>
+                <div style="padding-bottom: 20px"></div>
+                <button id="saveColor" onclick="saveColor()">Change</button>
+            </div>
         </div>
 
 
@@ -241,6 +246,8 @@
                 if(preferencesData) {
                     preferences = JSON.parse(preferencesData);
                     setPreferences();
+                } else {
+                    mode = "rgb(225,225,225)";
                 }
             });
             function savePreferences() {
@@ -265,13 +272,13 @@
                 var b = document.getElementById('slideBlue').value;
                 document.getElementById('change').style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
             }
-            function setColorpickerVal(modeColor) {
-                var modeColorFil = modeColor.replace("rgb(", "").replace(")", "");
-                modeColorFil = modeColorFil.split(',');
+            function setColorpickerVal(modeColorFil) {
+                /*var modeColorFil = modeColor.replace("rgb(", "").replace(")", "");
+                modeColorFil = modeColorFil.split(',');*/
                 document.getElementById('slideRed').value = modeColorFil[0];
                 document.getElementById('slideGreen').value = modeColorFil[1];
                 document.getElementById('slideBlue').value = modeColorFil[2];
-                document.getElementById('change').style.backgroundColor = modeColor;
+                document.getElementById('change').style.backgroundColor = "rgb("+modeColorFil[0]+","+modeColorFil[1]+","+modeColorFil[2]+")";
             }
             function setMode(modeColor) {
                 var modeColorFil = modeColor.replace("rgb(", "").replace(")", "");
@@ -279,7 +286,7 @@
                 config.BACK_COLOR.r=modeColorFil[0];
                 config.BACK_COLOR.g=modeColorFil[1];
                 config.BACK_COLOR.b=modeColorFil[2];
-                setColorpickerVal(modeColor);
+                setColorpickerVal(modeColorFil);
             }
             function saveColor() {
                 var modeColor = document.querySelector("#change").style.backgroundColor;
@@ -312,6 +319,11 @@
             function unpauseSwirl() {
                 config.PAUSED = false;
                 document.getElementById('pause').innerText="Pause Swirling";
+            }
+            function resetApp() {
+                if(confirm("Are you sure you want to reset this app? This can\'t be undone!")) {
+                    localStorage.clear();
+                }
             }
             function openMenu() {
                 if(!isMobile()) {
