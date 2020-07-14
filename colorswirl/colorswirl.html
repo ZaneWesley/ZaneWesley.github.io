@@ -307,7 +307,8 @@
                 savePreferences();
             }
             function swirlColors() {
-                multipleSplats(parseInt(Math.random() * 20) + 100);
+                gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                multipleSplats(parseInt(Math.random() * 20) + 50);
             }
             function toggleSwirl() {
                 if(swirl === "on") {
