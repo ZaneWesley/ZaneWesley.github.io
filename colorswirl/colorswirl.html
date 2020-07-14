@@ -1,4 +1,8 @@
-
+<!--
+    Code copyright 2020 Zane Harrison.
+    This code may not be copied, modified, or republished in any manner.
+    View the lisense at https://zanewesley.github.io/license.txt
+-->
 <!DOCTYPE html>
 <html>
     <head>
@@ -190,6 +194,7 @@
             <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
             <a  href="javascript:void(0)" id="mode" onclick="closeMenu(); changeMode()">Change Background Color</span>
             <a href="javascript:void(0)" id="addcolor" onclick="closeMenu(); addColor()">Add Color</a>
+            <a href="javascript:void(0)" id="swirlcolors" onclick="closeMenu(); swirlColors()">Swirl Colors</a>
             <a href="javascript:void(0)" id="screenshot" onclick="closeMenu(); captureScreenshot()">Screenshot Swirl</a>
             <a href="javascript:void(0)" id="resetApp" onclick="closeMenu(); resetApp()">Reset App</a>
         </div>
@@ -300,6 +305,9 @@
                 mode = modeColor;
                 document.querySelector('#colorpicker').style.display="none";
                 savePreferences();
+            }
+            function swirlColors() {
+                multipleSplats(parseInt(Math.random() * 20) + 100);
             }
             function toggleSwirl() {
                 if(swirl === "on") {
