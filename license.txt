@@ -1,3 +1,5 @@
+  View the official lisense page at https://github.com/ZaneWesley/ZaneWesley.github.io/blob/master/LICENSE for all permissions and conditions.
+  
   GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
