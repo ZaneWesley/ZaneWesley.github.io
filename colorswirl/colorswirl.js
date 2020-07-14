@@ -1,6 +1,9 @@
+/*
+    Code copyright 2020 Zane Harrison.
+    This code may not be copied, modified, or republished in any manner.
+    View the lisense at https://zanewesley.github.io/license.txt
+*/
 'use strict';
-
-// Simulation code
 
 var canvas = document.getElementsByTagName('canvas')[0];
 resizeCanvas();
@@ -33,14 +36,6 @@ var config = {
     SUNRAYS_RESOLUTION: 196,//196
     SUNRAYS_WEIGHT: 1.0,//1.0
 }
-
-/*setTimeout(function(e) {
-    canvas.opacity = 0;
-    setTimeout(function(e) {
-        config.BLOOM = false;
-        canvas.opacity = 1;
-    }, 1000);
-}, 3000);*/
 
 function pointerPrototype () {
     this.id = -1;
