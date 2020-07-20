@@ -303,13 +303,13 @@
             var swirl = "on";
 
             function setPreferences() {
-                var user = firebase.auth().currentUser;
+                /*var user = firebase.auth().currentUser;
                 if (user != null) {
                   user.providerData.forEach(function (profile) {
                     preferences.mode = profile.mode;
                     preferences.swirl = profile.swirl;
                   });
-                }
+                }*/
                 setMode(preferences.mode);
                 if(preferences.swirl === "on") {
                     unpauseSwirl();
@@ -338,6 +338,7 @@
                     setPreferences();
                 } else {
                     mode = "rgb(225,225,225)";
+                    document.querySelector('.box').style.display='block';
                 }
             });
             function reset() {
@@ -612,19 +613,19 @@
                 </g>
             </g>
         </svg>-->
-        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first 
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
 
-        <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+        <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics 
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
 
-        <!-- Add Firebase products that you want to use -->
+        <!-- Add Firebase products that you want to use 
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
 
         <script>
         // Your web app's Firebase configuration
-        /*var firebaseConfig = {
+        var firebaseConfig = {
             apiKey: "AIzaSyAXi9hMT5rmeD6B2O5J9U6YE9TWj67zZb4",
             authDomain: "color-swirl-8740e.firebaseapp.com",
             databaseURL: "https://color-swirl-8740e.firebaseio.com",
@@ -636,11 +637,11 @@
           };
           // Initialize Firebase
           firebase.initializeApp(firebaseConfig);
-          firebase.analytics();*/
-        </script>
+          firebase.analytics();
+        </script> -->
 
-        <script>/*
-            firebase.auth().onAuthStateChanged(function(user) {
+        <script>
+            /*firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                 // User is signed in.
               } else {
@@ -670,14 +671,16 @@
             }*/
             function resetApp() {
                 if(confirm("Are you sure you want to reset this app? This will permanently delete your account. It can\'t be undone!")) {
-                    var user = firebase.auth().currentUser;
+                    localStorage.clear();
+                    window.location.reload();
+                    /*var user = firebase.auth().currentUser;
                     user.delete().then(function() {
                       // User deleted.
                       window.location.href="deleted";
                     }).catch(function(error) {
                       // An error happened.
                       alert(error);
-                    });
+                    });*/
                     
                 }
             }
@@ -685,7 +688,7 @@
                 preferences.mode = mode;
                 preferences.swirl = swirl;
                 localStorage.setItem('swirl-data', JSON.stringify(preferences));
-                var user = firebase.auth().currentUser;
+                /*var user = firebase.auth().currentUser;
                 user.updateProfile({
                   mode: preferences.mode,
                   swirl: preferences.swirl
@@ -694,7 +697,7 @@
                 }).catch(function(error) {
                   // An error happened.
                   alert(error);
-                });
+                });*/
             }
         </script>
     </body>
