@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Color Swirl Privacy</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172524633-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-172524633-1');
+          gtag('set', {'user_id': 'USER_ID'}); // Set the user ID using signed-in user_id.
+        </script>
+
+    <style>
+      body {
+        font-family: Roboto, sans-serif;
+        text-align: left;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        background-image: url('paint-drops.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      h1 {
+        text-align: center;
+      }
+      .intro {
+        font-size: 16px;
+        text-align: center;
+        padding-bottom: 2rem;
+      }
+      .content {
+        top: -20px;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      .container {
+        width: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+      }
+      
+      @media (max-width: 775px) {
+        .container {
+          width: 100%;
+        }
+      }
+    </style>
+</head>
+<body>
+  <div class="content">
+    <div class="container">
+      <h1>Color Swirl Privacy</h1>
+      <p class="intro">Color Swirl tracks user's activity on the app to improve the user's experience and enhance its functionality. While some have little or no concern, others have concerns that need to be addressed.</p>
+
+      <h2>Who has Access to Your Information?</h2>
+      <p>As a part of my goal to keep everything secure, I have no access to your personal data. All of your account info is hashed and sent to a private database. You information is private and secure.</p>
+
+      <h2>How is Your Information Used?</h2>
+      <p>Your information is not visible to anyone. However, you app activity is shared anomously to reprt crashes, bugs, and suspicious activity.</p>
+
+      <h2>Your Privacy is Personal</h2>
+      <p>Not everyone has the same needs for their privacy. That's why on <a href="account">your account page</a> you can manage what information is shared with the app.</p>
+    </div>
+  </div>
+</body>
+</html>
