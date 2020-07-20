@@ -149,6 +149,70 @@
                 height: 50px;
                 display: inline-block;
             }
+            .box {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 25rem;
+                padding: 2.5rem;
+                box-sizing: border-box;
+                border: 1px solid #dadce0;
+                -webkit-border-radius: 8px;
+                border-radius: 8px;
+                display:none;
+                background-color: #fff;
+                transition: 2s;
+            }
+            .box h2 {
+                margin: 0px 0 -0.125rem;
+                padding: 0;
+                color: #fff;
+                text-align: center;
+                color: #202124;
+                font-family: 'Google Sans','Noto Sans Myanmar UI',arial,sans-serif;
+                font-size: 24px;
+                font-weight: 400;
+            }
+
+            .box p {
+                font-size: 16px;
+                font-weight: 400;
+                letter-spacing: .1px;
+                line-height: 1.5;
+                margin-bottom: 25px;
+                text-align: center;
+            }
+            .box button {
+                border: none;
+                outline: none;
+                color: #fff;
+                background-color: #1a73e8;
+                padding: 0.625rem 1.25rem;
+                cursor: pointer;
+                border-radius: 0.312rem;
+                font-size: 1rem;
+                float: right;
+            }
+              
+            .box button:hover {
+                background-color: #287ae6;
+                box-shadow: 0 1px 1px 0 rgba(66,133,244,0.45), 0 1px 3px 1px rgba(66,133,244,0.3);
+            }
+            .animate {
+                -webkit-animation: animatezoom 0.6s;
+                animation: animatezoom 0.6s
+            }
+
+            @-webkit-keyframes animatezoom {
+                from {-webkit-width: 0;-webkit-height: 0} 
+                to {-webkit-width: 25rem;-webkit-height: auto}
+            }
+              
+            @keyframes animatezoom {
+                from {width: 0;height: 0} 
+                to {width: 25rem;height: auto}
+            }
             @media (max-width: 775px) {
                 #swingySign {
                     left: 25%;
@@ -160,6 +224,9 @@
                     width: 100%;
                     height: 100%;
                     background-color: #fff;
+                }
+                .box {
+                    width: 99%;
                 }
             }
         </style>
@@ -218,6 +285,12 @@
                 <button id="saveColor" onclick="saveColor()">Change</button>
             </div>
         </div>
+        
+        <div class="box animate">
+            <h2>Notice:</h2>
+            <p>On Thursday July 23, 2020 there will be a major update that requires an app reset. This will erase all user preferences and data, but will greatly improve the user experience. With the update, there will be an option to create an account that wlil sync your preferences to all of your signed-in devices. Have some concerns? View the <a href="privacy">Privacy Policy</a>.</p>
+            <button type="button" onclick="this.parentNode.style.display='none'">Got It</button>
+        </div>
 
 
         <script src="colorswirl.js"></script>
@@ -241,14 +314,14 @@
                 }
                 var query = window.location.search;
                 var urlParams = new URLSearchParams(query);
-                /*if(urlParams.has('reset')) {
+                if(urlParams.has('reset')) {
                     if(urlParams.get('reset') !== "false" && urlParams.get('reset') !== null && urlParams.get('reset') !== "") {
-                        document.querySelector('#swingySign').classList.remove('appear');
-                        document.querySelector('#swingySign').style.display='none';
+                        document.querySelector('.box').classList.remove('appear');
+                        document.querySelector('.box').style.display='none';
                     }
                 } else {
-                    document.querySelector('#swingySign').style.display='block';
-                }*/
+                    document.querySelector('.box').style.display='block';
+                }
             }
             window.addEventListener('load', function() {
                 if(preferencesData) {
