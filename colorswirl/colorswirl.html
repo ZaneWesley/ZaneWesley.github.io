@@ -1,5 +1,5 @@
 <!--
-    Code copyright 2020 Zane Harrison.
+    Code copyright 2020 Zane Wesley.
     This code may not be copied, modified, or republished in any manner.
     View the lisense at https://zanewesley.github.io/license.txt
 -->
@@ -59,6 +59,22 @@
                 }
             }
 
+            .animate {
+                -webkit-animation: animatezoom 0.6s;
+                animation: animatezoom 0.6s
+            }
+
+            @-webkit-keyframes animatezoom {
+                from {-webkit-width: 0;-webkit-height: 0} 
+                to {-webkit-width: 25rem;-webkit-height: auto}
+            }
+              
+            @keyframes animatezoom {
+                from {width: 0;height: 0} 
+                to {width: 25rem;height: auto}
+            }
+
+
             .settings-panel {
                 bottom :0;
                 background-color: #333;
@@ -66,7 +82,6 @@
                 height: 50px;
                 position: absolute;
                 color: #fff;
-                z-index: 3;
             }
             .settings-panel span {
                 float: left;
@@ -199,20 +214,6 @@
                 background-color: #287ae6;
                 box-shadow: 0 1px 1px 0 rgba(66,133,244,0.45), 0 1px 3px 1px rgba(66,133,244,0.3);
             }
-            .animate {
-                -webkit-animation: animatezoom 0.6s;
-                animation: animatezoom 0.6s
-            }
-
-            @-webkit-keyframes animatezoom {
-                from {-webkit-width: 0;-webkit-height: 0} 
-                to {-webkit-width: 25rem;-webkit-height: auto}
-            }
-              
-            @keyframes animatezoom {
-                from {width: 0;height: 0} 
-                to {width: 25rem;height: auto}
-            }
             @media (max-width: 775px) {
                 #swingySign {
                     left: 25%;
@@ -248,7 +249,7 @@
 
     </head>
     <body>
-        <canvas></canvas>
+        <canvas id="swirlboard"></canvas>
 
         <div class="settings-panel">
             <!--<button onclick="multipleSplats(parseInt(Math.random() * 20) + 5);">Mix</button>-->
@@ -264,6 +265,7 @@
             <a href="javascript:void(0)" id="addcolor" onclick="closeMenu(); addColor()">Add Color</a>
             <a href="javascript:void(0)" id="swirlcolors" onclick="closeMenu(); swirlColors()">Swirl Colors</a>
             <a href="javascript:void(0)" id="screenshot" onclick="closeMenu(); captureScreenshot()">Screenshot Swirl</a>
+            <!--<a href="javascript:void(0)" id="logout" onclick="closeMenu(); logout()">Sign Out</a>-->
             <a href="javascript:void(0)" id="resetApp" onclick="closeMenu(); resetApp()">Reset App</a>
         </div>
 
@@ -285,7 +287,7 @@
                 <button id="saveColor" onclick="saveColor()">Change</button>
             </div>
         </div>
-        
+
         <div class="box animate">
             <h2>Notice:</h2>
             <p>On Thursday July 23, 2020 there will be a major update that requires an app reset. This will erase all user preferences and data, but will greatly improve the user experience. With the update, there will be an option to create an account that wlil sync your preferences to all of your signed-in devices. Have some concerns? View the <a href="privacy">Privacy Policy</a>.</p>
@@ -301,6 +303,13 @@
             var swirl = "on";
 
             function setPreferences() {
+                var user = firebase.auth().currentUser;
+                if (user != null) {
+                  user.providerData.forEach(function (profile) {
+                    preferences.mode = profile.mode;
+                    preferences.swirl = profile.swirl;
+                  });
+                }
                 setMode(preferences.mode);
                 if(preferences.swirl === "on") {
                     unpauseSwirl();
@@ -331,11 +340,6 @@
                     mode = "rgb(225,225,225)";
                 }
             });
-            function savePreferences() {
-                preferences.mode = mode;
-                preferences.swirl = swirl;
-                localStorage.setItem('swirl-data', JSON.stringify(preferences));
-            }
             function reset() {
                 if(window.location.hostname) {
                     window.location = 'colorswirl?reset=true';
@@ -404,18 +408,6 @@
             function unpauseSwirl() {
                 config.PAUSED = false;
                 document.getElementById('pause').innerText="Pause Swirling";
-            }
-            function resetApp() {
-                if(confirm("Are you sure you want to reset this app? This can\'t be undone!")) {
-                    localStorage.clear();
-                    document.body.style.cursor = "wait";
-                    config.PAUSED = true;
-                    setTimeout(function() {
-                        alert("App reset. The app will now refresh.");
-                        window.location.reload();
-                    }, 2000);
-                    
-                }
             }
             function openMenu() {
                 if(!isMobile()) {
@@ -620,5 +612,90 @@
                 </g>
             </g>
         </svg>-->
+        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+
+        <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+        <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+
+        <!--<script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAXi9hMT5rmeD6B2O5J9U6YE9TWj67zZb4",
+            authDomain: "color-swirl-8740e.firebaseapp.com",
+            databaseURL: "https://color-swirl-8740e.firebaseio.com",
+            projectId: "color-swirl-8740e",
+            storageBucket: "color-swirl-8740e.appspot.com",
+            messagingSenderId: "703552741611",
+            appId: "1:703552741611:web:c5ec1abc81b9ef891e5eae",
+            measurementId: "G-LHYQJRHTKB"
+          };
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+          firebase.analytics();
+        </script>
+
+        <script>
+            firebase.auth().onAuthStateChanged(function(user) {
+              if (user) {
+                // User is signed in.
+              } else {
+                // No user is signed in.
+                //document.getElementById('swirlboard').style.display="none";
+                //window.location.replace('signup');
+                document.getElementById('logout').innerText="Sign Up";
+                document.getElementById('logout').onclick=closeMenu();
+                document.getElementById('logout').href="signup";
+              }
+            });
+            function login() {
+                firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+                  // Handle Errors here.
+                  var errorCode = error.code;
+                  var errorMessage = error.message;
+                  // ...
+                });
+            }
+            function logout() {
+                firebase.auth().signOut().then(function() {
+                  // Sign-out successful.
+                }).catch(function(error) {
+                  // An error happened.
+                  alert(error);
+                });
+            }
+            function resetApp() {
+                if(confirm("Are you sure you want to reset this app? This will permanently delete your account. It can\'t be undone!")) {
+                    var user = firebase.auth().currentUser;
+                    user.delete().then(function() {
+                      // User deleted.
+                      window.location.href="deleted";
+                    }).catch(function(error) {
+                      // An error happened.
+                      alert(error);
+                    });
+                    
+                }
+            }
+            function savePreferences() {
+                preferences.mode = mode;
+                preferences.swirl = swirl;
+                localStorage.setItem('swirl-data', JSON.stringify(preferences));
+                var user = firebase.auth().currentUser;
+                user.updateProfile({
+                  mode: preferences.mode,
+                  swirl: preferences.swirl
+                }).then(function() {
+                  // Update successful.
+                }).catch(function(error) {
+                  // An error happened.
+                  alert(error);
+                });
+            }
+        </script>-->
     </body>
 </html>
