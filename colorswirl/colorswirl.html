@@ -622,9 +622,9 @@
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
 
-        <!--<script>
+        <script>
         // Your web app's Firebase configuration
-        var firebaseConfig = {
+        /*var firebaseConfig = {
             apiKey: "AIzaSyAXi9hMT5rmeD6B2O5J9U6YE9TWj67zZb4",
             authDomain: "color-swirl-8740e.firebaseapp.com",
             databaseURL: "https://color-swirl-8740e.firebaseio.com",
@@ -639,7 +639,7 @@
           firebase.analytics();
         </script>
 
-        <script>
+        <script>/*
             firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                 // User is signed in.
@@ -667,7 +667,7 @@
                   // An error happened.
                   alert(error);
                 });
-            }
+            }*/
             function resetApp() {
                 if(confirm("Are you sure you want to reset this app? This will permanently delete your account. It can\'t be undone!")) {
                     var user = firebase.auth().currentUser;
@@ -696,6 +696,6 @@
                   alert(error);
                 });
             }
-        </script>-->
+        </script>
     </body>
 </html>
