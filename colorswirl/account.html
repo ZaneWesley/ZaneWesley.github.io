@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Color Swirl Privacy</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172524633-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-172524633-1');
+          gtag('set', {'user_id': 'USER_ID'}); // Set the user ID using signed-in user_id.
+        </script>
+
+    <style>
+      body {
+        font-family: Roboto, sans-serif;
+      }
+      h1 {
+        text-align: center;
+      }
+      input {
+        width: 25%;
+        padding: 0.625rem 10px;
+        font-size: 1rem;
+        letter-spacing: 0.062rem;
+        margin-bottom: 1.875rem;
+        border: 1px solid #ccc;
+        background: transparent;
+        border-radius: 4px;
+        
+      }
+
+      label {
+        padding: 0.625rem 0;
+        font-size: 1rem;
+        pointer-events: none;
+        transition: 0.5s;
+        user-select: none;
+      }
+
+      button {
+        border: none;
+        outline: none;
+        color: #fff;
+        background-color: #1a73e8;
+        padding: 0.625rem 1.25rem;
+        cursor: pointer;
+        border-radius: 0.312rem;
+        font-size: 1rem;
+      }
+      
+      button:hover {
+        background-color: #287ae6;
+        box-shadow: 0 1px 1px 0 rgba(66,133,244,0.45), 0 1px 3px 1px rgba(66,133,244,0.3);
+      }
+
+      button:disabled {
+        opacity: 0.7;
+        cursor: auto;
+      }
+
+      button:disabled:hover {
+        opacity: 0.7;
+        background-color: #1a73e8;
+        box-shadow: none;
+      }
+      
+      @media (max-width: 775px) {
+        .container {
+          width: 100%;
+        }
+      }
+    </style>
+</head>
+<body>
+  <h1>Your Account</h1>
+  <h2>Personal Info</h2>
+  <form>
+    <label for="display-name">Display Name:</label>
+    <span type="text" id="display-name"></span>
+    <br>
+    <label for="email">Email:</label>
+    <span type="email" id="email"></span>
+    <br>
+    <br>
+    <button id="save" disabled>Save Changes</button>
+  </form>
+  <div>
+    <br>
+    <a href="colorswirl">Start Swirling</a>
+  </div>
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAXi9hMT5rmeD6B2O5J9U6YE9TWj67zZb4",
+      authDomain: "color-swirl-8740e.firebaseapp.com",
+      databaseURL: "https://color-swirl-8740e.firebaseio.com",
+      projectId: "color-swirl-8740e",
+      storageBucket: "color-swirl-8740e.appspot.com",
+      messagingSenderId: "703552741611",
+      appId: "1:703552741611:web:c5ec1abc81b9ef891e5eae",
+      measurementId: "G-LHYQJRHTKB"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+
+  <script>
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+      } else {
+        // No user is signed in.
+        window.location.href='login';
+      }
+    });
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault() || e.preventDefault;
+      var user = firebase.auth().currentUser;
+      user.updateProfile({
+        displayName: document.getElementById('display-name').value,
+      }).then(function() {
+        // Update successful.
+        alert("Display Name Updated: " + user.displayName);
+      }).catch(function(error) {
+        // An error happened.
+        alert(error);
+      });
+      user.updateEmail(document.getElementById('email').value).then(function() {
+        // Update successful.
+        alert("Email updated: " + user.email);
+      }).catch(function(error) {
+        // An error happened.
+        alert(error);
+      });
+    });
+
+      var user = firebase.auth().currentUser;
+      if (user != null) {
+        user.providerData.forEach(function (profile) {
+          document.getElementById('display-name').innerText = profile.displayName;
+          document.getElementById('email').innerText = profile.email;
+          document.getElementById('password').innerText = profile.password;
+        });
+      }
+  </script>
+</body>
+</html>

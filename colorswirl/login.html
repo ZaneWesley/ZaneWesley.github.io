@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login to Color Swirl</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-size: cover;
+        font-family: sans-serif;
+      }
+      
+      .box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 25rem;
+        padding: 2.5rem;
+        box-sizing: border-box;
+        border: 1px solid #dadce0;
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
+        display:none;
+        animation: slideleft 0.35s ease-out;
+
+      }
+      
+      .box h2 {
+        margin: 0px 0 -0.125rem;
+        padding: 0;
+        color: #fff;
+        text-align: center;
+        color: #202124;
+        font-family: 'Google Sans','Noto Sans Myanmar UI',arial,sans-serif;
+        font-size: 24px;
+        font-weight: 400;
+      }
+
+      .box p {
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: .1px;
+        line-height: 1.5;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+      
+      .box .inputBox {
+        position: relative;
+      }
+      
+      .box .inputBox input {
+        width: 93%;
+        padding: 0.625rem 10px;
+        font-size: 1rem;
+        letter-spacing: 0.062rem;
+        margin-bottom: 1.875rem;
+        border: 1px solid #ccc;
+        background: transparent;
+        border-radius: 4px;
+        
+      }
+      
+      .box .inputBox label {
+        position: absolute;
+        top: 0;
+        left: 10px;
+        padding: 0.625rem 0;
+        font-size: 1rem;
+        color: grey;
+        pointer-events: none;
+        transition: 0.5s;
+      }
+      
+      .box .inputBox input:focus ~ label,
+      .box .inputBox input:valid ~ label,
+      .box .inputBox input:not([value=""]) ~ label {
+        top: -1.125rem;
+        left: 10px;
+        color: #1a73e8;
+        font-size: 0.75rem;
+        background-color: white;
+        height: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      .box .inputBox input:focus {
+        outline: none;
+        border: 2px solid #1a73e8;
+      }
+      .box button {
+        border: none;
+        outline: none;
+        color: #fff;
+        background-color: #1a73e8;
+        padding: 0.625rem 1.25rem;
+        cursor: pointer;
+        border-radius: 0.312rem;
+        font-size: 1rem;
+        float: right;
+      }
+      
+      .box button:hover {
+        background-color: #287ae6;
+        box-shadow: 0 1px 1px 0 rgba(66,133,244,0.45), 0 1px 3px 1px rgba(66,133,244,0.3);
+      }
+      @keyframes slideleft {
+        0% {
+          left: 0;
+          opacity: 0;
+        }
+        100% {
+          left: 50%;
+          opacity: 1;
+        }
+      }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172524633-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-172524633-1');
+          gtag('set', {'user_id': 'USER_ID'}); // Set the user ID using signed-in user_id.
+        </script>
+</head>
+<body>
+  <div class="box">
+    <h2>Sign in</h2>
+    <p>Please sign in to continue.</p>
+    <form>
+      <div class="inputBox">
+        <input id="email" type="email" name="email" required>
+        <label>Email</label>
+      </div>
+      <div class="inputBox">
+        <input id="password" type="password" name="passward" required>
+        <label>Passward</label>
+      </div>
+      <button type="submit" name="signin">Sign In</button>
+    </form>
+    <br><br>
+    <p>Don't have an account? Sign up <a href="signup">here</a>!</p>
+  </div>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAXi9hMT5rmeD6B2O5J9U6YE9TWj67zZb4",
+      authDomain: "color-swirl-8740e.firebaseapp.com",
+      databaseURL: "https://color-swirl-8740e.firebaseio.com",
+      projectId: "color-swirl-8740e",
+      storageBucket: "color-swirl-8740e.appspot.com",
+      messagingSenderId: "703552741611",
+      appId: "1:703552741611:web:c5ec1abc81b9ef891e5eae",
+      measurementId: "G-LHYQJRHTKB"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+
+  <script>
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        window.location.href='colorswirl';
+      } else {
+        // No user is signed in.
+        document.querySelector('.box').style.display="block";
+        document.getElementById('loading-block').style.display="none";
+      }
+    });
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault() || e.preventDefault;
+      login(document.getElementById('email').value, document.getElementById('password').value);
+    });
+    function login(userEmail, userPassword) {
+      firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+        alert(errorMessage);
+      });
+    }
+  </script>
+</body>
+</html>
