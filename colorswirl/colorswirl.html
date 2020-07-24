@@ -644,8 +644,8 @@
             firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                 // User is signed in.
-                document.querySelector('.box').classList.remove('animate');
-                document.querySelector('.box').style.display="none";
+                document.querySelector('.box').classList.remove('appear');
+                document.querySelector('.box').style.display='none';
               } else {
                 // No user is signed in.
                 //document.getElementById('swirlboard').style.display="none";
