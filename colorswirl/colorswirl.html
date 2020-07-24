@@ -289,9 +289,11 @@
         </div>
 
         <div class="box animate">
-            <h2>Update Delayed</h2>
-            <p>The update has been delayed to Friday July 24, 2020. This will be a major update that requires an app reset which will erase all user preferences and data, but will greatly improve the user experience. With the update, there will be an option to create an account that will sync your preferences to all of your signed-in devices. Have some concerns? View the <a href="privacy">Privacy Policy</a>.</p>
-            <button type="button" onclick="this.parentNode.style.display='none'">Got It</button>
+            <h2>App Updated!</h2>
+            <p>Color Swirl is now updated! You now have an option to create an account and sync you settings across devices. Have some concerns? View the <a href="privacy">Privacy Policy</a>.</p>
+            <button type="button" onclick="window.location='signup'">Sign Up</button>
+            <br>
+            <p onclick="this.parentNode.style.display='none'" style="cursor: pointer; text-decoration: underline;">Continue without an account</p>
         </div>
 
 
@@ -303,13 +305,13 @@
             var swirl = "on";
 
             function setPreferences() {
-                /*var user = firebase.auth().currentUser;
+                var user = firebase.auth().currentUser;
                 if (user != null) {
                   user.providerData.forEach(function (profile) {
                     preferences.mode = profile.mode;
                     preferences.swirl = profile.swirl;
                   });
-                }*/
+                }
                 setMode(preferences.mode);
                 if(preferences.swirl === "on") {
                     unpauseSwirl();
@@ -359,8 +361,6 @@
                 document.getElementById('change').style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
             }
             function setColorpickerVal(modeColorFil) {
-                /*var modeColorFil = modeColor.replace("rgb(", "").replace(")", "");
-                modeColorFil = modeColorFil.split(',');*/
                 document.getElementById('slideRed').value = modeColorFil[0];
                 document.getElementById('slideGreen').value = modeColorFil[1];
                 document.getElementById('slideBlue').value = modeColorFil[2];
@@ -619,7 +619,7 @@
         <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
 
-        <!-- Add Firebase products that you want to use 
+        <!-- Add Firebase products that you want to use -->
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
 
@@ -638,10 +638,10 @@
           // Initialize Firebase
           firebase.initializeApp(firebaseConfig);
           firebase.analytics();
-        </script> -->
+        </script>
 
         <script>
-            /*firebase.auth().onAuthStateChanged(function(user) {
+            firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                 // User is signed in.
               } else {
@@ -668,19 +668,19 @@
                   // An error happened.
                   alert(error);
                 });
-            }*/
+            }
             function resetApp() {
                 if(confirm("Are you sure you want to reset this app? This will permanently delete your account. It can\'t be undone!")) {
                     localStorage.clear();
-                    window.location.reload();
-                    /*var user = firebase.auth().currentUser;
+                    var user = firebase.auth().currentUser;
                     user.delete().then(function() {
                       // User deleted.
-                      window.location.href="deleted";
+                      //window.location.href="deleted";
+                        window.location.reload();
                     }).catch(function(error) {
                       // An error happened.
                       alert(error);
-                    });*/
+                    });
                     
                 }
             }
@@ -688,7 +688,7 @@
                 preferences.mode = mode;
                 preferences.swirl = swirl;
                 localStorage.setItem('swirl-data', JSON.stringify(preferences));
-                /*var user = firebase.auth().currentUser;
+                var user = firebase.auth().currentUser;
                 user.updateProfile({
                   mode: preferences.mode,
                   swirl: preferences.swirl
@@ -697,7 +697,7 @@
                 }).catch(function(error) {
                   // An error happened.
                   alert(error);
-                });*/
+                });
             }
         </script>
     </body>
