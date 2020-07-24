@@ -21,16 +21,27 @@
 	<script>
 		var canvas = document.getElementsByTagName('canvas')[0];
 		var ctx = canvas.getContext('2d');
-		var cWidth, cHeight, cWidthCenter, cHeightCenter;
-		var dashLine = 10, dashGap = 20, dashOffset = 3;
+		var cWidth, cHeight, cWidthCenter, cHeightCenter, cThird;
+		var dashLine = 10, dashGap = 20, dashOffset = 3, offsetY = 0, offsetY2 = -500;
+		var dashInterval, updateInterval;
+		var gameStarted = false;
 		
 		resizeCanvas();
-		onCanvasLoad();
+		//onCanvasLoad();
+		update();
 
 		function onCanvasLoad() {
 			clearCanvas();
-			ctx.strokeStyle="#000";
-			ctx.fillStyle="#000";
+			var img = document.createElement('img');
+			img.src="grass.jpg";
+			document.body.appendChild(img);
+			ctx.drawImage(img, 0, offsetY, canvas.width, canvas.height);
+			ctx.drawImage(img, 0, offsetY2, canvas.width, canvas.height);
+			offsetY++;
+			offsetY2++;
+			img.remove();
+			ctx.strokeStyle="#828282";
+			ctx.fillStyle="#828282";
 			ctx.lineWidth = 10;
 			//Road Border
 			ctx.beginPath();
@@ -66,23 +77,69 @@
 			ctx.strokeStyle="yellow";
 			ctx.stroke();
 			//Text
-			ctx.font = "7em Calibri";
       		ctx.fillStyle = '#fff';
       		ctx.strokeStyle = '#fff';
       		if(isMobile()) {
+      			ctx.font = "2em Calibri";
       			ctx.fillText("Touch To Start", cWidthCenter/2, cHeightCenter);
       		} else {
+      			ctx.font = "7em Calibri";
 				ctx.fillText("Click To Start", cWidthCenter/2, cHeightCenter);
 			}
 		}
 		function onStart() {
-			//
+			console.log('Game Started');
+			dashLine = 20;
+			dashGap = 40;
+			updateInterval = setInterval(update, 20);
 		}
 		function onEnd() {
 			//
 		}
 		function update() {
-			//
+			clearCanvas();
+			ctx.strokeStyle="#828282";
+			ctx.fillStyle="#828282";
+			ctx.lineWidth = 10;
+			//Road Border
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			//Left
+			ctx.moveTo(0, cHeight);
+			ctx.lineTo((cWidthCenter/2),(cHeightCenter-(cHeight*0.2)));
+			//Top
+			ctx.lineTo((cWidthCenter+(cWidthCenter/2)),(cHeightCenter-(cHeight*0.2)));
+			//Right
+			ctx.lineTo(cWidth, cHeight);
+			//Bottom
+			ctx.lineTo(0, cHeight);
+			ctx.fill();
+			ctx.stroke();
+
+			//Road dashes
+			ctx.strokeStyle="#fff";
+			ctx.beginPath();
+			ctx.setLineDash([dashLine, dashGap]);
+			ctx.lineDashOffset = dashOffset;
+			dashOffset--;
+			//left lane (center left line)
+			ctx.moveTo((cWidthCenter)-cThird, (cHeightCenter-(cHeight*0.2)));
+			ctx.lineTo(cWidth/3, cHeight);
+			//right lane (center right line)
+			ctx.moveTo((cWidthCenter)+cThird, (cHeightCenter-(cHeight*0.2)));
+			ctx.lineTo(cWidth/1.5, cHeight);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			//Road yellow borders
+			//Left
+			ctx.moveTo(8, cHeight);
+			ctx.lineTo((cWidthCenter/2)+8, (cHeightCenter-(cHeight*0.2))-4);
+			//Right
+			ctx.moveTo((cWidthCenter+(cWidthCenter/2)-8),(cHeightCenter-(cHeight*0.2))-4);
+			ctx.lineTo(cWidth-8, cHeight);
+			ctx.strokeStyle="yellow";
+			ctx.stroke();
 		}
 		function clearCanvas() {
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -94,16 +151,38 @@
 		    cHeight = canvas.height;
 		    cWidthCenter = cWidth / 2;
 		    cHeightCenter = cHeight / 2;
+		    cThird = cWidth * 0.1;
 		}
 		function isMobile () {
 			return /Mobi|Android/i.test(navigator.userAgent);
 		}
 
-		setInterval(onCanvasLoad, 50);
+		dashInterval = setInterval(iniPreRoad, 50);
+		function iniPreRoad() {
+			if(gameStarted) {
+				clearInterval(dashInterval);
+			} else {
+				onCanvasLoad();
+			}
+		}
+
+		window.addEventListener('click', function(e) {
+			if(!gameStarted) {
+				e.preventDefault() || e.preventDefault;
+				gameStarted = true;
+				onStart();
+			}
+		});
+		window.addEventListener('touchstart', function(e) {
+			if(!gameStarted) {
+				e.preventDefault() || e.preventDefault;
+				gameStarted = true;
+				onStart();
+			}
+		});
 
 		window.addEventListener('resize', function() {
 			resizeCanvas();
-			onCanvasLoad();
 		});
 
 	</script>
