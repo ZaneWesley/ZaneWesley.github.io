@@ -664,6 +664,7 @@
             function logout() {
                 firebase.auth().signOut().then(function() {
                   // Sign-out successful.
+                    window.location.reload();
                 }).catch(function(error) {
                   // An error happened.
                   alert(error);
