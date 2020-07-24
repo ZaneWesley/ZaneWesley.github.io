@@ -644,6 +644,8 @@
             firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                 // User is signed in.
+                document.querySelector('.box').classList.remove('animate');
+                document.querySelector('.box').style.display="none";
               } else {
                 // No user is signed in.
                 //document.getElementById('swirlboard').style.display="none";
@@ -664,7 +666,7 @@
             function logout() {
                 firebase.auth().signOut().then(function() {
                   // Sign-out successful.
-                    window.location.reload();
+                  window.location.reload();
                 }).catch(function(error) {
                   // An error happened.
                   alert(error);
