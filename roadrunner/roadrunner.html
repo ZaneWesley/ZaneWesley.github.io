@@ -105,14 +105,23 @@
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			//Left
-			ctx.moveTo(0, cHeight);
-			ctx.lineTo((cWidthCenter/2),(cHeightCenter-(cHeight*0.2)));
+			ctx.moveTo(0, cHeight-60);
+			ctx.lineTo((cWidthCenter),(cHeightCenter-(cHeight*0.4)));
 			//Top
-			ctx.lineTo((cWidthCenter+(cWidthCenter/2)),(cHeightCenter-(cHeight*0.2)));
+			ctx.lineTo((cWidthCenter),(cHeightCenter-(cHeight*0.4)));
 			//Right
-			ctx.lineTo(cWidth, cHeight);
+			ctx.lineTo(cWidth, cHeight-60);
 			//Bottom
+			ctx.lineTo(0, cHeight-60);
+			ctx.fill();
+			ctx.stroke();
+			//Bottom Fill
+			ctx.beginPath();
+			ctx.moveTo(0, cHeight-60);
 			ctx.lineTo(0, cHeight);
+			ctx.lineTo(cWidth, cHeight);
+			ctx.lineTo(cWidth, cHeight-60);
+			ctx.lineTo(0, cHeight-60);
 			ctx.fill();
 			ctx.stroke();
 
@@ -123,21 +132,21 @@
 			ctx.lineDashOffset = dashOffset;
 			dashOffset--;
 			//left lane (center left line)
-			ctx.moveTo((cWidthCenter)-cThird, (cHeightCenter-(cHeight*0.2)));
+			ctx.moveTo((cWidthCenter), (cHeightCenter-(cHeight*0.4)));
 			ctx.lineTo(cWidth/3, cHeight);
 			//right lane (center right line)
-			ctx.moveTo((cWidthCenter)+cThird, (cHeightCenter-(cHeight*0.2)));
+			ctx.moveTo((cWidthCenter), (cHeightCenter-(cHeight*0.4)));
 			ctx.lineTo(cWidth/1.5, cHeight);
 			ctx.stroke();
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			//Road yellow borders
 			//Left
-			ctx.moveTo(8, cHeight);
-			ctx.lineTo((cWidthCenter/2)+8, (cHeightCenter-(cHeight*0.2))-4);
+			ctx.moveTo(0, cHeight);
+			ctx.lineTo((cWidthCenter), (cHeightCenter-(cHeight*0.4)));
 			//Right
-			ctx.moveTo((cWidthCenter+(cWidthCenter/2)-8),(cHeightCenter-(cHeight*0.2))-4);
-			ctx.lineTo(cWidth-8, cHeight);
+			ctx.moveTo((cWidthCenter),(cHeightCenter-(cHeight*0.4)));
+			ctx.lineTo(cWidth, cHeight);
 			ctx.strokeStyle="yellow";
 			ctx.stroke();
 		}
@@ -157,14 +166,14 @@
 			return /Mobi|Android/i.test(navigator.userAgent);
 		}
 
-		dashInterval = setInterval(iniPreRoad, 50);
+		/*dashInterval = setInterval(iniPreRoad, 50);
 		function iniPreRoad() {
 			if(gameStarted) {
 				clearInterval(dashInterval);
 			} else {
 				onCanvasLoad();
 			}
-		}
+		}*/
 
 		window.addEventListener('click', function(e) {
 			if(!gameStarted) {
