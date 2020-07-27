@@ -89,72 +89,18 @@
 		}
 		function onStart() {
 			console.log('Game Started');
-			dashLine = 20;
-			dashGap = 40;
-			updateInterval = setInterval(update, 20);
+			dashLine = 200;
+			dashGap = 100;
+			updateInterval = setInterval(update, 10);
 		}
 		function onEnd() {
 			//
-		}
-		function update_proto() {
-			clearCanvas();
-			ctx.strokeStyle="#828282";
-			ctx.fillStyle="#828282";
-			ctx.lineWidth = 10;
-			//Road Border
-			ctx.beginPath();
-			ctx.setLineDash([]);
-			//Left
-			ctx.moveTo(0, cHeight-60);
-			ctx.lineTo((cWidthCenter),(cHeightCenter-(cHeight*0.4)));
-			//Top
-			ctx.lineTo((cWidthCenter),(cHeightCenter-(cHeight*0.4)));
-			//Right
-			ctx.lineTo(cWidth, cHeight-60);
-			//Bottom
-			ctx.lineTo(0, cHeight-60);
-			ctx.fill();
-			ctx.stroke();
-			//Bottom Fill
-			ctx.beginPath();
-			ctx.moveTo(0, cHeight-60);
-			ctx.lineTo(0, cHeight);
-			ctx.lineTo(cWidth, cHeight);
-			ctx.lineTo(cWidth, cHeight-60);
-			ctx.lineTo(0, cHeight-60);
-			ctx.fill();
-			ctx.stroke();
-
-			//Road dashes
-			ctx.strokeStyle="#fff";
-			ctx.beginPath();
-			ctx.setLineDash([dashLine, dashGap]);
-			ctx.lineDashOffset = dashOffset;
-			dashOffset--;
-			//left lane (center left line)
-			ctx.moveTo((cWidthCenter), (cHeightCenter-(cHeight*0.2)));
-			ctx.lineTo(cWidth/3, cHeight);
-			//right lane (center right line)
-			ctx.moveTo((cWidthCenter), (cHeightCenter-(cHeight*0.4)));
-			ctx.lineTo(cWidth/1.5, cHeight);
-			ctx.stroke();
-			ctx.beginPath();
-			ctx.setLineDash([]);
-			//Road yellow borders
-			//Left
-			ctx.moveTo(0, cHeight);
-			ctx.lineTo((cWidthCenter), (cHeightCenter-(cHeight*0.2)));
-			//Right
-			ctx.moveTo((cWidthCenter),(cHeightCenter-(cHeight*0.4)));
-			ctx.lineTo(cWidth, cHeight);
-			ctx.strokeStyle="yellow";
-			ctx.stroke();
 		}
 		function update() {
 			clearCanvas();
 			ctx.strokeStyle="#828282";
 			ctx.fillStyle="#828282";
-			ctx.lineWidth = 10;
+			ctx.lineWidth = 6;
 			//Road Border
 			ctx.beginPath();
 			ctx.setLineDash([]);
@@ -172,31 +118,48 @@
 			ctx.fill();
 			ctx.stroke();
 
-			//Yellow Lines
+			//-Y-e-l-l-o-w- White Lines
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			//Left
-			ctx.moveTo(-4, cHeight-cHeight*0.27);
-			ctx.lineTo(cWidthCenter*0.75, cHeightCenter*0.379);
+			ctx.moveTo(-2, cHeight-cHeight*0.15);
+			ctx.lineTo(cWidthCenter*0.8, cHeightCenter*0.379);
 			//Right
-			ctx.moveTo(cWidthCenter/0.75, cHeightCenter*0.379);
-			ctx.lineTo(cWidth+4, cHeight-cHeight*0.27);
+			ctx.moveTo(cWidthCenter/0.8, cHeightCenter*0.379);
+			ctx.lineTo(cWidth+2, cHeight-cHeight*0.15);
 			ctx.strokeStyle="yellow";
 			ctx.stroke();
 
 			//Road dashes
 			ctx.strokeStyle="#fff";
+			ctx.lineWidth = 1;
 			ctx.beginPath();
 			ctx.setLineDash([dashLine, dashGap]);
 			ctx.lineDashOffset = dashOffset;
 			dashOffset++;
 			//left lane (center left line)
 			ctx.moveTo(cThird, cHeight);
-			ctx.lineTo(cWidthCenter*0.75, cHeightCenter*0.379);
+			ctx.lineTo(cWidthCenter*0.9, cHeightCenter*0.379);
 			//right lane (center right line)
 			ctx.moveTo(cWidth-cThird, cHeight);
-			ctx.lineTo(cWidthCenter/0.75, cHeightCenter*0.379);
+			ctx.lineTo(cWidthCenter/0.9, cHeightCenter*0.379);
 			ctx.stroke();
+
+			//Sky
+			ctx.strokeStyle="#87ceeb";
+			ctx.fillStyle="#87ceeb";
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.moveTo(0, cHeightCenter*0.379);
+			ctx.lineTo(0, 0);
+			ctx.lineTo(cWidth, 0);
+			ctx.lineTo(cWidth, cHeightCenter*0.379);
+			ctx.lineTo(0, cHeightCenter*0.379);
+			ctx.fill();
+			ctx.stroke();
+
+			//Gree grass
+			canvas.style.backgroundColor="green";
 
 		}
 		function clearCanvas() {
