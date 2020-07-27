@@ -62,7 +62,7 @@
 			ctx.beginPath();
 			ctx.setLineDash([dashLine, dashGap]);
 			ctx.lineDashOffset = dashOffset;
-			dashOffset--;
+			dashOffset++;
 			//Center line
 			ctx.moveTo(cWidthCenter, 0);
 			ctx.lineTo(cWidthCenter, cHeight);
@@ -189,7 +189,7 @@
 			ctx.beginPath();
 			ctx.setLineDash([dashLine, dashGap]);
 			ctx.lineDashOffset = dashOffset;
-			dashOffset--;
+			dashOffset++;
 			//left lane (center left line)
 			ctx.moveTo(cThird, cHeight);
 			ctx.lineTo(cWidthCenter*0.75, cHeightCenter*0.379);
