@@ -107,9 +107,9 @@
 			//Left
 			ctx.moveTo(0, cHeight);
 			ctx.lineTo(0, cHeight-cHeight*0.27);
-			ctx.lineTo(cWidthCenter*0.75, cHeightCenter*0.4);
+			ctx.lineTo(cWidthCenter*0.75, cHeightCenter*0.7);
 			//Top
-			ctx.lineTo(cWidthCenter/0.75, cHeightCenter*0.4);
+			ctx.lineTo(cWidthCenter/0.75, cHeightCenter*0.7);
 			//Right
 			ctx.lineTo(cWidth, cHeight-cHeight*0.27);
 			ctx.lineTo(cWidth, cHeight);
@@ -123,26 +123,26 @@
 			ctx.setLineDash([]);
 			//Left
 			ctx.moveTo(-2, cHeight-cHeight*0.15);
-			ctx.lineTo(cWidthCenter*0.8, cHeightCenter*0.379);
+			ctx.lineTo(cWidthCenter*0.8, cHeightCenter*0.7);
 			//Right
-			ctx.moveTo(cWidthCenter/0.8, cHeightCenter*0.379);
+			ctx.moveTo(cWidthCenter/0.8, cHeightCenter*0.7);
 			ctx.lineTo(cWidth+2, cHeight-cHeight*0.15);
 			ctx.strokeStyle="yellow";
 			ctx.stroke();
 
 			//Road dashes
 			ctx.strokeStyle="#fff";
-			ctx.lineWidth = 1;
+			ctx.lineWidth = 2;
 			ctx.beginPath();
 			ctx.setLineDash([dashLine, dashGap]);
 			ctx.lineDashOffset = dashOffset;
 			dashOffset++;
 			//left lane (center left line)
 			ctx.moveTo(cThird, cHeight);
-			ctx.lineTo(cWidthCenter*0.9, cHeightCenter*0.379);
+			ctx.lineTo(cWidthCenter*0.9, cHeightCenter*0.7);
 			//right lane (center right line)
 			ctx.moveTo(cWidth-cThird, cHeight);
-			ctx.lineTo(cWidthCenter/0.9, cHeightCenter*0.379);
+			ctx.lineTo(cWidthCenter/0.9, cHeightCenter*0.7);
 			ctx.stroke();
 
 			//Sky
@@ -150,11 +150,11 @@
 			ctx.fillStyle="#87ceeb";
 			ctx.beginPath();
 			ctx.setLineDash([]);
-			ctx.moveTo(0, cHeightCenter*0.379);
+			ctx.moveTo(0, cHeightCenter*0.7);
 			ctx.lineTo(0, 0);
 			ctx.lineTo(cWidth, 0);
-			ctx.lineTo(cWidth, cHeightCenter*0.379);
-			ctx.lineTo(0, cHeightCenter*0.379);
+			ctx.lineTo(cWidth, cHeightCenter*0.7);
+			ctx.lineTo(0, cHeightCenter*0.7);
 			ctx.fill();
 			ctx.stroke();
 
