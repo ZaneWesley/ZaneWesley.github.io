@@ -89,7 +89,7 @@
 		}
 		function onStart() {
 			console.log('Game Started');
-			dashLine = 100;
+			dashLine = 90;
 			dashGap = 50;
 			updateInterval = setInterval(update, 10);
 		}
@@ -118,14 +118,14 @@
 			ctx.fill();
 			ctx.stroke();
 
-			//-Y-e-l-l-o-w- White Lines
+			//Yellow Lines
 			ctx.beginPath();
 			ctx.setLineDash([]);
 			//Left
 			ctx.moveTo(-2, cHeight-cHeight*0.15);
-			ctx.lineTo(cWidthCenter*0.9, cHeightCenter*0.4);
+			ctx.lineTo(cWidthCenter*0.92, cHeightCenter*0.4);
 			//Right
-			ctx.moveTo(cWidthCenter/0.9, cHeightCenter*0.4);
+			ctx.moveTo(cWidthCenter/0.92, cHeightCenter*0.4);
 			ctx.lineTo(cWidth+2, cHeight-cHeight*0.15);
 			ctx.strokeStyle="yellow";
 			ctx.stroke();
@@ -139,10 +139,10 @@
 			dashOffset++;
 			//left lane (center left line)
 			ctx.moveTo(cThird, cHeight);
-			ctx.lineTo(cWidthCenter*0.95, cHeightCenter*0.4);
+			ctx.lineTo(cWidthCenter*0.97, cHeightCenter*0.4);
 			//right lane (center right line)
 			ctx.moveTo(cWidth-cThird, cHeight);
-			ctx.lineTo(cWidthCenter/0.95, cHeightCenter*0.4);
+			ctx.lineTo(cWidthCenter/0.97, cHeightCenter*0.4);
 			ctx.stroke();
 
 			//Sky
