@@ -29,20 +29,14 @@
 	    	var roomName = getQueryVariable("roomName") || '';
 	    	var hasRoomKey = false;
 	    	var hasRoomName = false;
-	    	if(roomKey) {
-	        	hasRoomKey = true;
-	    	}
 	    	if(roomName) {
 	        	hasRoomName = true;
 	    	}
+	    	if(roomKey) {
+	        	hasRoomKey = true;
+	    	}
 	    	if(hasRoomName && hasRoomKey) {
 	    		document.getElementById("frame").src="https://chatwithzane.herokuapp.com/join.html?room="+roomName+"&roomKey="+roomKey;
-	    	}
-	    	if(hasRoomName && !hasRoomKey) {
-	    		document.getElementById("frame").src="https://chatwithzane.herokuapp.com/join.html?room="+roomName;
-	    	}
-	    	if(hasRoomKey && !hasRoomName) {
-	    		document.getElementById("frame").src="https://chatwithzane.herokuapp.com/join.html?roomKey="+roomKey;
 	    	}
 		}
 		function getQueryVariable(variable) {
