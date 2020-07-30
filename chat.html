@@ -21,6 +21,43 @@
 	</style>
 </head>
 <body>
-	<iframe src="https://chatwithzane.herokuapp.com/join.html">Loading app...</iframe>
+	<iframe src="https://chatwithzane.herokuapp.com/join.html" id="frame">Loading app...</iframe>
+
+	<script>
+		function checkAutofill() {
+			var roomKey = getQueryVariable("roomKey") || '';
+	    	var roomName = getQueryVariable("roomName") || '';
+	    	var hasRoomKey = false;
+	    	var hasRoomName = false;
+	    	if(roomKey) {
+	        	hasRoomKey = true;
+	    	}
+	    	if(roomName) {
+	        	hasRoomName = true;
+	    	}
+	    	if(hasRoomName && hasRoomKey) {
+	    		document.getElementById("frame").src="https://chatwithzane.herokuapp.com/join.html?room="+roomName+"&roomKey="+roomKey;
+	    	}
+	    	if(hasRoomName && !hasRoomKey) {
+	    		document.getElementById("frame").src="https://chatwithzane.herokuapp.com/join.html?room="+roomName;
+	    	}
+	    	if(hasRoomKey && !hasRoomName) {
+	    		document.getElementById("frame").src="https://chatwithzane.herokuapp.com/join.html?roomKey="+roomKey;
+	    	}
+		}
+		function getQueryVariable(variable) {
+		    var query = window.location.search.substring(1);
+		    var vars = query.split('&');
+		    for (var i = 0; i < vars.length; i++) {
+		        var pair = vars[i].split('=');
+		        if (decodeURIComponent(pair[0]) == variable) {
+		            return decodeURIComponent(pair[1].replace(/\+/g,' '));
+		        }
+		    }
+
+		    return undefined;
+		}
+		checkAutofill();
+	</script>
 </body>
 </html>
