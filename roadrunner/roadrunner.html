@@ -5,6 +5,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/93/three.min.js"></script>
 
 	<title>Road Runner</title>
 
@@ -16,195 +17,338 @@
 	</style>
 </head>
 <body>
-	<canvas></canvas>
+
+	<div id="game"></div>
 
 	<script>
-		var canvas = document.getElementsByTagName('canvas')[0];
-		var ctx = canvas.getContext('2d');
-		var cWidth, cHeight, cWidthCenter, cHeightCenter, cThird;
-		var dashLine = 10, dashGap = 20, dashOffset = 3, offsetY = 0, offsetY2 = -500;
-		var dashInterval, updateInterval;
-		var gameStarted = false;
-		
-		resizeCanvas();
-		//onCanvasLoad();
-		update();
+		var sceneWidth;
+		var sceneHeight;
+		var camera;
+		var scene;
+		var renderer;
+		var dom;
+		var sun;
+		var ground;
+		//var orbitControl;
+		var road;
+		var heroSphere;
+		var roadRotation=/*0.008*/1.9840000000000015;
+		var runnerMovingSpeed;
+		var distanceTraveled = 0;
+		var worldWidth;
+		var heroRadius=0.2;
+		var sphericalHelper;
+		var pathAngleValues;
+		var heroBaseY=1.8;
+		var bounceValue=0.1;
+		var gravity=0.005;
+		var leftLane=-1;
+		var rightLane=1;
+		var middleLane=0;
+		var currentLane;
+		var clock;
+		var jumping;
+		var treeReleaseInterval=0.5;
+		var lastTreeReleaseTime=0;
+		var treesInPath;
+		var treesPool;
+		var particleGeometry;
+		var particleCount=20;
+		var explosionPower =1.06;
+		var particles;
+		//var stats;
+		var scoreText;
+		var score;
+		var hasCollided;
 
-		function onCanvasLoad() {
-			clearCanvas();
-			var img = document.createElement('img');
-			img.src="grass.jpg";
-			document.body.appendChild(img);
-			ctx.drawImage(img, 0, offsetY, canvas.width, canvas.height);
-			ctx.drawImage(img, 0, offsetY2, canvas.width, canvas.height);
-			offsetY++;
-			offsetY2++;
-			img.remove();
-			ctx.strokeStyle="#828282";
-			ctx.fillStyle="#828282";
-			ctx.lineWidth = 10;
-			//Road Border
-			ctx.beginPath();
-			ctx.setLineDash([]);
-			//Left
-			ctx.moveTo(0, cHeight);
-			ctx.lineTo((cWidthCenter/2),0);
-			//Top
-			ctx.lineTo((cWidthCenter+(cWidthCenter/2)),0);
-			//Right
-			ctx.lineTo(cWidth, cHeight);
-			//Bottom
-			ctx.lineTo(0, cHeight);
-			ctx.fill();
-			ctx.stroke();
-			//Road dashes
-			ctx.strokeStyle="#fff";
-			ctx.beginPath();
-			ctx.setLineDash([dashLine, dashGap]);
-			ctx.lineDashOffset = dashOffset;
-			dashOffset++;
-			//Center line
-			ctx.moveTo(cWidthCenter, 0);
-			ctx.lineTo(cWidthCenter, cHeight);
-			ctx.stroke();
-			ctx.beginPath();
-			ctx.setLineDash([]);
-			//Road yellow borders
-			ctx.moveTo(8, cHeight);
-			ctx.lineTo((cWidthCenter/2)+8, -2);
-			ctx.moveTo((cWidthCenter+(cWidthCenter/2)-8),-2);
-			ctx.lineTo(cWidth-8, cHeight);
-			ctx.strokeStyle="yellow";
-			ctx.stroke();
-			//Text
-      		ctx.fillStyle = '#fff';
-      		ctx.strokeStyle = '#fff';
-      		if(isMobile()) {
-      			ctx.font = "2em Calibri";
-      			ctx.fillText("Touch To Start", cWidthCenter/2, cHeightCenter);
-      		} else {
-      			ctx.font = "7em Calibri";
-				ctx.fillText("Click To Start", cWidthCenter/2, cHeightCenter);
+		init();
+
+		function init() {
+
+			//Ini
+			if(isMobile()) {
+				worldWidth = 30;
+			} else {
+				worldWidth = 40;
+			}
+			// set up the scene
+			createScene();
+
+			//call game loop
+			update();
+		}
+
+		function createScene(){
+			hasCollided=false;
+			score=0;
+			treesInPath=[];
+			treesPool=[];
+			clock=new THREE.Clock();
+			clock.start();
+			runnerMovingSpeed=(roadRotation*worldWidth/heroRadius)/5;
+			//sphericalHelper = new THREE.Spherical();
+			pathAngleValues=[1.52,1.57,1.62];
+		    sceneWidth=window.innerWidth;
+		    sceneHeight=window.innerHeight;
+		    scene = new THREE.Scene();//the 3d scene
+		    //scene.fog = new THREE.FogExp2( 0xf0fff0, 0.14 );
+		    camera = new THREE.PerspectiveCamera( 60, sceneWidth / sceneHeight, 0.1, 1000 );//perspective camera
+		    renderer = new THREE.WebGLRenderer({alpha:true});//renderer with transparent backdrop
+		    renderer.setClearColor(0xfffafa, 1); 
+		    renderer.shadowMap.enabled = true;//enable shadow
+		    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		    renderer.setSize( sceneWidth, sceneHeight );
+		    dom = document.getElementById('game');
+			dom.appendChild(renderer.domElement);
+			//stats = new Stats();
+			//dom.appendChild(stats.dom);
+			//createTreesPool();
+			addWorld();
+			addHero();
+			addLight();
+			//addExplosion();
+			
+			camera.position.z = 6.5;
+			camera.position.y = 2.5;
+			/*orbitControl = new THREE.OrbitControls( camera, renderer.domElement );//helper to rotate around in scene
+			orbitControl.addEventListener( 'change', render );
+			orbitControl.noKeys = true;
+			orbitControl.noPan = true;
+			orbitControl.enableZoom = false;
+			orbitControl.minPolarAngle = 1.1;
+			orbitControl.maxPolarAngle = 1.1;
+			orbitControl.minAzimuthAngle = -0.2;
+			orbitControl.maxAzimuthAngle = 0.2;
+			*/
+			window.addEventListener('resize', onWindowResize, false);//resize callback
+
+			document.onkeydown = handleKeyDown;
+			
+			scoreText = document.createElement('div');
+			scoreText.style.position = 'absolute';
+			//text2.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
+			scoreText.style.width = 100;
+			scoreText.style.height = 100;
+			//scoreText.style.backgroundColor = "blue";
+			scoreText.innerHTML = "0";
+			scoreText.style.top = 50 + 'px';
+			scoreText.style.left = 10 + 'px';
+			document.body.appendChild(scoreText);
+		  
+		  var infoText = document.createElement('div');
+			infoText.style.position = 'absolute';
+			infoText.style.width = 100;
+			infoText.style.height = 100;
+			infoText.style.backgroundColor = "yellow";
+			infoText.innerHTML = "UP - Jump, Left/Right - Move";
+			infoText.style.top = 10 + 'px';
+			infoText.style.left = 10 + 'px';
+			document.body.appendChild(infoText);
+		}
+		function addExplosion(){
+			particleGeometry = new THREE.Geometry();
+			for (var i = 0; i < particleCount; i ++ ) {
+				var vertex = new THREE.Vector3();
+				particleGeometry.vertices.push( vertex );
+			}
+			var pMaterial = new THREE.ParticleBasicMaterial({
+			  color: 0xfffafa,
+			  size: 0.2
+			});
+			particles = new THREE.Points( particleGeometry, pMaterial );
+			scene.add( particles );
+			particles.visible=false;
+		}
+		function createTreesPool(){
+			var maxTreesInPool=10;
+			var newTree;
+			for(var i=0; i<maxTreesInPool;i++){
+				newTree;//=createTree();
+				treesPool.push(newTree);
 			}
 		}
-		function onStart() {
-			console.log('Game Started');
-			dashLine = 90;
-			dashGap = 50;
-			updateInterval = setInterval(update, 10);
+		function handleKeyDown(keyEvent){
+			if(jumping)return;
+			var validMove=true;
+			if ( keyEvent.keyCode === 37) {//left
+				if(currentLane==middleLane){
+					currentLane=leftLane;
+				}else if(currentLane==rightLane){
+					currentLane=middleLane;
+				}else{
+					validMove=false;	
+				}
+			} else if ( keyEvent.keyCode === 39) {//right
+				if(currentLane==middleLane){
+					currentLane=rightLane;
+				}else if(currentLane==leftLane){
+					currentLane=middleLane;
+				}else{
+					validMove=false;	
+				}
+			}else{
+				if ( keyEvent.keyCode === 38){//up, jump
+					bounceValue=0.1;
+					jumping=true;
+				}
+				validMove=false;
+			}
+			//heroSphere.position.x=currentLane;
+			if(validMove){
+				jumping=true;
+				bounceValue=0.06;
+			}
 		}
-		function onEnd() {
+		function addHero(){
+			var sphereGeometry = new THREE.DodecahedronGeometry( heroRadius, 1);
+			var sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xe5f2f2 ,shading:THREE.FlatShading} )
+			jumping=false;
+			heroSphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
+			heroSphere.receiveShadow = true;
+			heroSphere.castShadow=true;
+			scene.add( heroSphere );
+			heroSphere.position.y=heroBaseY;
+			heroSphere.position.z=4.8;
+			currentLane=middleLane;
+			heroSphere.position.x=currentLane;
+		}
+		function addWorld(){
+			//var roadHeight = window.innerHeight/2;
+			var roadHeight = window.innerHeight;
+			var roadGeometry = new THREE.PlaneGeometry( worldWidth, roadHeight);
+			var roadMaterial = new THREE.MeshBasicMaterial( {color: 0x828282, side: THREE.DoubleSide} );
+			var lineMaterial = new THREE.LineDashedMaterial( {
+				color: 0xffffff,
+				linewidth: 1,
+				scale: 1,
+				dashSize: 3,
+				gapSize: 1,
+			} );
+			road = new THREE.Mesh( roadGeometry, roadMaterial );
+			road.receiveShadow = true;
+			road.castShadow=false;
+			scene.add( road );
+			road.position.y=-24;
+			road.position.z=2;
+			//addWorldTrees();
+		}
+		function addLight(){
+			var hemisphereLight = new THREE.HemisphereLight(0xfffafa,0x000000, .9)
+			scene.add(hemisphereLight);
+			sun = new THREE.DirectionalLight( 0xcdc1c5, 0.9);
+			sun.position.set( 12,6,-7 );
+			sun.castShadow = true;
+			scene.add(sun);
+			//Set up shadow properties for the sun light
+			sun.shadow.mapSize.width = 256;
+			sun.shadow.mapSize.height = 256;
+			sun.shadow.camera.near = 0.5;
+			sun.shadow.camera.far = 50 ;
+		}
+		function addTree(inPath, row, isLeft){
+			var newTree;
+			if(inPath){
+				if(treesPool.length==0)return;
+				newTree=treesPool.pop();
+				newTree.visible=true;
+				//console.log("add tree");
+				treesInPath.push(newTree);
+				//sphericalHelper.set( worldWidth-0.3, pathAngleValues[row], -road.rotation.x+4 );
+			}else{
+				newTree;
+				var forestAreaAngle=0;//[1.52,1.57,1.62];
+				if(isLeft){
+					forestAreaAngle=1.68+Math.random()*0.1;
+				}else{
+					forestAreaAngle=1.46-Math.random()*0.1;
+				}
+				//sphericalHelper.set( worldWidth-0.3, forestAreaAngle, row );
+			}
+			//
+			
+			road.add(newTree);
+		}
+
+		function update(){
+			//stats.update();
+		    //animate
+		    //camera.translateZ( 1 );
+		    road.rotation.x = roadRotation;
+		    heroSphere.rotation.x -= runnerMovingSpeed;
+		    if(heroSphere.position.y<=heroBaseY){
+		    	jumping=false;
+		    	bounceValue=(Math.random()*0.04)+0.005;
+		    }
+		    heroSphere.position.y+=bounceValue;
+		    heroSphere.position.x=THREE.Math.lerp(heroSphere.position.x,currentLane, 2*clock.getDelta());//clock.getElapsedTime());
+		    bounceValue-=gravity;
+		    if(clock.getElapsedTime()>treeReleaseInterval){
+		    	clock.start();
+		    	//addPathTree();
+		    	if(!hasCollided){
+					score+=2*treeReleaseInterval;
+					scoreText.innerHTML=score.toString();
+				}
+		    }
+		    doTreeLogic();
+		    //doExplosionLogic();
+		    render();
+			requestAnimationFrame(update);//request next update
+		}
+		function doTreeLogic(){
+			var oneTree;
+			var treePos = new THREE.Vector3();
+			var treesToRemove=[];
+			treesInPath.forEach( function ( element, index ) {
+				oneTree=treesInPath[ index ];
+				treePos.setFromMatrixPosition( oneTree.matrixWorld );
+				if(treePos.z>6 &&oneTree.visible){//gone out of our view zone
+					treesToRemove.push(oneTree);
+				}else{//check collision
+					if(treePos.distanceTo(heroSphere.position)<=0.6){
+						console.log("hit");
+						hasCollided=true;
+						onHit();
+					}
+				}
+			});
+			var fromWhere;
+			treesToRemove.forEach( function ( element, index ) {
+				oneTree=treesToRemove[ index ];
+				fromWhere=treesInPath.indexOf(oneTree);
+				treesInPath.splice(fromWhere,1);
+				treesPool.push(oneTree);
+				oneTree.visible=false;
+				console.log("remove tree");
+			});
+		}
+		function onHit() {
 			//
 		}
-		function update() {
-			clearCanvas();
-			ctx.strokeStyle="#828282";
-			ctx.fillStyle="#828282";
-			ctx.lineWidth = 6;
-			//Road Border
-			ctx.beginPath();
-			ctx.setLineDash([]);
-			//Left
-			ctx.moveTo(0, cHeight);
-			ctx.lineTo(0, cHeight-cHeight*0.27);
-			ctx.lineTo(cWidthCenter*0.9, cHeightCenter*0.4);
-			//Top
-			ctx.lineTo(cWidthCenter/0.9, cHeightCenter*0.4);
-			//Right
-			ctx.lineTo(cWidth, cHeight-cHeight*0.27);
-			ctx.lineTo(cWidth, cHeight);
-			//Bottom
-			ctx.lineTo(0, cHeight);
-			ctx.fill();
-			ctx.stroke();
-
-			//Yellow Lines
-			ctx.beginPath();
-			ctx.setLineDash([]);
-			//Left
-			ctx.moveTo(-2, cHeight-cHeight*0.15);
-			ctx.lineTo(cWidthCenter*0.92, cHeightCenter*0.4);
-			//Right
-			ctx.moveTo(cWidthCenter/0.92, cHeightCenter*0.4);
-			ctx.lineTo(cWidth+2, cHeight-cHeight*0.15);
-			ctx.strokeStyle="yellow";
-			ctx.stroke();
-
-			//Road dashes
-			ctx.strokeStyle="#fff";
-			ctx.lineWidth = 2;
-			ctx.beginPath();
-			ctx.setLineDash([dashLine, dashGap]);
-			ctx.lineDashOffset = dashOffset;
-			dashOffset++;
-			//left lane (center left line)
-			ctx.moveTo(cThird, cHeight);
-			ctx.lineTo(cWidthCenter*0.97, cHeightCenter*0.4);
-			//right lane (center right line)
-			ctx.moveTo(cWidth-cThird, cHeight);
-			ctx.lineTo(cWidthCenter/0.97, cHeightCenter*0.4);
-			ctx.stroke();
-
-			//Sky
-			ctx.strokeStyle="#87ceeb";
-			ctx.fillStyle="#87ceeb";
-			ctx.beginPath();
-			ctx.setLineDash([]);
-			ctx.moveTo(0, cHeightCenter*0.4);
-			ctx.lineTo(0, 0);
-			ctx.lineTo(cWidth, 0);
-			ctx.lineTo(cWidth, cHeightCenter*0.4);
-			ctx.lineTo(0, cHeightCenter*0.4);
-			ctx.fill();
-			ctx.stroke();
-
-			//Gree grass
-			canvas.style.backgroundColor="green";
-
+		function render(){
+		    renderer.render(scene, camera);//draw
 		}
-		function clearCanvas() {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
+		function gameOver () {
+		  //cancelAnimationFrame( globalRenderID );
+		  //window.clearInterval( powerupSpawnIntervalID );
 		}
-		function resizeCanvas () {
-		    canvas.width=window.innerWidth;
-		    canvas.height=window.innerHeight;
-		    cWidth = canvas.width;
-		    cHeight = canvas.height;
-		    cWidthCenter = cWidth / 2;
-		    cHeightCenter = cHeight / 2;
-		    cThird = cWidth * 0.3;
+		function onWindowResize() {
+			//resize & align
+			sceneHeight = window.innerHeight;
+			sceneWidth = window.innerWidth;
+			renderer.setSize(sceneWidth, sceneHeight);
+			camera.aspect = sceneWidth/sceneHeight;
+			camera.updateProjectionMatrix();
 		}
-		function isMobile () {
-			return /Mobi|Android/i.test(navigator.userAgent);
-		}
-
-		/*dashInterval = setInterval(iniPreRoad, 50);
-		function iniPreRoad() {
-			if(gameStarted) {
-				clearInterval(dashInterval);
+		function isMobile() {
+			var mobile;
+			if(window.innerWidth > 775) {
+				mobile = false;
 			} else {
-				onCanvasLoad();
+				mobile = true;
 			}
-		}*/
-
-		window.addEventListener('click', function(e) {
-			if(!gameStarted) {
-				e.preventDefault() || e.preventDefault;
-				gameStarted = true;
-				onStart();
-			}
-		});
-		window.addEventListener('touchstart', function(e) {
-			if(!gameStarted) {
-				e.preventDefault() || e.preventDefault;
-				gameStarted = true;
-				onStart();
-			}
-		});
-
-		window.addEventListener('resize', function() {
-			resizeCanvas();
-		});
+			return mobile;
+		}
 
 	</script>
 </body>
