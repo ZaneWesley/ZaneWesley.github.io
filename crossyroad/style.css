@@ -6,6 +6,7 @@ body {
   font-size: 2em;
   color: white;
 user-select: none;
+overflow: hidden;
 }
 button {
   outline: none;
