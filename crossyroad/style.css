@@ -5,6 +5,7 @@ body {
   font-family: 'Press Start 2P', cursive;
   font-size: 2em;
   color: white;
+user-select: none;
 }
 button {
   outline: none;
