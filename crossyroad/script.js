@@ -596,3 +596,7 @@ function animate(timestamp) {
 }
 
 requestAnimationFrame( animate );
+
+document.addEventListener('gesturestart', function (e) {
+    e.preventDefault();
+});
