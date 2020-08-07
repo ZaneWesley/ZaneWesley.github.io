@@ -6,6 +6,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/93/three.min.js"></script>
+	<script src="touchswipe.js"></script>
 
 	<title>Road Runner</title>
 
@@ -31,7 +32,8 @@
 		var ground;
 		//var orbitControl;
 		var road;
-		var heroSphere;
+		var dashedLine1, dashedLine2;
+		var runner;
 		var roadRotation=/*0.008*/1.9840000000000015;
 		var runnerMovingSpeed;
 		var distanceTraveled = 0;
@@ -42,15 +44,15 @@
 		var heroBaseY=1.8;
 		var bounceValue=0.1;
 		var gravity=0.005;
-		var leftLane=-1;
-		var rightLane=1;
+		var leftLane=-0.5;
+		var rightLane=0.5;
 		var middleLane=0;
 		var currentLane;
 		var clock;
 		var jumping;
 		var treeReleaseInterval=0.5;
 		var lastTreeReleaseTime=0;
-		var treesInPath;
+		var obsticleInPath;
 		var treesPool;
 		var particleGeometry;
 		var particleCount=20;
@@ -81,7 +83,7 @@
 		function createScene(){
 			hasCollided=false;
 			score=0;
-			treesInPath=[];
+			obsticleInPath=[];
 			treesPool=[];
 			clock=new THREE.Clock();
 			clock.start();
@@ -104,7 +106,7 @@
 			//dom.appendChild(stats.dom);
 			//createTreesPool();
 			addWorld();
-			addHero();
+			addRunner();
 			addLight();
 			//addExplosion();
 			
@@ -123,6 +125,40 @@
 			window.addEventListener('resize', onWindowResize, false);//resize callback
 
 			document.onkeydown = handleKeyDown;
+			var canvas = document.getElementsByTagName('canvas')[0];
+			swipedetect(canvas, function(swipedir){
+			    //swipedir contains either "none", "left", "right", "top", or "down"
+			    if(jumping)return;
+				var validMove=true;
+				if ( swipedir === 'left') {//left
+					if(currentLane==middleLane){
+						currentLane=leftLane;
+					}else if(currentLane==rightLane){
+						currentLane=middleLane;
+					}else{
+						validMove=false;	
+					}
+				} else if ( swipedir === 'right') {//right
+					if(currentLane==middleLane){
+						currentLane=rightLane;
+					}else if(currentLane==leftLane){
+						currentLane=middleLane;
+					}else{
+						validMove=false;	
+					}
+				}else{
+					if ( swipedir === 'up'){//up, jump
+						bounceValue=0.1;
+						jumping=true;
+					}
+					validMove=false;
+				}
+				//runner.position.x=currentLane;
+				if(validMove){
+					jumping=true;
+					bounceValue=0.06;
+				}
+			})
 			
 			scoreText = document.createElement('div');
 			scoreText.style.position = 'absolute';
@@ -193,24 +229,24 @@
 				}
 				validMove=false;
 			}
-			//heroSphere.position.x=currentLane;
+			//runner.position.x=currentLane;
 			if(validMove){
 				jumping=true;
 				bounceValue=0.06;
 			}
 		}
-		function addHero(){
+		function addRunner(){
 			var sphereGeometry = new THREE.DodecahedronGeometry( heroRadius, 1);
 			var sphereMaterial = new THREE.MeshStandardMaterial( { color: 0xe5f2f2 ,shading:THREE.FlatShading} )
 			jumping=false;
-			heroSphere = new THREE.Mesh( sphereGeometry, sphereMaterial );
-			heroSphere.receiveShadow = true;
-			heroSphere.castShadow=true;
-			scene.add( heroSphere );
-			heroSphere.position.y=heroBaseY;
-			heroSphere.position.z=4.8;
+			runner = new THREE.Mesh( sphereGeometry, sphereMaterial );
+			runner.receiveShadow = true;
+			runner.castShadow=true;
+			scene.add( runner );
+			runner.position.y=heroBaseY;
+			runner.position.z=4.8;
 			currentLane=middleLane;
-			heroSphere.position.x=currentLane;
+			runner.position.x=currentLane;
 		}
 		function addWorld(){
 			//var roadHeight = window.innerHeight/2;
@@ -246,14 +282,12 @@
 			sun.shadow.camera.far = 50 ;
 		}
 		function addTree(inPath, row, isLeft){
-			var newTree;
+			var newObstical;
 			if(inPath){
 				if(treesPool.length==0)return;
 				newTree=treesPool.pop();
 				newTree.visible=true;
-				//console.log("add tree");
-				treesInPath.push(newTree);
-				//sphericalHelper.set( worldWidth-0.3, pathAngleValues[row], -road.rotation.x+4 );
+				obsticleInPath.push(newObstical);
 			}else{
 				newTree;
 				var forestAreaAngle=0;//[1.52,1.57,1.62];
@@ -274,13 +308,13 @@
 		    //animate
 		    //camera.translateZ( 1 );
 		    road.rotation.x = roadRotation;
-		    heroSphere.rotation.x -= runnerMovingSpeed;
-		    if(heroSphere.position.y<=heroBaseY){
+		    runner.rotation.x += runnerMovingSpeed;
+		    if(runner.position.y<=heroBaseY){
 		    	jumping=false;
 		    	bounceValue=(Math.random()*0.04)+0.005;
 		    }
-		    heroSphere.position.y+=bounceValue;
-		    heroSphere.position.x=THREE.Math.lerp(heroSphere.position.x,currentLane, 2*clock.getDelta());//clock.getElapsedTime());
+		    runner.position.y+=bounceValue;
+		    runner.position.x=THREE.Math.lerp(runner.position.x,currentLane, 2*clock.getDelta());//clock.getElapsedTime());
 		    bounceValue-=gravity;
 		    if(clock.getElapsedTime()>treeReleaseInterval){
 		    	clock.start();
@@ -299,13 +333,13 @@
 			var oneTree;
 			var treePos = new THREE.Vector3();
 			var treesToRemove=[];
-			treesInPath.forEach( function ( element, index ) {
-				oneTree=treesInPath[ index ];
+			obsticleInPath.forEach( function ( element, index ) {
+				oneTree=obsticleInPath[ index ];
 				treePos.setFromMatrixPosition( oneTree.matrixWorld );
 				if(treePos.z>6 &&oneTree.visible){//gone out of our view zone
 					treesToRemove.push(oneTree);
 				}else{//check collision
-					if(treePos.distanceTo(heroSphere.position)<=0.6){
+					if(treePos.distanceTo(runner.position)<=0.6){
 						console.log("hit");
 						hasCollided=true;
 						onHit();
@@ -315,8 +349,8 @@
 			var fromWhere;
 			treesToRemove.forEach( function ( element, index ) {
 				oneTree=treesToRemove[ index ];
-				fromWhere=treesInPath.indexOf(oneTree);
-				treesInPath.splice(fromWhere,1);
+				fromWhere=obsticleInPath.indexOf(oneTree);
+				obsticleInPath.splice(fromWhere,1);
 				treesPool.push(oneTree);
 				oneTree.visible=false;
 				console.log("remove tree");
