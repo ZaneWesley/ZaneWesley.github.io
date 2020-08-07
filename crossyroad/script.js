@@ -600,6 +600,6 @@ requestAnimationFrame( animate );
 document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
 });
-document.getElementsByTagName('canvas')[0].addEventListener('touchstart', function(e) {
+document.body.addEventListener('touchstart', function(e) {
 e.preventDefault() || e.preventDefault;
 });
