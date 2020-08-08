@@ -602,4 +602,5 @@ document.addEventListener('gesturestart', function (e) {
 });
 document.body.addEventListener('touchstart', function(e) {
 e.preventDefault() || e.preventDefault;
+return false;
 });
