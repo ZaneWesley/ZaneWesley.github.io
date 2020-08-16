@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Search</title>
+	<script async src="https://cse.google.com/cse.js?cx=004331449840494391267:-bsyz9uk9qg"></script>
+	<style>
+		body{
+			background-color:#FFFFFF;
+			color:#333333;
+			font-family:arial,sans-serif;
+		}
+		#search-title {
+			text-align: center;
+			font-size: 3rem;
+			color: #2196F3;
+		}
+		#search-wrapper {
+			padding:0 20px;
+			position: absolute;
+			top: 25%;
+			left: 50%;
+			width: 582px;
+			transform: translateX(-50%) translateY(-25%);
+		}
+		#gsc-i-id1 {/*Input*/
+			width: 100% !important;
+			height: 2em !important;
+		}
+		#gsc-iw-id1 {/*Input Wrapper*/
+			border: 1px solid #ccc !important;
+			border-radius: 10px;
+		}
+		.gsc-search-button {
+			display: none;
+		}
+		#footer{
+			font-size:82%;
+			text-align:center;
+			padding:16px;
+			position: absolute;
+			bottom: 0;
+		}
+
+		@media(max-width: 775px) {
+			#search-wrapper {
+				width: 95% !important; 
+			}
+		}
+</style>
+</head>
+<body onload="straightenURL()">
+	<noscript>
+		<h3>Search Engine requires JavaScript</h3>
+		<p>JavaScript is either disabled or not supported by your browser. To use Search Engine, enable JavaScript by changing your browser options and reloading this page.</p>
+	</noscript>
+	<div id="search-wrapper">
+		<h1 id="search-title">Search</h1>
+		<div class="gcse-searchbox-only" id="searchbox" data-resultsUrl="/squery" data-enableHistory="true" enableAutoComplete="true"></div>
+	</div>
+	<div id="footer">&copy;&nbsp;2020&nbsp;Zane Wesley</div>
+
+	<script>
+		var refreshNum = 0;
+		var ifPreload = window.location.search;
+		ifPreload = urlParams = new URLSearchParams(ifPreload);
+		var preload = ifPreload.has('preload') ? true : false;
+		function straightenURL() {
+			if(!preload) {
+				var state = {
+					stateChangeNum: refreshNum
+				}, title = 'Search', url = '/search';
+				history.pushState(state, title, url);
+				refreshNum++;
+			} else {
+				document.getElementById('gsc-i-id1').value = ifPreload.get('preload');
+			}
+		}
+	</script>
+</body>
+</html>
