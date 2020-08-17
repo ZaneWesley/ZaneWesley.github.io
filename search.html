@@ -5,6 +5,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="icon" type="icon/png" href="/images/zsearch-logo.png">
 	<title>ZSearch</title>
 	<script async src="https://cse.google.com/cse.js?cx=004331449840494391267:-bsyz9uk9qg"></script>
 	<style>
@@ -12,9 +13,6 @@
 			background-color:#FFFFFF;
 			color:#333333;
 			font-family:arial,sans-serif;
-background-image: url('/images/nlbg.JPG');
-background-size: cover;
-background-repeat: no-repeat;
 		}
 		#search-title {
 			text-align: center;
@@ -55,10 +53,10 @@ background-repeat: no-repeat;
 		}
 </style>
 </head>
-<body onload="straightenURL()">
+<body onload="straightenURL(); setSearchTitleColor()">
 	<noscript>
-		<h3>Search Engine requires JavaScript</h3>
-		<p>JavaScript is either disabled or not supported by your browser. To use Search Engine, enable JavaScript by changing your browser options and reloading this page.</p>
+		<h3>ZSearch requires JavaScript</h3>
+		<p>JavaScript is either disabled or not supported by your browser. To use ZSearch, enable JavaScript by changing your browser options and reloading this page.</p>
 	</noscript>
 	<div id="search-wrapper">
 		<h1 id="search-title">ZSearch</h1>
@@ -82,6 +80,21 @@ background-repeat: no-repeat;
 				document.getElementById('gsc-i-id1').value = ifPreload.get('preload');
 			}
 		}
+		function setSearchTitleColor() {
+			var text = document.getElementById('search-title').innerText;
+			var characters = text.split("");
+			document.getElementById('search-title').innerText = "";
+			for(var i = 0; i < characters.length; i++) {
+				document.getElementById('search-title').innerHTML += "<span style='color:"+randColor()+";'>"+characters[i]+"</span>";
+			}
+		}
+		function randColor() {
+			var colors = ["#2196F3", "#ff9800", "#9e9e9e"];/*Blue, Orange, Grey*/
+			return colors[Math.floor(Math.random()*colors.length)];
+		}
+		setInterval(function() {
+			setSearchTitleColor();
+		}, 3000);
 	</script>
 </body>
 </html>
