@@ -5,6 +5,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="icon" type="icon/png" href="/images/zsearch-logo.png">
 	<title>ZSearch</title>
 	<script async src="https://cse.google.com/cse.js?cx=004331449840494391267:-bsyz9uk9qg"></script>
 	<style>
@@ -14,6 +15,7 @@
 			font-family:arial,sans-serif;
 			padding-top: 70px;
 			overflow-x: hidden;
+			max-width: 100%;
 		}
 		#search-title {
 			text-align: left;
@@ -46,6 +48,10 @@
 		.gsc-search-button {
 			display: none;
 		}
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
 		#footer{
 			font-size:82%;
 			text-align:center;
@@ -55,22 +61,67 @@
 		}
 
 		@media(max-width: 775px) {
+			body {
+				padding-top: 120px;
+			}
 			#search-wrapper {
 				width: 95% !important; 
+				padding: auto;
+				position: absolute;
+				top: 0;
+				left: 0;
+				z-index: 1;
+			}
+			#searchbox {
+				position: auto;
+				top: auto;
+				left: auto;
+				width: 90%;
+			}
+			#gsc-i-id1 {/*Input*/
+				width: 90% !important;
+				height: 2em !important;
+			}
+			#gsc-iw-id1 {/*Input Wrapper*/
+				width: 90%;
+				border: 1px solid #ccc !important;
+				border-radius: 10px;
 			}
 		}
 </style>
 </head>
-<body onload="straightenURL()">
+<body onload="updateTitle(); setSearchTitleColor()">
 	<noscript>
-		<h3>Search Engine requires JavaScript</h3>
-		<p>JavaScript is either disabled or not supported by your browser. To use Search Engine, enable JavaScript by changing your browser options and reloading this page.</p>
+		<h3>ZSearch requires JavaScript</h3>
+		<p>JavaScript is either disabled or not supported by your browser. To use ZSearch, enable JavaScript by changing your browser options and reloading this page.</p>
 	</noscript>
 	<div id="search-wrapper">
-		<h1 id="search-title">ZSearch</h1>
+		<a href="/search"><h1 id="search-title">ZSearch</h1></a>
 		<div class="gcse-searchbox" id="searchbox" data-enableHistory="true" enableAutoComplete="true"></div>
 	</div>
 	<div class="gcse-searchresults">
 	<div id="footer">&copy;&nbsp;2020&nbsp;Zane Wesley</div>
+
+	<script>
+		function updateTitle() {
+			var search_q = document.getElementById('gsc-i-id1').value;
+			document.title = "ZSearch | " + search_q;
+		}
+		function setSearchTitleColor() {
+			var text = document.getElementById('search-title').innerText;
+			var characters = text.split("");
+			document.getElementById('search-title').innerText = "";
+			for(var i = 0; i < characters.length; i++) {
+				document.getElementById('search-title').innerHTML += "<span style='color:"+randColor()+";'>"+characters[i]+"</span>";
+			}
+		}
+		function randColor() {
+			var colors = ["#2196F3", "#ff9800", "#9e9e9e"];/*Blue, Orange, Grey*/
+			return colors[Math.floor(Math.random()*colors.length)];
+		}
+		setInterval(function() {
+			setSearchTitleColor();
+		}, 3000);
+	</script>
 </body>
 </html>
