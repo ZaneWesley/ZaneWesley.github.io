@@ -211,11 +211,28 @@
 				e.preventDefault() || e.preventDefault;
 				$('#freezer1-display').slideUp();
 				$('#add-item-form').slideDown();
+				$('#new-item').focus();
 			});
 			$('#submit-item').click(function(e) {
 				e.preventDefault() || e.preventDefault;
-				$('#new-item').val();
+				freezer1Storage.push($('#new-item').val());
+				$('#new-item').val('');
+				updateStorage();
+				$('#add-item-form').slideUp();
+				$('#freezer1-display').slideDown();
 			});
+			$('#new-item').on('keypress', function(e) {
+				if(e.which === 13) {
+					e.preventDefault() || e.preventDefault;
+					updateStorage();
+				}
+			});
+			function updateStorage() {
+				$('#inventory-list').html('');
+				for(var i = 0; i < freezer1Storage.length; i++) {
+					$('#inventory-list').append('<li class="f-item">'+freezer1Storage[i]+'</li>');
+				}
+			}
 			function updateFreezer1Data() {
 			  firebase.database().ref('freezers/'+"freezer1").set(freezer1Storage);
 			}
