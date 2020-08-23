@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!--<link rel="icon" type="icon/png" href="/images/icon.png">-->
+		<title>Freezer Manager</title>
+		<style>
+			body {
+				font-family: Calibri, sans-serif;
+				overflow-x: hidden;
+				background-color: #3a3a3a;
+				padding-top: 6em;
+			}
+			header {
+				text-align: center;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				background-color: #607d8b;
+				color: #fff;
+				z-index: 1;
+			}
+			h2 {
+				color: #fff;
+				margin-top: 0;
+			}
+			ul {
+				list-style-type: none;
+				padding: 0;
+				margin: 0;
+			}
+			li {
+				padding: 8px 16px;
+				border-bottom: 1px solid #607d8b;
+				color: #fff;
+			}
+			li:hover {
+				background-color: #607d8b;
+				color: #fff;
+				cursor: pointer;
+			}
+			li:last-child {
+				border-bottom: none;
+			}
+			label {
+				color: #fff;
+				font-weight: bold;
+			}
+			input{
+				padding: 8px;
+				display: block;
+				border: none;
+				border: 1px solid #607d8b;
+				width: 90%;
+				background-color: transparent;
+				color: #fff;
+				outline: none;
+			}
+			.select-item {
+				position: relative;
+				width: 200px;
+				height: 200px;
+				border: 1px solid #ccc;
+				border-radius: 50%;
+				display: inline-block;
+				background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT24aSY6NNVkZyH6L5Ouh5C2X6SbFAkpK7aNQ&usqp=CAU');
+				background-repeat: no-repeat;
+				background-size: cover;
+				cursor: pointer;
+				transition: all 0.5s;
+			}
+			.select-item-text {
+				position: relative;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				text-align: center;
+				font-size: 1.5em;
+				font-weight: bold;
+				transition: all 0.5s;
+			}
+			.select-item:hover {
+				box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+			}
+			.select-item:hover .select-item-text {
+				font-size: 1.7em;
+			}
+			.space {
+				padding: 16px;
+				display: inline-block;
+			}
+			.delete {
+				background-color: red;
+				padding: 8px 16px;
+			}
+			.item {
+				padding-left: 8px;
+			}
+			.add-item-btn {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				background-color: #607d8b;
+				font-size: 3em;
+				color: #fff;
+				position: absolute;
+				bottom: 0.5em;
+				right: 0.5em;
+			}
+
+			#freezer1-display {
+				display: none;
+			}
+			#add-item-form {
+				display: none;
+			}
+
+			@media (max-width: 775px) {
+				.select-item {
+					width: 150px;
+					height: 150px;
+				}
+				.space {
+					display: block;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>Freezer Manager</h1>
+		</header>
+		<div class="main-select-wrapper" id="select-display">
+			<h2>Select a Freezer:</h2>
+			<div class="select-item" id="freezer1-btn">
+				<div class="select-item-text">Small Freezer</div>
+			</div>
+			<div class="space"></div>
+			<div class="select-item" id="freezer2-btn">
+				<div class="select-item-text">New Freezer</div>
+			</div>
+		</div>
+
+		<div class="freezer-display-wrapper" id="freezer1-display">
+			<h2>Small Freezer Inventory</h2>
+			<div class="inventory-list-wrapper">
+				<ul id="inventory-list">
+					<li class="f-item">Test</li>
+				</ul>
+			</div>
+
+			<div class="add-item-btn">
+				<svg aria-hidden="true" focusable="false" data-icon="plus" role="img" style="width:70%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#fff" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
+			</div>
+		</div>
+
+		<div id="add-item-form">
+			<h2>Add Item</h2>
+			<label for="new-item">Item</label>
+			<input id="new-item" type="text">
+			<button id="submit-item">Add</button>
+		</div>
+
+		<!-- The core Firebase JS SDK is always required and must be listed first -->
+		<script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
+
+		<!-- TODO: Add SDKs for Firebase products that you want to use
+		     https://firebase.google.com/docs/web/setup#available-libraries -->
+		<script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-database.js"></script>
+
+		<script>
+		  // Your web app's Firebase configuration
+		  var firebaseConfig = {
+			    apiKey: "AIzaSyCfKPK-VdwqmRbIzByPMyAdVqmvIAQWvgY",
+			    authDomain: "freezer-manager-20f5d.firebaseapp.com",
+			    databaseURL: "https://freezer-manager-20f5d.firebaseio.com",
+			    projectId: "freezer-manager-20f5d",
+			    storageBucket: "freezer-manager-20f5d.appspot.com",
+			    messagingSenderId: "677331693762",
+			    appId: "1:677331693762:web:4547245b0c01312404cb5b"
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+			// Get a reference to the database service
+			var database = firebase.database();
+		</script>
+		<script>
+			var freezer1Storage = [];
+			var freezer2Storage = [];
+			$('#freezer1-btn').click(function(e) {
+				$('#select-display').fadeOut();
+				setTimeout(function() {
+					$('#freezer1-display').slideDown();
+				}, 500);
+			})
+			$('.f-item').click(function(e) {
+				e.preventDefault() || e.preventDefault;
+				var itemText = e.target.innerText;
+				var remove = confirm("Are you sure you want to remove "+itemText+" from the freezer?");
+				if(remove) {
+					e.target.remove();
+				} else {
+					return;
+				}
+			});
+			$('.add-item-btn').click(function(e) {
+				e.preventDefault() || e.preventDefault;
+				$('#freezer1-display').slideUp();
+				$('#add-item-form').slideDown();
+			});
+			$('#submit-item').click(function(e) {
+				e.preventDefault() || e.preventDefault;
+				$('#new-item').val();
+			});
+			function updateFreezer1Data() {
+			  firebase.database().ref('freezers/'+"freezer1").set(freezer1Storage);
+			}
+			function updateFreezer2Data() {
+			  firebase.database().ref('freezer2/'+"freezer2").set(freezer2Storage);
+			}
+		</script>
+	</body>
+</html>
