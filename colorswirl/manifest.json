@@ -1,0 +1,12 @@
+{
+	"name": "Color Swirl",
+	"short_name": "Color Swirl",
+	"start_url": "colorswirl.html",
+	"background_color": "#ffffff",
+	"theme_color": "#ffffff",
+	"display": "standalone",
+	"icons": [{
+		"src": "icon.jpg",
+		"sizes": "750x752"
+	}]
+}
