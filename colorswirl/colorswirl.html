@@ -1,7 +1,7 @@
 <!--
     Code copyright 2020 Zane Wesley.
     This code may not be copied, modified, or republished in any manner.
-    View the lisense at https://zanewesley.github.io/license.txt
+    View the lisense at https://zanewesley.github.io/license
 -->
 <!DOCTYPE html>
 <html>
@@ -13,6 +13,9 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="mobile-web-app-capable" content="yes">
+
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="icon.jpg">
 
         <link rel="icon" type="icon/jpg" href="icon.jpg">
 
@@ -326,12 +329,12 @@
                 var query = window.location.search;
                 var urlParams = new URLSearchParams(query);
                 if(urlParams.has('reset')) {
-                    if(urlParams.get('reset') !== "false" && urlParams.get('reset') !== null && urlParams.get('reset') !== "") {
+                    /*if(urlParams.get('reset') !== "false" && urlParams.get('reset') !== null && urlParams.get('reset') !== "") {
                         document.querySelector('.box').classList.remove('appear');
                         document.querySelector('.box').style.display='none';
-                    }
+                    }*/
                 } else {
-                    document.querySelector('.box').style.display='block';
+                    //document.querySelector('.box').style.display='block';
                 }
             }
             window.addEventListener('load', function() {
@@ -340,7 +343,7 @@
                     setPreferences();
                 } else {
                     mode = "rgb(225,225,225)";
-                    document.querySelector('.box').style.display='block';
+                    //document.querySelector('.box').style.display='block';
                 }
             });
             function reset() {
@@ -422,6 +425,18 @@
             function closeMenu() {
                 document.getElementById("more-menu").style.height = "0";
                 document.getElementById("more-menu").classList.remove('more-menu-open');
+            }
+
+            /* Initialize Service Worker */
+            if('serviceWorker' in navigator) {
+                //Register path to service worker
+                console.log('Connecting to Service Worker...');
+                navigator.serviceWorker.register('./serviceworker.js', {scope: '/colorswirl'}).then(registration => {
+                    //Connected
+                    console.log('Service Worker Conntected');
+                });
+            } else {
+                console.log('Service Worker not Supported');
             }
         </script>
 <!--
