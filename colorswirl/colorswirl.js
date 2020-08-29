@@ -1,7 +1,7 @@
 /*
-    Code copyright 2020 Zane Harrison.
+    Code copyright 2020 Zane Wesley.
     This code may not be copied, modified, or republished in any manner.
-    View the lisense at https://zanewesley.github.io/license.txt
+    View the lisense at https://zanewesley.github.io/license
 */
 'use strict';
 
