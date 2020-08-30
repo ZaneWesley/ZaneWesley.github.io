@@ -33,7 +33,7 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
 	e.respondWith(
-		caches.open('colorswirl').then(cashe => {
+		caches.open('colorswirl').then(cache => {
 			//Does request exist
 			//yes
 			return cache.match(e.request).then(response => {
