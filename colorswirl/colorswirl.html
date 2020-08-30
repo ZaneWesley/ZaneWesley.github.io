@@ -417,14 +417,14 @@
                     alert('Press \'Add to Homescreen\' to download Color Swirl and add it to your homescreen.');
                     if(navigator.share) {
                         var title="Color Swirl", text="Download Color Swirl";
-                        navigator.share();
+                        navigator.share({title,text});
                     } else {
                         console.log('Browser cannot open share menu');
                     }
                 }
             });
             //Prompt to add to homescreen
-            /*var deferredPrompt ;
+            /*var deferredPrompt;
             window.addEventListener('beforeinstallprompt', function(e) {
                 e.preventDefault();
                 deferredPrompt  = e;
