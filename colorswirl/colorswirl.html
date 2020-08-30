@@ -395,13 +395,10 @@
                 if(!isMobile()) {
                     document.getElementById('notification-banner').style.display='none';
                 }
-
-                console.log('Preferences set');
             }
             window.addEventListener('load', function() {
                 if(preferencesData) {
                     preferences = JSON.parse(preferencesData);
-                    console.log('Attempting to set preferences...');
                     setPreferences();
                 } else {
                     mode = "rgb(225,225,225)";
@@ -412,7 +409,7 @@
                 if(!e.target.classList.contains('closebtn')) {
                     alert('Press \'Add to Homescreen\' to download Color Swirl and add it to your homescreen.');
                     if(navigator.share) {
-                        var title="Color Swirl", text="Download Color Swirl", url="zanewesley.github.io/colorswirl/colorswirl";
+                        var title="Color Swirl", text="Download Color Swirl", url="colorswirl";
                         navigator.share({
                             title,
                             text,
@@ -514,20 +511,11 @@
                 return isMobile;
             }
 
-            if(preferencesData) {
-                    preferences = JSON.parse(preferencesData);
-                    console.log('Attempting to set preferences...');
-                    setPreferences();
-                } else {
-                    mode = "rgb(225,225,225)";
-                    //document.querySelector('.box').style.display='block';
-                }
-
             /* Initialize Service Worker */
             if('serviceWorker' in navigator) {
                 //Register path to service worker
                 console.log('Connecting to Service Worker...');
-                navigator.serviceWorker.register('./serviceworker.js', {scope: '/colorswirl/'}).then(registration => {
+                navigator.serviceWorker.register('./serviceworker.js', {scope: '/colorswirl'}).then(registration => {
                     //Connected
                     console.log('Service Worker Conntected');
                 });
