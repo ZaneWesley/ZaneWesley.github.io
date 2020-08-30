@@ -424,15 +424,21 @@
                 }
             });*/
             //Prompt to add to homescreen
+            var deferredPrompt ;
             window.addEventListener('beforeinstallprompt', function(e) {
                 e.preventDefault();
-                console.log('Prompting to add to homescreen...')
-                e.prompt();
-                e.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                      console.log('Request accepted');
-                    } else {
-                      console.log('Request denied');
+                deferredPrompt  = e;
+                document.getElementById('notification-banner').addEventListener('click', function(e) {
+                if(!e.target.classList.contains('closebtn')) {
+                    console.log('Prompting to add to homescreen...');
+                    deferredPrompt .prompt();
+                    deferredPrompt .userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                          console.log('Request accepted');
+                        } else {
+                          console.log('Request denied');
+                        }
+                    }
                 }
             });
             function reset() {
