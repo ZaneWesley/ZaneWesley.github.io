@@ -412,7 +412,7 @@
                     //document.querySelector('.box').style.display='block';
                 }
             });
-            /*document.getElementById('notification-banner').addEventListener('click', function(e) {
+            document.getElementById('notification-banner').addEventListener('click', function(e) {
                 if(!e.target.classList.contains('closebtn')) {
                     alert('Press \'Add to Homescreen\' to download Color Swirl and add it to your homescreen.');
                     if(navigator.share) {
@@ -422,9 +422,9 @@
                         console.log('Browser cannot open share menu');
                     }
                 }
-            });*/
+            });
             //Prompt to add to homescreen
-            var deferredPrompt ;
+            /*var deferredPrompt ;
             window.addEventListener('beforeinstallprompt', function(e) {
                 e.preventDefault();
                 deferredPrompt  = e;
@@ -442,7 +442,7 @@
                     }
                 });
                 deferredPrompt = null;
-            });
+            });*/
             function reset() {
                 if(window.location.hostname) {
                     window.location = 'colorswirl?reset=true';
