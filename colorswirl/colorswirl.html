@@ -511,7 +511,7 @@
             if('serviceWorker' in navigator) {
                 //Register path to service worker
                 console.log('Connecting to Service Worker...');
-                navigator.serviceWorker.register('./serviceworker.js', {scope: '/colorswirl/'}).then(registration => {
+                navigator.serviceWorker.register('./serviceworker.js', {scope: '/colorswirl'}).then(registration => {
                     //Connected
                     console.log('Service Worker Conntected');
                 });
