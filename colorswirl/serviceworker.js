@@ -50,30 +50,3 @@ self.addEventListener('fetch', function(e) {
 		})
 	);
 });
-
-// Push Notifications
-if(Notification.permission === 'default') {
-	//Request permission if not granted
-	console.log('Requesting notificatio permission...');
-	Notification.requestPermission().then(result => {
-		if(result === 'denied') {
-			console.log('Notifications are blocked');
-			return;
-		}
-		if(result === 'granted') {
-			console.log('Notifications are enabled');
-			//
-		}
-	})
-}
-
-self.addEventListener('push', function(e) {
-	var options = {
-		body: e.data.body,
-		icon: 'icon.jpg',
-	}
-	e.waitUntil(
-		//Display notification
-		self.registration.showNotification(e.data.title, options)
-	)
-});
