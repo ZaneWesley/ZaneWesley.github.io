@@ -392,13 +392,6 @@
                 } else {
                     document.getElementById('notification-banner').classList.add('slideDown');
                 }
-                if(urlParams.has('app')) {
-                    if(urlParams.get('app') !== "false" && urlParams.get('app') !== null && urlParams.get('app') !== "") {
-                        document.getElementById('notification-banner').style.display='none';
-                    }
-                } else {
-                    document.getElementById('notification-banner').classList.add('slideDown');
-                }
                 if(!isMobile()) {
                     document.getElementById('notification-banner').style.display='none';
                 }
@@ -416,33 +409,17 @@
                 if(!e.target.classList.contains('closebtn')) {
                     alert('Press \'Add to Homescreen\' to download Color Swirl and add it to your homescreen.');
                     if(navigator.share) {
-                        var title="Color Swirl", text="Download Color Swirl";
-                        navigator.share({title,text});
+                        var title="Color Swirl", text="Download Color Swirl", url="zanewesley.github.io/colorswirl/colorswirl";
+                        navigator.share({
+                            title,
+                            text,
+                            url
+                        });
                     } else {
                         console.log('Browser cannot open share menu');
                     }
                 }
             });
-            //Prompt to add to homescreen
-            /*var deferredPrompt;
-            window.addEventListener('beforeinstallprompt', function(e) {
-                e.preventDefault();
-                deferredPrompt  = e;
-                document.getElementById('notification-banner').addEventListener('click', function(e) {
-                    if(!e.target.classList.contains('closebtn')) {
-                        console.log('Prompting to add to homescreen...');
-                        deferredPrompt .prompt();
-                        deferredPrompt .userChoice.then((choiceResult) => {
-                            if (choiceResult.outcome === 'accepted') {
-                              console.log('Request accepted');
-                            } else {
-                              console.log('Request denied');
-                            }
-                        });
-                    }
-                });
-                deferredPrompt = null;
-            });*/
             function reset() {
                 if(window.location.hostname) {
                     window.location = 'colorswirl?reset=true';
@@ -538,7 +515,7 @@
             if('serviceWorker' in navigator) {
                 //Register path to service worker
                 console.log('Connecting to Service Worker...');
-                navigator.serviceWorker.register('./serviceworker.js', {scope: '/colorswirl'}).then(registration => {
+                navigator.serviceWorker.register('./serviceworker.js', {scope: '/colorswirl/'}).then(registration => {
                     //Connected
                     console.log('Service Worker Conntected');
                 });
