@@ -392,6 +392,13 @@
                 } else {
                     document.getElementById('notification-banner').classList.add('slideDown');
                 }
+                if(urlParams.has('app')) {
+                    if(urlParams.get('app') !== "false" && urlParams.get('app') !== null && urlParams.get('app') !== "") {
+                        document.getElementById('notification-banner').style.display='none';
+                    }
+                } else {
+                    document.getElementById('notification-banner').classList.add('slideDown');
+                }
                 if(!isMobile()) {
                     document.getElementById('notification-banner').style.display='none';
                 }
@@ -405,7 +412,7 @@
                     //document.querySelector('.box').style.display='block';
                 }
             });
-            document.getElementById('notification-banner').addEventListener('click', function(e) {
+            /*document.getElementById('notification-banner').addEventListener('click', function(e) {
                 if(!e.target.classList.contains('closebtn')) {
                     alert('Press \'Add to Homescreen\' to download Color Swirl and add it to your homescreen.');
                     if(navigator.share) {
@@ -414,6 +421,18 @@
                     } else {
                         console.log('Browser cannot open share menu');
                     }
+                }
+            });*/
+            //Prompt to add to homescreen
+            window.addEventListener('beforeinstallprompt', function(e) {
+                e.preventDefault();
+                console.log('Prompting to add to homescreen...')
+                e.prompt();
+                e.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                      console.log('Request accepted');
+                    } else {
+                      console.log('Request denied');
                 }
             });
             function reset() {
