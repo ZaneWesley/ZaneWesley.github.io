@@ -395,11 +395,13 @@
                 if(!isMobile()) {
                     document.getElementById('notification-banner').style.display='none';
                 }
+
                 console.log('Preferences set');
             }
             window.addEventListener('load', function() {
                 if(preferencesData) {
                     preferences = JSON.parse(preferencesData);
+                    console.log('Attempting to set preferences...');
                     setPreferences();
                 } else {
                     mode = "rgb(225,225,225)";
@@ -511,6 +513,15 @@
                 }
                 return isMobile;
             }
+
+            if(preferencesData) {
+                    preferences = JSON.parse(preferencesData);
+                    console.log('Attempting to set preferences...');
+                    setPreferences();
+                } else {
+                    mode = "rgb(225,225,225)";
+                    //document.querySelector('.box').style.display='block';
+                }
 
             /* Initialize Service Worker */
             if('serviceWorker' in navigator) {
