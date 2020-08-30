@@ -43,7 +43,7 @@ self.addEventListener('fetch', function(e) {
 				}
 				//No
 				fetch(e.request).then(response => {
-					cache.put(e.request, response.clone());
+					//cache.put(e.request, response.clone());
 					return response;
 				});
 			});
