@@ -7,7 +7,7 @@
 //Onload - install
 self.addEventListener('install', function(e) {
 	var SWIRL_CACHE = 'swirl-cache';
-	var urlsToCache = ['colorswirl.html', 'colorswirl.js', 'signup.html', 'login.html'];
+	var urlsToCache = ['colorswirl.html?app=true', 'colorswirl.js', 'signup.html', 'login.html'];
 	e.waitUntil(
 		/* Cache pages*/
 		caches.open(SWIRL_CACHE).then(cache => cache.addAll(urlsToCache))
@@ -43,7 +43,7 @@ self.addEventListener('fetch', function(e) {
 				}
 				//No
 				fetch(e.request).then(response => {
-					//cache.put(e.request, response.clone());
+					cache.put(e.request, response.clone());
 					return response;
 				});
 			});
