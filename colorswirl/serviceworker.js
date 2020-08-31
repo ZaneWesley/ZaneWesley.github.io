@@ -4,7 +4,7 @@
     View the lisense at https://zanewesley.github.io/license
 */
 
-//Onload - install
+//Onload - install & download info
 self.addEventListener('install', function(e) {
 	var SWIRL_CACHE = 'swirl-cache';
 	var urlsToCache = ['colorswirl.html?app=true', 'colorswirl.js', 'signup.html', 'login.html'];
