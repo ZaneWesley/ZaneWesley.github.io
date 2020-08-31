@@ -358,6 +358,7 @@
         </div>
 
         <script src="colorswirl.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
         <script>
             var preferencesData = localStorage.getItem('swirl-data');
             var preferences = {};
@@ -776,7 +777,7 @@
                     localStorage.clear();
                     var user = firebase.auth().currentUser;
                     user.delete().then(function() {
-                      // User deleted
+                      // User deleted.
                       //window.location.href="deleted";
                         window.location.reload();
                     }).catch(function(error) {
