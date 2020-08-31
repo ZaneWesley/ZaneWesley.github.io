@@ -776,7 +776,7 @@
                     localStorage.clear();
                     var user = firebase.auth().currentUser;
                     user.delete().then(function() {
-                      // User deleted.
+                      // User deleted
                       //window.location.href="deleted";
                         window.location.reload();
                     }).catch(function(error) {
