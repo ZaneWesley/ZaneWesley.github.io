@@ -1,7 +1,7 @@
 {
 	"name": "Color Swirl",
 	"short_name": "Color Swirl",
-	"start_url": "colorswirl.html?app=true",
+	"start_url": "colorswirl.html",
 	"background_color": "#ffffff",
 	"theme_color": "#ffffff",
 	"display": "standalone",
