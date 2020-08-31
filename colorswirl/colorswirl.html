@@ -390,12 +390,11 @@
                     if(urlParams.get('reset') !== "false" && urlParams.get('reset') !== null && urlParams.get('reset') !== "") {
                         document.getElementById('notification-banner').style.display='none';
                     }
-                } else if(urlParams.has('app')) {
-                    if(urlParams.get('app') !== "false" && urlParams.get('app') !== null && urlParams.get('app') !== "") {
-                        document.getElementById('notification-banner').style.display='none';
-                    }
                 } else {
                     document.getElementById('notification-banner').classList.add('slideDown');
+                }
+                if (window.matchMedia('(display-mode: standalone)').matches) {  
+                    document.getElementById('notification-banner').style.display='none';
                 }
                 if(!isMobile()) {
                     document.getElementById('notification-banner').style.display='none';
