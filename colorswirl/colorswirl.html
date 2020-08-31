@@ -390,8 +390,6 @@
                     if(urlParams.get('reset') !== "false" && urlParams.get('reset') !== null && urlParams.get('reset') !== "") {
                         document.getElementById('notification-banner').style.display='none';
                     }
-                } else if (window.matchMedia('(display-mode: standalone)').matches) {
-                    document.getElementById('notification-banner').style.display='none';
                 } else {
                     document.getElementById('notification-banner').classList.add('slideDown');
                 }
@@ -407,7 +405,7 @@
                     setPreferences();
                 } else {
                     mode = "rgb(225,225,225)";
-                    //document.querySelector('.box').style.display='block';
+                    //document.querySelector('.box').style.display='block'; 
                 }
             });
             document.getElementById('notification-banner').addEventListener('click', function(e) {
