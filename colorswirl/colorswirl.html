@@ -395,6 +395,8 @@
                 }
                 if(!isMobile()) {
                     document.getElementById('notification-banner').style.display='none';
+                } else {
+                    eruda.init();
                 }
             }
             window.addEventListener('load', function() {
