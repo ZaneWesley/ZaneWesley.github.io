@@ -390,7 +390,7 @@
                     if(urlParams.get('reset') !== "false" && urlParams.get('reset') !== null && urlParams.get('reset') !== "") {
                         document.getElementById('notification-banner').style.display='none';
                     }
-                } else if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                } else if (window.matchMedia('(display-mode: standalone)').matches) {
                     document.getElementById('notification-banner').style.display='none';
                 } else {
                     document.getElementById('notification-banner').classList.add('slideDown');
