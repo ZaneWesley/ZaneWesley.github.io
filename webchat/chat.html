@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display Webcam Stream</title>
+ 
+<style>
+    8 {
+        box-sizing: border-box;
+    }
+    body {
+        margin: 0;
+    }
+    #video-container {
+        /*right: 2em;
+        bottom: 1em;*/
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        /*width: 200px;
+        height: 200px;*/
+        width: 70%;
+        height: 70%;
+    }
+    #userVideo {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+ 
+<body>
+<div id="video-container">
+    <video autoplay="true" id="userVideo"></video>
+</div>
+<button id="c-on-btn" onclick="start()">Start Video</button>
+<button id="c-pause-btn" onclick="pause()">Pause Video</button>
+<button id="c-off-btn" onclick="stop()">Stop Video</button>
+<label for="v-filter-select">Select a Filter</label>
+<select id="v-filter-select" onchange="filterVideo(this.value)">
+    <option value="none">No Filter</option>
+    <option value="grayscale(100%)">Greyscale</option>
+    <option value="blur(5px)">Blur</option>
+    <option value="brightness(100%)">Brighten</option>
+    <option value="contrast(100%)">Contrast</option>
+    <option value="hue-rotate(90deg)">Inverse Colors</option>
+    <option value="invert(100%)">Oppose Colors</option>
+    <option value="opacity(30%)">Fade</option>
+    <option value="saturate(8)">Saturate</option>
+    <option value="sepia(100%)">Sepia</option>
+</select>
+<script>
+    /* Init. Vars */
+    var video = document.querySelector("#userVideo");
+
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (err0r) {
+          console.log("Something went wrong!");
+        });
+    }
+    function stop(e) {
+        var stream = video.srcObject;
+        var tracks = stream.getTracks();
+
+        for (var i = 0; i < tracks.length; i++) {
+            var track = tracks[i];
+            track.stop();
+        }
+
+        video.srcObject = null;
+    }
+    function pause() {
+        video.pause();
+    }
+    function start() {
+        video.play();
+        if (navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+              video.srcObject = stream;
+            })
+            .catch(function (err0r) {
+              console.log("Something went wrong!");
+            });
+        }
+    }
+
+    function filterVideo(filter) {
+        document.querySelector("#userVideo").style.filter=filter;
+    }
+</script>
+</body>
+</html>
