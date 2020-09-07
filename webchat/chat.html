@@ -47,7 +47,7 @@
         video {
           width: 320px;
           height: 240px;
-          border: 1px solid black;
+          border: 1px solid #ccc;
           pointer-events: none;
         }
         #userPreview {
@@ -109,7 +109,7 @@
         </div>
          <div id="userPreview">
             You:<br>
-            <video id="userCamera" autoplay muted></video>
+            <video id="userCamera" autoplay muted playsinline></video>
         </div>
     </div>
 
@@ -267,7 +267,7 @@
           // get notified whenever we meet a new peer
           room.on('peer_joined', function(peer) {
             // create a video tag for the peer
-            const view = $('<video autoplay>');
+            const view = $('<video autoplay playsinline>');
             $('#guests').append(view);
             const ve = new rtc.MediaDomElement(view[0], peer);
             autoplay();
