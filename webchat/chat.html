@@ -74,7 +74,7 @@
         <div id="setup-container">
             Enter your room key to join:<br>
             <input placeholder="Room key" id="room_key">
-            <button id="connectBtn" onclick="connect()">Connect</button>
+            <button id="connectBtn" onclick="preconnect()">Connect</button>
         </div>
         <div id="guests">
             Guests:<br>
@@ -92,6 +92,19 @@
             if(urlParams.get('key') !== "false" && urlParams.get('key') !== null && urlParams.get('key') !== "") {
                 $('#room_key').val(urlParams.get('key'));
                 $('#connectBtn').click();
+            }
+        }
+        $('#room_key').on('keypress', function(e) {
+            if(e.which === 13) {
+                e.preventDefault();
+                preconnect();
+            }
+        });
+        function preconnect() {
+            if($('#room_key').val() !== "" && $('#room_key').val() !== null) {
+                connect();
+            } else {
+                alert('The room key is required.');
             }
         }
         async function connect() {
