@@ -56,6 +56,9 @@
             bottom: 2em;
             display: none;
         }
+        #local-settings {
+            display: none;
+        }
         #guests {
             display: none;
         }
@@ -95,6 +98,11 @@
             <input placeholder="Room key" id="room_key">
             <button id="connectBtn" onclick="preconnect()">Connect</button>
         </div>
+        <div id="local-settings">
+            <button id="toggleVideo" onclick="stopVideoOnly(document.getElementById('userCamera').srcObject)">Stop Camera</button>
+            <button id="toggleMute" onclick="stopAudioOnly(document.getElementById('userCamera').srcObject)">Mute</button>
+            <p>Once turned off, they cannot be turned back on.</p>
+        </div>
         <div id="guests">
             Guests:<br>
         </div>
@@ -107,6 +115,9 @@
     <script>
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
+        var videoStream = document.getElementById('userCamera').srcObject;
+        var camOn = true;
+        var muted = false;
         if(urlParams.has('key')) {
             if(urlParams.get('key') !== "false" && urlParams.get('key') !== null && urlParams.get('key') !== "") {
                 var roomQuery = urlParams.get('key').replace('wc_', '');
@@ -120,12 +131,89 @@
                 preconnect();
             }
         });
-        function preconnect() {
-            if($('#room_key').val() !== "" && $('#room_key').val() !== null) {
-                connect();
+
+        /*setInterval(function() {
+            var trigger = document.createElement('button');
+            trigger.onclick= function(e) {
                 $('video').each(function(index) {
                     this.play();
                 });
+                console.log('Video triggered');
+            }
+            //trigger.style.display="none";
+            trigger.click();
+            trigger.remove();
+        }, 1000);*/
+        function autoplay() {
+            var trigger = document.createElement('button');
+            trigger.onclick= function(e) {
+                $('video').each(function(index) {
+                    this.play();
+                });
+                console.log('Video triggered');
+            }
+            //trigger.style.display="none";
+            trigger.click();
+            trigger.remove();
+        }
+
+        function toggleVideo() {
+            if(camOn == false) {
+                startVideoOnly(videoStream);
+                camOn = true;
+                $('#toggleVideo').text('Camera Off');
+                console.log('Camera On');
+            } else {
+                camOn = false;
+                $('#toggleVideo').text('Camera On');
+                console.log('Camera Off');
+                stopVideoOnly(videoStream);
+            }
+        }
+
+        function toggleMute() {
+            if(muted === true) {
+                startAudioOnly(videoStream);
+                muted = false;
+                $('#toggleMute').text('Microphone Off');
+            } else {
+                startVideoOnly(videoStream);
+                muted = true;
+                $('#toggleMute').text('Microphone On');
+            }
+        }
+
+        // both mic and camera
+        function stopBothVideoAndAudio(stream) {
+            stream.getTracks().forEach(function(track) {
+                if (track.readyState == 'live') {
+                    track.stop();
+                }
+            });
+        }
+
+        // only camera
+        function stopVideoOnly(stream) {
+            stream.getTracks().forEach(function(track) {
+                if (track.readyState == 'live' && track.kind === 'video') {
+                    track.stop();
+                }
+            });
+        }
+
+
+        // only mic
+        function stopAudioOnly(stream) {
+            stream.getTracks().forEach(function(track) {
+                if (track.readyState == 'live' && track.kind === 'audio') {
+                    track.stop();
+                }
+            });
+        }
+
+        function preconnect() {
+            if($('#room_key').val() !== "" && $('#room_key').val() !== null) {
+                connect();
             } else {
                 alert('The room key is required.');
             }
@@ -143,6 +231,7 @@
           nameInput.prop('disabled', true).fadeOut();
           $('#connectBtn').prop('disabled', true).fadeOut();
           $('#setup-container').fadeOut();
+          $('#local-settings').fadeIn();
           $('#userPreview').fadeIn();
           $('#guests').fadeIn();
 
@@ -164,6 +253,7 @@
 
             // display that stream
             const ve = new rtc.MediaDomElement($('video')[0], stream);
+            autoplay();
           } catch(err) {
             alert("Unable to get stream, please give permission. You may need to go into settings if you have denied permissions before.");
             return;
@@ -175,6 +265,7 @@
             const view = $('<video autoplay>');
             $('#guests').append(view);
             const ve = new rtc.MediaDomElement(view[0], peer);
+            autoplay();
 
             // remove the tag after peer left
             peer.on('left', function() {
