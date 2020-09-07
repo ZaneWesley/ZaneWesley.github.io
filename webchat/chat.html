@@ -99,9 +99,10 @@
             <button id="connectBtn" onclick="preconnect()">Connect</button>
         </div>
         <div id="local-settings">
-            <button id="toggleVideo" onclick="stopVideoOnly(document.getElementById('userCamera').srcObject)">Stop Camera</button>
+            <!--<button id="toggleVideo" onclick="stopVideoOnly(document.getElementById('userCamera').srcObject)">Stop Camera</button>
             <button id="toggleMute" onclick="stopAudioOnly(document.getElementById('userCamera').srcObject)">Mute</button>
-            <p>Once turned off, they cannot be turned back on.</p>
+            <p>Once turned off, they cannot be turned back on.</p>-->
+            <button id="hangUp" onclick="hangup()">Leave</button>
         </div>
         <div id="guests">
             Guests:<br>
@@ -209,6 +210,10 @@
                     track.stop();
                 }
             });
+        }
+
+        function hangup() {
+            window.location='/webchat/chat';
         }
 
         function preconnect() {
