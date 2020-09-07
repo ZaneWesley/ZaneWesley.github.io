@@ -59,6 +59,25 @@
         #guests {
             display: none;
         }
+        button {
+          background-color: #65a9e5;
+          border: none;
+          color: white;
+          padding: 10px 24px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          cursor: pointer;
+          outline: none;
+        }
+        input {
+            border: 1px solid #ccc!important;
+            padding: 8px;
+            display: inline-block;
+            margin: 0;
+            outline: none;
+        }
     </style>
   </head>
   <body>
@@ -90,7 +109,8 @@
         var urlParams = new URLSearchParams(query);
         if(urlParams.has('key')) {
             if(urlParams.get('key') !== "false" && urlParams.get('key') !== null && urlParams.get('key') !== "") {
-                $('#room_key').val(urlParams.get('key'));
+                var roomQuery = urlParams.get('key').replace('wc_', '');
+                $('#room_key').val(roomQuery);
                 $('#connectBtn').click();
             }
         }
@@ -165,6 +185,10 @@
           } catch(err) {
             alert("Unable to join room: " + err.message);
           }
+
+          $('video').each(function(index) {
+            this.play();
+          });
         }
     </script>
   </body>
