@@ -123,6 +123,9 @@
         function preconnect() {
             if($('#room_key').val() !== "" && $('#room_key').val() !== null) {
                 connect();
+                $('video').each(function(index) {
+                    this.play();
+                });
             } else {
                 alert('The room key is required.');
             }
@@ -185,10 +188,6 @@
           } catch(err) {
             alert("Unable to join room: " + err.message);
           }
-
-          $('video').each(function(index) {
-            this.play();
-          });
         }
     </script>
   </body>
