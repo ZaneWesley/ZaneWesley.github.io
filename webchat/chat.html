@@ -118,7 +118,7 @@
         var urlParams = new URLSearchParams(query);
         var videoStream = document.getElementById('userCamera').srcObject;
         var camOn = true;
-        var muted = false;
+        var muted = false, hasAudio = true;
         var roomId;
         if(urlParams.has('key')) {
             if(urlParams.get('key') !== "false" && urlParams.get('key') !== null && urlParams.get('key') !== "") {
@@ -131,6 +131,7 @@
         if(urlParams.has('muted')) {
             if(urlParams.get('muted') && urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
                 muted = urlParams.get('muted');
+                hasAudio = (muted === true) ? hasAudio = false : hasAudio = true;
             }
         }
         if(urlParams.has('cam')) {
@@ -276,7 +277,7 @@
 
           try {
               // create a local stream from the users camera
-            const stream = await room.local.addStream({ video: camOn, audio: muted });
+            const stream = await room.local.addStream({ video: camOn, audio: hasAudio });
 
             // display that stream
             const ve = new rtc.MediaDomElement($('video')[0], stream);
