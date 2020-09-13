@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Chat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/rtc-lib@0.5.4/dist/bundle/rtc.dep.min.js"></script>
+    <link rel="icon" type="icon/ico" href="logo.ico">
+    <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: "Montserrat", sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          background-color: #f9fafc;
+          color: #595354;
+        }
+
+        a {
+            color: #65a9e5;
+        }
+
+        .header {
+          background-color: #ffffff;
+          padding: 10px 40px;
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header > .logo-container {
+          display: flex;
+          align-items: center;
+        }
+
+        .header > .logo-container > .logo-img {
+          width: 60px;
+          height: 60px;
+          margin-right: 15px;
+        }
+
+        .header > .logo-container > .logo-text {
+          font-size: 26px;
+          font-weight: 700;
+        }
+
+        .header > .logo-container > .logo-text > .logo-highlight {
+          color: #65a9e5;
+        }
+        .main {
+            padding: 20px 20px;
+        }
+        button {
+          background-color: #65a9e5;
+          border: none;
+          color: white;
+          padding: 10px 24px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          cursor: pointer;
+          outline: none;
+        }
+        input {
+            border: 1px solid #ccc!important;
+            padding: 8px;
+            display: inline-block;
+            margin: 0;
+            outline: none;
+        }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+        <div class="logo-container">
+          <img src="logo.ico" alt="Web Chat logo" class="logo-img" />
+          <h1 class="logo-text">
+            Web<span class="logo-highlight">Chat</span>
+          </h1>
+        </div>
+    </header>
+    <div class="main">
+        <div id="setup-container">
+            Enter a room name to create a meeting:<br>
+            <input placeholder="Room name" id="room_name">
+            <button id="connectBtn" onclick="create()">Create</button>
+            <p>Test your camera and surroundings before you join your meeting <a href="test">here</a>.</p>
+            <p>Looking to join a meeting? Join one <a href="chat">here</a>.</p>
+        </div>
+    </div>
+
+    <script>
+      var redirect="chat";
+      var key = "wc_"+new Date().getTime();
+      var query = "?key="+key+"&muted=false&cam=true";
+      $('#room_name').on('keypress', function(e) {
+            if(e.which === 13) {
+                e.preventDefault();
+                create();
+            }
+        });
+      function create() {
+        if($('#room_name').val() !== null && $('#room_name').val() !== "") {
+            window.location=redirect+query+"&name="+$('#room_name').val();
+        }
+      }
+    </script>
+  </body>
+</html>
