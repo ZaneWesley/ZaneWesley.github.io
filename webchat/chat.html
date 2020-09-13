@@ -118,8 +118,8 @@
         <div id="local-settings">
             <button id="toggleVideo" onclick="stopVideoOnly(document.getElementById('userCamera').srcObject)">Stop Camera</button>
             <button id="toggleMute" onclick="stopAudioOnly(document.getElementById('userCamera').srcObject)">Mute</button>
-            <p>When turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
             <button id="hangUp" onclick="hangup()">Leave</button>
+            <p>When turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
         </div>
         <div id="guests">
             Guests:<br>
@@ -166,6 +166,7 @@
                     console.log('Room name: '+urlParams.get('name'));
                 }
             }
+            document.getElementById('userCamera').muted=true;
         }
         $('#room_key').on('keypress', function(e) {
             if(e.which === 13) {
