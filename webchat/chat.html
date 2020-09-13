@@ -99,9 +99,9 @@
             <button id="connectBtn" onclick="preconnect()">Connect</button>
         </div>
         <div id="local-settings">
-            <!--<button id="toggleVideo" onclick="stopVideoOnly(document.getElementById('userCamera').srcObject)">Stop Camera</button>
+            <button id="toggleVideo" onclick="stopVideoOnly(document.getElementById('userCamera').srcObject)">Stop Camera</button>
             <button id="toggleMute" onclick="stopAudioOnly(document.getElementById('userCamera').srcObject)">Mute</button>
-            <p>Once turned off, they cannot be turned back on.</p>-->
+            <p>When turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
             <button id="hangUp" onclick="hangup()">Leave</button>
         </div>
         <div id="guests">
@@ -119,11 +119,23 @@
         var videoStream = document.getElementById('userCamera').srcObject;
         var camOn = true;
         var muted = false;
+        var roomId;
         if(urlParams.has('key')) {
             if(urlParams.get('key') !== "false" && urlParams.get('key') !== null && urlParams.get('key') !== "") {
                 var roomQuery = urlParams.get('key').replace('wc_', '');
                 $('#room_key').val(roomQuery);
                 $('#connectBtn').click();
+                roomId = roomQuery;
+            }
+        }
+        if(urlParams.has('muted')) {
+            if(urlParams.get('muted') && urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
+                muted = urlParams.get('muted');
+            }
+        }
+        if(urlParams.has('cam')) {
+            if(urlParams.get('cam') && urlParams.get('cam') !== null && urlParams.get('cam') !== "") {
+                camOn = urlParams.get('cam');
             }
         }
         $('#room_key').on('keypress', function(e) {
@@ -159,29 +171,37 @@
         }
 
         function toggleVideo() {
-            if(camOn == false) {
-                startVideoOnly(videoStream);
+            if(camOn === false) {
                 camOn = true;
                 $('#toggleVideo').text('Camera Off');
                 console.log('Camera On');
-            } else {
+                changeSettings();
+                location.reload();
+            } else if(camOn === true) {
                 camOn = false;
-                $('#toggleVideo').text('Camera On');
+                $('#toggleVideo').text('Start Camera');
                 console.log('Camera Off');
-                stopVideoOnly(videoStream);
+                changeSettings();
             }
         }
 
         function toggleMute() {
             if(muted === true) {
-                startAudioOnly(videoStream);
                 muted = false;
-                $('#toggleMute').text('Microphone Off');
-            } else {
-                startVideoOnly(videoStream);
+                $('#toggleMute').text('Mute');
+                changeSettings();
+                location.reload();
+            } else if(muted === false) {
                 muted = true;
-                $('#toggleMute').text('Microphone On');
+                $('#toggleMute').text('Unmute');
+                changeSettings();
             }
+        }
+
+        function changeSettings() {
+            var ifCam = camOn;
+            var ifMuted = muted;
+            history.pushState('', 'Update Room Settings', '/webchat/chat?key='+roomId+'&muted='+ifMuted+'&cam='+ifCam);
         }
 
         // both mic and camera
@@ -195,6 +215,7 @@
 
         // only camera
         function stopVideoOnly(stream) {
+            toggleVideo();
             stream.getTracks().forEach(function(track) {
                 if (track.readyState == 'live' && track.kind === 'video') {
                     track.stop();
@@ -205,6 +226,7 @@
 
         // only mic
         function stopAudioOnly(stream) {
+            toggleMute();
             stream.getTracks().forEach(function(track) {
                 if (track.readyState == 'live' && track.kind === 'audio') {
                     track.stop();
@@ -254,7 +276,7 @@
 
           try {
               // create a local stream from the users camera
-            const stream = await room.local.addStream({ video: true, audio: true });
+            const stream = await room.local.addStream({ video: camOn, audio: muted });
 
             // display that stream
             const ve = new rtc.MediaDomElement($('video')[0], stream);
