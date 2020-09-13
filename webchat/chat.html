@@ -16,6 +16,10 @@
           color: #595354;
         }
 
+        a {
+            color: #65a9e5;
+        }
+
         .header {
           background-color: #ffffff;
           padding: 10px 40px;
@@ -53,6 +57,12 @@
           height: 240px;
           border: 1px solid #ccc;
           pointer-events: none;
+        }
+        /* Mirror Image */
+        video {
+            transform: rotateY(180deg);
+            -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+            -moz-transform:rotateY(180deg); /* Firefox */
         }
         #userPreview {
             position: absolute;
@@ -102,6 +112,8 @@
             Enter your room key to join:<br>
             <input placeholder="Room key" id="room_key">
             <button id="connectBtn" onclick="preconnect()">Connect</button>
+            <p>Test your camera and surroundings before you join <a href="test">here</a>.</p>
+            <p>Want to create your own chat? Click <a href="new">here</a>.</p>
         </div>
         <div id="local-settings">
             <button id="toggleVideo" onclick="stopVideoOnly(document.getElementById('userCamera').srcObject)">Stop Camera</button>
@@ -125,28 +137,34 @@
         var camOn = true;
         var muted = false, hasAudio = true;
         var roomId;
-        if(urlParams.has('key')) {
-            if(urlParams.get('key') !== "false" && urlParams.get('key') !== null && urlParams.get('key') !== "") {
-                var roomQuery = urlParams.get('key').replace('wc_', '');
-                $('#room_key').val(roomQuery);
-                $('#connectBtn').click();
-                roomId = urlParams.get('key');
+        function init() {
+            if(urlParams.has('key')) {
+                if(urlParams.get('key') !== null && urlParams.get('key') !== "") {
+                    var roomQuery = urlParams.get('key').replace('wc_', '');
+                    roomId = 'wc_'+roomQuery;
+                    $('#room_key').val(roomQuery);
+                    $('#connectBtn').click();
+                }
             }
-        }
-        if(urlParams.has('muted')) {
-            if(urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
-                muted = urlParams.get('muted');
-                hasAudio = (muted === true) ? hasAudio = false : hasAudio = true;
+            if(urlParams.has('muted')) {
+                if(urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
+                    muted = urlParams.get('muted');
+                    hasAudio = (muted === true) ? hasAudio = false : hasAudio = true;
+                    console.log('Muted: '+muted);
+                    console.log('Has Audio: '+hasAudio);
+                }
             }
-        }
-        if(urlParams.has('cam')) {
-            if(urlParams.get('cam') !== null && urlParams.get('cam') !== "") {
-                camOn = urlParams.get('cam');
+            if(urlParams.has('cam')) {
+                if(urlParams.get('cam') !== null && urlParams.get('cam') !== "") {
+                    camOn = urlParams.get('cam');
+                    console.log('Cam On: '+camOn);
+                }
             }
-        }
-        if(urlParams.has('name')) {
-            if(urlParams.get('name') !== null && urlParams.get('name') !== "") {
-                $('.room-name').text(urlParams.get('name'));
+            if(urlParams.has('name')) {
+                if(urlParams.get('name') !== null && urlParams.get('name') !== "") {
+                    $('.room-name').text(urlParams.get('name'));
+                    console.log('Room name: '+urlParams.get('name'));
+                }
             }
         }
         $('#room_key').on('keypress', function(e) {
@@ -194,19 +212,21 @@
                 console.log('Camera Off');
                 changeSettings();
             }
+            console.log('Video Toggled');
         }
 
         function toggleMute() {
-            if(muted === true) {
+            if(muted === false) {
+                muted = true;
+                $('#toggleMute').text('Unmute');
+                changeSettings();
+            } else if(muted === true) {
                 muted = false;
                 $('#toggleMute').text('Mute');
                 changeSettings();
                 location.reload();
-            } else if(muted === false) {
-                muted = true;
-                $('#toggleMute').text('Unmute');
-                changeSettings();
             }
+            console.log('Sound Toggled');
         }
 
         function changeSettings() {
@@ -226,23 +246,33 @@
 
         // only camera
         function stopVideoOnly(stream) {
-            toggleVideo();
-            stream.getTracks().forEach(function(track) {
-                if (track.readyState == 'live' && track.kind === 'video') {
-                    track.stop();
-                }
-            });
+            try {
+                toggleVideo();
+                console.log('User Video Off');
+                stream.getTracks().forEach(function(track) {
+                    if (track.readyState == 'live' && track.kind === 'video') {
+                        track.stop();
+                    }
+                });
+            } catch(error) {
+                alert(error);
+            }
         }
 
 
         // only mic
         function stopAudioOnly(stream) {
-            toggleMute();
-            stream.getTracks().forEach(function(track) {
-                if (track.readyState == 'live' && track.kind === 'audio') {
-                    track.stop();
-                }
-            });
+            try {
+                toggleMute();
+                console.log('User Muted');
+                stream.getTracks().forEach(function(track) {
+                    if (track.readyState == 'live' && track.kind === 'audio') {
+                        track.stop();
+                    }
+                });
+            } catch(error) {
+                alert(error);
+            }
         }
 
         function hangup() {
@@ -318,6 +348,8 @@
             alert("Unable to join room: " + err.message);
           }
         }
+
+        init();
     </script>
   </body>
 </html>
