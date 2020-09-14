@@ -130,12 +130,14 @@
         </div>
     </div>
 
+    <button id="leaveProtoBtn" style="display: none;"></button>
+
     <script>
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
         var videoStream = document.getElementById('userCamera').srcObject;
         var camOn, muted, hasAudio;
-        var roomId;
+        var roomId, roomName;
         function init() {
             if(urlParams.has('key')) {
                 if(urlParams.get('key') !== null && urlParams.get('key') !== "") {
@@ -145,25 +147,12 @@
                     $('#connectBtn').click();
                 }
             }
-            if(urlParams.has('muted')) {
-                if(urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
-                    muted = urlParams.get('muted');
-                    hasAudio = !muted;
-                    console.log('Muted: '+muted);
-                    console.log('Has Audio: '+hasAudio);
-                    if(muted === true) {mute()}
-                }
-            }
-            if(urlParams.has('cam')) {
-                if(urlParams.get('cam') !== null && urlParams.get('cam') !== "") {
-                    camOn = urlParams.get('cam');
-                    console.log('Cam On: '+camOn);
-                    if(camOn === false) {hideVideo()}
-                }
-            }
+            checkCamSettings();
+            checkAudioSettings();
             if(urlParams.has('name')) {
                 if(urlParams.get('name') !== null && urlParams.get('name') !== "") {
                     $('.room-name').text(urlParams.get('name'));
+                    roomName = urlParams.get('name');
                     console.log('Room name: '+urlParams.get('name'));
                 }
             }
@@ -177,11 +166,27 @@
         });
 
         function checkCamSettings() {
-            //
+            if(urlParams.has('cam')) {
+                if(urlParams.get('cam') !== null && urlParams.get('cam') !== "") {
+                    camOn = urlParams.get('cam');
+                    console.log('Cam On: '+camOn);
+                    if(camOn === false) {hideVideo()}
+                }
+            }
+            console.log('Camera Settings Checked');
         }
 
         function checkAudioSettings() {
-            //
+            if(urlParams.has('muted')) {
+                if(urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
+                    muted = urlParams.get('muted');
+                    hasAudio = !muted;
+                    console.log('Muted: '+muted);
+                    console.log('Has Audio: '+hasAudio);
+                    if(muted === true) {mute()}
+                }
+            }
+            console.log('Audio Settings Checked');
         }
 
         function getBrowser() { 
@@ -303,7 +308,7 @@
         function changeSettings() {
             var ifCam = camOn;
             var ifMuted = muted;
-            history.pushState('', 'Update Room Settings', '/webchat/chat?key='+roomId+'&muted='+ifMuted+'&cam='+ifCam);
+            history.pushState('', 'Update Room Settings', '/webchat/chat?key='+roomId+'&muted='+ifMuted+'&cam='+ifCam+"&name="+roomName);
         }
 
         // both mic and camera
@@ -337,7 +342,7 @@
         }
 
         function hangup() {
-            window.location='/webchat/chat';
+            window.location='/webchat/test';
         }
 
         function preconnect() {
@@ -347,13 +352,21 @@
                 alert('The room key is required.');
             }
         }
+
+        /* 
+         * RTC Documentation: http://innovailable.github.io/rtc-lib/
+         * https://github.com/Innovailable/rtc-lib
+         * https://www.npmjs.com/package/rtc-lib
+         */
+
+
         async function connect() {
           // get room name from input
           const nameInput = $('#room_key');
           const roomKey = "wc_" + nameInput.val();
 
           if(!urlParams.has('key')) {
-            history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey);
+            history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&muted=false&cam=true&name='+roomName);
           }
           
           // make sure we don't connect twice
@@ -412,6 +425,13 @@
           } catch(err) {
             alert("Unable to join room: " + err.message);
           }
+          $('#leaveProtoBtn').click(function() {
+            room.leave();
+            setTimeout(function() {
+                room.connect();
+            }, 100);
+            //room.connect();
+          });
         }
 
         init();
