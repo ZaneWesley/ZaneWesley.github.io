@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Chat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/rtc-lib@0.5.4/dist/bundle/rtc.dep.min.js"></script>
+    <link rel="icon" type="icon/ico" href="logo.ico">
+    <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: "Montserrat", sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          background-color: #f9fafc;
+          color: #595354;
+        }
+
+        a {
+            color: #65a9e5;
+        }
+
+        .header {
+          background-color: #ffffff;
+          padding: 10px 40px;
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header > .logo-container {
+          display: flex;
+          align-items: center;
+        }
+
+        .header > .logo-container > .logo-img {
+          width: 60px;
+          height: 60px;
+          margin-right: 15px;
+        }
+
+        .header > .logo-container > .logo-text {
+          font-size: 26px;
+          font-weight: 700;
+        }
+
+        .header > .logo-container > .logo-text > .logo-highlight {
+          color: #65a9e5;
+        }
+        .main {
+            padding: 20px 20px;
+        }
+        .room-name {
+            position: absolute;
+            right: 2em;
+        }
+        video {
+          width: 320px;
+          height: 240px;
+          border: 1px solid #ccc;
+          pointer-events: none;
+        }
+        /* Mirror Image */
+        video {
+            transform: rotateY(180deg);
+            -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+            -moz-transform:rotateY(180deg); /* Firefox */
+        }
+        #userPreview {
+            position: absolute;
+            right: 2em;
+            bottom: 2em;
+            display: none;
+        }
+        #local-settings {
+            display: none;
+        }
+        #guests {
+            display: none;
+        }
+        button {
+          background-color: #65a9e5;
+          border: none;
+          color: white;
+          padding: 10px 24px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          cursor: pointer;
+          outline: none;
+        }
+        input {
+            border: 1px solid #ccc!important;
+            padding: 8px;
+            display: inline-block;
+            margin: 0;
+            outline: none;
+        }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+        <div class="logo-container">
+          <img src="logo.ico" alt="Web Chat logo" class="logo-img" />
+          <h1 class="logo-text">
+            Web<span class="logo-highlight">Chat</span>
+          </h1>
+          <h2 class="room-name"></h2>
+        </div>
+    </header>
+    <div class="main">
+        <div id="setup-container">
+            Enter your room key to join:<br>
+            <input placeholder="Room key" id="room_key">
+            <button id="connectBtn" onclick="preconnect()">Connect</button>
+            <p>Test your camera and surroundings before you join <a href="test">here</a>.</p>
+            <p>Want to create your own chat? Click <a href="new">here</a>.</p>
+        </div>
+        <div id="local-settings">
+            <button id="toggleVideo" onclick="hideVideo(); stopVideoOnly(document.getElementById('userCamera').srcObject);">Stop Camera</button>
+            <button id="toggleMute" onclick="mute(); stopAudioOnly(document.getElementById('userCamera').srcObject);">Mute</button>
+            <button id="hangUp" onclick="hangup()">Leave</button>
+            <p>When camera and mic are turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
+        </div>
+        <div id="guests">
+            Guests:<br>
+        </div>
+         <div id="userPreview">
+            You:<br>
+            <video id="userCamera" autoplay muted playsinline></video>
+        </div>
+    </div>
+
+    <button id="leaveProtoBtn" style="display: none;"></button>
+
+    <script>
+        var query = window.location.search;
+        var urlParams = new URLSearchParams(query);
+        var videoStream = document.getElementById('userCamera').srcObject;
+        var camOn, muted, hasAudio;
+        var roomId, roomName = "Untitled Chat";
+        function init() {
+            if(urlParams.has('key')) {
+                if(urlParams.get('key') !== null && urlParams.get('key') !== "") {
+                    var roomQuery = urlParams.get('key').replace('wc_', '');
+                    roomId = 'wc_'+roomQuery;
+                    $('#room_key').val(roomQuery);
+                    $('#connectBtn').click();
+                }
+            }
+            checkCamSettings();
+            checkAudioSettings();
+            if(urlParams.has('name')) {
+                if(urlParams.get('name') !== null && urlParams.get('name') !== "") {
+                    $('.room-name').text(urlParams.get('name'));
+                    roomName = urlParams.get('name');
+                    console.log('Room name: '+urlParams.get('name'));
+                }
+            }
+            document.getElementById('userCamera').muted=true;
+        }
+        $('#room_key').on('keypress', function(e) {
+            if(e.which === 13) {
+                e.preventDefault();
+                preconnect();
+            }
+        });
+
+        function checkCamSettings() {
+            if(urlParams.has('cam')) {
+                if(urlParams.get('cam') !== null && urlParams.get('cam') !== "") {
+                    camOn = urlParams.get('cam');
+                    console.log('Cam On: '+camOn);
+                    if(camOn === false) {hideVideo()}
+                }
+            }
+            console.log('Camera Settings Checked');
+        }
+
+        function checkAudioSettings() {
+            if(urlParams.has('muted')) {
+                if(urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
+                    muted = urlParams.get('muted');
+                    hasAudio = !muted;
+                    console.log('Muted: '+muted);
+                    console.log('Has Audio: '+hasAudio);
+                    if(muted === true) {mute()}
+                }
+            }
+            console.log('Audio Settings Checked');
+        }
+
+        function getBrowser() { 
+            /*if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) {
+                return 'Opera';
+            }
+            else */if(navigator.userAgent.indexOf("Chrome") != -1 )
+            {
+                return 'Chrome';
+            }
+            else if(navigator.userAgent.indexOf("Safari") != -1)
+            {
+                return 'Safari';
+            }
+            else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
+            {
+                 return 'Firefox';
+            }/*
+            else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+            {
+              return 'IE'; 
+            }*/
+            else {
+               return 'unknown';
+            }
+        }
+
+        /*setInterval(function() {
+            var trigger = document.createElement('button');
+            trigger.onclick= function(e) {
+                $('video').each(function(index) {
+                    this.play();
+                });
+                console.log('Video triggered');
+            }
+            //trigger.style.display="none";
+            trigger.click();
+            trigger.remove();
+        }, 1000);*/
+        function autoplay() {
+            var trigger = document.createElement('button');
+            trigger.onclick= function(e) {
+                $('video').each(function(index) {
+                    this.play();
+                });
+                console.log('Video triggered');
+            }
+            //trigger.style.display="none";
+            trigger.click();
+            trigger.remove();
+        }
+
+        function toggleVideo() {
+            if(camOn === false) {
+                camOn = true;
+                $('#toggleVideo').text('Camera Off');
+                console.log('Camera On');
+                changeSettings();
+                location.reload();
+            } else if(camOn === true) {
+                camOn = false;
+                $('#toggleVideo').text('Start Camera');
+                console.log('Camera Off');
+                changeSettings();
+            }
+            console.log('Video Toggled', camOn);
+        }
+
+        function toggleMute() {
+            if(muted === false) {
+                muted = true;
+                $('#toggleMute').text('Unmute');
+                changeSettings();
+            } else if(muted === true) {
+                muted = false;
+                $('#toggleMute').text('Mute');
+                changeSettings();
+                location.reload();
+            }
+            console.log('Sound Toggled', muted);
+        }
+
+        function mute() {
+            muted = true;
+            $('#toggleMute').text('Unmute');
+            changeSettings();
+            console.log('User Muted');
+            $('#toggleMute').on('click', function() {
+                unmute();
+            });
+            alert('When you unmute, your camera will automatically turn on. This can be turned back off manually.');
+        }
+
+        function unmute() {
+            muted = false;
+            $('#toggleMute').text('Mute');
+            changeSettings();
+            location.reload();
+            
+        }
+
+        function hideVideo() {
+            camOn = false;
+            $('#toggleVideo').text('Start Camera');
+            console.log('Camera Off');
+            changeSettings();
+            $('#toggleVideo').on('click', function() {
+                showVideo();
+            });
+        }
+
+        function showVideo() {
+            camOn = true;
+            $('#toggleVideo').text('Stop Camera');
+            console.log('Camera On');
+            changeSettings();
+            location.reload();
+        }
+
+        function changeSettings() {
+            var ifCam = camOn;
+            var ifMuted = muted;
+            history.pushState('', 'Update Room Settings', '/webchat/chat?key='+roomId+'&muted='+ifMuted+'&cam='+ifCam+"&name="+roomName);
+        }
+
+        // both mic and camera
+        function stopBothVideoAndAudio(stream) {
+            stream.getTracks().forEach(function(track) {
+                if (track.readyState == 'live') {
+                    track.stop();
+                }
+            });
+        }
+
+        // only camera
+        function stopVideoOnly(stream) {
+            console.log('User Video Off');
+            stream.getTracks().forEach(function(track) {
+                if (track.readyState == 'live' && track.kind === 'video') {
+                    track.stop();
+                }
+            });
+        }
+
+
+        // only mic
+        function stopAudioOnly(stream) {
+            console.log('User Muted');
+            stream.getTracks().forEach(function(track) {
+                if (track.readyState == 'live' && track.kind === 'audio') {
+                    track.stop();
+                }
+            });
+        }
+
+        function hangup() {
+            window.location='/webchat/test';
+        }
+
+        function preconnect() {
+            if($('#room_key').val() !== "" && $('#room_key').val() !== null) {
+                connect();
+            } else {
+                alert('The room key is required.');
+            }
+        }
+
+        /* 
+         * RTC Documentation: http://innovailable.github.io/rtc-lib/
+         * https://github.com/Innovailable/rtc-lib
+         * https://www.npmjs.com/package/rtc-lib
+         */
+
+
+        async function connect() {
+          // get room name from input
+          const nameInput = $('#room_key');
+          const roomKey = "wc_" + nameInput.val();
+
+          if(!urlParams.has('key')) {
+            history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&muted=false&cam=true&name='+roomName);
+          }
+          
+          // make sure we don't connect twice
+          nameInput.prop('disabled', true).fadeOut();
+          $('#connectBtn').prop('disabled', true).fadeOut();
+          $('#setup-container').fadeOut();
+          $('#local-settings').fadeIn();
+          $('#userPreview').fadeIn();
+          $('#guests').fadeIn();
+
+          // connnect to a public signaling server using the given name
+          const channel = new rtc.WebSocketChannel("wss://easy.innovailable.eu/" + encodeURI(roomKey));
+          const signaling = new rtc.MucSignaling(channel);
+
+          // use a poublic stun server
+          const options = {
+            stun: "stun:stun.innovailable.eu",
+          }
+
+          // create a room
+          const room = new rtc.Room(signaling, options);
+
+          try {
+              // create a local stream from the users camera
+            const stream = await room.local.addStream({ video: true, audio: true });
+
+            // display that stream
+            const ve = new rtc.MediaDomElement($('video')[0], stream);
+            autoplay();
+          } catch(err) {
+            if(getBrowser() === 'unknown') {
+                alert('Your browser does not support Web Chat. Please use Google Chrome, Mozilla Firefox, or Safari.');
+            } else {
+                alert("Unable to get stream, please give permission. You may need to go into settings if you have denied permissions before. Otherwise, your device does not have a camera. Please use a device with a camera to join a chat.");
+            }
+            return;
+          }
+
+          // get notified whenever we meet a new peer
+          room.on('peer_joined', function(peer) {
+            // create a video tag for the peer
+            const view = $('<video autoplay playsinline>');
+            $('#guests').append(view);
+            const ve = new rtc.MediaDomElement(view[0], peer);
+            autoplay();
+
+            // remove the tag after peer left
+            peer.on('left', function() {
+              view.remove();
+            });
+          });
+
+          // join the room
+          try {
+            await room.connect();
+          } catch(err) {
+            alert("Unable to join room: " + err.message);
+          }
+          $('#leaveProtoBtn').click(function() {
+            room.leave();
+            setTimeout(function() {
+                room.connect();
+            }, 100);
+            //room.connect();
+          });
+        }
+
+        init();
+    </script>
+  </body>
+</html>
