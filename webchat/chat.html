@@ -119,7 +119,7 @@
             <button id="toggleVideo" onclick="hideVideo(); stopVideoOnly(document.getElementById('userCamera').srcObject);">Stop Camera</button>
             <button id="toggleMute" onclick="mute(); stopAudioOnly(document.getElementById('userCamera').srcObject);">Mute</button>
             <button id="hangUp" onclick="hangup()">Leave</button>
-            <p>When turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
+            <p>When camera and mic are turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
         </div>
         <div id="guests">
             Guests:<br>
@@ -277,6 +277,7 @@
             $('#toggleMute').on('click', function() {
                 unmute();
             });
+            alert('When you unmute, your camera will automatically turn on. This can be turned back off manually.');
         }
 
         function unmute() {
