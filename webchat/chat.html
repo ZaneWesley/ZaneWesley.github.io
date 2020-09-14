@@ -116,8 +116,8 @@
             <p>Want to create your own chat? Click <a href="new">here</a>.</p>
         </div>
         <div id="local-settings">
-            <button id="toggleVideo" onclick="stopVideoOnly(document.getElementById('userCamera').srcObject)">Stop Camera</button>
-            <button id="toggleMute" onclick="stopAudioOnly(document.getElementById('userCamera').srcObject)">Mute</button>
+            <button id="toggleVideo" onclick="hideVideo(); stopVideoOnly(document.getElementById('userCamera').srcObject);">Stop Camera</button>
+            <button id="toggleMute" onclick="mute(); stopAudioOnly(document.getElementById('userCamera').srcObject);">Mute</button>
             <button id="hangUp" onclick="hangup()">Leave</button>
             <p>When turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
         </div>
@@ -134,8 +134,7 @@
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
         var videoStream = document.getElementById('userCamera').srcObject;
-        var camOn = true;
-        var muted = false, hasAudio = true;
+        var camOn, muted, hasAudio;
         var roomId;
         function init() {
             if(urlParams.has('key')) {
@@ -149,15 +148,17 @@
             if(urlParams.has('muted')) {
                 if(urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
                     muted = urlParams.get('muted');
-                    hasAudio = (muted === true) ? hasAudio = false : hasAudio = true;
+                    hasAudio = !muted;
                     console.log('Muted: '+muted);
                     console.log('Has Audio: '+hasAudio);
+                    if(muted === true) {mute()}
                 }
             }
             if(urlParams.has('cam')) {
                 if(urlParams.get('cam') !== null && urlParams.get('cam') !== "") {
                     camOn = urlParams.get('cam');
                     console.log('Cam On: '+camOn);
+                    if(camOn === false) {hideVideo()}
                 }
             }
             if(urlParams.has('name')) {
@@ -174,6 +175,39 @@
                 preconnect();
             }
         });
+
+        function checkCamSettings() {
+            //
+        }
+
+        function checkAudioSettings() {
+            //
+        }
+
+        function getBrowser() { 
+            /*if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) {
+                return 'Opera';
+            }
+            else */if(navigator.userAgent.indexOf("Chrome") != -1 )
+            {
+                return 'Chrome';
+            }
+            else if(navigator.userAgent.indexOf("Safari") != -1)
+            {
+                return 'Safari';
+            }
+            else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
+            {
+                 return 'Firefox';
+            }/*
+            else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+            {
+              return 'IE'; 
+            }*/
+            else {
+               return 'unknown';
+            }
+        }
 
         /*setInterval(function() {
             var trigger = document.createElement('button');
@@ -213,7 +247,7 @@
                 console.log('Camera Off');
                 changeSettings();
             }
-            console.log('Video Toggled');
+            console.log('Video Toggled', camOn);
         }
 
         function toggleMute() {
@@ -227,7 +261,43 @@
                 changeSettings();
                 location.reload();
             }
-            console.log('Sound Toggled');
+            console.log('Sound Toggled', muted);
+        }
+
+        function mute() {
+            muted = true;
+            $('#toggleMute').text('Unmute');
+            changeSettings();
+            console.log('User Muted');
+            $('#toggleMute').on('click', function() {
+                unmute();
+            });
+        }
+
+        function unmute() {
+            muted = false;
+            $('#toggleMute').text('Mute');
+            changeSettings();
+            location.reload();
+            
+        }
+
+        function hideVideo() {
+            camOn = false;
+            $('#toggleVideo').text('Start Camera');
+            console.log('Camera Off');
+            changeSettings();
+            $('#toggleVideo').on('click', function() {
+                showVideo();
+            });
+        }
+
+        function showVideo() {
+            camOn = true;
+            $('#toggleVideo').text('Stop Camera');
+            console.log('Camera On');
+            changeSettings();
+            location.reload();
         }
 
         function changeSettings() {
@@ -247,33 +317,23 @@
 
         // only camera
         function stopVideoOnly(stream) {
-            try {
-                toggleVideo();
-                console.log('User Video Off');
-                stream.getTracks().forEach(function(track) {
-                    if (track.readyState == 'live' && track.kind === 'video') {
-                        track.stop();
-                    }
-                });
-            } catch(error) {
-                alert(error);
-            }
+            console.log('User Video Off');
+            stream.getTracks().forEach(function(track) {
+                if (track.readyState == 'live' && track.kind === 'video') {
+                    track.stop();
+                }
+            });
         }
 
 
         // only mic
         function stopAudioOnly(stream) {
-            try {
-                toggleMute();
-                console.log('User Muted');
-                stream.getTracks().forEach(function(track) {
-                    if (track.readyState == 'live' && track.kind === 'audio') {
-                        track.stop();
-                    }
-                });
-            } catch(error) {
-                alert(error);
-            }
+            console.log('User Muted');
+            stream.getTracks().forEach(function(track) {
+                if (track.readyState == 'live' && track.kind === 'audio') {
+                    track.stop();
+                }
+            });
         }
 
         function hangup() {
@@ -318,13 +378,17 @@
 
           try {
               // create a local stream from the users camera
-            const stream = await room.local.addStream({ video: camOn, audio: hasAudio });
+            const stream = await room.local.addStream({ video: true, audio: true });
 
             // display that stream
             const ve = new rtc.MediaDomElement($('video')[0], stream);
             autoplay();
           } catch(err) {
-            alert("Unable to get stream, please give permission. You may need to go into settings if you have denied permissions before.");
+            if(getBrowser() === 'unknown') {
+                alert('Your browser does not support Web Chat. Please use Google Chrome, Mozilla Firefox, or Safari.');
+            } else {
+                alert("Unable to get stream, please give permission. You may need to go into settings if you have denied permissions before.");
+            }
             return;
           }
 
