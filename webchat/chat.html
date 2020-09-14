@@ -116,8 +116,8 @@
             <p>Want to create your own chat? Click <a href="new">here</a>.</p>
         </div>
         <div id="local-settings">
-            <button id="toggleVideo" onclick="hideVideo(); stopVideoOnly(document.getElementById('userCamera').srcObject);">Stop Camera</button>
-            <button id="toggleMute" onclick="mute(); stopAudioOnly(document.getElementById('userCamera').srcObject);">Mute</button>
+            <button id="toggleVideo">Stop Camera</button>
+            <button id="toggleMute">Mute</button>
             <button id="hangUp" onclick="hangup()">Leave</button>
             <p>When camera and mic are turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
         </div>
@@ -433,6 +433,14 @@
             }, 100);
             //room.connect();
           });
+
+$('#toggleMute').click(function() {
+
+stream.toggleMute([type='audio']);
+});
+$('#toggleVideo').click(function() {
+stream.toggleMute([type='video']);
+}):
         }
 
         init();
