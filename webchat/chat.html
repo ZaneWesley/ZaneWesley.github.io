@@ -137,7 +137,7 @@
         var urlParams = new URLSearchParams(query);
         var videoStream = document.getElementById('userCamera').srcObject;
         var camOn, muted, hasAudio;
-        var roomId, roomName;
+        var roomId, roomName = "Untitled Chat";
         function init() {
             if(urlParams.has('key')) {
                 if(urlParams.get('key') !== null && urlParams.get('key') !== "") {
