@@ -14,6 +14,7 @@
           -moz-osx-font-smoothing: grayscale;
           background-color: #f9fafc;
           color: #595354;
+          overflow-x: hidden;
         }
 
         a {
@@ -52,7 +53,7 @@
             position: absolute;
             right: 2em;
         }
-        video {
+        #userPreview video {
           width: 320px;
           height: 240px;
           border: 1px solid #ccc;
@@ -75,6 +76,12 @@
         }
         #guests {
             display: none;
+            position: absolute;
+            width: 100vw;
+        }
+        #guests video {
+            width: 25%;
+            padding-right: 1.5em;
         }
         button {
           background-color: #65a9e5;
@@ -137,7 +144,7 @@
         var urlParams = new URLSearchParams(query);
         var videoStream = document.getElementById('userCamera').srcObject;
         var camOn, muted, hasAudio;
-        var roomId, roomName = "Untitled Chat";
+        var roomId, roomName;
         function init() {
             if(urlParams.has('key')) {
                 if(urlParams.get('key') !== null && urlParams.get('key') !== "") {
@@ -401,7 +408,7 @@
             if(getBrowser() === 'unknown') {
                 alert('Your browser does not support Web Chat. Please use Google Chrome, Mozilla Firefox, or Safari.');
             } else {
-                alert("Unable to get stream, please give permission. You may need to go into settings if you have denied permissions before. Otherwise, your device does not have a camera. Please use a device with a camera to join a chat.");
+                alert("Unable to get stream, please give permission. You may need to go into settings if you have denied permissions before.");
             }
             return;
           }
