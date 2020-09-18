@@ -123,8 +123,8 @@
             <p>Want to create your own chat? Click <a href="new">here</a>.</p>
         </div>
         <div id="local-settings">
-            <button id="toggleVideo" onclick="hideVideo(); stopVideoOnly(document.getElementById('userCamera').srcObject);">Stop Camera</button>
-            <button id="toggleMute" onclick="mute(); stopAudioOnly(document.getElementById('userCamera').srcObject);">Mute</button>
+            <button id="toggleVideo">Stop Camera</button>
+            <button id="toggleMute">Mute</button>
             <button id="hangUp" onclick="hangup()">Leave</button>
             <p>When camera and mic are turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
         </div>
@@ -143,8 +143,8 @@
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
         var videoStream = document.getElementById('userCamera').srcObject;
-        var camOn, muted, hasAudio;
-        var roomId, roomName;
+        var camOn = true, hasAudio = true;
+        var roomId, roomName, stream;
         function init() {
             if(urlParams.has('key')) {
                 if(urlParams.get('key') !== null && urlParams.get('key') !== "") {
@@ -154,8 +154,6 @@
                     $('#connectBtn').click();
                 }
             }
-            checkCamSettings();
-            checkAudioSettings();
             if(urlParams.has('name')) {
                 if(urlParams.get('name') !== null && urlParams.get('name') !== "") {
                     $('.room-name').text(urlParams.get('name'));
@@ -171,30 +169,6 @@
                 preconnect();
             }
         });
-
-        function checkCamSettings() {
-            if(urlParams.has('cam')) {
-                if(urlParams.get('cam') !== null && urlParams.get('cam') !== "") {
-                    camOn = urlParams.get('cam');
-                    console.log('Cam On: '+camOn);
-                    if(camOn === false) {hideVideo()}
-                }
-            }
-            console.log('Camera Settings Checked');
-        }
-
-        function checkAudioSettings() {
-            if(urlParams.has('muted')) {
-                if(urlParams.get('muted') !== null && urlParams.get('muted') !== "") {
-                    muted = urlParams.get('muted');
-                    hasAudio = !muted;
-                    console.log('Muted: '+muted);
-                    console.log('Has Audio: '+hasAudio);
-                    if(muted === true) {mute()}
-                }
-            }
-            console.log('Audio Settings Checked');
-        }
 
         function getBrowser() { 
             /*if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) {
@@ -247,106 +221,13 @@
         }
 
         function toggleVideo() {
-            if(camOn === false) {
-                camOn = true;
-                $('#toggleVideo').text('Camera Off');
-                console.log('Camera On');
-                changeSettings();
-                location.reload();
-            } else if(camOn === true) {
-                camOn = false;
-                $('#toggleVideo').text('Start Camera');
-                console.log('Camera Off');
-                changeSettings();
-            }
+            camOn = new rtc.toggleMute ( [type='video'] );
             console.log('Video Toggled', camOn);
         }
 
         function toggleMute() {
-            if(muted === false) {
-                muted = true;
-                $('#toggleMute').text('Unmute');
-                changeSettings();
-            } else if(muted === true) {
-                muted = false;
-                $('#toggleMute').text('Mute');
-                changeSettings();
-                location.reload();
-            }
+            mute = new rtc.toggleMute ( [type='audio'] );
             console.log('Sound Toggled', muted);
-        }
-
-        function mute() {
-            muted = true;
-            $('#toggleMute').text('Unmute');
-            changeSettings();
-            console.log('User Muted');
-            $('#toggleMute').on('click', function() {
-                unmute();
-            });
-            alert('When you unmute, your camera will automatically turn on. This can be turned back off manually.');
-        }
-
-        function unmute() {
-            muted = false;
-            $('#toggleMute').text('Mute');
-            changeSettings();
-            location.reload();
-            
-        }
-
-        function hideVideo() {
-            camOn = false;
-            $('#toggleVideo').text('Start Camera');
-            console.log('Camera Off');
-            changeSettings();
-            $('#toggleVideo').on('click', function() {
-                showVideo();
-            });
-        }
-
-        function showVideo() {
-            camOn = true;
-            $('#toggleVideo').text('Stop Camera');
-            console.log('Camera On');
-            changeSettings();
-            location.reload();
-        }
-
-        function changeSettings() {
-            var ifCam = camOn;
-            var ifMuted = muted;
-            history.pushState('', 'Update Room Settings', '/webchat/chat?key='+roomId+'&muted='+ifMuted+'&cam='+ifCam+"&name="+roomName);
-        }
-
-        // both mic and camera
-        function stopBothVideoAndAudio(stream) {
-            stream.getTracks().forEach(function(track) {
-                if (track.readyState == 'live') {
-                    track.stop();
-                }
-            });
-        }
-
-        // only camera
-        function stopVideoOnly(stream) {
-            console.log('User Video Off');
-            stream.getTracks().forEach(function(track) {
-                if (track.readyState == 'live' && track.kind === 'video') {
-                    track.stop();
-                }
-            });
-        }
-
-
-        // only mic
-        function stopAudioOnly(stream) {
-            console.log('User Muted');
-            stream.getTracks().forEach(function(track) {
-                if (track.readyState == 'live' && track.kind === 'audio') {
-                    track.stop();
-                }
-            });
         }
 
         function hangup() {
@@ -374,7 +255,7 @@
           const roomKey = "wc_" + nameInput.val();
 
           if(!urlParams.has('key')) {
-            history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&muted=false&cam=true&name='+roomName);
+            history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&name='+roomName);
           }
           
           // make sure we don't connect twice
@@ -399,7 +280,8 @@
 
           try {
               // create a local stream from the users camera
-            const stream = await room.local.addStream({ video: true, audio: true });
+            //const stream = await room.local.addStream({ video: true, audio: true });
+            stream = await room.local.addStream({ video: true, audio: true });
 
             // display that stream
             const ve = new rtc.MediaDomElement($('video')[0], stream);
@@ -412,6 +294,17 @@
             }
             return;
           }
+
+          $('#toggleMute').click(function() {
+            stream.toggleMute(type='audio');
+            hasAudio=!hasAudio;
+            console.log('Mute Toggled. Has Audio:', hasAudio);
+          });
+          $('#toggleVideo').click(function() {
+            stream.toggleMute(type='video');
+            camOn=!camOn;
+            console.log('Cam Toggled. Cam On:', camOn);
+          });
 
           // get notified whenever we meet a new peer
           room.on('peer_joined', function(peer) {
@@ -433,13 +326,6 @@
           } catch(err) {
             alert("Unable to join room: " + err.message);
           }
-          $('#leaveProtoBtn').click(function() {
-            room.leave();
-            setTimeout(function() {
-                room.connect();
-            }, 100);
-            //room.connect();
-          });
         }
 
         init();
