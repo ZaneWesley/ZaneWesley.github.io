@@ -4,6 +4,7 @@
     <title>Web Chat</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/rtc-lib@0.5.4/dist/bundle/rtc.dep.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="icon" type="icon/ico" href="logo.ico">
     <style>
         body {
@@ -83,6 +84,22 @@
             width: 30%;
             padding-right: 1.5em;
         }
+        #chatFrame {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 5.4em;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            height: 88%;
+            width: 50%;
+        }
+        #chatFrame iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
         button {
           background-color: #65a9e5;
           border: none;
@@ -94,6 +111,9 @@
           font-size: 16px;
           cursor: pointer;
           outline: none;
+          user-select: none;
+          -moz-user-select: none;
+          -webkit-user-select: none;
         }
         input {
             border: 1px solid #ccc!important;
@@ -101,6 +121,49 @@
             display: inline-block;
             margin: 0;
             outline: none;
+        }
+    </style>
+    <style id="snackbar-styles">
+        #snackbar {
+          visibility: hidden;
+          min-width: 250px;
+          margin-left: -125px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 2px;
+          padding: 16px;
+          position: fixed;
+          z-index: 1;
+          left: 50%;
+          bottom: 30px;
+          font-size: 17px;
+        }
+
+        #snackbar.show {
+          visibility: visible;
+          -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+          animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @-webkit-keyframes fadein {
+          from {bottom: 0; opacity: 0;} 
+          to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+          from {bottom: 0; opacity: 0;}
+          to {bottom: 30px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+          from {bottom: 30px; opacity: 1;} 
+          to {bottom: 0; opacity: 0;}
+        }
+
+        @keyframes fadeout {
+          from {bottom: 30px; opacity: 1;}
+          to {bottom: 0; opacity: 0;}
         }
     </style>
   </head>
@@ -116,17 +179,26 @@
     </header>
     <div class="main">
         <div id="setup-container">
-            Enter your room key to join:<br>
-            <input placeholder="Room key" id="room_key">
-            <button id="connectBtn" onclick="preconnect()">Connect</button>
+            <h3>Join a Meeting</h3>
+            <label for="room_key">Room Key:</label>
+            <input type="text" placeholder="Room key" id="room_key" autocomplete="off">
+            <br><br>
+            <label for="room_name">Room Name:</label>
+            <input type="text" placeholder="Room Name" id="room_name" autocomplete="off">
+            <br><br>
+            <label for="username">Display Name:</label>
+            <input type="text" placeholder="Your Name" id="username">
+            <br><br>
+            <button id="connectBtn" onclick="preconnect()">Join</button>
             <p>Test your camera and surroundings before you join <a href="test">here</a>.</p>
             <p>Want to create your own chat? Click <a href="new">here</a>.</p>
         </div>
         <div id="local-settings">
-            <button id="toggleVideo">Stop Camera</button>
-            <button id="toggleMute">Mute</button>
-            <button id="hangUp" onclick="hangup()">Leave</button>
-            <p>When camera and mic are turned back on, you may experience a break in the audiostream. This will not last longer than a second.</p>
+            <button id="toggleVideo"><i class="fal fa-video"></i></button>
+            <button id="toggleMute"><i class="fal fa-microphone"></i></button>
+            <button id="share" onclick="createShareLink()"><i class="fal fa-share-alt"></i></button>
+            <button id="share" onclick="chatDisplayToggle()"><i class="fal fa-comment-alt-dots"></i></button>
+            <button id="hangUp" onclick="hangup()"><i class="fal fa-phone-slash"></i></button>
         </div>
         <div id="guests">
             Guests:<br>
@@ -137,38 +209,54 @@
         </div>
     </div>
 
-    <button id="leaveProtoBtn" style="display: none;"></button>
+    <div id="chatFrame">
+        <iframe id="chatIframe" crossorigin>Loading Chat&hellip;</iframe>
+    </div>
+
+    <div id="snackbar"></div>
 
     <script>
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
         var videoStream = document.getElementById('userCamera').srcObject;
         var camOn = true, hasAudio = true;
-        var roomId, roomName, stream;
+        var roomId, roomName, displayName, stream;
         function init() {
             if(urlParams.has('key')) {
-                if(urlParams.get('key') !== null && urlParams.get('key') !== "") {
+                if(urlParams.get('key') !== null && urlParams.get('key') !== "" && urlParams.get('key') !== "undefined") {
                     var roomQuery = urlParams.get('key').replace('wc_', '');
                     roomId = 'wc_'+roomQuery;
                     $('#room_key').val(roomQuery);
-                    $('#connectBtn').click();
+                    //$('#connectBtn').click();
                 }
             }
             if(urlParams.has('name')) {
-                if(urlParams.get('name') !== null && urlParams.get('name') !== "") {
+                if(urlParams.get('name') !== null && urlParams.get('name') !== "" && urlParams.get('name') !== "undefined") {
                     $('.room-name').text(urlParams.get('name'));
                     roomName = urlParams.get('name');
+                    $('#room_name').val(roomName);
                     console.log('Room name: '+urlParams.get('name'));
+                }
+            }
+            if(urlParams.has('displayName')) {
+                if(urlParams.get('displayName') !== null && urlParams.get('displayName') !== "" && urlParams.get('displayName') !== "undefined") {
+                    displayName = urlParams.get('displayName');
+                    $('#username').val(displayName);
+                    console.log('Display name: '+urlParams.get('name'));
                 }
             }
             document.getElementById('userCamera').muted=true;
         }
-        $('#room_key').on('keypress', function(e) {
+        $('input').on('keypress', function(e) {
             if(e.which === 13) {
                 e.preventDefault();
                 preconnect();
             }
         });
+
+        function iniChat() {
+            document.getElementById('chatIframe').src="https://webchatframe.herokuapp.com/chat.html?key="+roomId+"&name="+displayName;
+        }
 
         function getBrowser() { 
             /*if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) {
@@ -230,15 +318,52 @@
             console.log('Sound Toggled', muted);
         }
 
+        function chatDisplayToggle() {
+            if($('#chatFrame').css('display') === 'none') {
+                document.getElementById('chatFrame').style.display="block";
+            } else {
+                document.getElementById('chatFrame').style.display="none";
+            }
+        }
+
+        function createShareLink() {
+            var baseUrl = "https://zanewesley.github.io/webchat/chat";
+            var shareUrl = baseUrl + "?key=" + roomId;
+            CopyToClipboard(shareUrl);
+        }
+
+        function CopyToClipboard(value) {
+            var tempInput = document.createElement("input");
+            tempInput.value = value;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            snackbarMessgae("Share link copied to the clipboard!");
+        }
+
+        function snackbarMessgae(msg) {
+            var snackbar = document.getElementById("snackbar");
+            snackbar.innerText=msg;
+            snackbar.className = "show";
+            setTimeout(function(){ 
+                snackbar.className = snackbar.className.replace("show", "");
+                snackbar.innerText="";
+            }, 5000);
+        }
+
         function hangup() {
             window.location='/webchat/test';
         }
 
         function preconnect() {
-            if($('#room_key').val() !== "" && $('#room_key').val() !== null) {
+            if($('#room_key').val() !== "" && $('#room_key').val() !== null && $('#room_name').val() !== "" && $('#room_name').val() !== null && $('#username').val() !== "" && $('#username').val() !== null) {
+                roomName = $('#room_name').val();
+                displayName = $('#username').val();
+                $('.room-name').text(roomName);
                 connect();
             } else {
-                alert('The room key is required.');
+                alert('All room information is required.');
             }
         }
 
@@ -253,10 +378,9 @@
           // get room name from input
           const nameInput = $('#room_key');
           const roomKey = "wc_" + nameInput.val();
+          roomId = roomKey;
 
-          if(!urlParams.has('key')) {
-            history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&name='+roomName);
-          }
+        history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&name='+roomName+'&displayName='+displayName);
           
           // make sure we don't connect twice
           nameInput.prop('disabled', true).fadeOut();
@@ -265,6 +389,7 @@
           $('#local-settings').fadeIn();
           $('#userPreview').fadeIn();
           $('#guests').fadeIn();
+          iniChat();
 
           // connnect to a public signaling server using the given name
           const channel = new rtc.WebSocketChannel("wss://easy.innovailable.eu/" + encodeURI(roomKey));
@@ -298,11 +423,21 @@
           $('#toggleMute').click(function() {
             stream.toggleMute(type='audio');
             hasAudio=!hasAudio;
+            if(hasAudio == true) {
+                $('#toggleMute').html('<i class="fal fa-microphone"></i>');
+            } else {
+                $('#toggleMute').html('<i class="fal fa-microphone-slash"></i>');
+            }
             console.log('Mute Toggled. Has Audio:', hasAudio);
           });
           $('#toggleVideo').click(function() {
             stream.toggleMute(type='video');
             camOn=!camOn;
+            if(camOn == true) {
+                $('#toggleVideo').html('<i class="fal fa-video"></i>');
+            } else {
+                $('#toggleVideo').html('<i class="fal fa-video-slash"></i>');
+            }
             console.log('Cam Toggled. Cam On:', camOn);
           });
 
