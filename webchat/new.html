@@ -80,8 +80,13 @@
     </header>
     <div class="main">
         <div id="setup-container">
-            Enter a room name to create a meeting:<br>
-            <input placeholder="Room name" id="room_name">
+            <h3>Create a Meeting</h3>
+            <label for="room_name">Room Name:</label>
+            <input type="text" placeholder="Room name" id="room_name">
+            <br><br>
+            <label for="username">Display Name:</label>
+            <input type="text" placeholder="Your Name" id="username">
+            <br><br>
             <button id="connectBtn" onclick="create()">Create</button>
             <p>Test your camera and surroundings before you join your meeting <a href="test">here</a>.</p>
             <p>Looking to join a meeting? Join one <a href="chat">here</a>.</p>
@@ -99,8 +104,8 @@
             }
         });
       function create() {
-        if($('#room_name').val() !== null && $('#room_name').val() !== "") {
-            window.location=redirect+query+"&name="+$('#room_name').val();
+        if($('#room_name').val() !== null && $('#room_name').val() !== "" && $('#username').val() !== null && $('#username').val() !== "") {
+            window.location=redirect+query+"&name="+$('#room_name').val()+"&displayName="+$('#username').val();
         }
       }
     </script>
