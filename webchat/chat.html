@@ -91,7 +91,7 @@
             top: 5.4em;
             background-color: #fff;
             border: 1px solid #ccc;
-            height: 88%;
+            height: 100vh;
             width: 50%;
         }
         #chatFrame iframe {
@@ -194,11 +194,11 @@
             <p>Want to create your own chat? Click <a href="new">here</a>.</p>
         </div>
         <div id="local-settings">
-            <button id="toggleVideo"><i class="fal fa-video"></i></button>
-            <button id="toggleMute"><i class="fal fa-microphone"></i></button>
-            <button id="share" onclick="createShareLink()"><i class="fal fa-share-alt"></i></button>
-            <button id="share" onclick="chatDisplayToggle()"><i class="fal fa-comment-alt-dots"></i></button>
-            <button id="hangUp" onclick="hangup()"><i class="fal fa-phone-slash"></i></button>
+            <button id="toggleVideo" title="Toggle Camera"><i class="fal fa-video"></i></button>
+            <button id="toggleMute" title="Toggle Microphone"><i class="fal fa-microphone"></i></button>
+            <button id="share"  title="Share Chat" onclick="createShareLink()"><i class="fal fa-share-alt"></i></button>
+            <button id="chatToggle" title="Chat" onclick="chatDisplayToggle()"><i class="fal fa-comment-alt-dots"></i></button>
+            <button id="hangUp"  title="Leave Call" onclick="hangup()"><i class="fal fa-phone-slash"></i></button>
         </div>
         <div id="guests">
             Guests:<br>
@@ -235,6 +235,7 @@
                     $('.room-name').text(urlParams.get('name'));
                     roomName = urlParams.get('name');
                     $('#room_name').val(roomName);
+                    customTitle();
                     console.log('Room name: '+urlParams.get('name'));
                 }
             }
@@ -328,7 +329,7 @@
 
         function createShareLink() {
             var baseUrl = "https://zanewesley.github.io/webchat/chat";
-            var shareUrl = baseUrl + "?key=" + roomId;
+            var shareUrl = baseUrl + "?key=" + roomId + "&name=" + roomName;
             CopyToClipboard(shareUrl);
         }
 
@@ -340,6 +341,10 @@
             document.execCommand("copy");
             document.body.removeChild(tempInput);
             snackbarMessgae("Share link copied to the clipboard!");
+        }
+
+        function customTitle() {
+            document.title = roomName+" | Web Chat";
         }
 
         function snackbarMessgae(msg) {
@@ -381,6 +386,7 @@
           roomId = roomKey;
 
         history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&name='+roomName+'&displayName='+displayName);
+        customTitle();
           
           // make sure we don't connect twice
           nameInput.prop('disabled', true).fadeOut();
