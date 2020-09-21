@@ -227,6 +227,8 @@
         var videoStream = document.getElementById('userCamera').srcObject;
         var camOn = true, hasAudio = true;
         var roomId, roomName, displayName, stream;
+        var userData = localStorage.getItem('webchat-data');
+        var currentUserData = {};
         function init() {
             if(urlParams.has('key')) {
                 if(urlParams.get('key') !== null && urlParams.get('key') !== "" && urlParams.get('key') !== "undefined") {
@@ -254,6 +256,12 @@
                     console.log('Display name: '+urlParams.get('name'));
                 }
             }
+            /*if(userData) {
+                currentUserData = JSON.parse(userData);
+                setUserData();
+            } else {
+                //
+            }*/
             document.getElementById('userCamera').muted=true;
         }
         $('input').on('keypress', function(e) {
@@ -265,6 +273,15 @@
 
         function iniChat() {
             document.getElementById('chatIframe').src="https://webchatframe.herokuapp.com/chat.html?key="+roomId+"&name="+displayName;
+        }
+
+        function storeUserInfo() {
+            currentUserData.username = displayName;
+            localStorage.setItem('webchat-data', currentUserData);
+        }
+
+        function setUserData() {
+            $('#username').val(currentUserData.username);
         }
 
         function getBrowser() { 
@@ -395,6 +412,7 @@
 
         history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&name='+roomName+'&displayName='+displayName);
         customTitle();
+        storeUserInfo();
           
           // make sure we don't connect twice
           nameInput.prop('disabled', true).fadeOut();
