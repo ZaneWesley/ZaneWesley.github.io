@@ -180,15 +180,21 @@
     <div class="main">
         <div id="setup-container">
             <h3>Join a Meeting</h3>
-            <label for="room_key">Room Key:</label>
-            <input type="text" placeholder="Room key" id="room_key" autocomplete="off">
-            <br><br>
-            <label for="room_name">Room Name:</label>
-            <input type="text" placeholder="Room Name" id="room_name" autocomplete="off">
-            <br><br>
-            <label for="username">Display Name:</label>
-            <input type="text" placeholder="Your Name" id="username">
-            <br><br>
+            <div id="roomKeyContainer">
+                <label for="room_key">Room Key:</label>
+                <input type="text" placeholder="Room key" id="room_key" autocomplete="off">
+                <br>
+            </div>
+            <div id="roomNameContainer">
+                <label for="room_name">Room Name:</label>
+                <input type="text" placeholder="Room Name" id="room_name" autocomplete="off">
+                <br>
+            </div>
+            <div id="usernameContainer">
+                <label for="username">Display Name:</label>
+                <input type="text" placeholder="Your Name" id="username">
+            </div>
+            <br>
             <button id="connectBtn" onclick="preconnect()">Join</button>
             <p>Test your camera and surroundings before you join <a href="test">here</a>.</p>
             <p>Want to create your own chat? Click <a href="new">here</a>.</p>
@@ -228,6 +234,7 @@
                     roomId = 'wc_'+roomQuery;
                     $('#room_key').val(roomQuery);
                     //$('#connectBtn').click();
+                    $('#roomKeyContainer').hide();
                 }
             }
             if(urlParams.has('name')) {
@@ -237,6 +244,7 @@
                     $('#room_name').val(roomName);
                     customTitle();
                     console.log('Room name: '+urlParams.get('name'));
+                    $('#roomNameContainer').hide();
                 }
             }
             if(urlParams.has('displayName')) {
@@ -329,7 +337,7 @@
 
         function createShareLink() {
             var baseUrl = "https://zanewesley.github.io/webchat/chat";
-            var shareUrl = baseUrl + "?key=" + roomId + "&name=" + roomName;
+            var shareUrl = baseUrl + "?key=" + roomId + "&name=" + encodeURIComponent(roomName);
             CopyToClipboard(shareUrl);
         }
 
