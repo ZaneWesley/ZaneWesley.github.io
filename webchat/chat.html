@@ -347,8 +347,12 @@
         function chatDisplayToggle() {
             if($('#chatFrame').css('display') === 'none') {
                 document.getElementById('chatFrame').style.display="block";
+document.body.width="50%";
+document.getElementById('userPreview').style.right="50%";
             } else {
                 document.getElementById('chatFrame').style.display="none";
+document.body.width="100%";
+document.getElementById('userPreview').style.right="2em";
             }
         }
 
