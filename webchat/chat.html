@@ -219,7 +219,7 @@
             box-shadow: 3px 6px 18px 0px rgba(0, 0, 0, 0.2);
         }
     </style>
-    <style id="snackbar-styles">
+    <style id="ui-styles">
         #snackbar {
           visibility: hidden;
           min-width: 250px;
@@ -260,6 +260,40 @@
         @keyframes fadeout {
           from {bottom: 30px; opacity: 1;}
           to {bottom: 0; opacity: 0;}
+        }
+        .tooltip {
+          position: relative;
+          display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #383838;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px 0;
+          position: absolute;
+          z-index: 1;
+          top: 150%;
+          left: 50%;
+          margin-left: -60px;
+        }
+
+        .tooltip .tooltiptext::after {
+          content: "";
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 10px;
+          border-style: solid;
+          border-color: transparent transparent #383838 transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
         }
     </style>
     <style id="mobile-styles">
@@ -303,12 +337,17 @@
             <p>Want to create your own chat? Click <a href="new">here</a>.</p>
         </div>
         <div id="local-settings">
-            <button id="settings-btn" class="control-btn" title="Chat Settings" onclick="settingsDisplayToggle()"><i class="fal fa-cog"></i></button>
-            <button id="share" class="control-btn" title="Share Chat" onclick="createShareLink()"><i class="fal fa-share-alt"></i></button>
-            <button id="chatToggle" class="control-btn" title="Chat" onclick="chatDisplayToggle()"><i class="fal fa-comment-alt-dots"></i></button>
-            <button id="toggleVideo" class="control-btn" title="Toggle Camera"><i class="fal fa-video"></i></button>
-            <button id="toggleMute" class="control-btn" title="Toggle Microphone"><i class="fal fa-microphone"></i></button>
-            <button id="hangUp"  title="Leave Call" onclick="hangup()"><i class="fal fa-phone-slash"></i> Leave</button>
+            <span class="tooltip"><button id="settings-btn" class="control-btn" title="Chat Settings" onclick="settingsDisplayToggle()"><i class="fal fa-cog"></i></button><span class="tooltiptext">Chat Settings</span></span>
+
+            <span class="tooltip"><button id="share" class="control-btn" title="Share Chat" onclick="createShareLink()"><i class="fal fa-share-alt"></i></button><span class="tooltiptext">Share Chat</span></span>
+
+            <span class="tooltip"><button id="chatToggle" class="control-btn" title="Chat" onclick="chatDisplayToggle()"><i class="fal fa-comment-alt-dots"></i></button><span class="tooltiptext">Chat</span></span>
+
+            <span class="tooltip"><button id="toggleVideo" class="control-btn" title="Toggle Camera"><i class="fal fa-video"></i></button><span class="tooltiptext">Toggle Camera</span></span>
+
+            <span class="tooltip"><button id="toggleMute" class="control-btn" title="Toggle Microphone"><i class="fal fa-microphone"></i></button><span class="tooltiptext">Toggle Microphone</span></span>
+
+            <span class="tooltip"><button id="hangUp"  title="Leave Call" onclick="hangup()"><i class="fal fa-phone-slash"></i> Leave</button><span class="tooltiptext">Leave</span></span>
         </div>
         <div id="guests">
             <!--<p>Guests:</p>-->
