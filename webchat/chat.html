@@ -14,9 +14,10 @@
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           background-color: #f9fafc;
+          /*background-color: #181818;*/
           color: #595354;
           overflow-x: hidden;
-transition: all 2s;
+          transition: all 1s;
         }
 
         a {
@@ -55,14 +56,23 @@ transition: all 2s;
             position: absolute;
             right: 2em;
         }
+        #userPreview {
+          transition: all 1s;
+        }
         #userPreview video {
           width: 320px;
           height: 240px;
           border: 1px solid #ccc;
           pointer-events: none;
         }
-        /* Mirror Image */
         video {
+          transition: all 1s;
+          /*background-image: url('video.svg');
+          background-size: 90%;
+          background-repeat: no-repeat;*/
+        }
+        /* Mirror Image */
+        video.mirror {
             transform: rotateY(180deg);
             -webkit-transform:rotateY(180deg); /* Safari and Chrome */
             -moz-transform:rotateY(180deg); /* Firefox */
@@ -75,15 +85,41 @@ transition: all 2s;
         }
         #local-settings {
             display: none;
+            border-bottom: 1px solid #ccc;
+            padding: 1em;
+            text-align: right;
+            transition: all 1s;
+        }
+        .control-btn {
+          background-color: transparent;
+          text-align: center;
+          width: 3em;
+        }
+        .control-btn:hover {
+          /*background-color: #469ae3;*/
+          /*color: #595354;*/
+          color: #65a9e5;
+        }
+        #toggleMute {
+          padding-right: 3em;
+        }
+        #hangUp {
+          background-color: red;
+        }
+        #hangUp:hover {
+          color: #ffffff;
+          background-color: #e10000;
         }
         #guests {
             display: none;
             position: absolute;
             width: 100vw;
+            transition: all 1s;
         }
         #guests video {
             width: 30%;
             padding-right: 1.5em;
+            pointer-events: none;
         }
         #chatFrame {
             display: none;
@@ -94,6 +130,7 @@ transition: all 2s;
             border: 1px solid #ccc;
             height: 100vh;
             width: 50%;
+            transition: all 1s;
         }
         #chatFrame iframe {
             border: none;
@@ -101,6 +138,24 @@ transition: all 2s;
             height: 100%;
             overflow-x: hidden;
         }
+
+        #settingsBox {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: #ffffff;
+          border-radius: 5px;
+          padding: 20px;
+          width: 50%;
+          height: 50%;
+          display: none;
+        }
+
+        #settingsBox h1 {
+          text-align: center;
+        }
+
         button {
           background-color: #65a9e5;
           border: none;
@@ -122,6 +177,46 @@ transition: all 2s;
             display: inline-block;
             margin: 0;
             outline: none;
+        }
+    </style>
+    <style>
+        .onoffswitch {
+            position: relative; width: 55px;
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+        }
+        .onoffswitch-checkbox {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .onoffswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            height: 28px; padding: 0; line-height: 28px;
+            border: 0px solid #FFFFFF; border-radius: 30px;
+            background-color: #CCCCCC;
+        }
+        .onoffswitch-label:before {
+            content: "";
+            display: block; width: 30px; margin: -1px;
+            background: #FFFFFF;
+            position: absolute; top: 0; bottom: 0;
+            right: 23px;
+            border-radius: 30px;
+            box-shadow: 0 6px 12px 0px #757575;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label {
+            background-color: #65A9E5;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label, .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+           border-color: #65A9E5;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+            right: 0px; 
+            background-color: #595354; 
+            box-shadow: 3px 6px 18px 0px rgba(0, 0, 0, 0.2);
         }
     </style>
     <style id="snackbar-styles">
@@ -167,6 +262,13 @@ transition: all 2s;
           to {bottom: 0; opacity: 0;}
         }
     </style>
+    <style id="mobile-styles">
+      @media (max-width:755px) {
+        #settingsBox {
+          width: 90%;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="header">
@@ -201,23 +303,40 @@ transition: all 2s;
             <p>Want to create your own chat? Click <a href="new">here</a>.</p>
         </div>
         <div id="local-settings">
-            <button id="toggleVideo" title="Toggle Camera"><i class="fal fa-video"></i></button>
-            <button id="toggleMute" title="Toggle Microphone"><i class="fal fa-microphone"></i></button>
-            <button id="share"  title="Share Chat" onclick="createShareLink()"><i class="fal fa-share-alt"></i></button>
-            <button id="chatToggle" title="Chat" onclick="chatDisplayToggle()"><i class="fal fa-comment-alt-dots"></i></button>
-            <button id="hangUp"  title="Leave Call" onclick="hangup()"><i class="fal fa-phone-slash"></i></button>
+            <button id="settings-btn" class="control-btn" title="Chat Settings" onclick="settingsDisplayToggle()"><i class="fal fa-cog"></i></button>
+            <button id="share" class="control-btn" title="Share Chat" onclick="createShareLink()"><i class="fal fa-share-alt"></i></button>
+            <button id="chatToggle" class="control-btn" title="Chat" onclick="chatDisplayToggle()"><i class="fal fa-comment-alt-dots"></i></button>
+            <button id="toggleVideo" class="control-btn" title="Toggle Camera"><i class="fal fa-video"></i></button>
+            <button id="toggleMute" class="control-btn" title="Toggle Microphone"><i class="fal fa-microphone"></i></button>
+            <button id="hangUp"  title="Leave Call" onclick="hangup()"><i class="fal fa-phone-slash"></i> Leave</button>
         </div>
         <div id="guests">
-            Guests:<br>
+            <!--<p>Guests:</p>-->
+            <br>
         </div>
          <div id="userPreview">
             You:<br>
-            <video id="userCamera" autoplay muted playsinline></video>
+            <video id="userCamera" class="mirror" autoplay muted playsinline></video>
         </div>
     </div>
 
     <div id="chatFrame">
         <iframe id="chatIframe" crossorigin>Loading Chat&hellip;</iframe>
+    </div>
+
+    <div id="settingsBox">
+      <h1>Chat Settings</h1>
+      <span onclick="settingsDisplayToggle()" style="position: absolute; top: 1em; right: 1em; cursor: pointer; font-size: 2em;"><i class="far fa-times"></i></span>
+      <label for="mirrorToggle"><h3>Mirror Image:</h3></label>
+      <div class="onoffswitch">
+          <input type="checkbox"class="onoffswitch-checkbox" id="mirrorToggle" tabindex="0" checked>
+          <label class="onoffswitch-label" for="mirrorToggle"></label>
+      </div>
+      <label for="hideChat"><h3>Hide Chat:</h3></label>
+      <div class="onoffswitch">
+          <input type="checkbox"class="onoffswitch-checkbox" id="hideChat" tabindex="0">
+          <label class="onoffswitch-label" for="hideChat"></label>
+      </div>
     </div>
 
     <div id="snackbar"></div>
@@ -348,13 +467,56 @@ transition: all 2s;
         function chatDisplayToggle() {
             if($('#chatFrame').css('display') === 'none') {
                 document.getElementById('chatFrame').style.display="block";
-document.body.width="50%";
-document.getElementById('userPreview').style.right="50%";
+                document.body.width="50%";
+                document.getElementById('userPreview').style.right="52.5%";
+                document.getElementById('local-settings').style.paddingRight="51%";
             } else {
+                document.body.width="100%";
+                document.getElementById('userPreview').style.right="2em";
                 document.getElementById('chatFrame').style.display="none";
-document.body.width="100%";
-document.getElementById('userPreview').style.right="2em";
+                document.getElementById('local-settings').style.paddingRight="0";
             }
+        }
+
+        function settingsDisplayToggle() {
+          if($('#settingsBox').css('display') === 'none') {
+            document.getElementById('settingsBox').style.display="block";
+          } else {
+            document.getElementById('settingsBox').style.display="none";
+          }
+        }
+
+        document.getElementById('settingsBox').addEventListener('click', function(e) {
+          if($('#mirrorToggle').prop('checked') === true) {
+            mirror();
+          } else {
+            unmirror();
+          }
+          if($('#hideChat').prop('checked') === true) {
+            hideChat(true);
+          } else {
+            hideChat(false);
+          }
+        });
+
+        function mirror() {
+          $('video').addClass('mirror');
+        }
+
+        function unmirror() {
+          $('video').removeClass('mirror');
+        }
+
+        function hideChat(bool) {
+          if(bool === true) {
+            $('#chatToggle').fadeOut();
+            document.body.width="100%";
+            document.getElementById('userPreview').style.right="2em";
+            document.getElementById('chatFrame').style.display="none";
+            document.getElementById('local-settings').style.paddingRight="0";
+          } else {
+            $('#chatToggle').fadeIn();
+          }
         }
 
         function createShareLink() {
@@ -403,7 +565,7 @@ document.getElementById('userPreview').style.right="2em";
         }
 
         /* 
-         * RTC Documentation: http://innovailable.github.io/rtc-lib/
+         * RTC Lib Documentation: http://innovailable.github.io/rtc-lib/
          * https://github.com/Innovailable/rtc-lib
          * https://www.npmjs.com/package/rtc-lib
          */
@@ -418,6 +580,8 @@ document.getElementById('userPreview').style.right="2em";
         history.pushState('', 'Update Room Key', '/webchat/chat?key='+roomKey+'&name='+roomName+'&displayName='+displayName);
         customTitle();
         storeUserInfo();
+        document.body.style.backgroundColor="#181818";
+        document.querySelector('.main').style.color="#ffffff";
           
           // make sure we don't connect twice
           nameInput.prop('disabled', true).fadeOut();
@@ -428,7 +592,7 @@ document.getElementById('userPreview').style.right="2em";
           $('#guests').fadeIn();
           iniChat();
 
-          // connnect to a public signaling server using the given name
+          // connnect to a public signaling server using the given key
           const channel = new rtc.WebSocketChannel("wss://easy.innovailable.eu/" + encodeURI(roomKey));
           const signaling = new rtc.MucSignaling(channel);
 
@@ -478,10 +642,14 @@ document.getElementById('userPreview').style.right="2em";
             console.log('Cam Toggled. Cam On:', camOn);
           });
 
+          $('#share-screen').click(function() {
+            //
+          });
+
           // get notified whenever we meet a new peer
           room.on('peer_joined', function(peer) {
             // create a video tag for the peer
-            const view = $('<video autoplay playsinline>');
+            const view = $('<video class="mirror" autoplay playsinline>');
             $('#guests').append(view);
             const ve = new rtc.MediaDomElement(view[0], peer);
             autoplay();
