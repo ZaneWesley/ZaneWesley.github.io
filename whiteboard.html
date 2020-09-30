@@ -3,13 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro|" rel="stylesheet">
-
-    <!--<link href="images/countdown.png" type="icon/png" rel="icon">-->
 
     <title>Whiteboard</title>
 </head>
@@ -26,30 +20,6 @@
 
 
                         <script type="text/javascript">
-
-
-
-
-                            function download()
-                            {
-
-                                var canvas = $("#canvas").get(0);
-                                var dataUrl = canvas.toDataURL();
-                                $.ajax({
-                                    type: "POST",
-                                    url: "https://toolster.net/instruments/paint_one/convert.php",
-                                    data: "base="+dataUrl,
-                                    success: function(msg){
-                                        //alert(msg);
-                                        var iframe = document.getElementById("download_frame");
-                                        iframe.src = 'https://toolster.net/instruments/paint_one/download.php?file='+msg;
-
-                                    }
-                                });
-
-                            }
-
-
 
                             var ctx, color = "#000";
 
@@ -75,12 +45,6 @@
                                 $("#new").click(function() {
                                     newCanvas();
                                 });
-
-                                $("#download").click(function() {
-                                    download();
-                                });
-
-
                             });
 
                             // function to setup a new canvas for drawing
@@ -159,8 +123,6 @@
                                     x = e.pageX;
                                     y = e.pageY-44;
                                     ctx.moveTo(x,y);
-                                    var canvas = document.getElementById("canvas");
-                                    cHistory.saveState(canvas);
                                 };
                                 var move = function(e) {
                                     if(clicked){
@@ -178,61 +140,12 @@
                                 $(window).on("mouseup", stop);
                             };
 
-                            var cHistory = {
-                                redo_list: [],
-                                undo_list: [],
-                                saveState: function(canvas, list, keep_redo) {
-                                  keep_redo = keep_redo || false;
-                                  if(!keep_redo) {
-                                    this.redo_list = [];
-                                  }
-                                  
-                                  (list || this.undo_list).push(canvas.toDataURL());   
-                                },
-                                undo: function(canvas, ctx) {
-                                  this.restoreState(canvas, ctx, this.undo_list, this.redo_list);
-                                },
-                                redo: function(canvas, ctx) {
-                                  this.restoreState(canvas, ctx, this.redo_list, this.undo_list);
-                                },
-                                restoreState: function(canvas, ctx,  pop, push) {
-                                  if(pop.length) {
-                                    this.saveState(canvas, push, true);
-                                    var restore_state = pop.pop();
-                                    var img = new Element('img', {'src':restore_state});
-                                    img.onload = function() {
-                                      ctx.clearRect(0, 0, 600, 400);
-                                      ctx.drawImage(img, 0, 0, 600, 400, 0, 0, 600, 400);  
-                                    }
-                                  }
-                                }
-                              }
-                              $('undo').on('click', function() {
-                                var canvas = document.getElementById("canvas");
-                                cHistory.undo(canvas, ctx);
-                              });
-                              
-                              $('redo').on('click', function() {
-                                var canvas = document.getElementById("canvas");
-                                cHistory.redo(canvas, ctx);
-                              });
-
-                            function undo() {
-                                var canvas = document.getElementById("canvas");
-                                cHistory.undo(canvas, ctx);
-                            }
-
-                            function redo() {
-                                var canvas = document.getElementById("canvas");
-                                cHistory.redo(canvas, ctx);
-                            }
-
                         </script>
 
                         <div id="page">
                             <div id="content">
                               <p style="text-align:center">Whiteboard loading...</p>
-                              <p style="text-align:center">Coded by Zane Harrison</p>
+                              <p style="text-align:center">Please wait.</p>
                               </div>
                             <div class="footer">
                                 <div class="palette-case">
@@ -256,26 +169,10 @@
                                     <div id="btn-container">
                                         <div style="padding-top: 2%;"></div>
                                         <button id="new" class="navbtn">New Canvas</button>
-                                        <button id="undo" class="navbtn" onclick="undo()">Undo</button>
-                                        <button id="redo" class="navbtn" onclick="redo()">Redo</button>
-                                        <!--<button id="download" class="navbtn">Download Picture</button>-->
                                     </div>
-
                                 </div>
-
-
                             </div>
-
-
-
                         </div>
-
-
-                        <iframe id="download_frame" width="1" height="1" style="display:none;">
-                        </iframe>
-
-
-
                     </div>
 
                 </div>
