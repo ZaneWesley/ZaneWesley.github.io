@@ -4,6 +4,7 @@
     <title>Web Chat</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/rtc-lib@0.5.4/dist/bundle/rtc.dep.min.js"></script>
+    <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="icon" type="icon/ico" href="logo.ico">
     <style>
@@ -89,6 +90,7 @@
             padding: 1em;
             text-align: right;
             transition: all 1s;
+            padding-right: 1.5em;
         }
         .control-btn {
           background-color: transparent;
@@ -123,13 +125,15 @@
         }
         #chatFrame {
             display: none;
-            position: absolute;
+            position: fixed;
             right: 0;
             top: 5.4em;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            height: 100vh;
+            /*background-color: #fff;*/
+            background-color: #212121;
+            /*border: 1px solid #ccc;*/
+            height: 90vh;
             width: 50%;
+            /*width: 0;*/
             transition: all 1s;
         }
         #chatFrame iframe {
@@ -203,6 +207,7 @@
             right: 23px;
             border-radius: 30px;
             box-shadow: 0 6px 12px 0px #757575;
+            transition: all 0.5s;
         }
         .onoffswitch-checkbox:checked + .onoffswitch-label {
             background-color: #65A9E5;
@@ -376,6 +381,11 @@
           <input type="checkbox"class="onoffswitch-checkbox" id="hideChat" tabindex="0">
           <label class="onoffswitch-label" for="hideChat"></label>
       </div>
+      <label for="togglePreviewDrag"><h3>Make Camera Preview Movable</h3></label>
+      <div class="onoffswitch">
+          <input type="checkbox"class="onoffswitch-checkbox" id="togglePreviewDrag" tabindex="0">
+          <label class="onoffswitch-label" for="togglePreviewDrag"></label>
+      </div>
     </div>
 
     <div id="snackbar"></div>
@@ -388,6 +398,15 @@
         var roomId, roomName, displayName, stream;
         var userData = localStorage.getItem('webchat-data');
         var currentUserData = {};
+
+        var draggableUserPreview = new Draggabilly( '#userPreview', {
+          // options
+          //axis: 'x',
+          //containment: 'document'
+          grid: [ 20, 20 ]
+        });
+        draggableUserPreview.disable();
+
         function init() {
             if(urlParams.has('key')) {
                 if(urlParams.get('key') !== null && urlParams.get('key') !== "" && urlParams.get('key') !== "undefined") {
@@ -506,14 +525,18 @@
         function chatDisplayToggle() {
             if($('#chatFrame').css('display') === 'none') {
                 document.getElementById('chatFrame').style.display="block";
-                document.body.width="50%";
-                document.getElementById('userPreview').style.right="52.5%";
-                document.getElementById('local-settings').style.paddingRight="51%";
+                //document.getElementById('chatFrame').style.width="50%";
+                document.querySelector('.main').style.width="50%";
+                document.getElementById('userPreview').style.right="51%";
+                document.getElementById('local-settings').style.paddingRight="2em";
+                document.getElementById('guests').style.width="49%";
             } else {
-                document.body.width="100%";
+                document.querySelector('.main').style.width="100%";
                 document.getElementById('userPreview').style.right="2em";
                 document.getElementById('chatFrame').style.display="none";
-                document.getElementById('local-settings').style.paddingRight="0";
+                //document.getElementById('chatFrame').style.width="0%";
+                document.getElementById('local-settings').style.paddingRight="2em";
+                document.getElementById('guests').style.width="100%";
             }
         }
 
@@ -536,6 +559,11 @@
           } else {
             hideChat(false);
           }
+          if($('#togglePreviewDrag').prop('checked') === true) {
+            canDrag(true);
+          } else {
+            canDrag(false);
+          }
         });
 
         function mirror() {
@@ -555,6 +583,14 @@
             document.getElementById('local-settings').style.paddingRight="0";
           } else {
             $('#chatToggle').fadeIn();
+          }
+        }
+
+        function canDrag(bool) {
+          if(bool === true) {
+            draggableUserPreview.enable();
+          } else {
+            draggableUserPreview.disable();
           }
         }
 
