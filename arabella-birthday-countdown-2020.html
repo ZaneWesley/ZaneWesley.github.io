@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Miltonian&display=swap" rel="stylesheet">
+  <title>Arabella's Birthday Countdown 2020</title>
+
+    <!-- Styles -->
+    <style>
+	    body {
+	    	font-family: 'Miltonian', cursive;
+	    	background-color: #b19cd9;
+	    	color: #ffffff;
+        overflow: hidden;
+	    }
+	    .title {
+	    	position: absolute;
+	    	z-index: 2;
+	    	background-color: transparent;
+	    	padding: 0.5em;
+        bottom: 1em;
+        z-index: 10;
+	    }
+	    .cdb {
+  			position: absolute;
+  			padding: 2em;
+  			vertical-align: middle;
+  			top: 50%;
+  			left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+        z-index: 10;
+        opacity: 1;
+  		}
+  		.cdi {
+        font-size: 5em;
+        display: inline-block;
+        width: 40%;
+  		}
+  		.cdi-lbl {
+  			font-size: .5em;
+  		}
+    </style>
+    <style>
+      @keyframes move_wave {
+          0% {
+              transform: translateX(0) translateZ(0) scaleY(1)
+          }
+          50% {
+              transform: translateX(-25%) translateZ(0) scaleY(0.55)
+          }
+          100% {
+              transform: translateX(-50%) translateZ(0) scaleY(1)
+          }
+      }
+      .waveWrapper {
+          overflow: hidden;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          margin: auto;
+      }
+      .waveWrapperInner {
+          position: absolute;
+          width: 100%;
+          overflow: hidden;
+          height: 100%;
+          bottom: -1px;
+          background-image: linear-gradient(to top, #b19cd9 20%, #86377b 80%);
+      }
+      .bgTop {
+          z-index: 15;
+          opacity: 0.5;
+      }
+      .bgMiddle {
+          z-index: 10;
+          opacity: 0.75;
+      }
+      .bgBottom {
+          z-index: 5;
+      }
+      .wave {
+          position: absolute;
+          left: 0;
+          width: 200%;
+          height: 100%;
+          background-repeat: repeat no-repeat;
+          background-position: 0 bottom;
+          transform-origin: center bottom;
+      }
+      .waveTop {
+          background-size: 50% 100px;
+      }
+      .waveAnimation .waveTop {
+        animation: move-wave 3s;
+         -webkit-animation: move-wave 3s;
+         -webkit-animation-delay: 1s;
+         animation-delay: 1s;
+      }
+      .waveMiddle {
+          background-size: 50% 120px;
+      }
+      .waveAnimation .waveMiddle {
+          animation: move_wave 10s linear infinite;
+      }
+      .waveBottom {
+          background-size: 50% 100px;
+      }
+      .waveAnimation .waveBottom {
+          animation: move_wave 15s linear infinite;
+      }
+    </style>
+    <!-- jQuery JavaScript Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <div class="waveWrapper waveAnimation">
+    <div class="waveWrapperInner bgTop">
+      <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+    </div>
+    <div class="waveWrapperInner bgMiddle">
+      <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+    </div>
+    <div class="waveWrapperInner bgBottom">
+      <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+    </div>
+  </div>
+	
+	<h1 class="title">Until Arabella's Birthday</h1>
+
+	<!-- Display the countdown timer in an element -->
+	<div id="countdown-box" class="cdb">
+		<div class="cdi">
+			<span id="d">0</span>
+			<div id="d-lbl" class="cdi-lbl">DAYS</div>
+		</div>	
+		<span style="padding: 5px;"></span>
+		<div class="cdi">
+			<span id="h">0</span>
+			<div id="h-lbl" class="cdi-lbl">HOURS</div>
+		</div>
+		<br><br>
+		<div class="cdi">
+			<span id="m">0</span>
+			<div id="m-lbl" class="cdi-lbl">MINUTES</div>
+		</div>	
+		<span style="padding: 5px;"></span>
+		<div class="cdi">
+			<span id="s">0</span>
+			<div id="s-lbl" class="cdi-lbl">SECONDS</div>
+		</div>
+	</div>
+
+<script>
+// Set the birthday date we're counting down to
+var countdownDate = new Date("October 22, 2020 10:00:00").getTime();/* hrs: min: sec */
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countdownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element
+  $('#d').text(days);
+  $('#h').text(hours);
+  $('#m').text(minutes);
+  $('#s').text(seconds);
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("countdown-box").innerHTML = "<span class='cdi'>Happy Birthday Arabella!</span>";
+  }
+}, 1000);
+</script>
+</body>
+</html>
