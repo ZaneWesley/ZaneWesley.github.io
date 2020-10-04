@@ -178,10 +178,10 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element
-  $('#d').text(days);
-  $('#h').text(hours);
-  $('#m').text(minutes);
-  $('#s').text(seconds);
+  $('#d').text(addZero(days));
+  $('#h').text(addZero(hours));
+  $('#m').text(addZero(minutes));
+  $('#s').text(addZero(seconds));
 
   // If the count down is finished, write some text 
   if (distance < 0) {
@@ -189,6 +189,12 @@ var x = setInterval(function() {
     document.getElementById("countdown-box").innerHTML = "<span class='cdi'>Happy Birthday Arabella!</span>";
   }
 }, 1000);
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
 </script>
 </body>
 </html>
