@@ -98,8 +98,9 @@
                                 // setup canvas
                                 ctx=document.getElementById("canvas").getContext("2d");
                                 ctx.strokeStyle = color;
-                                ctx.lineWidth = 1;
-                                ctx.fillStyle = "#fff"; //цвет фона
+                                //ctx.lineWidth = 1;
+                                ctx.lineWidth = document.getElementById('size').value;
+                                ctx.fillStyle = "#fff";
                                 ctx.fillRect(0,0,w,h);
 
                                 // setup to trigger drawing on mouse or touch
@@ -227,6 +228,18 @@
                                 cHistory.redo(canvas, ctx);
                             }
 
+                            function setMarkerSize(size) {
+                                ctx.lineWidth=size;
+                            }
+
+                            function setMarkerColor(customColor) {
+                                color = customColor;
+                                $(".palette").css("border-color", "#777");
+                                $(".palette").css("border-style", "solid");
+                                ctx.beginPath();
+                                ctx.strokeStyle = color;
+                            }
+
                         </script>
 
                         <div id="page">
@@ -253,6 +266,12 @@
                                     </div>
 
                                     <div style="clear:both"></div>
+                                    <div id="controls-container">
+                                        <label for="size">Marker Size:</label>
+                                        <input id="size" type="range" min="1" max="10" value="1" onchange="setMarkerSize(this.value)">
+                                        <label for="customColor">Custom Color:</label>
+                                        <input id="customColor" type="color" onchange="setMarkerColor(this.value)">
+                                    </div>
                                     <div id="btn-container">
                                         <div style="padding-top: 2%;"></div>
                                         <button id="new" class="navbtn">New Canvas</button>
@@ -385,6 +404,9 @@
                     .black{
                         background-color:#000;
                         border:2px dashed #fff;
+                    }
+                    #controls-container {
+                        color: #ffffff;
                     }
 
 
