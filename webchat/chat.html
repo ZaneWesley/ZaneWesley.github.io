@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="icon" type="icon/ico" href="logo.ico">
     <style>
+        * {
+          user-select: none!important;
+          -moz-user-select: none!important;
+          -webkit-user-select: none!important;
+        }
         body {
           margin: 0;
           padding: 0;
@@ -160,6 +165,11 @@
           text-align: center;
         }
 
+        .pinned {
+          position: absolute;
+          width: 100%;
+        }
+
         button {
           background-color: #65a9e5;
           border: none;
@@ -300,6 +310,41 @@
         .tooltip:hover .tooltiptext {
           visibility: visible;
         }
+        .contextmenu {
+          display: none;
+          position: absolute;
+          z-index: 500;
+          padding: 12px 0;
+          width: 240px;
+          background-color: #ffffff;
+          border: 1px solid #dfdfdf;
+          box-shadow: 1px 1px 2px #cfcfcf;
+        }
+        .contextmenu-open {
+          display: block;
+        }
+        .contextmenu-items {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }
+        .contextmenu-item {
+          display: block;
+          margin-bottom: 4px;
+        }
+        .contextmenu-item:last-child {
+          margin-bottom: 0;
+        }
+        .contextmenu-link {
+          display: block;
+          padding: 4px 12px;
+          color: #0066aa;
+          text-decoration: none;
+        }
+        .contextmenu-link:hover {
+          color: #ffffff;
+          background-color: #0066aa;
+        }
     </style>
     <style id="mobile-styles">
       @media (max-width:755px) {
@@ -319,7 +364,7 @@
           <h2 class="room-name"></h2>
         </div>
     </header>
-    <div class="main">
+    <div id="main" class="main">
         <div id="setup-container">
             <h3>Join a Meeting</h3>
             <div id="roomKeyContainer">
@@ -390,6 +435,14 @@
 
     <div id="snackbar"></div>
 
+    <nav class="contextmenu">
+      <ul class="contextmenu-items">
+        <li class="contextmenu-item"><a href="#" class="contextmenu-link">Inspect</a></li>
+        <li class="contextmenu-item"><a href="#" class="contextmenu-link">View Source</a></li>
+        <li class="contextmenu-item"><a href="#" class="contextmenu-link">Delete</a></li>
+      </ul>
+    </nav>
+
     <script>
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
@@ -448,6 +501,10 @@
                 preconnect();
             }
         });
+
+        /*$('#guests video').on('dblclick', function(e) {
+          $(this).addClass('pinned');
+        });*/
 
         function iniChat() {
             document.getElementById('chatIframe').src="https://webchatframe.herokuapp.com/chat.html?key="+roomId+"&name="+displayName;
@@ -577,10 +634,9 @@
         function hideChat(bool) {
           if(bool === true) {
             $('#chatToggle').fadeOut();
-            document.body.width="100%";
-            document.getElementById('userPreview').style.right="2em";
-            document.getElementById('chatFrame').style.display="none";
-            document.getElementById('local-settings').style.paddingRight="0";
+            if($('#chatFrame').css('display') === 'block') {
+              chatDisplayToggle();
+            }
           } else {
             $('#chatToggle').fadeIn();
           }
@@ -678,6 +734,8 @@
 
           // create a room
           const room = new rtc.Room(signaling, options);
+          // create data channel
+          //const dataChannel = new rtc.DataChannel(channel);
 
           try {
               // create a local stream from the users camera
@@ -689,7 +747,7 @@
             autoplay();
           } catch(err) {
             if(getBrowser() === 'unknown') {
-                alert('Your browser does not support Web Chat. Please use Google Chrome, Mozilla Firefox, or Safari.');
+                alert('Your browser does not support Web Chat Video Conferencing. Please another browser such as Google Chrome, Mozilla Firefox, or Safari.');
             } else {
                 alert("Unable to get stream, please give permission. You may need to go into settings if you have denied permissions before.");
             }
@@ -744,6 +802,184 @@
         }
 
         init();
+    </script>
+    <script id="contextmenu-script">
+      (function() {
+        
+        "use strict";
+        function clickInsideElement(e, className ) {
+          var el = e.srcElement || e.target;
+          
+          if ( el.classList.contains(className) ) {
+            return el;
+          } else {
+            while ( el = el.parentNode ) {
+              if ( el.classList && el.classList.contains(className) ) {
+                return el;
+              }
+            }
+          }
+
+          return false;
+        }
+        function getPosition(e) {
+          var posx = 0;
+          var posy = 0;
+
+          if (!e) var e = window.event;
+          
+          if (e.pageX || e.pageY) {
+            posx = e.pageX;
+            posy = e.pageY;
+          } else if (e.clientX || e.clientY) {
+            posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+            posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+          }
+
+          return {
+            x: posx,
+            y: posy
+          }
+        }
+        /**
+         * Variables
+         */
+        var contextMenuClassName = "contextmenu";
+        var contextMenuItemClassName = "contextmenu-item";
+        var contextMenuLinkClassName = "contextmenu-link";
+        var contextMenuActive = "contextmenu-active";
+
+        var clickCoords;
+        var clickCoordsX;
+        var clickCoordsY;
+
+        var taskItemClassName = "contextmenu-link";
+
+        var menu = document.querySelector("#contextmenu");
+        var menuItems = menu.querySelectorAll(".contextmenu-item");
+        var menuState = 0;
+        var menuWidth;
+        var menuHeight;
+        var menuPosition;
+        var menuPositionX;
+        var menuPositionY;
+
+        var windowWidth;
+        var windowHeight;
+
+        function iniContextmenu() {
+          contextListener();
+          clickListener();
+          keyupListener();
+          resizeListener();
+        }
+
+        /**
+         * Listens for contextmenu events.
+         */
+        function contextListener() {
+          document.addEventListener( "contextmenu", function(e) {
+            e.preventDefault();
+            toggleMenuOn();
+            positionMenu(e);
+          });
+        }
+
+        /**
+         * Listens for click events.
+         */
+        function clickListener() {
+          document.addEventListener( "click", function(e) {
+            var clickeElIsLink = clickInsideElement( e, contextMenuLinkClassName );
+
+            if ( clickeElIsLink ) {
+              e.preventDefault();
+              menuItemListener( clickeElIsLink );
+            } else {
+              var button = e.which || e.button;
+              if ( button === 1 ) {
+                toggleMenuOff();
+              }
+            }
+          });
+        }
+
+        /**
+         * Listens for keyup events.
+         */
+        function keyupListener() {
+          window.onkeyup = function(e) {
+            if ( e.keyCode === 27 ) {
+              toggleMenuOff();
+            }
+          }
+        }
+
+        /**
+         * Window resize event listener
+         */
+        function resizeListener() {
+          window.onresize = function(e) {
+            toggleMenuOff();
+          };
+        }
+
+        /**
+         * Turns the custom context menu on.
+         */
+        function toggleMenuOn() {
+          if ( menuState !== 1 ) {
+            menuState = 1;
+            menu.classList.add( contextMenuActive );
+          }
+        }
+
+        /**
+         * Turns the custom context menu off.
+         */
+        function toggleMenuOff() {
+          if ( menuState !== 0 ) {
+            menuState = 0;
+            menu.classList.remove( contextMenuActive );
+          }
+        }
+
+        /**
+         * Positions the menu properly.
+         * 
+         * @param {Object} e The event
+         */
+        function positionMenu(e) {
+          clickCoords = getPosition(e);
+          clickCoordsX = clickCoords.x;
+          clickCoordsY = clickCoords.y;
+
+          menuWidth = menu.offsetWidth + 4;
+          menuHeight = menu.offsetHeight + 4;
+
+          windowWidth = window.innerWidth;
+          windowHeight = window.innerHeight;
+
+          if ( (windowWidth - clickCoordsX) < menuWidth ) {
+            menu.style.left = windowWidth - menuWidth + "px";
+          } else {
+            menu.style.left = clickCoordsX + "px";
+          }
+
+          if ( (windowHeight - clickCoordsY) < menuHeight ) {
+            menu.style.top = windowHeight - menuHeight + "px";
+          } else {
+            menu.style.top = clickCoordsY + "px";
+          }
+        }
+        function menuItemListener( link ) {
+          console.log( "Task ID - " + taskItemInContext.getAttribute("data-id") + ", Task action - " + link.getAttribute("data-action"));
+          toggleMenuOff();
+        }
+
+        iniContextmenu();
+
+      })();
     </script>
   </body>
 </html>
