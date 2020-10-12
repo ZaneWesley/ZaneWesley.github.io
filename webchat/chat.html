@@ -818,13 +818,13 @@
       function setPosition({ top, left }) {
         menu.style.left = `${left}px`;
         menu.style.top = `${top}px`;
-        toggleMenu("show");
       };
 
       $('html').on("click", function(e) {
-        if (menuVisible) {
+        /*if (menuVisible) {
           toggleMenu("hide");
-        }
+        }*/
+        toggleMenu("hide");
       });
 
       /*$('.mouse-option').on("click", function(e) {
@@ -838,6 +838,7 @@
           top: e.pageY
         };
         setPosition(origin);
+        toggleMenu("show");
         return false;
       });
     </script>
