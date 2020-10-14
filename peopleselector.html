@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700|Roboto:100,300,400,500,700,900&amp;lang=en" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<title>Select a Person</title>
+
+	<style>
+        * {
+            box-shadow: border-box;
+        }
+        body {
+            font-family: Roboto, sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        header {
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+        header p {
+            line-height: 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            padding: 8px 16px;
+            border-bottom: 1px solid #ddd;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        input {
+            border: 1px solid grey;
+            color: #000;
+            background-color: #fff;
+            padding: 8px 16px;
+            outline: none;
+        }
+        button {
+            border: 1px solid #2196F3;
+            color: #000;
+            background-color: #fff;
+            border-radius: 4px;
+            user-select: none;
+            padding: 8px 16px;
+            vertical-align: middle;
+            overflow: hidden;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            outline: none;
+        }
+        #setup {
+            padding-bottom: 6em;
+        }
+        .col {
+            position: absolute;
+            width: 48%;
+        }
+        .col.left {
+            left: 1em;
+            border-right: 1px solid #ccc;
+            height: 87vh;
+        }
+        .col.right {
+            right: 1em;
+        }
+        #nameDisplay {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        #selectedName {
+            font-size: 3em;
+        }
+        #nextName {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+        }
+        @media (max-width: 775px) {
+        	.col {
+                position: static;
+                width: 90%;
+            }
+            .col.left {
+                left: auto;
+                border: none;
+                height: auto;
+            }
+            .col.right {
+                right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+	<header>
+        <h1>Select a Person</h1>
+        <p>Randomly select a person for a task</p>
+    </header>
+    <div id="setup">
+        <div id="setupContainer" class="col left">
+            <h2>Enter Names</h2>
+            <label for="name">Name:</label>
+            <input id="name" type="text" placeholder="Name" autocomplete="off">
+            <button id="addName" onclick="addName()">Add</button>
+            <div>
+                <br>
+                <button id="startSelection" onclick="startSelection()">Done</button>
+            </div>
+        </div>
+        <div id="nameListContainer" class="col right">
+            <h2>Name Pool</h2>
+            <div id="nameList"></div>
+        </div>
+    </div>
+    <div id="nameDisplay">
+        <h1 id="selectedName">No Names in Pool</h1>
+        <div>
+            <button id="nextName" onclick="nextName()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        var selectedNames = [];
+        $('#name').on('keydown', function(e) {
+            if(e.which === 13) {
+                e.preventDefault();
+                addName();
+            }
+        });
+        function addName() {
+            if($('#name').val() !== null && $('#name').val() !== "" && $('#name').val() !== undefined) {
+                if(!selectedNames.includes($('#name').val())) {
+                    selectedNames.push($('#name').val());
+                    $('#name').val('');
+                } else {
+                    if(confirm($('#name').val() + "is already in the name pool. Do you want to add it again?")) {
+                        selectedNames.push($('#name').val());
+                        $('#name').val('');
+                    } else {
+                        $('#name').val('');
+                    }
+                }
+                $('#nameList').html(makeList(selectedNames));
+            } else {
+                alert('You must put in a name.');
+            }
+        }
+
+        function makeList(array) {
+            // Create the list element:
+            var list = document.createElement('ul');
+
+            for (var i = 0; i < array.length; i++) {
+                // Create the list item:
+                var item = document.createElement('li');
+
+                // Set its contents:
+                item.appendChild(document.createTextNode(array[i]));
+
+                // Add it to the list:
+                list.appendChild(item);
+            }
+
+            // Finally, return the constructed list:
+            return list;
+        }
+
+        function startSelection() {
+            $('#setup').fadeOut();
+            $('#nameDisplay').fadeIn();
+            createURLString();
+            nextName();
+        }
+
+        function nextName() {
+            $('#selectedName').html(selectName());
+        }
+
+        function selectName() {
+            var nameNum = Math.floor(Math.random()*selectedNames.length);
+            var name = selectedNames[nameNum];
+            return name;
+        }
+        function createURLString() {
+            var URLString = window.location.pathname+'?pool='+selectedNames;
+            history.pushState('', URLString);
+            console.log(URLString);
+        }
+    </script>
+
+</body>
+</html>
