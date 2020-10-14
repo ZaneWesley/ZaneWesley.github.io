@@ -136,6 +136,7 @@
         var selectedNames = [];
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
+        var shareLink;
         function init() {
             if(urlParams.has('pool')) {
                 if(urlParams.get('pool') !== null && urlParams.get('pool') !== "") {
@@ -148,6 +149,7 @@
                         if(confirm('Would you like to delete the saved name pool?')) {
                             var URLString = window.location.pathname;
                             history.pushState('', 'Save Name Pool', URLString);
+                            shareLink = URLString;
                         } else {
                             return false;
                         }
@@ -218,7 +220,16 @@
         function createURLString() {
             var URLString = window.location.pathname+'?pool='+selectedNames;
             history.pushState('', 'Save Name Pool', URLString);
-            console.log(URLString);
+            shareLink = URLString;
+            CopyToClipboard(URLString);
+        }
+        function CopyToClipboard(value) {
+            var tempInput = document.createElement("input");
+            tempInput.value = value;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
         }
         init();
     </script>
