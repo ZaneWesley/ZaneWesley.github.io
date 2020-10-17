@@ -88,16 +88,9 @@
         $('.app').click(function() {
             openApp($(this), $(this).attr('data-url'));
         });
-        /*$('iframe').focus(function() {
-            window.location = $(this).parent().attr('data-url');
-        })*/
-        var monitor = setInterval(function() {
-          var elem = document.activeElement;
-          if (elem && elem.tagName == 'IFRAME') {
-            clearInterval(monitor);
-            openApp($(elem.parentNode), $(elem.parentNode).attr('data-url'));
-          }
-        }, 100);
+        $('iframe').contents().on('click', function(e) {
+            openApp($(this).parent(), $(this).parent().attr('data-url'));
+        });
         function openApp(elem, appUrl) {
             $(elem).css('transform', 'scale(2)');
             setTimeout(function() {
