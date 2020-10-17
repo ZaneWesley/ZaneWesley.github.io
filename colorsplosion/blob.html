@@ -124,6 +124,24 @@
 						setInterval( loop, 1000 / 60 );
 					}
 				};
+
+				setTimeout(function(){
+			        // This hides the address bar:
+			        window.scrollTo(0, 1);
+			    }, 0);
+
+				var elem = document.documentElement;
+				function openFullscreen() {
+				  if (elem.requestFullscreen) {
+				    elem.requestFullscreen();
+				  } else if (elem.mozRequestFullScreen) { /* Firefox */
+				    elem.mozRequestFullScreen();
+				  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+				    elem.webkitRequestFullscreen();
+				  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+				    elem.msRequestFullscreen();
+				  }
+				}
 				
 				function createBlob( position, velocity ) {
 					var blob = new Blob();
