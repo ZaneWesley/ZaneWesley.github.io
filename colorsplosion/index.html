@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<title>Colorsplosion</title>
+
+	<style>
+        * {
+            box-shadow: border-box;
+        }
+        html, body {
+            overflow-x: hidden;
+        }
+        body {
+            font-family: Calibri, sans-serif;
+            scroll-behavior: smooth;
+        }
+        header {
+            padding: 2em;
+            text-align: center;
+            vertical-align: middle;
+        }
+        #app-container {
+            width: auto;
+            height: 250px;
+            overflow: auto;
+            white-space: nowrap;
+            user-select: none;
+        }
+        .app {
+            width: 320px;
+            height: 220px;
+            border: 3px solid #ccc;
+            border-radius: 10px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .app:hover {
+            opacity: 0.8;
+            transform: scale(0.7);
+            transition: all 0.5s;
+        }
+        .app iframe {
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            border: none;
+            border-radius: 11px;
+        }
+        @media (max-width: 775px) {
+            #app-container {
+                border-bottom: 1px solid #ccc;
+            }
+        	.app {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+	   <h1>Colorsplosion</h1>
+    </header>
+    <p>Choose a Colorsplosion activity:</p>
+    <div id="app-container">
+        <div class="app" data-url="colorsplosion">
+            <iframe src="colorsplosion">Loading preview...</iframe>
+            <div class="app-title">Colorsplosion</div>
+        </div>
+        <div class="app" data-url="blob">
+            <iframe src="blob" id="blobFrame">Loading preview...</iframe>
+            <div class="app-title">Blob Bouncer</div>
+        </div>
+        <div class="app" data-url="trail">
+            <iframe src="trail">Loading preview...</iframe>
+            <div class="app-title">Color Trail</div>
+        </div>
+    </div>
+
+    <script>
+        $('#blobFrame').bind("load", function() {
+            $(this).contents().find("#keyboardDown").click().click().click();
+            $(this).contents().find(".controls").hide();
+        });
+        $('.app').click(function() {
+            openApp($(this), $(this).attr('data-url'));
+        });
+        /*$('iframe').focus(function() {
+            window.location = $(this).parent().attr('data-url');
+        })*/
+        var monitor = setInterval(function() {
+          var elem = document.activeElement;
+          if (elem && elem.tagName == 'IFRAME') {
+            clearInterval(monitor);
+            openApp($(elem.parentNode), $(elem.parentNode).attr('data-url'));
+          }
+        }, 100);
+        function openApp(elem, appUrl) {
+            $(elem).css('transform', 'scale(2)');
+            setTimeout(function() {
+                window.location = appUrl;
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>
