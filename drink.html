@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Drink Timer</title>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @import url("https://fonts.googleapis.com/css?family=Roboto:100,400");
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  background: -webkit-gradient(linear, left top, right bottom, from(#c8c897), to(#6590A2));
+  background: linear-gradient(to bottom right, #c8c897, #6590A2);
+}
+
+[v-cloak] {
+  display: none;
+}
+
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: #1E384C;
+  -webkit-transition: background-color .3s;
+  transition: background-color .3s;
+}
+@media (min-width: 500px) {
+  .stage {
+    border-radius: 5px;
+    max-height: 550px;
+    max-width: 350px;
+  }
+}
+.stage.menu-open .microphone {
+  -webkit-transform: translate3d(-1em, 0, 0);
+          transform: translate3d(-1em, 0, 0);
+  opacity: 0;
+}
+.stage.menu-open .voices-menu__button {
+  z-index: 40;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+.stage.menu-open .menu {
+  z-index: 25;
+}
+.stage.menu-open .time {
+  -webkit-transform: translate3d(0, -200%, 0);
+          transform: translate3d(0, -200%, 0);
+  -webkit-transition: .5s opacity, .5s transform;
+  transition: .5s opacity, .5s transform;
+  opacity: 0;
+}
+.stage.menu-open button {
+  -webkit-transform: translate3d(0, 200%, 0);
+          transform: translate3d(0, 200%, 0);
+  -webkit-transition-delay: 0s;
+          transition-delay: 0s;
+  opacity: 0;
+}
+.stage.menu-open .percent {
+  -webkit-transition: .4s opacity, .4s transform;
+  transition: .4s opacity, .4s transform;
+  -webkit-transform: translate3d(0, 50%, 0);
+          transform: translate3d(0, 50%, 0);
+  opacity: 0;
+}
+.stage.menu-open .menu__item {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.stage.menu-open .menu__item:nth-child(1) {
+  -webkit-transition-delay: .2s;
+          transition-delay: .2s;
+}
+.stage.menu-open .menu__item:nth-child(2) {
+  -webkit-transition-delay: .3s;
+          transition-delay: .3s;
+}
+.stage.menu-open .menu__item:nth-child(3) {
+  -webkit-transition-delay: .4s;
+          transition-delay: .4s;
+}
+.stage.menu-open .menu__item:nth-child(4) {
+  -webkit-transition-delay: .5s;
+          transition-delay: .5s;
+}
+.stage.voices-open .voices-menu {
+  z-index: 35;
+}
+.stage.voices-open .voices-menu__bg {
+  -webkit-transform: scale(6);
+          transform: scale(6);
+}
+.stage.voices-open .voices-menu__close {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0) rotate(0);
+          transform: translate3d(0, 0, 0) rotate(0);
+}
+.stage.voices-open .voices-list-wrapper {
+  opacity: 1;
+}
+.stage.voices-open .voices-list__item {
+  opacity: 1;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+  -webkit-transition: opacity .15s, -webkit-transform .2s;
+  transition: opacity .15s, -webkit-transform .2s;
+  transition: opacity .15s, transform .2s;
+  transition: opacity .15s, transform .2s, -webkit-transform .2s;
+}
+.stage.voices-open .voices-list__item:nth-child(1) {
+  -webkit-transition-delay: 75ms;
+          transition-delay: 75ms;
+}
+.stage.voices-open .voices-list__item:nth-child(2) {
+  -webkit-transition-delay: 150ms;
+          transition-delay: 150ms;
+}
+.stage.voices-open .voices-list__item:nth-child(3) {
+  -webkit-transition-delay: 225ms;
+          transition-delay: 225ms;
+}
+.stage.voices-open .voices-list__item:nth-child(4) {
+  -webkit-transition-delay: 300ms;
+          transition-delay: 300ms;
+}
+.stage.voices-open .voices-list__item:nth-child(5) {
+  -webkit-transition-delay: 375ms;
+          transition-delay: 375ms;
+}
+.stage.voices-open .voices-list__item:nth-child(6) {
+  -webkit-transition-delay: 450ms;
+          transition-delay: 450ms;
+}
+.stage.voices-open .voices-list__item:nth-child(7) {
+  -webkit-transition-delay: 525ms;
+          transition-delay: 525ms;
+}
+.stage.voices-open .voices-list__item:nth-child(8) {
+  -webkit-transition-delay: 600ms;
+          transition-delay: 600ms;
+}
+.stage.voices-open .voices-list__item:nth-child(9) {
+  -webkit-transition-delay: 675ms;
+          transition-delay: 675ms;
+}
+.stage.voices-open .voices-list__item:nth-child(10) {
+  -webkit-transition-delay: 750ms;
+          transition-delay: 750ms;
+}
+
+.microphone {
+  z-index: 30;
+  position: absolute;
+  top: -.5em;
+  left: -.8em;
+  width: 70px;
+  height: 70px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: opacity .3s, color .2s, -webkit-transform .3s;
+  transition: opacity .3s, color .2s, -webkit-transform .3s;
+  transition: opacity .3s, transform .3s, color .2s;
+  transition: opacity .3s, transform .3s, color .2s, -webkit-transform .3s;
+}
+.microphone:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+.microphone svg {
+  z-index: 2;
+  position: relative;
+  font-size: 2em;
+  width: 1em;
+  height: 1em;
+}
+.microphone:before, .microphone:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0;
+}
+.microphone:after {
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+}
+.microphone:before {
+  z-index: 2;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+}
+.microphone.is-listening {
+  color: #d82e2e;
+}
+.microphone.is-listening:before {
+  -webkit-animation: pulseAway 1s infinite;
+          animation: pulseAway 1s infinite;
+}
+.microphone.is-listening:after {
+  opacity: 1;
+  -webkit-animation: pulse 1.5s linear infinite;
+          animation: pulse 1.5s linear infinite;
+}
+.microphone .voice-tooltip {
+  position: absolute;
+  top: 110%;
+  left: 25px;
+  padding: .4em .6em;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: .8em;
+  font-weight: 300;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+.microphone .voice-tooltip:before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent rgba(255, 255, 255, 0.1) transparent;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  -webkit-transition: all .15s ease;
+  transition: all .15s ease;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.voices-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+@media (min-width: 500px) {
+  .voices-menu {
+    border-radius: 5px;
+    overflow: hidden;
+  }
+}
+.voices-menu__bg {
+  position: absolute;
+  top: -15em;
+  left: -15em;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  width: 20em;
+  height: 20em;
+  color: #222;
+  -webkit-transform: scale(0.2);
+          transform: scale(0.2);
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+.voices-menu__button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: .8em .6em;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  cursor: pointer;
+  -webkit-transform: translate3d(1em, 0, 0);
+          transform: translate3d(1em, 0, 0);
+  -webkit-transition: opacity .3s, color .2s, -webkit-transform .3s;
+  transition: opacity .3s, color .2s, -webkit-transform .3s;
+  transition: opacity .3s, transform .3s, color .2s;
+  transition: opacity .3s, transform .3s, color .2s, -webkit-transform .3s;
+}
+.voices-menu__button:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+.voices-menu__button > * {
+  vertical-align: middle;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+.voices-menu__button svg {
+  width: 1.8em;
+  height: 1.8em;
+}
+.voices-menu__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 10px;
+  font-size: 2em;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  cursor: pointer;
+  -webkit-transform: translate3d(1em, 0, 0) rotate(45deg);
+          transform: translate3d(1em, 0, 0) rotate(45deg);
+  -webkit-transition: opacity .3s, color .2s, -webkit-transform .3s;
+  transition: opacity .3s, color .2s, -webkit-transform .3s;
+  transition: opacity .3s, transform .3s, color .2s;
+  transition: opacity .3s, transform .3s, color .2s, -webkit-transform .3s;
+}
+.voices-menu__close svg {
+  width: 1em;
+  height: 1em;
+}
+.voices-menu__close:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.voices-list-wrapper {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow-y: auto;
+  opacity: 0;
+}
+
+.voices-list {
+  margin: 0;
+  padding: 0;
+}
+.voices-list__item {
+  display: block;
+  opacity: 0;
+  -webkit-transform: translate(0, 1em);
+          transform: translate(0, 1em);
+}
+.voices-list__item.is-selected .voices-list__icon {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0) rotate(0);
+          transform: translate3d(0, 0, 0) rotate(0);
+}
+.voices-list__icon {
+  position: relative;
+  margin-right: 20px;
+  color: #02C39A;
+  opacity: 0;
+  -webkit-transform: translate3d(-1em, 0, 0) rotate(-30deg);
+          transform: translate3d(-1em, 0, 0) rotate(-30deg);
+  -webkit-transition: opacity .2s, -webkit-transform .2s;
+  transition: opacity .2s, -webkit-transform .2s;
+  transition: opacity .2s, transform .2s;
+  transition: opacity .2s, transform .2s, -webkit-transform .2s;
+}
+.voices-list__icon svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+.voices-list__link {
+  display: -webkit-box;
+  display: flex;
+  padding: .5em 1.1em;
+  font-size: 1.3em;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+}
+.voices-list__link:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+.voices-list__link span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.voices-list__content {
+  line-height: 1;
+}
+.voices-list__content span {
+  font-size: .5em;
+}
+.voices-list__default {
+  color: #02C39A;
+}
+
+.menu {
+  z-index: 10;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+}
+.menu__button {
+  z-index: 30;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  padding: 1.5em 1em;
+  cursor: pointer;
+}
+.menu__button:hover .menu__dot,
+.menu__button:hover .menu__dot:before,
+.menu__button:hover .menu__dot:after {
+  background: rgba(255, 255, 255, 0.8);
+}
+.menu__dot {
+  position: relative;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-transition: background .2s;
+  transition: background .2s;
+}
+.menu__dot:before, .menu__dot:after {
+  position: absolute;
+  content: '';
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-transition: background .2s;
+  transition: background .2s;
+}
+.menu__dot:before {
+  top: 10px;
+}
+.menu__dot:after {
+  bottom: 10px;
+}
+.menu__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.menu__item {
+  overflow: hidden;
+  opacity: 0;
+  -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+  -webkit-transition: .4s transform, .4s opacity;
+  transition: .4s transform, .4s opacity;
+}
+.menu__item a {
+  font-size: 1.8em;
+  font-weight: 300;
+  display: block;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: .5em 1.5em;
+}
+.menu__item a span {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+.menu__item a:hover svg, .menu__item a:focus svg {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+.menu__item a:hover .water-glass__water, .menu__item a:focus .water-glass__water {
+  fill: #32BAFA;
+  -webkit-transform: scale(1, 0.8);
+          transform: scale(1, 0.8);
+}
+.menu__item a:hover .coffee-cup__coffee, .menu__item a:focus .coffee-cup__coffee {
+  fill: #BF9E87;
+  -webkit-transform: scale(1, 0.8);
+          transform: scale(1, 0.8);
+}
+.menu__item a:hover .beer-glass__beer, .menu__item a:focus .beer-glass__beer {
+  fill: #E18E02;
+  -webkit-transform: scale(1, 0.8);
+          transform: scale(1, 0.8);
+}
+.menu__item a:hover .clock__short, .menu__item a:focus .clock__short {
+  fill: #02C39A;
+  -webkit-transform-origin: 0% 50%;
+          transform-origin: 0% 50%;
+  -webkit-transform: rotate(20deg);
+          transform: rotate(20deg);
+  -webkit-transition: color .2s, -webkit-transform 1s;
+  transition: color .2s, -webkit-transform 1s;
+  transition: transform 1s, color .2s;
+  transition: transform 1s, color .2s, -webkit-transform 1s;
+}
+.menu__item a:hover .clock__long, .menu__item a:focus .clock__long {
+  fill: #02C39A;
+  -webkit-transition: color .2s, -webkit-transform 1s;
+  transition: color .2s, -webkit-transform 1s;
+  transition: transform 1s, color .2s;
+  transition: transform 1s, color .2s, -webkit-transform 1s;
+  -webkit-transform-origin: 50% 95%;
+          transform-origin: 50% 95%;
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+.menu__item svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  margin-right: 1em;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+.menu__item svg path {
+  fill: #fff;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  -webkit-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+}
+
+.browser-support {
+  color: #fff;
+  font-size: .8rem;
+  text-align: center;
+  padding: .5rem;
+}
+
+.content {
+  z-index: 20;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+.time {
+  overflow: hidden;
+  padding: 1em;
+  font-size: 1.1em;
+  text-align: center;
+  -webkit-transition: .5s .2s opacity, .5s transform .2s;
+  transition: .5s .2s opacity, .5s transform .2s;
+}
+
+.timer__item {
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  margin-right: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.timer__item:first-child, .timer__item:nth-child(3) {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.timer-enter, .timer-leave-to {
+  opacity: 0;
+  -webkit-transform: translate3d(0, -100%, 0);
+          transform: translate3d(0, -100%, 0);
+}
+
+.timer-leave-to {
+  -webkit-transition-duration: .5s;
+          transition-duration: .5s;
+}
+
+.timer-leave-active {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+
+.percent {
+  z-index: 2;
+  position: relative;
+  font-size: 7em;
+  font-weight: 100;
+  color: rgba(255, 255, 255, 0.7);
+  -webkit-transition: .4s .2s opacity, .4s .2s transform;
+  transition: .4s .2s opacity, .4s .2s transform;
+}
+.percent > div {
+  display: inline-block;
+}
+.percent > span {
+  margin-left: -.4em;
+  font-size: .5em;
+}
+
+.percent-left-enter-active, .percent-left-leave-active {
+  -webkit-transition: -webkit-transform .1s ease;
+  transition: -webkit-transform .1s ease;
+  transition: transform .1s ease;
+  transition: transform .1s ease, -webkit-transform .1s ease;
+}
+
+.percent-left-enter, .percent-left-leave-to {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+button {
+  z-index: 20;
+  position: absolute;
+  display: block;
+  width: 70%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 1.5em;
+  padding: .6em;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1em;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 2em;
+  outline: none;
+  -webkit-transition: .2s background, .4s .3s transform, .4s .3s opacity;
+  transition: .2s background, .4s .3s transform, .4s .3s opacity;
+  cursor: pointer;
+}
+button:hover {
+  background: #fff;
+  color: currentColor;
+}
+
+.waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-transition: .4s transform ease;
+  transition: .4s transform ease;
+  -webkit-transform-origin: bottom center;
+          transform-origin: bottom center;
+}
+@media (min-width: 500px) {
+  .waves {
+    border-radius: 5px;
+  }
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-animation: wave 1s linear infinite;
+          animation: wave 1s linear infinite;
+}
+.wave--front {
+  z-index: 2;
+  color: #32BAFA;
+}
+.wave--back {
+  z-index: 1;
+  color: #2C7FBE;
+  animation-direction: reverse;
+}
+
+.water {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  background: currentColor;
+}
+.water svg {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: 99.9%;
+}
+
+.water:first-of-type {
+  -webkit-transform: translate(-100%, 0);
+          transform: translate(-100%, 0);
+}
+
+svg {
+  fill: currentColor;
+}
+
+@-webkit-keyframes wave {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+  50% {
+    -webkit-transform: translate3d(50%, 0.5em, 0);
+            transform: translate3d(50%, 0.5em, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes wave {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+  50% {
+    -webkit-transform: translate3d(50%, 0.5em, 0);
+            transform: translate3d(50%, 0.5em, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+  }
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@-webkit-keyframes pulseAway {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.4);
+            transform: scale(1.4);
+  }
+}
+@keyframes pulseAway {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.4);
+            transform: scale(1.4);
+  }
+}
+</style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="stage" class="stage" :class="{'menu-open': menuOpen, 'voices-open': voicesOpen}" :style="{ color: activeReminder.waveFrontColor, backgroundColor: stageBg }" v-cloak>
+  <div class="menu__button" @click="toggleMenu">
+    <div class="menu__dot"></div>
+  </div>
+  <div class="microphone" v-if="supportSpeechRecognition" :class="{'is-listening': isListening }" @click="startListenVoiceCommands">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 16c2.206 0 4-1.795 4-4v-6c0-2.206-1.794-4-4-4s-4 1.794-4 4v6c0 2.205 1.794 4 4 4z"></path>
+                <path d="M19 12v-2c0-0.552-0.447-1-1-1s-1 0.448-1 1v2c0 2.757-2.243 5-5 5s-5-2.243-5-5v-2c0-0.552-0.447-1-1-1s-1 0.448-1 1v2c0 3.52 2.613 6.432 6 6.92v1.080h-3c-0.553 0-1 0.447-1 1s0.447 1 1 1h8c0.553 0 1-0.447 1-1s-0.447-1-1-1h-3v-1.080c3.387-0.488 6-3.4 6-6.92z"></path>
+            </svg>
+    <div class="voice-tooltip" v-show="isListening">
+                <transition name="fade" mode="out-in">
+                    <span :key="tooltipText">{{ tooltipText }}</span>
+                </transition>
+            </div>
+  </div>
+  <div class="voices-menu">
+    <svg class="voices-menu__bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><title>sphere</title><circle cx="25" cy="25" r="25"/></svg>
+    <div class="voices-menu__button" @click="toggleVoicesMenu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="768" height="768" viewBox="0 0 768 768">
+                    <path d="M523.5 448.5h108c4.5-21 9-42 9-64.5s-4.5-43.5-9-64.5h-108c3 21 4.5 42 4.5 64.5s-1.5 43.5-4.5 64.5zM466.5 625.5c58.5-19.5 109.5-61.5 139.5-114h-94.5c-10.5 40.5-25.5 78-45 114zM459 448.5c3-21 4.5-42 4.5-64.5s-1.5-43.5-4.5-64.5h-150c-3 21-4.5 42-4.5 64.5s1.5 43.5 4.5 64.5h150zM384 639c27-39 48-81 61.5-127.5h-123c13.5 46.5 34.5 88.5 61.5 127.5zM256.5 256.5c10.5-40.5 25.5-78 45-114-58.5 19.5-109.5 61.5-139.5 114h94.5zM162 511.5c30 52.5 81 94.5 139.5 114-19.5-36-34.5-73.5-45-114h-94.5zM136.5 448.5h108c-3-21-4.5-42-4.5-64.5s1.5-43.5 4.5-64.5h-108c-4.5 21-9 42-9 64.5s4.5 43.5 9 64.5zM384 129c-27 39-48 81-61.5 127.5h123c-13.5-46.5-34.5-88.5-61.5-127.5zM606 256.5c-30-52.5-81-94.5-139.5-114 19.5 36 34.5 73.5 45 114h94.5zM384 64.5c177 0 319.5 142.5 319.5 319.5s-142.5 319.5-319.5 319.5-319.5-142.5-319.5-319.5 142.5-319.5 319.5-319.5z"></path>
+                </svg>
+      <span>Select voice</span>
+    </div>
+    <div class="voices-menu__close" @click="toggleVoicesMenu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="768" height="768" viewBox="0 0 768 768">
+                    <path d="M607.5 205.5l-178.5 178.5 178.5 178.5-45 45-178.5-178.5-178.5 178.5-45-45 178.5-178.5-178.5-178.5 45-45 178.5 178.5 178.5-178.5z"></path>
+                </svg>
+    </div>
+    <div class="voices-list-wrapper">
+      <ul class="voices-list">
+        <li class="voices-list__item" :class="{'is-selected': selectedVoice.name === voice.name }" v-for="voice in voices" :key="voice.lang">
+          <a href="#" class="voices-list__link" @click.prevent="voiceSelected(voice)">
+            <span class="voices-list__icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="768" height="768" viewBox="0 0 768 768">
+                                    <path d="M672 160q13.75 0 22.875 9.125t9.125 22.875q0 13.5-9.25 22.75l-384 384q-9.25 9.25-22.75 9.25t-22.75-9.25l-192-192q-9.25-9.25-9.25-22.75 0-13.75 9.125-22.875t22.875-9.125q13.5 0 22.75 9.25l169.25 169.5 361.25-361.5q9.25-9.25 22.75-9.25z"></path>
+                                </svg>
+                            </span>
+            <div class="voices-list__content">
+              <div>{{voice.name}}</div>
+              <span>{{voice.lang}}</span>
+              <span v-if="voice.default" class="voices-list__default">Default</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="menu">
+    <ul class="menu__list">
+      <li class="menu__item" @mouseover="mouseOver('water')" @mouseout="mouseOut()" @touchstart="mouseOver('water')" @touchend="mouseOut()">
+        <a href="#" @click.prevent="start('water')">
+          <svg id="coffee-cup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                            <title>coffee-cup-01</title>
+                            <path class="water-glass" d="M39.92,45H25V43.21H38.15L43.14,4l2,.2ZM25,45H10.08L4.89,4.15l2-.2,5,39.26H25Z"/>
+                            <path class="water-glass__water" d="M39.09,6.88s-3.13,2-5.48,0c-4.92,2.65-7.72,0-7.72,0s-4.59,2.76-7.94,0c-4.47,3.09-7,0-7,0l3.91,33.76H35Z"/>
+                        </svg>
+          <span>Water break</span>
+        </a>
+      </li>
+      <li class="menu__item" @mouseover="mouseOver('coffee')" @mouseout="mouseOut()" @touchstart="mouseOver('coffee')" @touchend="mouseOut()">
+        <a href="#" @click.prevent="start('coffee')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                            <title>coffee-cup</title>
+                            <path class="coffee-cup" d="M49.42,21.07a9.69,9.69,0,0,0-2.17-6.55,10.16,10.16,0,0,0-7.08-3.12c-.14-2.47-.38-4-.38-4H36.58S42,39.54,20.43,39.56C-1.87,39.57,4.16,7.37,4.16,7.37H1.07S-4.29,43,20.43,43c9.31,0,14.35-5.06,17-11.37C40.47,31.4,49.43,29.84,49.42,21.07Zm-11,7.82a49,49,0,0,0,1.81-14.83,8.13,8.13,0,0,1,5.52,2.4,6.76,6.76,0,0,1,1.49,4.63C47.29,26.71,41.58,28.39,38.45,28.89Z"/>
+                            <path class="coffee-cup__coffee" d="M7.07,11.94H33.73s3.72,23.65-13.3,23.65S7.07,11.94,7.07,11.94Z"/>
+                        </svg>
+          <span>Coffee break</span>
+        </a>
+      </li>
+      <li class="menu__item" @mouseover="mouseOver('break')" @mouseout="mouseOut()" @touchstart="mouseOver('break')" @touchend="mouseOut()">
+        <a href="#" @click.prevent="start('break')">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                            <title>clock</title>
+                            <path class="clock" d="M24.62,47.08A21.88,21.88,0,1,1,46.49,25.21,21.9,21.9,0,0,1,24.62,47.08Zm0-41.75A19.88,19.88,0,1,0,44.49,25.21,19.9,19.9,0,0,0,24.62,5.33Z"/>
+                            <path class="clock__short" d="M34.49,26.71H24.62a1.5,1.5,0,0,1,0-3h9.88a1.5,1.5,0,0,1,0,3Z"/>
+                            <path class="clock__long" d="M24.62,26.71a1.5,1.5,0,0,1-1.5-1.5V9.54a1.5,1.5,0,0,1,3,0V25.21A1.5,1.5,0,0,1,24.62,26.71Z"/>
+                        </svg>
+          <span>Work Break</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="browser-support" v-if="!supportSpeechSynth">
+    Your browser doesn't <strong>support</strong> speech synthesis.
+  </div>
+  <div class="time">
+    <transition-group name="timer" tag="div">
+      <div v-for="time in timer" class="timer__item" :key="time.id">
+        {{ time.value }}
+      </div>
+    </transition-group>
+  </div>
+  <div class="waves" :style="waveStyles">
+    <div class="wave wave--back" :style="{ color: activeReminder.waveBackColor }">
+      <div class="water">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 32" preserveAspectRatio="none"><title>wave2</title><path d="M350,17.32V32H0V17.32C116.56,65.94,175-39.51,350,17.32Z"/></svg>
+      </div>
+      <div class="water">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 32" preserveAspectRatio="none"><title>wave2</title><path d="M350,17.32V32H0V17.32C116.56,65.94,175-39.51,350,17.32Z"/></svg>
+      </div>
+    </div>
+    <div class="wave wave--front" :style="{ color: activeReminder.waveFrontColor }">
+      <div class="water">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 32" preserveAspectRatio="none"><title>wave2</title><path d="M350,17.32V32H0V17.32C116.56,65.94,175-39.51,350,17.32Z"/></svg>
+      </div>
+      <div class="water">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 32" preserveAspectRatio="none"><title>wave2</title><path d="M350,17.32V32H0V17.32C116.56,65.94,175-39.51,350,17.32Z"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="percent">
+      <transition name="percent-left" mode="out-in">
+        <div :key="percentsLeft">{{ percentsLeft }}</div>
+      </transition>
+      <span>%</span>
+    </div>
+  </div>
+  <button @click="reset">
+            {{ percentsLeft > 0 ? activeReminder.buttonTxt : 'Reset' }}
+        </button>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/countdown/2.6.0/countdown.min.js'></script>
+<script src='https://unpkg.com/vue/dist/vue.min.js'></script>
+<script>
+  var SpeechRecognition = SpeechRecognition || window.webkitSpeechRecognition || undefined;
+  var numbers = Array.apply(null, Array(101)).map(function (_, i) {return i;});
+
+  if (SpeechRecognition) {
+    var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList || undefined;
+    var SpeechRecognitionEvent = SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent || undefined;
+
+    var commands = ['reset', 'timer', ...numbers];
+    var grammar = '#JSGF V1.0; grammar colors; public <color> = ' + commands.join(' | ') + ' ;';
+
+    var speechRecognitionList = new SpeechGrammarList();
+    speechRecognitionList.addFromString(grammar, 1);
+
+    var recognition = new SpeechRecognition();
+    recognition.grammars = speechRecognitionList;
+    //recognition.continuous = false;
+    recognition.lang = 'en-US';
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+  }
+
+  var speechSynth = new SpeechSynthesisUtterance();
+
+  const padDigits = (number, digits) => {
+    return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+  };
+
+  const calculatePercentsLeft = (value, from) => {
+    return Math.floor(Math.ceil(value / 1000) / (from * 60) * 100);
+  };
+
+  const calculateScaleFactor = percent => {
+    return 1 - (100 - percent) / 100;
+  };
+
+  function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000).
+      toString(16).
+      substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
+  }
+
+  const settings = {
+    water: {
+      warningMsg: 'Remember to drink',
+      timeIsUpMsg: 'Time\'s up. You really need to drink now',
+      buttonTxt: 'Drink',
+      waveFrontColor: '#32BAFA',
+      waveBackColor: '#2C7FBE',
+      stageBg: '#1E384C',
+      durationInMinutes: 20 },
+
+    coffee: {
+      warningMsg: `It's almost coffee time.`,
+      timeIsUpMsg: 'Time\'s up. Let\'s take a coffee break!',
+      buttonTxt: 'Drink Coffee',
+      waveFrontColor: '#b39374',
+      waveBackColor: '#7a6057',
+      stageBg: '#392a2c',
+      durationInMinutes: 20 },
+
+    break: {
+      warningMsg: 'It is time to rest your eyes soon!',
+      timeIsUpMsg: 'Time\'s up. Now, it\'s really time to rest your eyes!',
+      buttonTxt: 'Take a Break',
+      waveFrontColor: '#02C39A',
+      waveBackColor: '#028090',
+      stageBg: '#012F35',
+      durationInMinutes: 20 }
+  };
+
+
+
+  new Vue({
+    el: '#stage',
+    data() {
+      return {
+        color: '',
+        percents: [100],
+        percentsLeft: 100,
+        secondsLeft: 0,
+        waveStyles: '',
+        duration: 1,
+        timer: [],
+        voicesOpen: false,
+        voices: [],
+        selectedVoice: {},
+        countdownObj: {},
+        activeReminder: settings.water,
+        menuOpen: false,
+        isListening: false,
+        tooltipText: 'Say eg. "reset"',
+        stageBg: settings.water.stageBg };
+
+    },
+    mounted() {
+      this.resetTimer();
+      this.voices = speechSynthesis.getVoices();
+
+      if (this.voices.length === 0) {
+        speechSynthesis.onvoiceschanged = () => {
+          this.voices = speechSynthesis.getVoices();
+        };
+      }
+    },
+    computed: {
+      supportSpeechSynth() {
+        return 'speechSynthesis' in window;
+      },
+      supportSpeechRecognition() {
+        return SpeechRecognition;
+      } },
+
+    watch: {
+      percentsLeft: function (val, oldVal) {
+        if (val === oldVal) {
+          return;
+        }
+        this.percents.splice(0, 1);
+        this.percents.push(val);
+      } },
+
+    methods: {
+      setActiveReminder(reminder) {
+        this.activeReminder = settings[reminder];
+        this.stageBg = this.activeReminder.stageBg;
+      },
+      toggleMenu() {
+        this.menuOpen = !this.menuOpen;
+        if (this.menuOpen) {
+          this.pauseTimer();
+          this.waveStyles = `transform: translate3d(0,100%,0); transition-delay: .25s;`;
+        } else {
+          this.continueTimer();
+        }
+      },
+      toggleVoicesMenu() {
+        this.voicesOpen = !this.voicesOpen;
+      },
+      voiceSelected(voice) {
+        this.selectedVoice = voice;
+        speechSynth.voice = voice;
+      },
+      start(reminder) {
+        this.setActiveReminder(reminder);
+        this.percents = [100];
+        this.timer = [];
+        this.menuOpen = false;
+        this.resetTimer();
+      },
+      resetTimer() {
+        let durationInSeconds = 60 * this.activeReminder.durationInMinutes;
+        this.startTimer(durationInSeconds);
+      },
+      startTimer(secondsLeft) {
+        let now = new Date();
+
+        // later on, this timer may be stopped
+        if (this.countdown) {
+          window.clearInterval(this.countdown);
+        }
+
+        this.countdown = countdown(ts => {
+          this.secondsLeft = Math.ceil(ts.value / 1000);
+          this.percentsLeft = calculatePercentsLeft(ts.value, this.activeReminder.durationInMinutes);
+          this.waveStyles = `transform: scale(1,${calculateScaleFactor(this.percentsLeft)})`;
+          this.updateCountdown(ts);
+          if (this.percentsLeft == 10) {
+            this.giveWarning();
+          }
+          if (this.percentsLeft <= 0) {
+            this.timeIsUpMessage();
+            this.pauseTimer();
+            this.timer = [];
+            setTimeout(() => {
+              this.startListenVoiceCommands();
+            }, 1500);
+
+          }
+        }, now.getTime() + secondsLeft * 1000);
+      },
+      updateCountdown(ts) {
+        if (this.timer.length > 2) {
+          this.timer.splice(2);
+        }
+
+        const newTime = {
+          id: guid(),
+          value: `${padDigits(ts.minutes, 2)}:${padDigits(ts.seconds, 2)}` };
+
+
+        this.timer.unshift(newTime);
+      },
+      pauseTimer() {
+        window.clearInterval(this.countdown);
+      },
+      continueTimer() {
+        if (this.secondsLeft > 0) {
+          this.startTimer(this.secondsLeft - 1);
+        }
+      },
+      giveWarning() {
+        speechSynth.text = this.activeReminder.warningMsg;
+        window.speechSynthesis.speak(speechSynth);
+      },
+      timeIsUpMessage() {
+        speechSynth.text = this.activeReminder.timeIsUpMsg;
+        window.speechSynthesis.speak(speechSynth);
+      },
+      timerResetMessage() {
+        speechSynth.text = `Timer reset. Time left ${this.activeReminder.durationInMinutes} ${this.activeReminder.durationInMinutes > 1 ? 'minutes' : 'minute'}`;
+        window.speechSynthesis.speak(speechSynth);
+      },
+      reset() {
+        this.resetTimer();
+        this.timerResetMessage();
+      },
+      startListenVoiceCommands() {
+        if (this.isListening || !this.supportSpeechRecognition) return;
+
+        this.isListening = true;
+        recognition.start();
+        recognition.onresult = event => {
+          let last = event.results.length - 1;
+          let transcript = event.results[last][0].transcript;
+          let splittedTranscript = transcript.split(' ');
+          let isFinal = event.results[last].isFinal;
+
+          this.tooltipText = transcript;
+
+          if (transcript == "reset") {
+            this.resetTimer();
+            this.timerResetMessage();
+          }
+          if (
+          splittedTranscript.length >= 3 &&
+          splittedTranscript[0] == 'timer' &&
+          isFinal &&
+          numbers.includes(Number(splittedTranscript[1])) && (
+          splittedTranscript[2] == 'minute' || splittedTranscript[2] == 'minutes'))
+          {
+            this.activeReminder.durationInMinutes = numbers[splittedTranscript[1]];
+            this.resetTimer();
+            this.timerResetMessage();
+          }
+
+
+        };
+        recognition.onend = () => {
+          this.isListening = false;
+          this.tooltipText == '';
+          recognition.stop();
+        };
+        recognition.onsoundend = () => {
+          this.isListening = false;
+          recognition.stop();
+        };
+      },
+      mouseOver(type) {
+        this.stageBg = settings[type].stageBg;
+      },
+      mouseOut() {
+        this.stageBg = this.activeReminder.stageBg;
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
