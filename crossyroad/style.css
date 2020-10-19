@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
-
+html, body {
+user-select:none;
+}
 body {
   margin: 0;
   font-family: 'Press Start 2P', cursive;
   font-size: 2em;
   color: white;
-user-select: none;
 overflow: hidden;
 }
 button {
