@@ -144,10 +144,10 @@
                 if(urlParams.get('pool') !== null && urlParams.get('pool') !== "") {
                     var poolQuery = urlParams.get('pool');
                     var poolArray = poolQuery.split(',');
-                    if(confirm('It looks like you have a saved names pool. Would you like to use it?')) {
+                    /*if(confirm('It looks like you have a saved names pool. Would you like to use it?')) {*/
                         selectedNames = poolArray;
                         startSelection();
-                    } else {
+                    /*} else {
                         if(confirm('Would you like to delete the saved name pool?')) {
                             var URLString = window.location.pathname;
                             history.pushState('', 'Save Name Pool', URLString);
@@ -155,7 +155,7 @@
                         } else {
                             return false;
                         }
-                    }
+                    }*/
                 }
             }
         }
