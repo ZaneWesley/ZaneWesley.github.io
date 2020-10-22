@@ -220,17 +220,14 @@
             var name = selectedNames[nameNum];
             if(recentSelected.length === selectedNames.length) {
                 recentSelected=[];
-                selectName();
+                nextName();
+            } else if(recentSelected.includes(name)) {
+                nextName();
             } else {
-                if(recentSelected.includes(name)) {
-                    selectName();
-                } else {
-                    recentSelected.push(name);
-                }
+                recentSelected.push(name);
+                console.log(name);
+                return name;
             }
-            
-            console.log(name);
-            return name;
         }
         function createURLString() {
             var URLString = window.location.pathname+'?pool='+selectedNames;
