@@ -220,15 +220,16 @@
             var name = selectedNames[nameNum];
             if(recentSelected.length === selectedNames.length) {
                 recentSelected=[];
+                selectName();
             } else {
                 if(recentSelected.includes(name)) {
                     selectName();
-                    return;
                 } else {
                     recentSelected.push(name);
                 }
             }
             
+            console.log(name);
             return name;
         }
         function createURLString() {
