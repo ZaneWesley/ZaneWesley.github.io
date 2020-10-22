@@ -136,6 +136,7 @@
 
     <script>
         var selectedNames = [];
+        var recentSelected=[];
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
         var shareLink;
@@ -217,6 +218,17 @@
         function selectName() {
             var nameNum = Math.floor(Math.random()*selectedNames.length);
             var name = selectedNames[nameNum];
+            if(recentSelected.length === selectedNames.length) {
+                recentSelected=[];
+            } else {
+                if(recentSelected.includes(name)) {
+                    selectName();
+                    return;
+                } else {
+                    recentSelected.push(name);
+                }
+            }
+            
             return name;
         }
         function createURLString() {
