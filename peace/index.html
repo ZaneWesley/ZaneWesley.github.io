@@ -5,6 +5,7 @@
 	<meta name="viewport" content="initial-scale=1.0,width=device-width">
 	<link rel="apple-touch-icon" href="icon.png">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 	<link rel="icon" type="icon/png" href="icon.png">
@@ -100,6 +101,15 @@
 			bottom: 0;
 			display: none;
 		}
+		.back {
+        	border-radius: 20px;
+        	background-color: lightblue;
+        	position: absolute;
+        	top: 0.5em;
+        	left: 0.5em;
+        	padding: 0.5em;
+        	cursor: pointer;
+        }
 		#app iframe {
 			height: 100%;
             width: 100%;
@@ -153,6 +163,7 @@
     </div>
 
     <div id="app">
+    	<span class="back"><i class="fas fa-arrow-left"></i> Back</span>
     	<iframe>Loading app...</iframe>
     </div>
 
@@ -166,6 +177,7 @@
 			            $(this).contents().find("#notification-banner").hide();
 			            $(this).contents().find(".settings-panel").hide();
 			        });
+			        $('body').css('overflow-y', 'hidden');
     				$('#app').fadeIn();
     				break;
     			case 'nature':
@@ -178,7 +190,12 @@
     				console.log($(this).attr('data-app'));
     				break;
     		}
-    	})
+    	});
+    	$('.back').click(function(e) {
+    		$('#app').fadeOut();
+    		$('#app iframe').attr('src', '');
+    		$('body').css('overflow-y', 'auto');
+    	});
     </script>
 </body>
 </html>
