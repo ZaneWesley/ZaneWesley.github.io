@@ -16,7 +16,7 @@
 			padding: 16px;
 			padding-top: 230px;
 			font-family: Calibri, cursive;
-			background-color: rgba(173, 216, 230, 0.5);
+			background-color: #D5EBF2;
 		}
 		header {
 			font-family: Parisienne, cursive;
@@ -103,7 +103,7 @@
 		}
 		.back {
         	border-radius: 20px;
-        	background-color: lightblue;
+        	background-color: #D5EBF2;
         	position: absolute;
         	top: 0.5em;
         	left: 0.5em;
@@ -176,6 +176,7 @@
     				$('#app iframe').bind("load", function() {
 			            $(this).contents().find("#notification-banner").hide();
 			            $(this).contents().find(".settings-panel").hide();
+			            document.querySelector('#app iframe').contentWindow.setMode('rgb(213, 235, 242)');
 			        });
 			        $('body').css('overflow-y', 'hidden');
     				$('#app').fadeIn();
