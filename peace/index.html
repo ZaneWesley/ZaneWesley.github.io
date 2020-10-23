@@ -20,6 +20,7 @@
 		}
 		header {
 			font-family: Parisienne, cursive;
+			background-color: #71BCCF;
 			background-image: linear-gradient(to right, #447D9B, #9CD1D9, #71BCCF, #468686);
 			/*left-outer:#447D9B, left-center:#9CD1D9, right-center:#71BCCF, right-outer:#468686*/
 			background-size: cover;
@@ -178,6 +179,7 @@
 			            $(this).contents().find(".settings-panel").hide();
 			            document.querySelector('#app iframe').contentWindow.setMode('rgb(213, 235, 242)');
 			        });
+			        scrollToTop();
 			        $('body').css('overflow-y', 'hidden');
     				$('#app').fadeIn();
     				break;
@@ -197,6 +199,13 @@
     		$('#app iframe').attr('src', '');
     		$('body').css('overflow-y', 'auto');
     	});
+    	function scrollToTop() {
+		  var c = document.documentElement.scrollTop || document.body.scrollTop;
+		  if (c > 0) {
+		    window.requestAnimationFrame(scrollToTop);
+		    window.scrollTo(0, c - c / 8);
+		  }
+		}
     </script>
 </body>
 </html>
