@@ -233,7 +233,7 @@
 	</style>
 </head>
 <body>
-	<header id="top">
+	<header>
 		<h1>Peace</h1>
 		<P>Peace be still and know that I am God, Psalm 46:10</P>
 	</header>
@@ -307,9 +307,9 @@
 			            document.querySelector('#app iframe').contentWindow.setMode('rgb(213, 235, 242)');
 			        });
 			        scrollToTop();
+			        $('body').css('overflow-y', 'hidden');
 			        loading();
 			        setTimeout(function() {
-			        	$('body').css('overflow-y', 'hidden');
     					$('#app').fadeIn();
     					ready();
 			        }, 1500);
@@ -318,9 +318,9 @@
     				console.log($(this).attr('data-app'));
     				$('#app iframe').attr('src', 'nature');
 			        scrollToTop();
+			        $('body').css('overflow-y', 'hidden');
 			        loading();
 			        setTimeout(function() {
-			        	$('body').css('overflow-y', 'hidden');
     					$('#app').fadeIn();
     					ready();
 			        }, 2500);
@@ -329,9 +329,9 @@
     				console.log($(this).attr('data-app'));
     				$('#app iframe').attr('src', 'breathe');
 			        scrollToTop();
+			        $('body').css('overflow-y', 'hidden');
 			        loading();
 			        setTimeout(function() {
-			        	$('body').css('overflow-y', 'hidden');
     					$('#app').fadeIn();
     					ready();
 			        }, 2500);
