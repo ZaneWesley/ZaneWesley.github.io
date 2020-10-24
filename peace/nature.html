@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0,width=device-width">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" href="icon.png">
+	<link rel="shortcut icon" href="icon.png">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<link rel="icon" type="icon/png" href="icon.png">
+	<title>Breathe | Nature</title>
+	<style>
+		body {
+			overflow: hidden;
+			font-family: Roboto, cursive;
+			background-color: #D5EBF2;
+			margin:0;
+		}
+		video {
+			display: none;
+		}
+		canvas {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+
+	<!--<iframe width="962" height="541" src="https://www.youtube.com/embed/BHACKCNDMW8?t=3" frameborder="0" allow="autoplay; picture-in-picture" allowfullscreen></iframe>-->
+
+	<video src="nature.mp4" autoplay playsinline></video>
+
+	<canvas></canvas>
+
+    <script>
+    	var canvas = document.querySelector('canvas');
+		var ctx    = canvas.getContext('2d');
+		var video  = document.querySelector('video');
+
+		video.addEventListener('play', function () {
+		    var $this = this; //cache
+		    (function loop() {
+		        if (!$this.paused && !$this.ended) {
+		            ctx.drawImage($this, 0, 0);
+		            setTimeout(loop, 1000 / 60); // drawing at 60fps
+		        }
+		    })();
+		}, 0);
+    	/*function windowResize() {
+	    	document.querySelector('canvas').width=window.innerWidth;
+	    	document.querySelector('canvas').height=window.innerHeight;
+	    }
+
+	    window.addEventListener('resize', windowResize);
+
+    	windowResize();*/
+    </script>
+</body>
+</html>
