@@ -8,204 +8,154 @@
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<link href="https://fonts.googleapis.com/css2?family=Parisienne&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 	<link rel="icon" type="icon/png" href="icon.png">
 	<title>Peace</title>
 	<style>
 		body {
-			overflow-x: hidden;
-			padding: 16px;
-			padding-top: 230px;
-			font-family: Calibri, cursive;
+			overflow: hidden;
+			font-family: Roboto, cursive;
 			background-color: #D5EBF2;
 		}
-		header {
-			font-family: Parisienne, cursive;
-			background-color: #71BCCF;
-			background-image: linear-gradient(to right, #447D9B, #9CD1D9, #71BCCF, #468686);
-			/*left-outer:#447D9B, left-center:#9CD1D9, right-center:#71BCCF, right-outer:#468686*/
-			background-size: cover;
+		svg {
 			position: absolute;
-			left: 0;
-			top: 0;
 			width: 100%;
-			height: 230px;
-			text-align: center;
-			color: #fff;
-		}
-		header h1 {
-			font-size: 5em;
-		}
-		header p {
-			line-height: 0;
-			font-size: 1.5em;
-			margin-top: 0;
-			font-family: Dancing Script, cursive;
-			text-transform: capitalize;
-		}
-		.panel {
-			background-image: linear-gradient(20deg, #447D9B, #9CD1D9, #71BCCF, #468686 70.71%);
-            position: relative;
-            width: 100%;
-            left: 0;
-            padding: 2em;
-            font-family: Dancing Script, cursive;
-            color: #fff;
-		}
-		.inst {
-			font-size: 1.5em;
-		}
-		.apps-grid {
-			display: grid;
-			grid-gap: 30px 30px;
-			grid-template-columns: auto auto auto;
-			padding: 10px;
-			width: 100%;
-			height: auto;
-			overflow-x: hidden;
-		}
-
-		.grid-item {
-			background-color: rgba(255, 255, 255, 0.5);
-			border: 1px solid rgba(255, 255, 255, 0.5);
-			padding: 20px;
-			font-size: 30px;
-			text-align: center;
-			width: 30px;
-			height: 30px;
-		}
-		#app-container {
-            width: 100%;/*auto*/
-            height: auto;/*250*/
-            overflow: auto;
-            user-select: none;
-        }
-        .app {
-            width: 320px;
-            height: 220px;
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            border-radius: 10px;
-            display: inline-block;
-            cursor: pointer;
-            vertical-align: middle;
-            text-align: center;
-        }
-		[data-app="swirl"] {
-			background-image: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
-            	linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
-            	linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
-		}
-		#app {
-			position: absolute;
-			top: 0;
-			left:0;
-			right:0;
-			bottom: 0;
-			display: none;
-		}
-		.back {
-        	border-radius: 20px;
-        	background-color: #D5EBF2;
-        	position: absolute;
-        	top: 0.5em;
-        	left: 0.5em;
-        	padding: 0.5em;
-        	cursor: pointer;
-        }
-		#app iframe {
 			height: 100%;
-            width: 100%;
-            border: none;
+		}
+		#start {
+			color: #fff;
+			font-size: 2em;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+			cursor: pointer;
+		}
+		#text {
+			color: #fff;
+			font-size: 2em;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
 		}
 		@media (max-width: 775px) {
-			header p {
-				font-size: 1em;
-			}
-            #app-container {
-                border-bottom: 1px solid #ccc;
-            }
-        	.app {
-                width: 95%;
-            }
+			/**/
         }
 	</style>
 </head>
 <body>
-	<header>
-		<h1>Peace</h1>
-		<P>Peace be still and know that I am God, Psalm 46:10</P>
-	</header>
-	<div class="apps-container">
-		<p class="inst">Select an activity to begin:</p>
-		<!--<div class="apps-grid">
-			<div class="grid-item cs">Swirl Colors</div>
-			<div class="grid-item">View Nature</div>
-			<div class="grid-item">Guided Breathing</div>  
-			<div class="grid-item">4</div>
-			<div class="grid-item">5</div>
-			<div class="grid-item">6</div>  
-			<div class="grid-item">7</div>
-			<div class="grid-item">8</div>
-			<div class="grid-item">Auto</div>  
-		</div>-->
-	</div>
-	<div id="app-container">
-        <div class="app" data-app="swirl">
-            <div class="app-title">Swirl Colors</div>
-        </div>
-        <div class="app" data-app="nature">
-            <div class="app-title">Nature Scenes</div>
-        </div>
-        <div class="app" data-app="breathe">
-            <div class="app-title">Guided Breathing</div>
-        </div>
-        <div class="app" data-app="ambient">
-            <div class="app-title">Ambient Sounds</div>
-        </div>
-    </div>
+	
 
-    <div id="app">
-    	<span class="back"><i class="fas fa-arrow-left"></i> Back</span>
-    	<iframe>Loading app...</iframe>
-    </div>
+	<svg>
+		<circle id="pulse" cx="100" cy="100" fill="none" r="10" stroke="#70c2db" stroke-width="4">
+    		<animate attributeName="r" from="80" to="110" dur="1.5s" begin="0s" repeatCount="indefinite"/>
+    		<animate attributeName="opacity" from="1" to="0" dur="1.5s" begin="0s" repeatCount="indefinite"/>
+		</circle>
+		<circle id="breatheGuide" cx="100" cy="100" r="80" stroke="#8ac8db" stroke-width="3" fill="#aee4f5"/></circle>
+	</svg>
+
+	<div id="start">Click to Start</div>
 
     <script>
-    	$('.app').click(function(e) {
-    		switch($(this).attr('data-app')) {
-    			case 'swirl':
-    				console.log($(this).attr('data-app'));
-    				$('#app iframe').attr('src', '/colorswirl/colorswirl');
-    				$('#app iframe').bind("load", function() {
-			            $(this).contents().find("#notification-banner").hide();
-			            $(this).contents().find(".settings-panel").hide();
-			            document.querySelector('#app iframe').contentWindow.setMode('rgb(213, 235, 242)');
-			        });
-			        scrollToTop();
-			        $('body').css('overflow-y', 'hidden');
-    				$('#app').fadeIn();
-    				break;
-    			case 'nature':
-    				console.log($(this).attr('data-app'));
-    				break;
-    			case 'breathe':
-    				console.log($(this).attr('data-app'));
-    				break;
-    			case 'ambient':
-    				console.log($(this).attr('data-app'));
-    				break;
-    		}
+
+    	var breathing = false;
+
+    	$('#start').click(function(e) {
+    		startGuide();
     	});
-    	$('.back').click(function(e) {
-    		$('#app').fadeOut();
-    		$('#app iframe').attr('src', '');
-    		$('body').css('overflow-y', 'auto');
-    	});
-    	function scrollToTop() {
-		  var c = document.documentElement.scrollTop || document.body.scrollTop;
-		  if (c > 0) {
-		    window.requestAnimationFrame(scrollToTop);
-		    window.scrollTo(0, c - c / 8);
-		  }
-		}
+
+    	function startGuide() {
+    		$('#pulse').fadeOut();
+    		$('#start').fadeOut();
+    		$('#start').attr('id', 'text');
+    		startTimer();
+    		breathing = true;
+    		setTimeout(function() {
+    			$('#text').text('Breathe In');
+    		}, 200);
+    		$('#text').fadeIn();
+    		$('#breatheGuide').animate({
+    			r: window.innerHeight/2
+    		}, 2000, function() {
+    			setTimeout(function() {
+    				$('#text').fadeOut();
+    				breatheOut();
+    			}, 500);
+    		});
+    	}
+
+    	function breatheIn() {
+    		if(breathing) {
+	    		setTimeout(function() {
+	    			$('#text').text('Breathe In');
+	    		}, 200);
+	    		$('#text').fadeIn();
+	    		$('#breatheGuide').animate({
+	    			r: window.innerHeight/2
+	    		}, 3000, function() {
+	    			setTimeout(function() {
+	    				$('#text').fadeOut();
+	    				breatheOut();
+	    			}, 300);
+	    		});
+	    	}
+    	}
+
+    	function breatheOut() {
+	    	if(breathing) {
+	    		setTimeout(function() {
+	    			$('#text').text('Breathe Out');
+	    		}, 200);
+	    		$('#text').fadeIn();
+	    		$('#breatheGuide').animate({
+	    			r: 30
+	    		}, 3000, function() {
+	    			setTimeout(function() {
+	    				$('#start').fadeOut();
+	    				breatheIn();
+	    			}, 1000);
+	    		});
+	    	}
+    	}
+
+    	function startTimer() {
+    		setTimeout(function() {
+    			breathing = false;
+    			setTimeout(function() {
+	    			setInterval(function() {
+	    				$('#text').text('Done!');
+	    			}, 100);
+	    		}, 200);
+    			$('#text').fadeIn();
+    			$('#breatheGuide').animate({
+	    			r: 80
+	    		}, 5000);
+	    		setTimeout(function() {
+	    			$('#pulse').fadeIn();
+	    			$('#text').fadeOut();
+	    			$('#text').attr('id', 'start');
+	    			setTimeout(function() {
+	    				$('#start').text('Click to Start');
+	    				$('#start').fadeIn();
+	    				location.reload();
+	    		}, 200);
+	    		}, 5000);
+    		}, 120000);//120000
+    	}
+
+    	function windowResize() {
+    		var VC = window.innerHeight/2;
+	    	var HC = window.innerWidth/2;
+	    	$('#breatheGuide').attr('cx', HC).attr('cy', VC);
+	    	$('#pulse').attr('cx', HC).attr('cy', VC);
+    	}
+
+    	window.addEventListener('resize', windowResize);
+
+    	windowResize();
     </script>
 </body>
 </html>
