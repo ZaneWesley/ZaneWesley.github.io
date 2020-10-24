@@ -89,20 +89,32 @@
             cursor: pointer;
             vertical-align: middle;
             text-align: center;
+            transition: all 0.5s;
         }
 		[data-app="swirl"] {
 			background-image: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
             	linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
             	linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
 		}
+		[data-app="swirl"]:hover {
+        	filter: saturate(3);
+        }
 		[data-app="nature"] {
 			background-image: url('nature.jpg');
 			background-size: cover;
 			background-repeat: no-repeat;
 		}
+		[data-app="nature"]:hover {
+        	filter: grayscale(30%);
+        }
 		[data-app="breathe"] {
-			/**/
+			background-image: url('breathe-icon.svg');
+			background-size: cover;
+			background-repeat: no-repeat;
 		}
+		[data-app="breathe"]:hover {
+        	filter: contrast(85%);
+        }
 		#app {
 			position: absolute;
 			top: 0;
@@ -125,6 +137,82 @@
             width: 100%;
             border: none;
 		}
+		#loader {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 10;
+			width: 20%;
+			display: none;
+		}
+		#face, #sec, #hr {
+			animation: changeColor 7s ease infinite;
+			-moz-animation: changeColor 7s ease infinite;
+			-webkit-animation: changeColor 7s ease infinite;
+			-o-animation: changeColor 7s infinite;
+			animation-fill-mode: forwards;
+		}
+		@keyframes changeColor {
+			0% {
+				stroke: pink;
+			}
+			25% {
+				stroke: #4796F2;
+			}
+			50% {
+				stroke: #6887A4;
+			}
+			75% {
+				stroke: #B182AC;
+			}
+			100% {
+				 stroke: lightgreen;
+			}
+		}
+		.slide {
+		    width: 70px;
+		    height: 47px;
+		    background: #92B901;
+		    color: #ffffff;
+		    position: relative;
+		    font-weight: bold;
+		    font-size: 20px;
+		    padding: 10px;
+		    animation: slide 5s 1;
+		    -moz-animation: slide 5s 1;
+		    -webkit-animation: slide 5s 1;
+		    -o-animation: slide 5s 1;
+		    border-radius: 5px;
+		    -webkit-border-radius: 5px;
+		}
+		@keyframes slide {
+			0% {
+			    transform: rotate(0deg);
+			    left: 0px;
+			}
+			25% {
+			    transform: rotate(20deg);
+			    left: 0px;
+			}
+			50% {
+			    transform: rotate(0deg);
+			    left: 500px;
+			}
+			55% {
+			    transform: rotate(0deg);
+			    left: 500px;
+			}
+			70% {
+			    transform: rotate(0deg);
+			    left: 500px;
+			    background: #1ec7e6;
+			}
+			100% {
+			    transform: rotate(-360deg);
+			    left: 0px;
+			}
+		}
 		@media (max-width: 775px) {
 			header p {
 				font-size: 1em;
@@ -135,11 +223,14 @@
         	.app {
                 width: 95%;
             }
+            #loader {
+            	width: 50%;
+            }
         }
 	</style>
 </head>
 <body>
-	<header>
+	<header id="top">
 		<h1>Peace</h1>
 		<P>Peace be still and know that I am God, Psalm 46:10</P>
 	</header>
@@ -177,6 +268,30 @@
     	<iframe>Loading app...</iframe>
     </div>
 
+    <div id="loader">
+    	<svg version="1.1" id="L2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+			<circle id="face" fill="none" stroke="#fff" stroke-width="4" stroke-miterlimit="10" cx="50" cy="50" r="48"/>
+			<line id="sec" fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="85" y2="50.5">
+			  <animateTransform 
+			       attributeName="transform" 
+			       dur="2s"
+			       type="rotate"
+			       from="0 50 50"
+			       to="360 50 50"
+			       repeatCount="indefinite" />
+			</line>
+			<line id="hr" fill="none" stroke-linecap="round" stroke="#fff" stroke-width="4" stroke-miterlimit="10" x1="50" y1="50" x2="49.5" y2="74">
+			  <animateTransform 
+			       attributeName="transform" 
+			       dur="15s"
+			       type="rotate"
+			       from="0 50 50"
+			       to="360 50 50"
+			       repeatCount="indefinite" />
+			</line>
+		</svg>
+    </div>
+
     <script>
     	$('.app').click(function(e) {
     		switch($(this).attr('data-app')) {
@@ -189,10 +304,12 @@
 			            document.querySelector('#app iframe').contentWindow.setMode('rgb(213, 235, 242)');
 			        });
 			        scrollToTop();
+			        loading();
 			        setTimeout(function() {
 			        	$('body').css('overflow-y', 'hidden');
     					$('#app').fadeIn();
-			        }, 200);
+    					ready();
+			        }, 1500);
     				break;
     			case 'nature':
     				console.log($(this).attr('data-app'));
@@ -201,10 +318,12 @@
     				console.log($(this).attr('data-app'));
     				$('#app iframe').attr('src', 'breathe');
 			        scrollToTop();
+			        loading();
 			        setTimeout(function() {
 			        	$('body').css('overflow-y', 'hidden');
     					$('#app').fadeIn();
-			        }, 2000);
+    					ready();
+			        }, 2500);
     				break;
     			case 'ambient':
     				console.log($(this).attr('data-app'));
@@ -223,9 +342,18 @@
 		    window.scrollTo(0, c - c / 8);
 		  }
 		}*/
-		function scrollToTop() {
+		/*function scrollToTop() {
 			var c = document.documentElement.scrollTop || document.body.scrollTop;
 			window.scrollTo(0, 0);
+		}*/
+		function scrollToTop() {
+			location="#top";
+		}
+		function loading() {
+			$('#loader').fadeIn();
+		}
+		function ready() {
+			$('#loader').fadeOut();
 		}
     </script>
 </body>
