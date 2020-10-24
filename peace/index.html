@@ -189,8 +189,10 @@
 			            document.querySelector('#app iframe').contentWindow.setMode('rgb(213, 235, 242)');
 			        });
 			        scrollToTop();
-			        $('body').css('overflow-y', 'hidden');
-    				$('#app').fadeIn();
+			        setTimeout(function() {
+			        	$('body').css('overflow-y', 'hidden');
+    					$('#app').fadeIn();
+			        }, 200);
     				break;
     			case 'nature':
     				console.log($(this).attr('data-app'));
@@ -199,8 +201,10 @@
     				console.log($(this).attr('data-app'));
     				$('#app iframe').attr('src', 'breathe');
 			        scrollToTop();
-			        $('body').css('overflow-y', 'hidden');
-    				$('#app').fadeIn();
+			        setTimeout(function() {
+			        	$('body').css('overflow-y', 'hidden');
+    					$('#app').fadeIn();
+			        }, 2000);
     				break;
     			case 'ambient':
     				console.log($(this).attr('data-app'));
