@@ -313,6 +313,14 @@
     				break;
     			case 'nature':
     				console.log($(this).attr('data-app'));
+    				$('#app iframe').attr('src', 'nature');
+			        scrollToTop();
+			        loading();
+			        setTimeout(function() {
+			        	$('body').css('overflow-y', 'hidden');
+    					$('#app').fadeIn();
+    					ready();
+			        }, 2500);
     				break;
     			case 'breathe':
     				console.log($(this).attr('data-app'));
