@@ -1,7 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-<circle id="pulse" cx="160" cy="110" fill="none" r="10" stroke="#70c2db" stroke-width="4">
-    		<animate attributeName="r" from="80" to="110" dur="1.5s" begin="0s" repeatCount="indefinite"/>
-    		<animate attributeName="opacity" from="1" to="0" dur="1.5s" begin="0s" repeatCount="indefinite"/>
-		</circle>
-		<circle id="breatheGuide" cx="160" cy="110" r="80" stroke="#8ac8db" stroke-width="3" fill="#aee4f5"></circle>
+	<circle id="pulse" cx="160" cy="110" fill="none" r="10" stroke="#70c2db" stroke-width="4">
+    	<animate attributeName="r" from="80" to="110" dur="1.5s" begin="0s" repeatCount="indefinite"/>
+    	<animate attributeName="opacity" from="1" to="0" dur="1.5s" begin="0s" repeatCount="indefinite"/>
+	</circle>
+	<circle id="breatheGuide" cx="160" cy="110" r="80" stroke="#8ac8db" stroke-width="3" fill="#aee4f5"></circle>
+	<defs>
+	    <font-face>
+	    	<font-face-src>
+	        	<font-face-uri href="https://fonts.googleapis.com/css2?family=Roboto"/>
+	    	</font-face-src>
+	    </font-face>
+	 </defs>
+	<text x="105" y="120" fill="#fff" stroke="none" font-size="2em" font-family="Roboto, sans-serif">Breathe</text>
 </svg>
