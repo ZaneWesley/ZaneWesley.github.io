@@ -49,12 +49,12 @@
 <body>
 	
 
-	<svg>
+	<svg xmlns="http://www.w3.org/2000/svg">
 		<circle id="pulse" cx="100" cy="100" fill="none" r="10" stroke="#70c2db" stroke-width="4">
     		<animate attributeName="r" from="80" to="110" dur="1.5s" begin="0s" repeatCount="indefinite"/>
     		<animate attributeName="opacity" from="1" to="0" dur="1.5s" begin="0s" repeatCount="indefinite"/>
 		</circle>
-		<circle id="breatheGuide" cx="100" cy="100" r="80" stroke="#8ac8db" stroke-width="3" fill="#aee4f5"/></circle>
+		<circle id="breatheGuide" cx="100" cy="100" r="80" stroke="#8ac8db" stroke-width="3" fill="#aee4f5"></circle>
 	</svg>
 
 	<div id="start">Click to Start</div>
@@ -68,31 +68,34 @@
     	});
 
     	function startGuide() {
-    		$('#pulse').fadeOut();
     		$('#start').fadeOut();
     		$('#start').attr('id', 'text');
-    		startTimer();
-    		breathing = true;
     		setTimeout(function() {
-    			$('#text').text('Breathe In');
-    		}, 200);
-    		$('#text').fadeIn();
-    		$('#breatheGuide').animate({
-    			r: window.innerHeight/2
-    		}, 2000, function() {
+    			$('#text').text('Breathe With the Circle');
+    			$('#text').fadeIn();
     			setTimeout(function() {
     				$('#text').fadeOut();
-    				breatheOut();
-    			}, 500);
-    		});
+    				$('#text').text('Follow the Instructions On the Screen');
+    				setTimeout(function() {
+    					$('#text').fadeIn();
+    					setTimeout(function() {
+    						$('#text').fadeOut();
+    						$('#pulse').fadeOut();
+				    		startTimer();
+				    		breathing = true;
+				    		breatheIn();
+    					}, 3000);
+    				}, 200);
+    			}, 3000);
+    		}, 200);
     	}
 
     	function breatheIn() {
     		if(breathing) {
 	    		setTimeout(function() {
 	    			$('#text').text('Breathe In');
+	    			$('#text').fadeIn();
 	    		}, 200);
-	    		$('#text').fadeIn();
 	    		$('#breatheGuide').animate({
 	    			r: window.innerHeight/2
 	    		}, 3000, function() {
@@ -108,8 +111,8 @@
 	    	if(breathing) {
 	    		setTimeout(function() {
 	    			$('#text').text('Breathe Out');
+	    			$('#text').fadeIn();
 	    		}, 200);
-	    		$('#text').fadeIn();
 	    		$('#breatheGuide').animate({
 	    			r: 30
 	    		}, 3000, function() {
