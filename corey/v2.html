@@ -1,0 +1,806 @@
+<html>
+<head>
+  <title>Corey</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="external/spectrum.css" rel="stylesheet">
+  <script src="external/spectrum.js"></script>
+  <script>
+    var $speechInput,
+      $recBtn,
+      recognition,
+      messageRecording = "Listening...",
+      messageCouldntHear = "I couldn't hear you, could you say that again?",
+      messageInternalError = "Uh Oh! There's an internal server error. Please try again later.",
+      messageSorry = "I'm sorry, I don't have the answer to that yet.";
+      var preferences = {};
+    $(document).ready(function() {
+      $speechInput = $("#speech");
+      $recBtn = $("#rec");
+
+      // Get the saved data, if any
+      var preferencesData = localStorage.getItem('corey-preferences-data');
+            
+      // Did we get anything back from localStorage?
+      if (preferencesData) {
+        // If so, objectify it and store it in our global preferences object
+        preferences = JSON.parse(preferencesData);
+                
+        // Apply the preferences
+        setPreferences(preferences);
+      } else {
+        // If not, build the va using the default CSS values
+      }
+
+      $speechInput.keypress(function(event) {
+        if (event.which == 13) {
+          event.preventDefault();
+          if ($speechInput.val() !== "" && $speechInput.val() !== null) {
+          	send();
+          } else {
+	        var useri = {
+	    		user: "Empty request",
+	    		corey: "Oops! You didn\'t ask me anything."
+	    	};
+
+    		var debugJSON = JSON.stringify(useri, undefined, 2);
+          	respond("Oops! You didn\'t ask me anything.");
+          	debugRespond(debugJSON);
+
+          }
+        }
+      });
+      $recBtn.on("click", function(event) {
+        switchRecognition();
+      });
+      $(".debug__btn").on("click", function() {
+        $(this).next().toggleClass("is-active");
+        return false;
+      });
+      $('#menu-icon-2').hide();
+      $('#menu-icon-1').on("mouseover", function(e) {
+      	$('#menu-icon-1').hide();
+      	$('#menu-icon-2').show();
+      });
+      $('#menu-icon-2').on("mouseleave mouseoff", function(e) {
+      	$('#menu-icon-2').hide();
+      	$('#menu-icon-1').show();
+      });
+      initializeColorPickers();
+
+      $('.dialog-input').on('input keyup keypress keydown focus blur change', function(e) {
+        $('body').css('background-color', $('#bg-color').val());
+        preferences.bodyBackgroundColor = $('#bg-color').val();
+      	$('#speech').css('background-color', $('#input-color').val());
+      	$('#rec').css('background-color', $('#input-color').val()).css('color', '#ffffff');
+      	preferences.iptBackgroundColor = $('#input-color').val();
+      	$('#response').css('color', '#ffffff');
+      	$('.debug__btn').css('background-color', $('#input-color').val()).css('color', '#ffffff');
+      	$('.spoken-response__text').css('color', '#ffffff');
+      	preferences.username = $('#username').val();
+      	var backgroundColorArray = $('#input-color').val().split(', ');
+        // The background color's luminance value is in the third array item
+        // Parse that value as an integer and then subtract 20
+        var borderLuminance = parseInt(backgroundColorArray[2]) - 20;
+        if (borderLuminance > 100) borderLuminance = 100;
+        var responseBackgroundLuminance = parseInt(backgroundColorArray[2]) - 40;
+        if (responseBackgroundLuminance > 100) responseBackgroundLuminance = 100;
+        // Parse that value as an integer and then add 20
+        var btnLuminance = parseInt(backgroundColorArray[2]) + 20;
+        if (btnLuminance > 100) btnLuminance = 100;
+        // Build the hsl() string for the border and background colors
+        var borderColor = backgroundColorArray[0] + ', '  + backgroundColorArray[1] + ', ' + borderLuminance + '%)';
+        var btnBorderColor = backgroundColorArray[0] + ', '  + backgroundColorArray[1] + ', ' + borderLuminance + '%)';
+        var btnHoverColor = backgroundColorArray[0] + ', '  + backgroundColorArray[1] + ', ' + btnLuminance + '%)';
+        var responseBackgroundColor = backgroundColorArray[0] + ', '  + backgroundColorArray[1] + ', ' + responseBackgroundLuminance + '%)';
+        $('#speech').css('border', '1px solid ' + borderColor);
+        $('.debug__btn').css('border', '1px solid ' + borderColor);
+        preferences.borderColor = borderColor;
+        $('#rec').css('border', '1px solid ' + btnBorderColor);
+        $('#rec:hover').css('background-color', btnHoverColor);
+        preferences.btnBorderColor = btnBorderColor;
+        preferences.btnHoverColor = btnHoverColor;
+        $('#response').css('background-color', responseBackgroundColor);
+        $('.spoken-response__text').css('background-color', responseBackgroundColor);
+        preferences.responseBackgroundColor = responseBackgroundColor;
+      });
+    });
+
+    function startRecognition() {
+      recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+          recognition.interimResults = false;
+
+      recognition.onstart = function(event) {
+        respond(messageRecording);
+        updateRec();
+      };
+      recognition.onresult = function(event) {
+        recognition.onend = null;
+        
+        var text = "";
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+            text += event.results[i][0].transcript;
+          }
+          setInput(text);
+        stopRecognition();
+      };
+      recognition.onend = function() {
+        respond(messageCouldntHear);
+        stopRecognition();
+      };
+      recognition.lang = "en-US";
+      recognition.start();
+    }
+  
+    function stopRecognition() {
+      if (recognition) {
+        recognition.stop();
+        recognition = null;
+      }
+      updateRec();
+    }
+
+    function switchRecognition() {
+      if (recognition) {
+        stopRecognition();
+      } else {
+        startRecognition();
+      }
+    }
+
+    function setInput(text) {
+      $speechInput.val(text);
+      send();
+    }
+
+    function updateRec() {
+      $recBtn.text(recognition ? "Stop" : "Speak");
+    }
+
+    function send() {
+      var text = $speechInput.val();
+      prepareResponse(text);
+    }
+
+    function prepareResponse(val) {
+      var response, returned = false;
+
+      var filterVal = val.toLowerCase().replace(/[^\w\s\d]/gi, "");
+      filterVal = filterVal.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "").replace(/wont/g, "will not").replace(/dont/g, "do not").replace(/youre/g, "you are").replace(/arent/g, "are not").replace(/im/g, "i am");
+
+      switch(filterVal) {
+      	case "what time is it":
+      		response = timeResponseArr[Math.floor(Math.random()*timeResponseArr.length)] + new Date().toLocaleTimeString();
+      		returned = true;
+      		break;
+      	case "what is the time":
+      		response = timeResponseArr[Math.floor(Math.random()*timeResponseArr.length)] + new Date().toLocaleTimeString();
+      		returned = true;
+      		break;
+      	case "tell me the time":
+      		response = timeResponseArr[Math.floor(Math.random()*timeResponseArr.length)] + new Date().toLocaleTimeString();
+      		returned = true;
+      		break;
+      	case "what is todays date":
+      		response = dateResponseArr[Math.floor(Math.random()*dateResponseArr.length)] + new Date().toLocaleDateString();
+      		returned = true;
+      		break;
+      	case "what is the date":
+      		response = dateResponseArr[Math.floor(Math.random()*dateResponseArr.length)] + new Date().toLocaleDateString();
+      		returned = true;
+      		break;
+      	case "what is today":
+      		response = dateResponseArr[Math.floor(Math.random()*dateResponseArr.length)] + new Date().toLocaleDateString();
+      		returned = true;
+      		break;
+      	case "tell me the date":
+      		response = dateResponseArr[Math.floor(Math.random()*dateResponseArr.length)] + new Date().toLocaleDateString();
+      		returned = true;
+      		break;
+        case "what is the day of the week":
+          response = dayResponseArr[Math.floor(Math.random()*dayResponseArr.length)] + dayNameArr[new Date().getDay()];
+          returned = true;
+          break;
+        case "what day of the week is it":
+          response = dayResponseArr[Math.floor(Math.random()*dayResponseArr.length)] + dayNameArr[new Date().getDay()];
+          returned = true;
+          break;
+      	case "what is the weather":
+      		response = "It looks dark, maybe cloudy? Oh, wait! I don\'t have eyes! Maybe try weather.com. I think they know about the skies better.";
+          setTimeout(function() {
+            open('https://weather.com/weather/today');
+          }, 7000);
+      		returned = true;
+      		break;
+        case "what is the weather today":
+          response = "It looks the same as always, maybe cloudy? Oh, wait! I don\'t have eyes! Maybe try weather.com. I think they know about the skies better.";
+          setTimeout(function() {
+            open('https://weather.com/weather/today');
+          }, 7000);
+          returned = true;
+          break;
+        case "what is the weather like":
+          response = "How should I know? I\'m a computer! Maybe try weather.com. I think they know what it\'s like.";
+          setTimeout(function() {
+            open('https://weather.com/weather/today');
+          }, 7000);
+          returned = true;
+          break;
+        case "what is the weather like today":
+          response = "How should I know? I\'m a computer! Maybe try weather.com. I think they know what it\'s like.";
+          setTimeout(function() {
+            open('https://weather.com/weather/today');
+          }, 7000);
+          returned = true;
+          break;
+      	case "play music":
+          response = "I only know one song. If you don't like it, just tell me to stop the music. Here it goes:";
+          var fox_music = document.getElementById("msc-audio");
+          fox_music.src = "external/wdtfs.mp3";
+          fox_music.play();
+          returned = true;
+          break;
+        case "play what does the fox say":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.src = "external/wdtfs.mp3";
+      		fox_music.play();
+      		returned = true;
+      		break;
+      	case "play what does the fox say by ylvis":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.src = "external/wdtfs.mp3";
+      		fox_music.play();
+      		returned = true;
+      		break;
+      	case "play the fox by ylvis":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.src = "external/wdtfs.mp3";
+      		fox_music.play();
+      		returned = true;
+      		break;
+      	case "stop playing":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.pause();
+      		fox_music.currentTime = 0;
+      		returned = true;
+      		break;
+      	case "stop playing music":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.pause();
+      		fox_music.currentTime = 0;
+      		returned = true;
+      		break;
+      	case "stop the music":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.pause();
+      		fox_music.currentTime = 0;
+      		returned = true;
+      		break;
+      	case "stop playing the music":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.pause();
+      		fox_music.currentTime = 0;
+      		returned = true;
+      		break;
+      	case "pause the music":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.pause();
+      		returned = true;
+      		break;
+      	case "pause":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("wdtfs-audio");
+      		fox_music.pause();
+      		returned = true;
+      		break;
+      	case "play":
+      		response = accomplishedResponseArr[Math.floor(Math.random()*accomplishedResponseArr.length)];
+      		var fox_music = document.getElementById("msc-audio");
+      		fox_music.src = "external/wdtfs.mp3";
+      		fox_music.play();
+      		returned = true;
+      		break;
+        case "what is my name":
+          var UName = preferences.username
+          if(UName !== "" && UName !== null && UName !== undefined) {
+            response = UNameResponseArr[Math.floor(Math.random()*UNameResponseArr.length)] + preferences.username;
+          } else {
+            response = "I don\'t know your name yet, but you can tell me in the preferences settings.";
+          }
+          returned = true;
+      }
+
+      if(returned === false) {
+      	response = getAnswer(filterVal);
+      }
+
+      var useri = {
+    		user: val,
+    		corey: response
+    	};
+
+    var debugJSON = JSON.stringify(useri, undefined, 2),
+        spokenResponse = response;
+
+      respond(spokenResponse);
+      debugRespond(debugJSON);
+    }
+
+    function debugRespond(val) {
+      $("#response").append("\n\n" + val);
+    }
+
+    function respond(val) {
+      if (val == "") {
+        val = messageSorry;
+      }
+
+      if (val !== messageRecording) {
+        var msg = new SpeechSynthesisUtterance();
+        msg.voiceURI = "native";
+        msg.text = val;
+        msg.lang = "en-US";
+        //window.speechSynthesis.speak(msg);
+        var tempBtn = document.createElement('button');
+        tempBtn.onclick = window.speechSynthesis.speak(msg);
+        document.body.appendChild(tempBtn);
+        $(tempBtn).click();
+        tempBtn.remove();
+      }
+
+      $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
+    }
+
+    function getAnswer(text) {
+	    var responseText = compare(text);
+      	if(responseText == "" || responseText == null || responseText == undefined) {
+      			responseText = alternative[Math.floor(Math.random()*alternative.length)];
+      		}
+	    return responseText;
+    }
+
+    function compare(string){
+      	var item;
+      	for(var x=0; x<trigger.length; x++){
+      		for(var y=0; y<reply.length; y++){
+      			if(trigger[x][y] == string){
+      				var items = reply[x];
+      				item =  items[Math.floor(Math.random()*items.length)];
+      			}
+      		}
+      	}
+      	return item;
+	}
+
+    var timeResponseArr = ["It's ", "Right now it's ", "The time is "];
+    var dateResponseArr = ["Today is ", "Today's date is "];
+    var dayResponseArr = ["Today is ", "It is ", "The day of the week is "];
+    var dayNameArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var accomplishedResponseArr = ["Done.", "Ok. It\'s done.", "Ok.", "I did it."];
+    var UNameResponseArr = ["Your name is ", "You are ", "Is this a trick question? I have a good memory and you told me earlier. Your name is "];
+
+    var devMode = false;
+
+    function openMenu() {
+	  document.getElementById("sidebar").style.width = "250px";
+	  document.body.style.backgroundColor = "#242424"; /*"#000d1b";*/
+	}
+
+	function closeMenu() {
+	  document.getElementById("sidebar").style.width = "0";
+	  document.body.style.backgroundColor = $('#bg-color').val(); /*"#192837";*/
+	}
+
+  $('.menu-btn').click(function() {
+    closeMenu();
+  });
+
+  function toggleDevMode() {
+    closeMenu();
+    if(devMode) {
+      $('.debug').fadeOut();
+      $('#dev-toggle').text('Developer Mode Off');
+      devMode = false;
+      setTimeout(function() {
+        $('#dev-toggle').text('Developer Mode');
+      }, 2000);
+    } else {
+      $('.debug').fadeIn();
+      $('#dev-toggle').text('Developer Mode On');
+      devMode = true;
+      setTimeout(function() {
+        $('#dev-toggle').text('Developer Mode');
+      }, 2000);
+    }
+  }
+
+	function openDialog(dialog) {
+		if(dialog) {
+			$('#' + dialog).fadeIn();
+		}
+		$('.dialog').each(function(i, val) {
+			var id = this.id;
+			if(id !== dialog) {
+				$(this).fadeOut();
+			}
+		});
+		closeMenu();
+	}
+
+	function savePreferences() {
+		localStorage.setItem('corey-preferences-data', JSON.stringify(preferences));
+	}
+
+	function resetPreferences() {
+		localStorage.removeItem('corey-preferences-data');
+		window.location=window.location;
+	}
+
+	function setPreferences(preferences) {
+		$('body').css('background-color', preferences.bodyBackgroundColor);
+		$('#speech').css('background-color', preferences.iptBackgroundColor);
+		$('#rec').css('background-color', preferences.iptBackgroundColor).css('color', '#ffffff');
+    $('#response').css('color', '#ffffff');
+    $('.debug__btn').css('background-color', preferences.iptBackgroundColor).css('color', '#ffffff');
+    $('.spoken-response__text').css('color', '#ffffff');
+    $('#speech').css('border', '1px solid ' + preferences.borderColor);
+    $('.debug__btn').css('border', '1px solid ' + preferences.borderColor);
+    $('#rec').css('border', '1px solid ' + preferences.btnBorderColor);
+    $('#rec:hover').css('background-color', preferences.btnHoverColor);
+    $('#response').css('background-color', preferences.responseBackgroundColor);
+    $('.spoken-response__text').css('background-color', preferences.responseBackgroundColor);
+    $('#bg-color').spectrum('set', preferences.bodyBackgroundColor);
+    $('#input-color').spectrum('set', preferences.iptBackgroundColor);
+    $('#username').val(preferences.username);
+	}
+
+	function initializeColorPickers() {
+    	
+    	// Background color picker
+    	$("#bg-color").spectrum({
+    	    color: "hsl(210, 37%, 16%)",
+    	    flat: false,
+    	    showInput: true,
+    	    showAlpha: true,
+    	    className: "full-spectrum",
+    	    showButtons: false,
+    	    showInitial: true,
+    	    showPalette: true,
+    	    showSelectionPalette: true,
+    	    maxSelectionSize: 10,
+    	    preferredFormat: "hsl",
+    	    localStorageKey: "spectrum.demo",
+    	    palette: [
+    	        ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+    	        "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+    	        ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)",
+    	        "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)",
+    	        "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+    	        "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)",
+    	        "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+    	        "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+    	        "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+    	        "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+    	        "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)",
+    	        "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+    	    ]
+    	});
+    	// Input Background color picker
+    	$("#input-color").spectrum({
+    	    color: "hsl(194, 74%, 27%)",
+    	    flat: false,
+    	    showInput: true,
+    	    showAlpha: true,
+    	    className: "full-spectrum",
+    	    showButtons: false,
+    	    showInitial: true,
+    	    showPalette: true,
+    	    showSelectionPalette: true,
+    	    maxSelectionSize: 10,
+    	    preferredFormat: "hsl",
+    	    localStorageKey: "spectrum.demo",
+    	    palette: [
+    	        ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
+    	        "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
+    	        ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)",
+    	        "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)",
+    	        "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+    	        "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)",
+    	        "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+    	        "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+    	        "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+    	        "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+    	        "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)",
+    	        "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
+    	    ]
+    	});
+	}
+  </script>
+  <style type="text/css">
+    html {
+      box-sizing: border-box;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+    body {
+      background-color: #192837;
+      font-family: "Titillium Web", Arial, sans-serif;
+      font-size: 20px;
+      margin: 0;
+      transition: background-color .5s;
+      overflow-x: hidden;
+    }
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    label {
+    	cursor: pointer;
+    	font-weight: bold;
+    }
+    input#speech {
+      background-color: /*#126077;*/rgb(59, 119, 216);
+      border: 1px solid /*#3F7F93;*/rgb(29, 73, 145);
+      color: #A6CAE6;
+      font-family: "Titillium Web";
+      font-size: 20px;
+      line-height: 43px;
+      padding: 0 0.75em;
+      width: 400px;
+      transition: all 0.35s ease-in;
+    }
+    textarea#response {
+      background-color: #070F24;
+      border: 1px solid #122435;
+      color: /*#606B88;*/ #ffffff;
+      padding: 0.5em;
+      width: 100%;
+      transition: all 0.35s ease-in;
+      resize: none;
+    }
+    input#speech:active, input#speech:focus, textarea#response:active, textarea#response:focus {
+      outline: 1px solid #48788B;
+    }
+    .btn {
+      background-color: #126178;
+      border: 1px solid #549EAF;
+      color: /*#549EAF;*/ #ffffff;
+      cursor: pointer;
+      display: inline-block;
+      font-family: "Titillium Web";
+      font-size: 20px;
+      line-height: 43px;
+      padding: 0 0.75em;
+      text-align: center;
+      text-transform: uppercase;
+      transition: all 0.35s ease-in;
+    }
+    .btn:hover {
+      background-color: #1888A9;
+      color: #183035;
+    }
+    .debug {
+      bottom: 0;
+      position: fixed;
+      right: 0;
+      display: none;
+    }
+    .debug__content {
+      font-size: 14px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.35s ease-in;
+    }
+    .debug__content.is-active {
+      display: block;
+      max-height: 500px;
+    }
+    .debug__btn {
+      width: 100%;
+    }
+    .spoken-response {
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.35s ease-in;
+    }
+    .spoken-response.is-active {
+      max-height: 400px;
+    }
+    .spoken-response__text {
+      background-color: #040E23;
+      color: /*#7584A2;*/#ffffff;
+      padding: 1em;
+    }
+
+    .sidemenu {
+	  height: 100%;
+	  width: 0;
+	  position: fixed;
+	  z-index: 1;
+	  top: 0;
+	  left: 0;
+	  background-color: #111;
+	  overflow-x: hidden;
+	  transition: 0.5s;
+	  padding-top: 60px;
+	}
+
+	.sidemenu a {
+	  padding: 8px 8px 8px 32px;
+	  text-decoration: none;
+	  font-size: 25px;
+	  color: #818181;
+	  display: block;
+	  transition: 0.3s;
+	}
+
+	.sidemenu a:hover {
+	  color: #f1f1f1;
+	}
+
+	.sidemenu .closebtn {
+	  position: absolute;
+	  top: 0;
+	  right: 25px;
+	  font-size: 36px;
+	  margin-left: 50px;
+	}
+	#main {
+	  transition: margin-left .5s;
+	  padding: 16px;
+	}
+
+	.dialog {
+		width: 50%;
+		min-height: 50%;
+		padding: 16px;
+		border: 1px solid #ccc;
+		background-color: #fff;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		z-index: 9;
+	}
+	.dialog h2 {
+		text-align: center;
+		border-bottom: 1px solid #ccc;
+	}
+  .dialog-btn {
+    background-color: #126178;
+    border: 1px solid #549EAF;
+    color: /*#549EAF;*/ #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Titillium Web";
+    font-size: 20px;
+    padding: 0 0.75em;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.35s ease-in;
+  }
+  @media (max-width: 775px) {
+    .sidemenu {padding-top: 15px;}
+    .sidemenu a {font-size: 1.5em;}
+    .container {
+      width: 100%!important;
+      align-content: center;
+      padding-left: 1.5em;
+    }
+    #speech {
+      width: 90%!important;
+    }
+    .btn {
+      width: 90%;
+      display: block;
+    }
+    #spokenResponse {
+      width: 90%!important;
+    }
+    #response {
+      width: 100%!important;
+    }
+    .debug {
+      left: 0;
+      right: 0;
+      width: 100%!important;
+    }
+    .debug__btn {
+      width: 100%!important;
+    }
+    .dialog {
+      width: 100%;
+      min-height: 100%;
+      height: auto;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div id="main">
+	  <div class="container">
+	    <input id="speech" type="text">
+	    <button id="rec" class="btn">Speak</button>
+	    <div id="spokenResponse" class="spoken-response">
+	      <div class="spoken-response__text"></div>
+	    </div>
+	  </div>
+	  <div class="debug">
+	    <div class="debug__btn btn">
+	      Debug JSON results
+	    </div>
+	    <div class="debug__content">
+	      <textarea id="response" cols="40" rows="20"></textarea>
+	    </div>
+	  </div>
+  </div>
+
+  	<div id="use-dialog" class="dialog" style="display: none;">
+  		<h2>How To Use</h2>
+  		<p>Corey is your virtual assisstant! You can ask it practical questions, for some dad jokes, or you can just have a conversation with him! Just click the speak button and talk to him or type your question in the box. He's all yours!</p>
+      <p>Just like with any technology, Corey is being continuously improved and optimized for the best user experience. If you have a feature request, please send it to me! I'd love to hear it!</p>
+  		<button class="dialog-btn" onclick="openDialog();">Close</button>
+  	</div>
+
+  	<div id="preferences-dialog" class="dialog" class="dialog" style="display: none;">
+  		<h2>Preferences</h2>
+  		<div id="direct-styles-wrapper">
+  			<label for="username">Your Name: </label>
+  			<input class="dialog-input" id="username" type="text">
+  			<br><br>
+  			<label for="bg-color">Background Color: </label>
+  			<input class="dialog-input" id="bg-color" type="text">
+  			<br><br>
+  			<label for="input-color">Command Background Color: </label>
+  			<input class="dialog-input" id="input-color" type="text">
+  			<br><br>
+  			<button class="dialog-btn" onclick="openDialog(); resetPreferences()">Reset</button><span> <b>This action cannot be undone!</b></span>
+  			<br>
+  			<button class="dialog-btn" onclick="openDialog(); savePreferences()">Close & Save</button>
+  		</div>
+  	</div>
+
+  	<div id="version-dialog" class="dialog" style="display: none;">
+  		<h2>Version</h2>
+  		<p><b>Current Version: </b>2.4.4</p>
+  		<p><b>Newest Version: </b>2.4.4</p>
+  		<p><b>Previous Versions: </b>1.0.0, 1.1.0, 1.1.3, 1.1.4, 1.2.0, 1.3.1, 1.3.3, 1.3.4, 1.4.1, 1.4.2, 2.0.0, 2.1.0, 2.1.8, 2.2.1, 2.2.3, 2.2.4, 2.3.1, 2.3.4, 2.3.5, 2.3.7, 2.4.0, 2.4.1, 2.4.2, 2.4.3, <b>2.4.4 (Current)</b></p>
+  		<button class="dialog-btn" onclick="openDialog();">Close</button>
+  	</div>
+
+	<div id="sidebar" class="sidemenu">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
+		<a href="javascript:void(0)" class="menu-btn" onclick="openDialog('use-dialog');">How to Use</a>
+		<a href="javascript:void(0)" class="menu-btn" onclick="openDialog('preferences-dialog');">Preferences</a>
+		<a href="javascript:void(0)" class="menu-btn" onclick="openDialog('version-dialog');">Version</a>
+    <a href="javascript:void(0)" class="menu-btn" onclick="toggleDevMode();" id="dev-toggle">Developer Mode</a>
+	</div>
+
+	<span style="cursor:pointer; position: absolute; top: 1em; left: 1em;" onclick="openMenu()">
+		<div id="menu-icon-1">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><linearGradient id="9iHXMuvV7brSX7hFt~tsna" x1="12.066" x2="34.891" y1=".066" y2="22.891" gradientUnits="userSpaceOnUse"><stop offset=".237" stop-color="#3bc9f3"/><stop offset=".85" stop-color="#1591d8"/></linearGradient><path fill="url(#9iHXMuvV7brSX7hFt~tsna)" d="M43,15H5c-1.1,0-2-0.9-2-2v-2c0-1.1,0.9-2,2-2h38c1.1,0,2,0.9,2,2v2C45,14.1,44.1,15,43,15z"/><linearGradient id="9iHXMuvV7brSX7hFt~tsnb" x1="12.066" x2="34.891" y1="12.066" y2="34.891" gradientUnits="userSpaceOnUse"><stop offset=".237" stop-color="#3bc9f3"/><stop offset=".85" stop-color="#1591d8"/></linearGradient><path fill="url(#9iHXMuvV7brSX7hFt~tsnb)" d="M43,27H5c-1.1,0-2-0.9-2-2v-2c0-1.1,0.9-2,2-2h38c1.1,0,2,0.9,2,2v2C45,26.1,44.1,27,43,27z"/><linearGradient id="9iHXMuvV7brSX7hFt~tsnc" x1="12.066" x2="34.891" y1="24.066" y2="46.891" gradientUnits="userSpaceOnUse"><stop offset=".237" stop-color="#3bc9f3"/><stop offset=".85" stop-color="#1591d8"/></linearGradient><path fill="url(#9iHXMuvV7brSX7hFt~tsnc)" d="M43,39H5c-1.1,0-2-0.9-2-2v-2c0-1.1,0.9-2,2-2h38c1.1,0,2,0.9,2,2v2C45,38.1,44.1,39,43,39z"/></svg>
+		</div>
+		<div id="menu-icon-2">
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="49px" height="49px" viewBox="0 0 48 48" version="1.1"><defs><linearGradient id="linear0" gradientUnits="userSpaceOnUse" x1="43.2365" y1="0.2365" x2="125.02608" y2="82.02608" gradientTransform="matrix(0.27907,0,0,0.27907,0,0)"><stop offset="0.237" style="stop-color:rgb(0%,44.705882%,100%);stop-opacity:1;"/><stop offset="0.85" style="stop-color:rgb(0%,77.647059%,100%);stop-opacity:1;"/></linearGradient><linearGradient id="linear1" gradientUnits="userSpaceOnUse" x1="43.2365" y1="43.2365" x2="125.02608" y2="125.02608" gradientTransform="matrix(0.27907,0,0,0.27907,0,0)"><stop offset="0.237" style="stop-color:rgb(0%,44.705882%,100%);stop-opacity:1;"/><stop offset="0.85" style="stop-color:rgb(0%,77.647059%,100%);stop-opacity:1;"/></linearGradient><linearGradient id="linear2" gradientUnits="userSpaceOnUse" x1="43.2365" y1="86.2365" x2="125.02608" y2="168.02608" gradientTransform="matrix(0.27907,0,0,0.27907,0,0)"><stop offset="0.237" style="stop-color:rgb(0%,44.705882%,100%);stop-opacity:1;"/><stop offset="0.85" style="stop-color:rgb(0%,77.647059%,100%);stop-opacity:1;"/></linearGradient></defs><g id="surface18378654"><path style=" stroke:none;fill-rule:nonzero;fill:url(#linear0);" d="M 43 15 L 5 15 C 3.898438 15 3 14.101562 3 13 L 3 11 C 3 9.898438 3.898438 9 5 9 L 43 9 C 44.101562 9 45 9.898438 45 11 L 45 13 C 45 14.101562 44.101562 15 43 15 Z M 43 15 "/><path style=" stroke:none;fill-rule:nonzero;fill:url(#linear1);" d="M 43 27 L 5 27 C 3.898438 27 3 26.101562 3 25 L 3 23 C 3 21.898438 3.898438 21 5 21 L 43 21 C 44.101562 21 45 21.898438 45 23 L 45 25 C 45 26.101562 44.101562 27 43 27 Z M 43 27 "/><path style=" stroke:none;fill-rule:nonzero;fill:url(#linear2);" d="M 43 39 L 5 39 C 3.898438 39 3 38.101562 3 37 L 3 35 C 3 33.898438 3.898438 33 5 33 L 43 33 C 44.101562 33 45 33.898438 45 35 L 45 37 C 45 38.101562 44.101562 39 43 39 Z M 43 39 "/></g></svg>
+		</div>
+	</span>
+
+	<audio id="msc-audio" controls="false" src="" loop="false" preload="true" style="display: none;">
+
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css">
+  <script src="external/trigger.js"></script>
+</body>
+</html>
