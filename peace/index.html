@@ -16,7 +16,6 @@
 	<title>Peace</title>
 	<style>
 		body {
-			overflow-x: hidden;
 			padding: 16px;
 			padding-top: 230px;
 			font-family: Roboto, cursive;
@@ -307,7 +306,7 @@
 			            document.querySelector('#app iframe').contentWindow.setMode('rgb(213, 235, 242)');
 			        });
 			        scrollToTop();
-			        $('body').css('overflow-y', 'hidden');
+			        $('body').css('overflow', 'hidden');
 			        loading();
 			        setTimeout(function() {
     					$('#app').fadeIn();
@@ -318,7 +317,7 @@
     				console.log($(this).attr('data-app'));
     				$('#app iframe').attr('src', 'nature');
 			        scrollToTop();
-			        $('body').css('overflow-y', 'hidden');
+			        $('body').css('overflow', 'hidden');
 			        loading();
 			        setTimeout(function() {
     					$('#app').fadeIn();
@@ -329,7 +328,7 @@
     				console.log($(this).attr('data-app'));
     				$('#app iframe').attr('src', 'breathe');
 			        scrollToTop();
-			        $('body').css('overflow-y', 'hidden');
+			        $('body').css('overflow', 'hidden');
 			        loading();
 			        setTimeout(function() {
     					$('#app').fadeIn();
@@ -353,12 +352,9 @@
 		    window.scrollTo(0, c - c / 8);
 		  }
 		}*/
-		/*function scrollToTop() {
+		function scrollToTop() {
 			var c = document.documentElement.scrollTop || document.body.scrollTop;
 			window.scrollTo(0, 0);
-		}*/
-		function scrollToTop() {
-			location="#top";
 		}
 		function loading() {
 			$('#loader').fadeIn();
