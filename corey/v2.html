@@ -51,8 +51,23 @@
           }
         }
       });
+      var speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if(typeof speechRecognition === "undefined") {
+        $('#rec').hide();
+        $('#submit').show();
+      }
       $recBtn.on("click", function(event) {
         switchRecognition();
+      });
+      $('#submit').on('click', function(e) {
+        if ($speechInput.val() !== "" && $speechInput.val() !== null) {
+            send();
+        } else {
+          var useri = {
+            user: "Empty request",
+            corey: "Oops! You didn\'t ask me anything."
+          }
+        }
       });
       $(".debug__btn").on("click", function() {
         $(this).next().toggleClass("is-active");
@@ -409,6 +424,7 @@
     closeMenu();
     if(devMode) {
       $('.debug').fadeOut();
+      $('body').removeClass('dev');
       $('#dev-toggle').text('Developer Mode Off');
       devMode = false;
       setTimeout(function() {
@@ -416,6 +432,7 @@
       }, 2000);
     } else {
       $('.debug').fadeIn();
+      $('body').addClass('dev');
       $('#dev-toggle').text('Developer Mode On');
       devMode = true;
       setTimeout(function() {
@@ -540,6 +557,11 @@
       margin: 0;
       transition: background-color .5s;
       overflow-x: hidden;
+    }
+    .dev {
+      background-image: url('external/dev.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
     }
     .container {
       position: absolute;
@@ -692,6 +714,9 @@
     text-transform: uppercase;
     transition: all 0.35s ease-in;
   }
+  #submit {
+    display: none;
+  }
   @media (max-width: 775px) {
     .sidemenu {padding-top: 15px;}
     .sidemenu a {font-size: 1.5em;}
@@ -734,6 +759,7 @@
 	  <div class="container">
 	    <input id="speech" type="text">
 	    <button id="rec" class="btn">Speak</button>
+      <button id="submit" class="btn">Done</button>
 	    <div id="spokenResponse" class="spoken-response">
 	      <div class="spoken-response__text"></div>
 	    </div>
