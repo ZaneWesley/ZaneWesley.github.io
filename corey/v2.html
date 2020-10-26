@@ -6,6 +6,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="external/spectrum.css" rel="stylesheet">
   <script src="external/spectrum.js"></script>
+  <script src="https://code.responsivevoice.org/responsivevoice.js?key=6sD0hsN1"></script>
   <script>
     var $speechInput,
       $recBtn,
@@ -371,7 +372,8 @@
         msg.lang = "en-US";
         //window.speechSynthesis.speak(msg);
         var tempBtn = document.createElement('button');
-        tempBtn.onclick = window.speechSynthesis.speak(msg);
+        //tempBtn.onclick = window.speechSynthesis.speak(msg);
+        tempBtn.onclick = responsiveVoice.speak(msg, "UK English Male");
         document.body.appendChild(tempBtn);
         $(tempBtn).click();
         tempBtn.remove();
