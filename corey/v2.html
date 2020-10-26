@@ -62,6 +62,7 @@
       $('#submit').on('click', function(e) {
         if ($speechInput.val() !== "" && $speechInput.val() !== null) {
             send();
+            $speechInput.val('');
         } else {
           var useri = {
             user: "Empty request",
@@ -177,6 +178,9 @@
     function send() {
       var text = $speechInput.val();
       prepareResponse(text);
+      setTimeout(function() {
+        $speechInput.val('');
+      }, 1500);
     }
 
     function prepareResponse(val) {
