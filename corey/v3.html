@@ -177,10 +177,30 @@
 
     function send() {
       var text = $speechInput.val();
-      prepareResponse(text);
+      text = text.toLowerCase();
+      var mathString = text.replace("what is", "").replace("calculate", "").replace("add", "").replace("subtract", "").replace("multiply", "").replace("divide", "").replace("multiplied by", "*").replace("plus", "+").replace("minus", "-");
+      if ( !String( mathString ).match( /[a-zA-Z]/ ) && !String( mathString ).match( /^(-?\d+)$/ ) && String( mathString ).match( /[()\\*+-/]/ ) ) {
+          calculate(mathString);
+      } else {
+        prepareResponse(text);
+      }
       setTimeout(function() {
         $speechInput.val('');
       }, 1500);
+    }
+
+    function calculate(val) {
+      var result = eval(val);
+      var useri = {
+        user: val,
+        corey: result
+      };
+
+      var debugJSON = JSON.stringify(useri, undefined, 2),
+      spokenResponse = calcResponseArr[Math.floor(Math.random()*calcResponseArr.length)] + result.toString() + ".";
+
+      respond(spokenResponse);
+      debugRespond(debugJSON);
     }
 
     function prepareResponse(val) {
@@ -229,28 +249,52 @@
       	case "what is the weather":
       		response = "It looks dark, maybe cloudy? Oh, wait! I don\'t have eyes! Maybe try weather.com. I think they know about the skies better.";
           setTimeout(function() {
-            open('https://weather.com/weather/today');
+            var tempBtn = document.createElement('button');
+            $(tempBtn).click(function() {
+              open('https://weather.com/weather/today');
+            });
+            document.body.appendChild(tempBtn);
+            $(tempBtn).click();
+            tempBtn.remove();
           }, 7000);
       		returned = true;
       		break;
         case "what is the weather today":
           response = "It looks the same as always, maybe cloudy? Oh, wait! I don\'t have eyes! Maybe try weather.com. I think they know about the skies better.";
           setTimeout(function() {
-            open('https://weather.com/weather/today');
+            var tempBtn = document.createElement('button');
+            $(tempBtn).click(function() {
+              open('https://weather.com/weather/today');
+            });
+            document.body.appendChild(tempBtn);
+            $(tempBtn).click();
+            tempBtn.remove();
           }, 7000);
           returned = true;
           break;
         case "what is the weather like":
           response = "How should I know? I\'m a computer! Maybe try weather.com. I think they know what it\'s like.";
           setTimeout(function() {
-            open('https://weather.com/weather/today');
+            var tempBtn = document.createElement('button');
+            $(tempBtn).click(function() {
+              open('https://weather.com/weather/today');
+            });
+            document.body.appendChild(tempBtn);
+            $(tempBtn).click();
+            tempBtn.remove();
           }, 7000);
           returned = true;
           break;
         case "what is the weather like today":
           response = "How should I know? I\'m a computer! Maybe try weather.com. I think they know what it\'s like.";
           setTimeout(function() {
-            open('https://weather.com/weather/today');
+            var tempBtn = document.createElement('button');
+            $(tempBtn).click(function() {
+              open('https://weather.com/weather/today');
+            });
+            document.body.appendChild(tempBtn);
+            $(tempBtn).click();
+            tempBtn.remove();
           }, 7000);
           returned = true;
           break;
@@ -374,7 +418,7 @@
         //tempBtn.onclick = window.speechSynthesis.speak(msg);
         $(tempBtn).attr('onclick', responsiveVoice.speak(val, "UK English Male"));
         document.body.appendChild(tempBtn);
-        $(tempBtn).trigger('click');
+        $(tempBtn).click();
         tempBtn.remove();
       }
 
@@ -408,6 +452,7 @@
     var dayNameArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var accomplishedResponseArr = ["Done.", "Ok. It\'s done.", "Ok.", "I did it."];
     var UNameResponseArr = ["Your name is ", "You are ", "Is this a trick question? I have a good memory and you told me earlier. Your name is "];
+    var calcResponseArr = ["The answer is ", "It\'s ", "It is ", ""];
 
     var devMode = false;
 
@@ -642,6 +687,7 @@
       max-height: 0;
       overflow: hidden;
       transition: all 0.35s ease-in;
+      width: 495px;
     }
     .spoken-response.is-active {
       max-height: 400px;
