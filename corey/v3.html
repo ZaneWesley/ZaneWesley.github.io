@@ -33,10 +33,6 @@
         // If not, build the va using the default CSS values
       }
 
-      if(confirm('Please enable Corey to speak:')) {
-        responsiveVoice.speak('');
-      }
-
       $speechInput.keypress(function(event) {
         if (event.which == 13) {
           event.preventDefault();
@@ -376,9 +372,9 @@
         //window.speechSynthesis.speak(msg);
         var tempBtn = document.createElement('button');
         //tempBtn.onclick = window.speechSynthesis.speak(msg);
-        tempBtn.onclick = responsiveVoice.speak(val, "UK English Male");
+        $(tempBtn).attr('onclick', responsiveVoice.speak(val, "UK English Male"));
         document.body.appendChild(tempBtn);
-        $(tempBtn).click();
+        $(tempBtn).trigger('click');
         tempBtn.remove();
       }
 
