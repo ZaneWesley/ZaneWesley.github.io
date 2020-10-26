@@ -371,8 +371,7 @@
         msg.lang = "en-US";
         //window.speechSynthesis.speak(msg);
         var tempBtn = document.createElement('button');
-        //tempBtn.onclick = window.speechSynthesis.speak(msg);
-        tempBtn.onclick = responsiveVoice.speak(msg, "UK English Male");
+        tempBtn.onclick = window.speechSynthesis.speak(msg);
         document.body.appendChild(tempBtn);
         $(tempBtn).click();
         tempBtn.remove();
@@ -833,6 +832,5 @@
 
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css">
   <script src="external/trigger.js"></script>
-  <script src="https://code.responsivevoice.org/responsivevoice.js?key=6sD0hsN1"></script>
 </body>
 </html>
