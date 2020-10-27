@@ -425,7 +425,7 @@
         //window.speechSynthesis.speak(msg);
         var tempBtn = document.createElement('button');
         //tempBtn.onclick = window.speechSynthesis.speak(msg);
-        $(tempBtn).attr('onclick', responsiveVoice.speak(val, "UK English Female"));
+        $(tempBtn).attr('onclick', responsiveVoice.speak(val, "UK English Male"));
         document.body.appendChild(tempBtn);
         $(tempBtn).click();
         tempBtn.remove();
