@@ -466,8 +466,12 @@
     var devMode = false;
 
     function openMenu() {
-	  document.getElementById("sidebar").style.width = "250px";
-	  document.body.style.backgroundColor = "#242424"; /*"#000d1b";*/
+      if(!isMobile()) {
+        document.getElementById("sidebar").style.width = "250px";
+      } else {
+        document.getElementById("sidebar").style.width = "100%";
+      }
+      document.body.style.backgroundColor = "#242424"; /*"#000d1b";*/
 	}
 
 	function closeMenu() {
@@ -512,6 +516,16 @@
 		});
 		closeMenu();
 	}
+
+  function isMobile() {
+    var mobile;
+    if(window.innerWidth > 775) {
+      mobile = false;
+    } else {
+      mobile = true;
+    }
+    return mobile;
+  }
 
 	function savePreferences() {
 		localStorage.setItem('corey-preferences-data', JSON.stringify(preferences));
