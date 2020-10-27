@@ -6,6 +6,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="external/spectrum.css" rel="stylesheet">
   <script src="external/spectrum.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZY47SDS8PD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-ZY47SDS8PD');
+  </script>
   <script>
     var $speechInput,
       $recBtn,
@@ -768,6 +777,44 @@
   #submit {
     display: none;
   }
+  .menu {
+    width: 140px;
+    z-index: 500;
+    box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    display: none;
+    transition: 0.2s display ease-in;
+    background-color: #333;
+    color: #fff;
+  }
+  .menu .menu-options {
+    list-style: none;
+    /*padding: 10px 0;*/
+    padding: 0;
+    z-index: 1;
+  }
+  .menu .menu-options .menu-option {
+    font-weight: 500;
+    z-index: 1;
+    font-size: 14px;
+    padding: 10px 40px 10px 20px;
+    cursor: pointer;
+  }
+  .menu .menu-options .menu-option:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  @keyframes move {
+    from {
+      transform: translate(0%);
+    }
+    50% {
+      transform: translate(-40%);
+    }
+    to {
+      transform: transform(0%);
+    }
+  }
   @media (max-width: 775px) {
     .sidemenu {padding-top: 15px;}
     .sidemenu a {font-size: 1.5em;}
@@ -875,9 +922,77 @@
 		</div>
 	</span>
 
-	<audio id="msc-audio" controls="false" src="" loop="false" preload="true" style="display: none;">
+	<audio id="msc-audio" controls="false" src="" loop="false" preload="true" style="display: none;"></audio>
+
+  <div class="menu">
+    <ul class="menu-options">
+      <li class="menu-option" onclick="speakMenuTrigger()">Speak</li>
+      <li class="menu-option" onclick="createShareLink()">Share</li>
+      <li class="menu-option" onclick="prefMenuTrigger()">Preferences</li>
+    </ul>
+  </div>
 
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200" rel="stylesheet" type="text/css">
+  <script id="contextmenu-script">
+    var menu = document.querySelector(".menu");
+    var menuVisible = false;
+
+    function toggleMenu(command) {
+      menu.style.display = command === "show" ? "block" : "none";
+      menuVisible = !menuVisible;
+    };
+
+    function setPosition({ top, left }) {
+      menu.style.left = `${left}px`;
+      menu.style.top = `${top}px`;
+    };
+
+    $('html').on("click", function(e) {
+      /*if (menuVisible) {
+        toggleMenu("hide");
+      }*/
+      toggleMenu("hide");
+    });
+
+    /*$('.mouse-option').on("click", function(e) {
+      console.log(e.target.innerHTML);
+    });*/
+
+    $('html').on("contextmenu", function(e) {
+      e.preventDefault();
+      const origin = {
+        left: e.pageX,
+        top: e.pageY
+      };
+      setPosition(origin);
+      toggleMenu("show");
+      return false;
+    });
+
+    function speakMenuTrigger() {
+      $('#rec').click();
+    }
+
+    function prefMenuTrigger() {
+      openDialog('preferences-dialog');
+    }
+
+    function createShareLink() {
+      var baseUrl = "https://zanewesley.github.io/corey";
+      var shareUrl = baseUrl + "?ref=cmt";
+      CopyToClipboard(shareUrl);
+      respond("Share link copied to clipboard.");
+    }
+
+    function CopyToClipboard(value) {
+      var tempInput = document.createElement("input");
+      tempInput.value = value;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+    }
+  </script>
   <script src="external/trigger.js"></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=6sD0hsN1"></script>
 </body>
