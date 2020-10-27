@@ -1,23 +1,23 @@
 var trigger = [
-      	["hi","hey","hello", "yo", "chatbot", "computer", "howdy"], /*1*/
-      	["how are you", "how is life", "how are things"],/*2*/
+      	["hi","hey","hello", "yo", "chatbot", "computer", "howdy", "hey bro", "hi bro"], /*1*/
+      	["how are you", "how is life", "how are things", "how you doing", "how you doin", "how you doing bro", "how you doin bro", "how ya doing bro", "how ya doin bro", "how r u"],/*2*/
       	["what are you doing", "what is going on", "what have you been doing", "what you doing"],/*3*/
       	["how old are you", "whats your age", "what is your age", "whens your birthday", "when is your birthday"],/*4*/
       	["who are you", "are you human", "are you a computer", "are you human or a computer"],/*5*/
       	["who created you", "who made you"],/*6*/
       	["your name please",  "your name", "may i know your name", "what is your name", "i want to know your name", "can i have your name", "can i have your name please", "may i know your name please"],/*7*/
       	["i love you", "love you"],/*8*/
-      	["happy", "i am happy", "good", "i am doing well", "doing well", "fine", "i am fine", "i am good", "great", "teriffic", "fantastic", "fantaboulous", "swell", "doing swell", "i am teriffic", "i am great", "i am fantastic", "i am terrific", "i am swell"],/*9*/
+      	["happy", "i am happy", "good", "i am good", "i am doing good", "doing good", "i am doing well", "doing well", "fine", "i am fine", "i am good", "great", "teriffic", "fantastic", "fantaboulous", "swell", "doing swell", "i am teriffic", "i am great", "i am fantastic", "i am terrific", "i am swell"],/*9*/
       	["bad", "bored", "tired", "terrible", "i am ugly", "i am bad", "i am feeling bad", "i feel bad", "i am bored", "i am feeling bored", "i feel bored", "i am tired", "i feel tierd", "i am feeling tierd"],/*10*/
       	["help me", "help", "can you help me", "help me"],/*11*/
       	["nice", "thanks", "thank you", "ok thank you", "okay thank you", "ok thanks", "okay thanks"],/*12*/
       	["bye", "good bye", "goodbye", "see you later", "see ya", "see you around", "good talking to you", "good talking"],/*13*/
         ["i do not know", "i dont know"],/*14*/
         ["go away", "skedaddle", "shew", "leave"],/*15*/
-        ["be quiet", "shut up", "shut", "stut it", "quiet", "be sient", "silent", "silence", "stop it", "stop"],/*16*/
+        ["be quiet", "shut up", "shut", "stut it", "quiet", "be sient", "silent", "silence", "stop it", "stop", "you are stupid", "you are dumb", "you are not smart"],/*16*/
         ["nothing", "dont need it", "i dont need your help", "do not need your help", "do not need it", "dont want it", "i dont want it", "do not want it", "i do not want it", "not needed", "you cant", "dont", "leave me alone"],/*17*/
         ["what does the fox say", "what does fox say"],/*18*/
-        ["no"],/*19*/
+        ["no", "no thanks", "no thank you"],/*19*/
         ["what is love"],/*20*/
         ["do you have a boy friend", "do you have a boyfriend", "who is your boy friend", "who is your boyfriend", "whos your boy friend", "whos your boyfriend", "do you have a girl friend", "do you have a girlfriend", "who is your girl friend", "who is your girlfriend", "whos your girl friend", "whos your girlfriend"],/*21*/
         ["what came first the chicken or the egg", "who came first the chicken or the egg", "did the chicken or the egg come first"],/*22*/
@@ -29,7 +29,7 @@ var trigger = [
         ["oops"],/*28*/
         ["yes"],/*29*/
         ["are you siri", "you are like siri", "why do you act like siri"],/*30*/
-        ["ah", "ok", "okay", "gotcha", "got it", "i understand"],/*31*/
+        ["ah", "ok", "okay", "gotcha", "got it", "i understand", "oh ok"],/*31*/
         ["are you listening", "are you listening to me", "you listening", "you listening to me"],/*32*/
         ["you are bad", "youre bad", "your bad", "i do not like you", "i dont like you", "you do not answer my questions", "you do not answer my question", "you did not answer my question", "you function badly", "you are terrible", "you are terrible at answering my questions", "you are terrible at answering my question",  "you are awful", "you are awful at answering my questions", "you are awful at answering my question", "you are mean", "you are ugly", "you are fat", "you are a mistake", "you are worth nothing", "you are no fun", "you do not do right"],/*33*/
         ["knock knock", "tell me a knock knock joke"],/*34*/
@@ -37,7 +37,11 @@ var trigger = [
         ["why do you talk so much", "you talk too much"],/*36*/
         ["what can you do", "what do you do", "what can i ask", "what can i ask you", "what can i ask you to do"],/*37*/
         ["a human", "human", "a boy", "boy", "a girl", "girl", "a man", "man", "a woman", "woman", "a friend", "friend"],/*38*/
-        ["whats your favorate color", "your favorate color", "my favorate color", "whats my favorate color"]/*39*/
+        ["whats your favorite color", "your favorite color", "my favorite color", "whats my favorite color"],/*39*/
+        ["thank you bye", "thank you bye", "thank you bye now", "thanks bye", "thanks bye bye", "thanks bye now", "ok bye", "ok bye bye"],/*40*/
+        ["good morning", "have a good morning", "its morning time", "morning time"],/*41*/
+        ["good night", "goodnight", "have a good night", "its night time", "its night time", "night time", "nighttime"],/*42*/
+        ["do you sleep", "do you go to bed", "what time do you go to bed", "what time do you go to sleep", "when do you go to bed", "when do you go to sleep", "when do you sleep"]/*43*/
       ];
       var reply = [
       	["Hi.","Hey.","Hello."], /*1*/
@@ -55,7 +59,7 @@ var trigger = [
       	["Bye.", "Goodbye.", "See you later.", "Good talking to you.", "See ya."],/*13*/
         ["How can I help?", "What can I do for you?"],/*14*/
         ["I am just a computer. I can't go away.", "Well then"],/*15*/
-        ["Well then", "That's not very nice", "Fine", "That's rude", "What did I do?", "Sometimes silence is best."],/*16*/
+        ["Well then", "That's not very nice", "Fine", "That's rude", "What did I do?", "Sometimes silence is best.", "I\'m only a computer, you know.", "Don\'t say that to me! I\'m your friend!"],/*16*/
         ["Okay then", "Well then", "Very well", "What did I do?"],/*17*/
         ["Fraka-kaka-kaka-kaka-kow!", "Ring-ding-ding-ding-dingeringding!", "Chacha-chacha-chacha-chow!", "Nobody knows.", "Hatee-hatee-hatee-ho!", "Wa-pa-pa-pa-pa-pa-pow", "Tchoff-tchoff-tchoff-tchoff-tchoff-tchoff-tchoff", "A-hee-ahee-ahee-ah-hee", "A-oo-oo-oo-ooo-oo-oo-oo", "Ba-do-duh-bum-bum-bum-bay-dum"],/*18*/
         ["I'm sorry.", "That's okay."],/*19*/
@@ -78,6 +82,10 @@ var trigger = [
         ["Would you like me to talk less?", "You have to talk to me to know what to say. If I talk too much, that means you do as well."],/*36*/
         ["I can tell jokes!", "I can encourage you!", "You can ask me for a joke!", "We can have a conversation.", "I can\'t do anything, silly, I\'m a computer. I can talk to you though! Ask me a question!", "I can be sarcastic."],/*37*/
         ["That\'s what I guessed.", "How nice!", "Sometimes I wish I was that."],/*38*/
-        ["My favorate color is orange and blue.", "Orange and blue.", "I don\'t know about you, but mine is orange and blue.", "Who really cares. You\'re just asking to see what I say. Regardless, my favorate colors are orange and blue."]/*39*/
+        ["My favorite color is orange and blue.", "Orange and blue.", "I don\'t know about you, but mine is orange and blue.", "Who really cares. You\'re just asking to see what I say. Regardless, my favorite colors are orange and blue."],/*39*/
+        ["My pleasure! Bye!", "It\'s my pleasure! See ya around!", "Any time! See ya!"],/*40*/
+        ["Good morning! How are you!", "What a winderful morning it is!", "Rise and shine! Have a great day!"],/*41*/
+        ["Goodnight! Sleep well!", "Goodnight! Rest well!", "Goodnight!"],/*42*/
+        ["I am a computer. I do not sleep.", "I go to sleep when nobody talks to me.", "I do not have a bedtime. Talk to me anytime!"]/*43*/
       ];
-      var alternative = ["I don't think I understand.", "Try saying that a different way.", "I don't quite understand", "I'm having trouble understanding.", "I'm having trouble understanding you."];
+      var alternative = ["I don\'t think I understand.", "Try saying that a different way.", "I don\'t quite understand", "I\'m having trouble understanding.", "I\'m having trouble understanding you."];
