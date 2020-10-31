@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+	<title>Guess that Number</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		body {
+			margin: 0;
+			overflow-x: hidden;
+			font-family: Roboto;
+		}
+		header {
+			text-align: center;
+			border-bottom: 1px solid #ccc;
+			width: 100%;
+		}
+		button {
+			padding: 16px;
+			border: none;
+			background-color: #ccc;
+			color: white;
+			outline: none;
+			cursor: pointer;
+		}
+		label {
+			font-weight: bold;
+			cursor: pointer;
+		}
+		input {
+			padding: 16px;
+			border: 1px solid #ccc;
+			outline: none;
+		}
+		#setup {
+			padding: 16px;
+			width: 100%;
+			position: relative;
+			left: auto;
+		}
+		#game-container {
+			display: none;
+			padding: 16px;
+			width: 100%;
+		}
+		.out {
+			animation: slideOut 2s ease-in;
+			-moz-animation: slideOut 2s ease-in;
+			-webkit-animation: slideOut 2s ease-in;
+			-o-animation: slideOut 2s;
+			animation-fill-mode: forwards;
+		}
+		@keyframes slideOut {
+			0% {
+				left: 16px;
+				width: 100%;
+			}
+			40% {
+				left: 30%;
+				width: 100%;
+			}
+			100% {
+				left: 110%;
+				width: 100%;
+				display: none;
+			}
+		}
+		.green {
+			background-color: #4CAF50!important;
+		}
+		.yellow {
+			background-color: #ffc107!important;
+		}
+		.orange {
+			background-color: #ff9800!important;
+		}
+		.red {
+			background-color: #e51400!important;
+		}
+		.navy {
+			background-color: #223a5e!important;
+		}
+		.blue {
+			background-color: #2196F3!important;
+		}
+		@media (max-width: 775px) {
+			button {
+				display: block;
+				width: 100%;
+			}
+			input {
+				display: block;
+				width: 100%;
+			}
+			#levelIdentifier {
+				display: block;
+			}
+			.mobile-spacer {
+				display: block;
+				padding-top: 1em;
+			}
+        }
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Guess that Number!</h1>
+	</header>
+	<div id="setup">
+		<h2>Choose a Level:</h2>
+		<button id="1" class="green" onclick="L1()">Easy: 1-10</button>
+		<button id="2" class="yellow" onclick="L2()">Medium: 1-50</button>
+		<button id="3" class="orange" onclick="L3()">Hard: 1-250</button>
+		<button id="4" class="red" onclick="L4()">Very Hard: 1-1250</button>
+		<button id="5" class="navy" onclick="L5()">Almost Impossible: 1-1000000</button>
+	</div>
+	<div id="game-container">
+		<h2 id="guide">Guess a Number <span id="levelIdentifier"></span></h2>
+		<h4>Guesses: <span id="guessCount">0</span></h4>
+		<label for="userGuess">Your Guess:</label>
+		<input id="userGuess" type="text" inputmode="decimal">
+		<span class="mobile-spacer"></span>
+		<button id="submitGuess" class="blue" onclick="makeGuess()">Guess</button>
+	</div>
+	<script>
+		var num;
+		var totalGuesses = 0;
+		var guess;
+		var level;
+		function makeGuess() {
+			$('#submitGuess').prop('disabled', true);
+			guess = Number($('#userGuess').val());
+			totalGuesses = totalGuesses+1;
+			$('#guessCount').text(totalGuesses);
+			if(guess === num) {
+				win();
+			} else if(guess > num) {
+				tooHigh();
+			} else if(guess < num) {
+				tooLow();
+			}
+		}
+		function tooHigh() {
+			$('#guide').text(guess + " was too high. Guess again.");
+			$('#submitGuess').prop('disabled', false);
+			$('#userGuess').val('').focus();
+			setTimeout('')
+		}
+		function tooLow() {
+			$('#guide').text(guess + " was too low. Guess again.");
+			$('#submitGuess').prop('disabled', false);
+			$('#userGuess').val('').focus();
+		}
+		function win() {
+			$('#guide').text(guess + " was the correct number! Good job!");
+			$('#userGuess').val('').prop('disabled', true);
+			setTimeout(function() {
+				$('#game-container').fadeOut();
+				setTimeout(function() {
+					$('#setup').fadeIn();
+					setTimeout(function() {
+						location.reload();
+					}, 300);
+				}, 500);
+			}, 2000);
+		}
+		function L1() {
+			num = Math.ceil(Math.random() * 10);
+			level = 1;
+			$('#levelIdentifier').text('between 1 and 10');
+			startGame();
+		}
+		function L2() {
+			num = Math.ceil(Math.random() * 50);
+			level = 2;
+			$('#levelIdentifier').text('between 1 and 50');
+			startGame();
+		}
+		function L3() {
+			num = Math.ceil(Math.random() * 250);
+			$('#levelIdentifier').text('between 1 and 250');
+			level = 3;
+			startGame();
+		}
+		function L4() {
+			num = Math.ceil(Math.random() * 1250);
+			$('#levelIdentifier').text('between 1 and 1250');
+			level = 4;
+			startGame();
+		}
+		function L5() {
+			num = Math.ceil(Math.random() * 1000000);
+			$('#levelIdentifier').text('between 1 and 1000000');
+			level = 5;
+			startGame();
+		}
+		function startGame() {
+			$('#setup').fadeOut();
+			totalGuesses = 0;
+			$('#userGuess').val('').prop('disabled', false);
+			setTimeout(function() {
+				$('#game-container').fadeIn();
+				$('#userGuess').val('').focus();
+			}, 500);
+		}
+	</script>
+</body>
