@@ -132,6 +132,12 @@
 		var totalGuesses = 0;
 		var guess;
 		var level;
+		$('#userGuess').on('keypress', function(e) {
+			if(e.which === 13) {
+				e.preventDefault();
+				makeGuess();
+			}
+		});
 		function makeGuess() {
 			$('#submitGuess').prop('disabled', true);
 			guess = Number($('#userGuess').val());
