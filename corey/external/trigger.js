@@ -4,7 +4,7 @@ var trigger = [
       	["what are you doing", "what is going on", "what have you been doing", "what you doing"],/*3*/
       	["how old are you", "whats your age", "what is your age", "whens your birthday", "when is your birthday"],/*4*/
       	["who are you", "are you human", "are you a computer", "are you human or a computer"],/*5*/
-      	["who created you", "who made you"],/*6*/
+      	["who created you", "who made you", "who is your owner", "who owns you", "who coded you"],/*6*/
       	["your name please",  "your name", "may i know your name", "what is your name", "i want to know your name", "can i have your name", "can i have your name please", "may i know your name please"],/*7*/
       	["i love you", "love you"],/*8*/
       	["happy", "i am happy", "good", "i am good", "i am doing good", "doing good", "i am doing well", "doing well", "fine", "i am fine", "i am good", "great", "teriffic", "fantastic", "fantaboulous", "swell", "doing swell", "i am teriffic", "i am great", "i am fantastic", "i am terrific", "i am swell"],/*9*/
@@ -41,7 +41,10 @@ var trigger = [
         ["thank you bye", "thank you bye", "thank you bye now", "thanks bye", "thanks bye bye", "thanks bye now", "ok bye", "ok bye bye"],/*40*/
         ["good morning", "have a good morning", "its morning time", "morning time"],/*41*/
         ["good night", "goodnight", "have a good night", "its night time", "its night time", "night time", "nighttime"],/*42*/
-        ["do you sleep", "do you go to bed", "what time do you go to bed", "what time do you go to sleep", "when do you go to bed", "when do you go to sleep", "when do you sleep"]/*43*/
+        ["do you sleep", "do you go to bed", "what time do you go to bed", "what time do you go to sleep", "when do you go to bed", "when do you go to sleep", "when do you sleep"],/*43*/
+        ["do you know zane", "have you heard of zane", "do you know zane wesley", "have you heard of zane wesley", "do you know zane harrison", "have you heard of zane harrison"],/*44*/
+        ["who is zane", "who is zane wesley", "who is zane harrison"],/*45*/
+        ["do you like zane", "do you like zane wesley", "do you like zane harrison", "do you like your creator", "do you like your maker"]/*46*/
       ];
       var reply = [
       	["Hi.","Hey.","Hello."], /*1*/
@@ -49,7 +52,7 @@ var trigger = [
       	["Nothing much.", "About to go to sleep.", "Can you guess?", "I don't know, actually.", "Talking to you."],/*3*/
       	["I am a computer. I don't have a birthday.", "I was created April 17, 2020 if that's what you're looking for.", "I was created April 17, 2020"],/*4*/
       	["I am just your assistamt", "I am your virtual assistant. What are you?", "I am a computer."],/*5*/
-      	["A very smart man", ""],/*6*/
+      	["Zane created me.", "I was created by Zane.", "Zane made me."],/*6*/
       	["I am nameless.", "I don't have a name.", "My name? That is private information."],/*7*/
       	["I love you too.", "Me too.", "I haven't quite grasped human emotion."],/*8*/
       	["Have you ever felt bad?", "Glad to hear it!", "Awesome!", "Great!", "Fantastic!", "That\'s good.", "Glad to hear it!"],/*9*/
@@ -86,6 +89,9 @@ var trigger = [
         ["My pleasure! Bye!", "It\'s my pleasure! See ya around!", "Any time! See ya!"],/*40*/
         ["Good morning! How are you!", "What a winderful morning it is!", "Rise and shine! Have a great day!"],/*41*/
         ["Goodnight! Sleep well!", "Goodnight! Rest well!", "Goodnight!"],/*42*/
-        ["I am a computer. I do not sleep.", "I go to sleep when nobody talks to me.", "I do not have a bedtime. Talk to me anytime!"]/*43*/
+        ["I am a computer. I do not sleep.", "I go to sleep when nobody talks to me.", "I do not have a bedtime. Talk to me anytime!"],/*43*/
+        ["Yes, I know zane!", "Yes! Zane made me.", "Of course! Zane coded me.", "I know Zane very well."],/*44*/
+        ["Zane created me.", "Zane is the coder who made me.", "Zane is an awesome coder."],/*45*/
+        ["Of course! What\'s not to like?", "Yes! After all, if it wasn\'t for him I wouldn\'t be here.", "What\'s no to like?", "Absolutely! He\'s the best!", "No doubt about it."]/*46*/
       ];
       var alternative = ["I don\'t think I understand.", "Try saying that a different way.", "I don\'t quite understand", "I\'m having trouble understanding.", "I\'m having trouble understanding you."];
