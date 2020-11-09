@@ -31,6 +31,7 @@
     		$('#overlay').fadeOut();
     		$('#loader').fadeOut();
     	}, 1000);
+    	history.pushState({}, '', '/corey');
       $speechInput = $("#speech");
       $recBtn = $("#rec");
 
@@ -262,7 +263,7 @@
           returned = true;
           break;
       	case "what is the weather":
-      		response = "Here\'s the forcast for Jackson, TN.";
+      		response = "Here\'s the forecast for Jackson, TN.";
           setTimeout(function() {
           	openWeather();
             }, 2000);
@@ -283,7 +284,7 @@
           returned = true;
           break;
         case "what is the weather like today":
-          response = "Here is the forcast for today in Jackson, TN.";
+          response = "Here is the forecast for today in Jackson, TN.";
           setTimeout(function() {
           	openWeather();
             }, 2000);
