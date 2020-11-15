@@ -587,7 +587,12 @@ function animate(timestamp) {
       const carMinX = vechicle.position.x - vechicleLength*zoom/2;
       const carMaxX = vechicle.position.x + vechicleLength*zoom/2;
       if(chickenMaxX > carMinX && chickenMinX < carMaxX) {
-        endDOM.style.visibility = 'visible';
+        document.getElementById('fcanvas').style.display='block';
+        clickButton();
+        setTimeout(function() {
+          endDOM.style.visibility = 'visible';
+          document.getElementById('fcanvas').style.display='none';
+        }, 4000);
       }
     });
 
@@ -595,12 +600,13 @@ function animate(timestamp) {
   renderer.render( scene, camera );	
 }
 
-requestAnimationFrame( animate );
+setInterval(zoomOutMobile, 100);
+function zoomOutMobile() {
+  var viewport = document.querySelector('meta[name="viewport"]');
 
-document.addEventListener('gesturestart', function (e) {
-    e.preventDefault();
-});
-document.body.addEventListener('touchstart', function(e) {
-e.preventDefault() || e.preventDefault;
-return false;
-});
+  if ( viewport ) {
+    viewport.content = "initial-scale=0.1";
+  }
+}
+
+requestAnimationFrame( animate );
