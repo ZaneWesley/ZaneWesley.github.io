@@ -419,9 +419,11 @@ function Lane(index) {
 }
 
 document.querySelector("#retry").addEventListener("click", () => {
-  lanes.forEach(lane => scene.remove( lane.mesh ));
-  initaliseValues();
-  endDOM.style.visibility = 'hidden';
+    lanes.forEach(lane => scene.remove( lane.mesh ));
+    initaliseValues();
+    endDOM.style.visibility = 'hidden';
+    document.getElementById('fcanvas').style.display='none';
+    //document.getElementsByTagName('canvas')[1].style.display='block';
 });
 
 document.getElementById('forward').addEventListener("click", () => move('forward'));
@@ -587,26 +589,22 @@ function animate(timestamp) {
       const carMinX = vechicle.position.x - vechicleLength*zoom/2;
       const carMaxX = vechicle.position.x + vechicleLength*zoom/2;
       if(chickenMaxX > carMinX && chickenMinX < carMaxX) {
+        endDOM.style.visibility = 'visible';
         document.getElementById('fcanvas').style.display='block';
+        //document.getElementsByTagName('canvas')[1].style.display='none';
         clickButton();
-        setTimeout(function() {
-          endDOM.style.visibility = 'visible';
-          document.getElementById('fcanvas').style.display='none';
-        }, 4000);
+        lanes.forEach(lane => scene.remove( lane.mesh ));
+        initaliseValues();
       }
     });
 
   }
-  renderer.render( scene, camera );	
+  renderer.render( scene, camera ); 
 }
 
-setInterval(zoomOutMobile, 100);
-function zoomOutMobile() {
-  var viewport = document.querySelector('meta[name="viewport"]');
-
-  if ( viewport ) {
-    viewport.content = "initial-scale=0.1";
-  }
-}
+document.body.addEventListener('dblclick', function(e) {
+    e.preventDefault();
+    return false;
+});
 
 requestAnimationFrame( animate );
