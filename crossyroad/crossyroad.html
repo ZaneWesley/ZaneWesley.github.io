@@ -2,15 +2,84 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
   <title>Crossy Road</title>
-  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-status-bar-style" content="transparent">
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+    html, body {
+      user-select: none;
+    }
+    body {
+      margin: 0;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2em;
+      color: white;
+    }
+    button {
+      outline: none;
+      cursor: pointer;
+      border: none;
+      box-shadow: 3px 5px 0px 0px rgba(0,0,0,0.75);
+    }
+    #counter {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    #end {
+      position: absolute;
+      min-width: 100%;
+      min-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+    }
+    #end button {
+      background-color: red;
+      padding: 20px 50px 20px 50px;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    #controlls {
+      position: absolute;
+      min-width: 100%;
+      min-height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    #controlls div {
+      display: grid;
+      grid-template-columns: 50px 50px 50px;
+      grid-template-rows: auto auto;
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+      margin-bottom: 20px;
+    }
+    #controlls button {
+      width: 100%;
+      background-color: white;
+      border: 1px solid lightgray;
+    }
+    #controlls button:first-of-type {
+      grid-column: 1/-1;
+    }
+    #fcanvas {
+      display: none;
+      background-color: transparent;
+    }
+    #button {
+      display: none;
+    }
+  </style>
 
 </head>
 <body>
-<!-- partial:index.partial.html -->
 <div id="counter">0</div>
     
 <div id="controlls">
@@ -49,8 +118,12 @@
 <div id="end">
   <button id="retry">Retry</button>
 </div>
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js'></script><script  src="./script.js"></script>
+
+<canvas id="fcanvas"></canvas>
+<button id="button"></button>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js'></script>
+  <script src="script.js"></script>
+  <script src="feather-burst.js"></script>
 
 </body>
 </html>
