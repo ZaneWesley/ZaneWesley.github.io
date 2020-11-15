@@ -183,8 +183,8 @@ const button = document.getElementById('button');
 	resizeCanvas = () => {
 	  fcanvas.width = window.innerWidth;
 	  fcanvas.height = window.innerHeight;
-	  cx = ctx.fcanvas.width / 2;
-	  cy = ctx.fcanvas.height / 2;
+	  cx = fcanvas.width / 2;
+	  cy = fcanvas.height / 2;
 	}
 		// resize listenter
 	window.addEventListener('resize', () => {
