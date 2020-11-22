@@ -2,11 +2,18 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<meta name="application-name" content="Zane's Apps">
+	<link rel="apple-touch-icon-precomposed" href="images/home-icon.svg">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<link rel="icon" type="icon/png" href="home-icon.png">
+    <!--https://pixelcog.github.io/parallax.js/-->
+	<link rel="icon" type="icon/png" href="home-icon.svg">
 	<title>Zane's Apps</title>
 	<style>
 		* {
@@ -17,340 +24,196 @@
 		body {
 			background-color: #fff;
 			font-family: Calibri, sans-serif;
-			padding-top: 8em;
+			padding-top: 80%;
 			padding-left: 1em;
 		}
 		header {
-			text-align: center;
-			box-shadow: 6px 6px 6px 6px #ccc;
-			padding: 2em;
-			background-color: #fff;
-			border-bottom: 2px solid #ccc;
-			width: 100%;
-			position: absolute;
-			top: -30%;
-			left: 0;
-			animation: slideDown 1s ease;
-			animation-delay: 3s;
-			animation-fill-mode: forwards;
-		}
-		header li {
-			list-style-type: none;
-		}
-		.bg {
-			background-image: linear-gradient(to top, #0060ff, #ffffff);/*to direction, start color, finish color*/
+			background-image: url('images/header-bg.svg');
+			background-size: cover;
+			background-position: center center;
 			background-repeat: no-repeat;
+			background-attachment: fixed;
 			position: absolute;
-			left: 0;
-			right: 0;
-			top: 100%;
-			bottom: 0;
-			animation: bgAnimation 2.5s ease;
-			animation-fill-mode: forwards;
+			top:0;
+			left:0;
+			min-height: 100%;
+			height: auto;
+			width: 100%;
 		}
-		.main {
-			padding: 2em;
-		}
-		.col {
+		header h1 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 6em;
+			color: #f2f2f2;
 			text-align: center;
-			padding: 2em 1em;
-			border-radius: 5px;
-			border: 1px solid #ccc;
-			background-color: #fff;
-			box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-			width: 0;
+			background-color: #3f3d56;
+			padding: 8px;
+			box-shadow: 7px 7px 12px #292838;
+			width: 75%;
+		}
+		.content {
 			position: absolute;
-			animation: colAnimation 2.5s ease;
-			animation-fill-mode: forwards;
-			height: 0;
-			color: transparent;
-			opacity: 0;
-			overflow: hidden;
-			user-select: none;
+			min-height: 100%;
+			height: auto;
+			width: 100%;
+			padding: 16px;
 		}
-		.col:before, .col:after {
-			position: absolute;
-			width: 40%;
-			height: 10px;
-			content: ' ';
-			left: 12px;
-			bottom: 12px;
-			background-color: transparent;
-			transform: skew(-5deg) rotate(-5deg);
-			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-			z-index: -1;
-			opacity: 0;
+		.split {
+			position: relative;
+			width: 50%;
+			min-height: 100%;
+			height: auto;
 		}
-		.col:after {
-			left: auto;
-			right: 12px;
-			transform: skew(5deg) rotate(5deg);
+		.left {
+			float: left;
 		}
-		.col.left {
-			left: 1.5em;
-			top: 8em;
-			animation-delay: 0.5s;
+		.right {
+			float: right;
 		}
-		.col.right {
-			right: 1.5em;
-			top: 8em;
-			animation-delay: 1s;
+		.bg-image {
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+		img {
+			width: 100%;
+		}
+		ul, li {
+			width: 100%;
 		}
 		ul {
 			list-style-type: none;
-			width: 90%;
-			text-align: left;
+			padding-left: 1em;
 		}
-		ul li {
-			width: 90%;/*0%*/
+		li {
+			font-size: 20px;
 			cursor: pointer;
-			padding: 1em;
-			transition: all 0.5s;
-			color: transparent;
-			border-bottom: 1px solid #fff;
-			animation: slideLeft 1s ease;
-			animation-delay: calc(var(--animation-order) * 1s);
-			animation-fill-mode: forwards;
+			padding: 5px;
 		}
-		ul li:hover:not(.disabled) {
-			border-bottom: 1px solid #2196F3;
-			box-shadow: 2px 2px 3px 3px #ccc;
+		li:hover {
+			border-bottom: 1px solid #00b0ff;
 		}
-		@keyframes bgAnimation {
-			0% {
-				top: 100%;
-			}
-			100% {
-				top: 0;
-			}
+		.mobile-hidden {
+			display: inherit;
 		}
-		@keyframes slideDown {
-			0% {
-				top: -20%;
-			}
-			100% {
-				top: 0;
-			}
-		}
-		@keyframes colAnimation {
-			0% {
-				height: 0px;
-				width: 0;
-				color: transparent;
-			}
-			1% {
-				opacity: 1;
-			}
-			50% {
-				height: 50%;
-				color: transparent;
-				opacity: 1;
-			}
-			100% {
-				height: auto;
-				width: 45%;
-				color: #000;
-				opacity: 1;
-			}
-		}
-		@keyframes slideLeft {
-			0% {
-				/*width: 0%;*/
-				color: transparent;
-			}
-			100% {
-				/*width: 100%;*/
-				color: #000;
-			}
+		.mobile-visible {
+			display: none;
 		}
 		@media (max-width:755px) {
-			.bg {
-				bottom: -100%;
+			header {
+				background-position: right center;
+				background-attachment: scroll;
 			}
-			ul {
+			header h1 {
+				font-size: 3em;
+			}
+			.split {
 				width: 100%;
 			}
-			.col.left, .col.right {
-				position: static;
-				left: auto;
-				right: auto;
-				top: auto;
+			.left {
+				float: none;
 			}
-			.col {
+			.right {
+				float: none;
+			}
+			.mobile-hidden {
+				display: none;
+			}
+			.mobile-visible {
 				display: block;
-			}
-			@keyframes colAnimation {
-				0% {
-					height: 0px;
-					width: 0;
-					color: transparent;
-				}
-				1% {
-					opacity: 1;
-				}
-				50% {
-					height: 50%;
-					color: transparent;
-					opacity: 1;
-				}
-				100% {
-					height: auto;
-					width: 95%;
-					color: #000;
-					opacity: 1;
-				}
-			}
-			.mobile-spacer {
-				padding-top: 1em;
 			}
 		}
 	</style>
 </head>
 <body>
-	<div class="bg"></div>
 	<header>
 		<h1>Zane's Apps</h1>
 	</header>
-	<!--<div class="main">
-		<p>Welcome to my website! Here you can find all the cool things I've been making!</p>
-	</div>-->
-	<div class="col left">
-		<h2>Under Developement</h2>
-		<ul id="dev-list">
-			<li id="mmc" data-url="/mmc">
-				Molar Mass Calculator
-			</li>
-			<li id="colorsplosion" data-url="/colorsplosion">
-				Colorsplosion
-			</li>
-			<li id="zsearch" data-url="/search">
-				ZSearch
-			</li>
-			<li id="chat" data-url="/chat">
-				Chat Rooms
-			</li>
-			<li id="peace" data-url="/peace">
-				Peace
-			</li>
-			<li id="corey" data-url="/corey?ref=home">
-				Corey - Virtual Assistant
-			</li>
-		</ul>
+	<div class="content">
+		<div id="dev">
+			<div class="split left">
+				<img src="images/dev-bg.svg" alt="Dev Image">
+			</div>
+			<div class="split right">
+				<h1>Under Developement</h1>
+				<ul>
+					<li id="mmc" data-url="/mmc">
+						Molar Mass Calculator
+					</li>
+					<li id="colorsplosion" data-url="/colorsplosion">
+						Colorsplosion
+					</li>
+					<li id="zsearch" data-url="/search">
+						ZSearch
+					</li>
+					<li id="chat" data-url="/chat">
+						Chat Rooms
+					</li>
+					<li id="peace" data-url="/peace">
+						Peace
+					</li>
+					<li id="corey" data-url="/corey?ref=home">
+						Corey - Virtual Assistant
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="comp">
+			<div class="split left">
+				<img src="images/complete-bg.svg" class="mobile-visible" alt="Complete Image">
+				<h1>Completed</h1>
+				<ul>
+					<li id="numberguessing" data-url="/numberguessing">
+						Guess that Number
+					</li>
+					<li id="2048" data-url="/2048">
+						2048
+					</li>
+					<li id="tictactoe" data-url="/tic-tac-toe">
+						Tic Tac Toe
+					</li>
+					<li id="webchat" data-url="/webchat/new">
+						Webchat Video Conferencing
+					</li>
+					<li id="app" data-url="/app">
+						My App
+					</li>
+					<li id="colorswirl" data-url="/colorswirl/colorswirl">
+						Color Swirl - Updated
+					</li>
+					<li id="mrlangbucks" data-url="https://mrlangbucks.github.io">
+						Mr. Lang Bucks
+					</li>
+					<li id="tdl" data-url="/todo">
+						To Do List
+					</li>
+					<li id="whiteboard" data-url="/whiteboard">
+						Whiteboard
+					</li>
+					<li id="archive" data-url="/archive">
+						App Archive
+					</li>
+				</ul>
+			</div>
+			<div class="split right mobile-hidden">
+				<img src="images/complete-bg.svg" alt="Complete Image">
+			</div>
+		</div>
 	</div>
-	<div class="mobile-spacer"></div>
-	<div class="col right">
-		<h2>Recently Completed</h2>
-		<ul id="comp-list">
-			<li id="numberguessing" data-url="/numberguessing">
-				Guess that Number
-			</li>
-			<li id="2048" data-url="/2048">
-				2048
-			</li>
-			<li id="tictactoe" data-url="/tic-tac-toe">
-				Tic Tac Toe
-			</li>
-			<li id="webchat" data-url="/webchat/new">
-				Webchat Video Conferencing
-			</li>
-			<li id="app" data-url="/app">
-				My App
-			</li>
-			<li id="colorswirl" data-url="/colorswirl/colorswirl">
-				Color Swirl - Updated
-			</li>
-			<li id="mrlangbucks" data-url="https://mrlangbucks.github.io">
-				Mr. Lang Bucks
-			</li>
-			<li id="tdl" data-url="/todo">
-				To Do List
-			</li>
-			<li id="whiteboard" data-url="/whiteboard">
-				Whiteboard
-			</li>
-			<li id="archive" data-url="/archive">
-				App Archive
-			</li>
-		</ul>
-	</div>
-	<script>
-		/*$('header').animate({
-			top: '0'
-		}, 1000);*/
-		$('.col.left li').click(function(e) {
-			var thisElem = this;
-			scrollToTop();
-			if($(thisElem).hasClass('disabled') !== true) {
-				$(thisElem).animate({
-					position: 'absolute',
-					left: '50%',
-					top: '2em',
-					transform: 'translateX(-50%)',
-					border: 'none',
-					fontWeight: '600',
-					fontSize: '2em'
-				}, 1000).prependTo('header');
-				$('header h1').fadeOut();
-				setTimeout(function() {
-					/*var appWindow = window.open($(thisElem).attr('data-url'));
-					if(!appWindow || appWindow.closed || typeof appWindow.closed == 'undefined') {
-						//Blocked popup*/
-						window.location=$(thisElem).attr('data-url');
-					/*}*/
-					$(thisElem).animate({
-						position: 'static',
-						left: 'auto',
-						top: 'auto',
-						transform: 'none',
-						border: 'none',
-						fontWeight: '400',
-						fontSize: '1em'
-					}, 1000).prependTo('#dev-list');
-					$('header h1').fadeIn();
-				}, 2000);
-			}
-		});
 
-		$('.col.right li').click(function(e) {
-			var thisElem = this;
-			scrollToTop();
-			if($(thisElem).hasClass('disabled') !== true) {
-				$(thisElem).animate({
-					position: 'absolute',
-					left: '50%',
-					top: '2em',
-					transform: 'translateX(-50%)',
-					border: 'none',
-					fontWeight: '600',
-					fontSize: '2em'
-				}, 1000).prependTo('header');
-				$('header h1').fadeOut();
-				setTimeout(function() {
-					/*var appWindow = window.open($(thisElem).attr('data-url'));
-					if(!appWindow || appWindow.closed || typeof appWindow.closed == 'undefined') {
-						//Blocked popup*/
-						window.location=$(thisElem).attr('data-url');
-					/*}*/
-					$(thisElem).animate({
-						position: 'static',
-						left: 'auto',
-						top: 'auto',
-						transform: 'none',
-						border: 'none',
-						fontWeight: '400',
-						fontSize: '1em'
-					}, 1000).prependTo('#comp-list');
-					$('header h1').fadeIn();
-				}, 2000);
+	<script>
+		function ini() {
+			$('.content').css('top', $('header').css('height'));
+		}
+		$('li').click(function(e) {
+			if(!$(this).hasClass('disabled')) {
+				window.location=$(this).attr('data-url');
 			}
 		});
-		function scrollToTop() {
-		  var c = document.documentElement.scrollTop || document.body.scrollTop;
-		  if (c > 0) {
-		    window.requestAnimationFrame(scrollToTop);
-		    window.scrollTo(0, c - c / 8);
-		  }
-		}
+		window.addEventListener('resize', ini);
+		ini();
 	</script>
 </body>
 </html>
