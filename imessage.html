@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+  <meta name="apple-mobile-web-app-title" content="iMessage">
+  <meta name="application-name" content="iMessage">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="/corey/external/trigger.js"></script>
+  <title>iMessage</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    form.chat *{
+      transition:all .5s;
+      box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      -moz-box-sizing:border-box;
+    }
+
+    form.chat {
+      margin:0;
+      cursor:default;
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      top:0;
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none;   /* Chrome/Safari/Opera */
+      -khtml-user-select: none;    /* Konqueror */
+      -moz-user-select: none;      /* Firefox */
+      -ms-user-select: none;       /* IE/Edge */
+      user-select: none;   
+    }
+
+    form.chat span.spinner{
+      -moz-animation: loading-bar 2s 1;
+      -webkit-animation: loading-bar 2s 1;
+      animation: loading-bar 2s 1;
+      display: block;
+      height: 3px;
+      /*background-color: #00e34d;*/
+      background-color: #0B93F6;
+      transition: width 0.2s;
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      z-index:4;
+    }
+
+    form.chat .messages{
+      display:block;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      position:relative;
+      height:90%;
+      width:100%;
+      padding:2% 3%;
+      border-bottom:1px solid #ecf0f1;
+    }
+
+    form.chat ::-webkit-scrollbar {width: 3px; height:1px;transition:all .5s;z-index:10;}
+    form.chat ::-webkit-scrollbar-track {background-color: white;}
+    form.chat ::-webkit-scrollbar-thumb {
+      background-color: #bec4c8; 
+      border-radius:3px;
+    }
+
+    form.chat .message{
+      display:block;
+      width:98%;
+      padding:0.5%;
+    }
+
+    form.chat .message p{
+      margin:0;
+    }
+
+    form.chat .myMessage,
+    form.chat .fromThem {
+      max-width: 50%;
+      word-wrap: break-word;
+      margin-bottom: 20px;
+    }
+
+    form.chat .message:hover .myMessage{
+      -webkit-transform: translateX(-130px);
+      transform: translateX(-130px);
+    }
+
+    form.chat .message:hover .fromThem{
+      -webkit-transform: translateX(130px);
+      transform: translateX(130px);
+    }
+
+    form.chat .message:hover date {
+      opacity: 1;
+    }
+
+    form.chat .myMessage,.fromThem{
+      position: relative;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 25px;
+      clear: both;
+      font: 400 17px 'Open Sans', sans-serif;
+    }
+
+    form.chat .myMessage {
+      /*background-color: #00e34d;*//*green*/
+      background-color: #0B93F6;/*blue*/
+      color:white;
+      float:right;
+      clear:both;
+      border-bottom-right-radius: 20px 0px\9;
+    }
+
+    form.chat .myMessage:before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      bottom: -2px;
+      right: -8px;
+      height: 19px;
+      /*border-right: 20px solid #00e34d;*//*green*/
+      border-right: 20px solid #0B93F6;/*blue*/
+      border-bottom-left-radius: 16px 14px;
+      -webkit-transform: translate(0, -2px);
+      transform: translate(0, -2px);
+      border-bottom-left-radius: 15px 0px\9;
+      transform: translate(-1px, -2px)\9;
+    }
+
+    form.chat .myMessage:after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      bottom: -2px;
+      right: -42px;
+      width: 12px;
+      height: 20px;
+      background: white;
+      border-bottom-left-radius: 10px;
+      -webkit-transform: translate(-30px, -2px);
+      transform: translate(-30px, -2px);
+    }
+
+    form.chat .fromThem {
+      background-color: #E5E5EA;
+      color: black;
+      float: left;
+      clear:both;
+      border-bottom-left-radius: 30px 0px\9;
+    }
+    form.chat .fromThem:before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      bottom: -2px;
+      left: -7px;
+      height: 19px;
+      border-left: 20px solid #E5E5EA;
+      border-bottom-right-radius: 16px 14px;
+      -webkit-transform: translate(0, -2px);
+      transform: translate(0, -2px);
+      border-bottom-right-radius: 15px 0px\9;
+      transform: translate(-1px, -2px)\9;
+    }
+
+    form.chat .fromThem:after {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      bottom: -2px;
+      left: 4px;
+      width: 26px;
+      height: 20px;
+      background: white;
+      border-bottom-right-radius: 10px;
+      -webkit-transform: translate(-30px, -2px);
+      transform: translate(-30px, -2px);
+    }
+
+    form.chat date {
+      position:absolute;
+      top: 10px;
+      font-size:14px;
+      white-space:nowrap;
+      vertical-align:middle;
+      color: #8b8b90;
+      opacity: 0;
+      z-index:4;
+    }
+
+    form.chat .myMessage date {
+      left: 105%;
+    }
+
+    form.chat .fromThem date {
+      right: 105%;
+    }
+
+    form.chat input{
+      font: 400 17px 'Open Sans', sans-serif;
+      border:0;
+      padding:0 15px;
+      height:10%;
+      outline:0;
+    }
+
+    form.chat input[type='text']{
+      width:73%;
+      float:left;
+    }
+
+    form.chat input[type='submit']{
+      width:23%;
+      background:transparent;
+      /*color:#00E34D;*//*green*/
+      color: #0B93F6;
+      font-weight:700;
+      font-size: 17px;
+      text-align:right;
+      float:right;
+      cursor: pointer;
+    }
+
+      form.chat .myMessage,form.chat .fromThem{
+        font-size:17px;
+      }
+      
+      form.chat .message:hover .myMessage{
+        transform: translateY(18px);
+        -webkit-transform: translateY(18px);
+      }
+
+      form.chat .message:hover .fromThem{
+        transform: translateY(18px);
+        -webkit-transform: translateY(18px);
+      }
+      
+      form.chat .myMessage date,form.chat .fromThem date {
+        top: -20px;
+        left:auto;
+        right:0;
+        font-size:14px;
+      }
+      
+      form.chat .myMessage,
+      form.chat .fromThem {
+        max-width: 90%;
+      }
+
+      a {
+        color: blue;
+      }
+      
+    @-moz-keyframes loading-bar {
+      0% {
+        width: 0%;
+      }
+      90% {
+        width: 90%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    @-webkit-keyframes loading-bar {
+      0% {
+        width: 0%;
+      }
+      90% {
+        width: 90%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    @keyframes loading-bar {
+      0% {
+        width: 0%;
+      }
+      90% {
+        width: 90%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+    /* The device with borders */
+    .iphone {
+      position: relative;
+      width: 360px;
+      /*height: 640px;*/
+      height: 100%;
+      margin: auto;
+      border: 16px black solid;
+      border-top-width: 60px;
+      border-bottom-width: 60px;
+      border-radius: 36px;
+    }
+
+    /* The horizontal line on the top of the device */
+    .iphone:before {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 5px;
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #333;
+      border-radius: 10px;
+    }
+
+    /* The circle on the bottom of the device */
+    .iphone:after {
+      content: '';
+      display: block;
+      width: 35px;
+      height: 35px;
+      position: absolute;
+      left: 50%;
+      bottom: -65px;
+      transform: translate(-50%, -50%);
+      background: #333;
+      border-radius: 50%;
+    }
+
+    /* The screen (or content) of the device */
+    .iphone .content {
+      width: 360px;
+      height: 640px;
+      background: white;
+    }
+    @media(max-width: 775px) {
+      .iphone {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .iphone:before {
+        content: none;
+      }
+      .iphone:after {
+        content: none;
+      }
+      .iphone .content {
+        width: 100%;
+        height: 550px;
+      }
+      #message-input, #message-send {
+        position: absolute;
+        bottom: 0;
+      }
+      #message-send {
+        right: 0;
+      }
+    }
+  </style>
+
+</head>
+<body>
+<div class="iphone">
+  <div class="content">
+    <form class="chat">
+      <span></span>
+      <div class="messages" id="messages-container">
+        <!--<div class="message">
+          <div class="myMessage">
+            <p>It looks beautiful!</p>
+            <date><b>Zane</b> 11.22.2020 13:55:07</date>
+          </div>
+        </div>-->
+        <div class="message">
+          <div class="fromThem">
+            <p>Hi, I'm Corey! I can text now! Just text me a question to get started!</p>
+            <date><b>Corey</b> 11.22.2020 13:56:17</date>
+          </div>
+        </div>
+      </div>
+      <input id="message-input" type="text" placeholder="Your message">
+      <input id="message-send" type="submit" value="Send">
+    </form>
+  </div>
+</div>
+<script>
+  var name = "You";
+
+  function scrollDown() {
+    var objDiv = document.querySelector(".messages");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }
+
+  $("input").keypress(function(e) {
+    if (e.which == 13) {
+      e.preventDefault();
+      $('form.chat input[type="submit"]').click();
+    }
+  });
+  $('form.chat input[type="submit"]').click(function(e) {
+    e.preventDefault();
+    var message = $('form.chat input[type="text"]').val();
+    if ($('form.chat input[type="text"]').val()) {
+      var d = new Date();
+      var clock = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      var currentDate =
+        (('' + day).length < 2 ? '0' : '') + day + '.' +
+        (('' + month).length < 2 ? '0' : '') + month + '.' +
+        d.getFullYear() + '&nbsp;&nbsp;' + clock;
+      $('form.chat div.messages').append('<div class="message"><div class="myMessage"><p>' + message + '</p><date><b>' + name + '</b> ' + currentDate + '</date></div></div>');
+      setTimeout(function() {
+        $('form.chat > span').addClass('spinner');
+      }, 100);
+      setTimeout(function() {
+        $('form.chat > span').removeClass('spinner');
+      }, 2000);
+    }
+    $('form.chat input[type="text"]').val('');
+    scrollDown();
+    getResponse(message);
+  });
+
+  function getResponse(val) {
+    var filterVal = val.toLowerCase().replace(/[^\w\s\d]/gi, "");
+      filterVal = filterVal.replace(/ a /g, " ").replace(/i feel /g, "").replace(/whats/g, "what is").replace(/please /g, "").replace(/ please/g, "").replace(/wont/g, "will not").replace(/dont/g, "do not").replace(/youre/g, "you are").replace(/arent/g, "are not").replace(/im/g, "i am").replace(/thats/g, "that is").replace(/\s{2,}/g, ' ').trim();
+    var responseText = compare(filterVal);
+    if(responseText == "" || responseText == null || responseText == undefined) {
+      responseText = "I may not know the answer to that, or I can not answer it in a text. Head over to the <a href='/corey'>Corey app</a> and try asking it there.";
+    }
+    setTimeout(function() {
+        sendResponse(responseText);
+        scrollDown();
+      }, 2500);
+  }
+
+  function compare(string){
+        var item;
+        for(var x=0; x<trigger.length; x++){
+          for(var y=0; y<reply.length; y++){
+            if(trigger[x][y] == string){
+              var items = reply[x];
+              item =  items[Math.floor(Math.random()*items.length)];
+            }
+          }
+        }
+        return item;
+  }
+
+  function sendResponse(response) {
+    var d = new Date();
+    var clock = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+    var currentDate =
+      (('' + day).length < 2 ? '0' : '') + day + '.' +
+      (('' + month).length < 2 ? '0' : '') + month + '.' +
+      d.getFullYear() + '&nbsp;&nbsp;' + clock;
+    $('form.chat div.messages').append('<div class="message"><div class="fromThem"><p>' + response + '</p><date><b>Corey</b> ' + currentDate + '</date></div></div>');
+  }
+
+  function isMobile() {
+    if(window.innerWidth < 775) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  if(isMobile()) {
+    document.querySelector('.content').style.height = window.innerHeight + 'px';
+    console.log('Mobile device:', isMobile());
+  }
+</script>
+
+</body>
+</html>
