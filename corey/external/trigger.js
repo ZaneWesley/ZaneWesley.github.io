@@ -2,7 +2,7 @@ var trigger = [
       	["hi","hey","hello", "yo", "chatbot", "computer", "howdy", "hey bro", "hi bro"], /*1*/
       	["how are you", "how is life", "how are things", "how you doing", "how you doin", "how you doing bro", "how you doin bro", "how ya doing bro", "how ya doin bro", "how r u"],/*2*/
       	["what are you doing", "what is going on", "what have you been doing", "what you doing"],/*3*/
-      	["how old are you", "whats your age", "what is your age", "whens your birthday", "when is your birthday"],/*4*/
+      	["how old are you", "what is your age", "what is your age", "whens your birthday", "when is your birthday"],/*4*/
       	["who are you", "are you human", "are you a computer", "are you human or a computer"],/*5*/
       	["who created you", "who made you", "who is your owner", "who owns you", "who coded you"],/*6*/
       	["your name please",  "your name", "may i know your name", "what is your name", "i want to know your name", "can i have your name", "can i have your name please", "may i know your name please"],/*7*/
@@ -29,7 +29,7 @@ var trigger = [
         ["oops"],/*28*/
         ["yes"],/*29*/
         ["are you siri", "you are like siri", "why do you act like siri"],/*30*/
-        ["ah", "ok", "okay", "gotcha", "got it", "i understand", "oh ok"],/*31*/
+        ["ah", "ok", "okay", "gotcha", "got it", "i understand", "oh ok", "cool", "that is cool"],/*31*/
         ["are you listening", "are you listening to me", "you listening", "you listening to me"],/*32*/
         ["you are bad", "youre bad", "your bad", "i do not like you", "i dont like you", "you do not answer my questions", "you do not answer my question", "you did not answer my question", "you function badly", "you are terrible", "you are terrible at answering my questions", "you are terrible at answering my question",  "you are awful", "you are awful at answering my questions", "you are awful at answering my question", "you are mean", "you are ugly", "you are fat", "you are a mistake", "you are worth nothing", "you are no fun", "you do not do right"],/*33*/
         ["knock knock", "tell me a knock knock joke"],/*34*/
@@ -37,7 +37,7 @@ var trigger = [
         ["why do you talk so much", "you talk too much"],/*36*/
         ["what can you do", "what do you do", "what can i ask", "what can i ask you", "what can i ask you to do"],/*37*/
         ["a human", "human", "a boy", "boy", "a girl", "girl", "a man", "man", "a woman", "woman", "a friend", "friend"],/*38*/
-        ["whats your favorite color", "your favorite color", "my favorite color", "whats my favorite color"],/*39*/
+        ["what is your favorite color", "your favorite color", "my favorite color", "what is my favorite color"],/*39*/
         ["thank you bye", "thank you bye", "thank you bye now", "thanks bye", "thanks bye bye", "thanks bye now", "ok bye", "ok bye bye"],/*40*/
         ["good morning", "have a good morning", "its morning time", "morning time"],/*41*/
         ["good night", "goodnight", "have a good night", "its night time", "its night time", "night time", "nighttime"],/*42*/
