@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">-->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="icon" type="icon/png" href="home-icon.png">
+	<title>Unknown App</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			overflow-x: hidden;
+		}
+		body {
+			background-color: #fff;
+			font-family: Calibri, sans-serif;
+			padding-top: 8em;
+			padding-left: 1em;
+		}
+		header {
+			text-align: center;
+			box-shadow: 6px 6px 6px 6px #ccc;
+			padding: 2em;
+			background-color: #fff;
+			border-bottom: 2px solid #ccc;
+			width: 100%;
+			position: absolute;
+			top: -30%;
+			left: 0;
+			animation: slideDown 1s ease;
+			animation-delay: 3s;
+			animation-fill-mode: forwards;
+		}
+		header li {
+			list-style-type: none;
+		}
+		.bg {
+			background-image: linear-gradient(to top, red, #ffffff);/*to direction, start color, finish color*/
+			background-repeat: no-repeat;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 100%;
+			bottom: 0;
+			animation: bgAnimation 2.5s ease;
+			animation-fill-mode: forwards;
+		}
+		.main {
+			padding: 2em;
+		}
+		.col {
+			text-align: center;
+			padding: 2em 1em;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			background-color: #fff;
+			box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+			width: 0;
+			position: absolute;
+			animation: colAnimation 2.5s ease;
+			animation-fill-mode: forwards;
+			height: 0;
+			color: transparent;
+			opacity: 0;
+			overflow: hidden;
+			user-select: none;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		.a {
+			text-decoration: underline;
+			cursor: pointer;
+		}
+		@keyframes bgAnimation {
+			0% {
+				top: 100%;
+			}
+			100% {
+				top: 0;
+			}
+		}
+		@keyframes slideDown {
+			0% {
+				top: -20%;
+			}
+			100% {
+				top: 0;
+			}
+		}
+		@keyframes colAnimation {
+			0% {
+				height: 0px;
+				width: 0;
+				color: transparent;
+			}
+			1% {
+				opacity: 1;
+			}
+			50% {
+				height: 50%;
+				color: transparent;
+				opacity: 1;
+			}
+			100% {
+				height: auto;
+				width: 45%;
+				color: #000;
+				opacity: 1;
+			}
+		}
+		@keyframes slideLeft {
+			0% {
+				/*width: 0%;*/
+				color: transparent;
+				opacity: 0;
+			}
+			100% {
+				/*width: 100%;*/
+				color: #000;
+				opacity: 1;
+			}
+		}
+		@media (max-width:755px) {
+			/*.bg {
+				bottom: -100%;
+			}*/
+			.col {
+				display: block;
+			}
+			@keyframes colAnimation {
+				0% {
+					height: 0px;
+					width: 0;
+					color: transparent;
+				}
+				1% {
+					opacity: 1;
+				}
+				50% {
+					height: 50%;
+					color: transparent;
+					opacity: 1;
+				}
+				100% {
+					height: auto;
+					width: 95%;
+					color: #000;
+					opacity: 1;
+				}
+			}
+			.mobile-spacer {
+				padding-top: 1em;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="bg"></div>
+	<header>
+		<h1>Unknown App</h1>
+	</header>
+	<div class="col">
+		<h2>404 Error</h2>
+		<p>It looks like this app doesn't exist! If you followed a link, please <span class="a" data-url="broken-link">report the broken link</span>.</p>
+		<p>See other cool apps on my <span class="a" data-url="/">homepage</span>!</p>
+	</div>
+	<script>
+		$('.a').click(function(e) {
+			window.location=$(this).attr('data-url');
+		});
+	</script>
+</body>
+</html>

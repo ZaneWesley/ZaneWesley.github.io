@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<title>Projects Home</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<style>
+	body {
+		background-color: dodgerblue;
+		font-family: Calibri, sans-serif;
+		background-image: linear-gradient(to bottom,#00C6Ff 0%, /*#0072FF*/dodgerblue 100%);
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+	.content1 {
+		width: 50%;
+		padding: 12px;
+		background-color: #fff;
+		position: absolute;
+		top: 20%;
+		left: 50%;
+		transform: translateX(-50%);
+		border-radius: 10px;
+		text-align: center;
+	}
+	.content1 {
+		position:relative;
+		animation:animatetop 0.4s
+	}
+	@keyframes animatetop {
+		from {
+			top:-300px;
+			opacity:0
+		} to {
+			top:0;
+			opacity:1
+		}
+	}
+	.content2 {
+		width: 50%;
+		padding: 12px;
+		background-color: #fff;
+		position: absolute;
+		top: 30%;
+		left: 50%;
+		transform: translateX(-50%);
+		border-radius: 10px;
+		text-align: center;
+	}
+	h1 {
+		text-align: center;
+		border-bottom: 1px solid #ccc;
+		width: 100%;
+	}
+	.msg {
+		text-align: center;
+		font-weight: bold;
+	}
+	.alerts-container h2 {
+		border-bottom: 1px solid #ccc;
+	}
+	.alerts p {
+		color: orange;
+		font-weight: bold;
+	}
+@media screen and (max-width: 775px) {
+    .content1, .content2 {
+        width: 80%;
+    }
+    .content2 {
+        top: 50%;
+    }
+}
+	</style>
+	<script></script>
+</head>
+<body>
+	<div class="content1">
+		<h1>ZMonkey-27's Projects Home</h1>
+		<div class="msg">
+			<p>To view projects, go to the project-specific page. This page is for news and alerts only.</p>
+		</div>
+	</div>
+	<div class="content2">
+		<div class="alerts-container">
+			<h2>News and Alerts</h2>
+			<div class="alerts">
+				<p>The QR Code builder is now online! <a href='/qrbuilder.html'>Click here</a> to check it out!</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
