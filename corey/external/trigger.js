@@ -28,8 +28,8 @@ var trigger = [
         ["why did the chicken cross the road"],/*27*/
         ["oops"],/*28*/
         ["yes"],/*29*/
-        ["are you siri", "you are like siri", "why do you act like siri"],/*30*/
-        ["ah", "ok", "okay", "gotcha", "got it", "i understand", "oh ok", "cool", "that is cool"],/*31*/
+        ["are you siri", "you are like siri", "why do you act like siri", "are you alexa", "you are like alexa", "why do you act like like alexa"],/*30*/
+        ["ah", "ok", "okay", "gotcha", "got it", "i understand", "oh ok", "cool", "that is cool", "me too"],/*31*/
         ["are you listening", "are you listening to me", "you listening", "you listening to me"],/*32*/
         ["you are bad", "youre bad", "your bad", "i do not like you", "i dont like you", "you do not answer my questions", "you do not answer my question", "you did not answer my question", "you function badly", "you are terrible", "you are terrible at answering my questions", "you are terrible at answering my question",  "you are awful", "you are awful at answering my questions", "you are awful at answering my question", "you are mean", "you are ugly", "you are fat", "you are a mistake", "you are worth nothing", "you are no fun", "you do not do right"],/*33*/
         ["knock knock", "tell me a knock knock joke"],/*34*/
