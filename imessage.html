@@ -430,7 +430,6 @@
       }, 2000);
     }
     $('form.chat input[type="text"]').val('');
-    $('form.chat input[type="text"]').blur();
     scrollDown();
     getResponse(message);
   });
@@ -484,6 +483,12 @@
   if(isMobile()) {
     document.querySelector('.content').style.height = window.innerHeight + 'px';
     console.log('Mobile device:', isMobile());
+    $('.message').click(function(e) {
+      $(this).hover();
+    });
+    $('body').click(function(e) {
+      $('.message').blur();
+    });
   }
 </script>
 
