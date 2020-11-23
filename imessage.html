@@ -430,6 +430,7 @@
       }, 2000);
     }
     $('form.chat input[type="text"]').val('');
+    $('form.chat input[type="text"]').blur();
     scrollDown();
     getResponse(message);
   });
