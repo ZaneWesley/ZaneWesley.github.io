@@ -4,7 +4,13 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Tic Tac Toe</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+    <meta name="apple-mobile-web-app-title" content="Tic Tac Toe">
+    <meta name="application-name" content="Tic Tac Toe">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!--<link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">-->
     <link href="https://fonts.googleapis.com/css2?family=Nerko+One&family=Open+Sans&display=swap" rel="stylesheet">
@@ -311,8 +317,10 @@
                     var boxSize;
                     if(isMobile()) {
                         boxSize = SW/3.5+'px';
-                    } else {
+                    } else if(isTablet()) {
                         boxSize = SW/5+'px';
+                    } else {
+                        boxSize = SW/8+'px';
                     }
                     for (var i = 0; i < td.length; i++) {
                         td[i].style.width = boxSize;
@@ -322,6 +330,14 @@
 
                 function isMobile() {
                     if(window.innerWidth < 775) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+                function isTablet() {
+                    if(window.innerWidth < 1024) {
                         return true;
                     } else {
                         return false;
