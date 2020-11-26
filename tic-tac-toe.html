@@ -19,6 +19,7 @@
             background-color: dodgerblue;
             color: white;
             font-family: 'Open Sans', sans-serif;
+            overflow-x: hidden;
         }
 
         td {
@@ -110,6 +111,59 @@
         .text {
             font-size: 4em;
         }
+
+        #scores {
+            position: absolute;
+            left: 0;
+            top: -400px;
+            width: 100%;
+            color: dodgerblue;
+            background-color: #fff;
+            padding: 16px;
+            align-content: center;
+            transition: 2s;
+        }
+
+        #scores .close {
+            position: absolute;
+            top: 0;
+            right: 1em;
+            font-size: 3em;
+            cursor: pointer;
+        }
+
+        .show {
+            top: 0!important;
+        }
+
+        #scores h1 {
+            text-align: center;
+        }
+
+        #scores div > div {
+            display: inline-block;
+        }
+
+        #scores > div {
+            text-align: justify;
+            width: 50%;
+            margin: auto;
+        }
+        #scores div:after {
+            display:inline-block;
+            width:100%;
+            content:'';
+        }
+
+        button {
+            background-color: rgba(13, 76, 117, 0.5);
+            color: #efefef;
+            border-radius: 20px;
+            padding: 8px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -136,6 +190,18 @@
                 <h1 class="text">Game Running!</h1>
                 <h1>Click anywhere to restart.</h1>
             </div>
+
+            <div id="scores">
+                <span class="close" onclick="toggleScores()">&times;</span>
+                <h1>Scores</h1>
+                <div class="container">
+                    <div>You: <span id="huWins">0</span></div>
+                    <div>Draws: <span id="huAiTies">0</span></div>
+                    <div>Computer: <span id="aiWins">0</span></div>
+                </div>
+            </div>
+
+            <button id="scoresToggle" onclick="toggleScores()">Show Scores</button>
 
            
 
@@ -174,6 +240,9 @@
                         huWins = ticTacToeData.huWins;
                         aiWins = ticTacToeData.aiWins;
                         huAiTies = ticTacToeData.huAiTies;
+                        document.getElementById('huWins').innerText = ticTacToeData.huWins;
+                        document.getElementById('huAiTies').innerText = ticTacToeData.huAiTies;
+                        document.getElementById('aiWins').innerText = ticTacToeData.aiWins;
                     }
                 }
 
@@ -369,11 +438,22 @@
                 }
 
                 function saveData() {
+                    document.getElementById('huWins').innerText = huWins;
+                    document.getElementById('huAiTies').innerText = huAiTies;
+                    document.getElementById('aiWins').innerText = aiWins;
                     ticTacToeData.huWins = huWins;
                     ticTacToeData.aiWins = aiWins;
                     ticTacToeData.huAiTies = huAiTies;
                     localStorage.setItem('tic-tac-toe-data', JSON.stringify(ticTacToeData));
                     console.log('Data Saved', JSON.parse(localStorage.getItem('tic-tac-toe-data')));
+                }
+
+                function toggleScores() {
+                    if(document.getElementById('scores').classList.contains('show')) {
+                        document.getElementById('scores').classList.remove('show');
+                    } else {
+                        document.getElementById('scores').classList.add('show');
+                    }
                 }
 
                 function isMobile() {
