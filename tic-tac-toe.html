@@ -66,12 +66,12 @@
         circle {
           -webkit-animation-duration: 0.5s;
                   animation-duration: 0.5s;
-          stroke: #f62459;/*pink: #f62459*/
+          stroke: #ff5e13;/*pink: #f62459*/
         }
         path {
           -webkit-animation-duration: 0.25s;
                   animation-duration: 0.25s;
-          stroke: #36dbd7;/*mint:; #36dbd7*/
+          stroke: #d3d3d3;/*mint:; #36dbd7*/
         }
 
         .o {
@@ -145,6 +145,13 @@
                 var svgHeight = 99;
                 var winRatio = ["true", "true", "false", "false"];
                 var shouldWin;
+                var turnFirst = 'o';//First game x will be first
+                var huWins = 0;
+                var aiWins = 0;
+                var huAiTies = 0;
+                var gameEnded = false;
+                var ticTacToeDataString = localStorage.getItem('tic-tac-toe-data');
+                var ticTacToeData = {};
                 const huPlayer = '<svg class="x" width="'+svgWidth+'" height="'+svgHeight+'"><path class="cross" d="M 20 20 L 80 80" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100"></path><path class="cross" d="M 80 20 L 20 80" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100"></path></svg>';//X
                 const aiPlayer = '<svg class="o" width="'+svgWidth+'" height="'+svgHeight+'"><circle class="naught" cx="50" cy="50" r="30" fill="none" stroke-width="10" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round"></circle></svg>';//O
                 const winCombo = [
@@ -157,19 +164,36 @@
                     [0, 4, 8],
                     [6, 4, 2]
                 ]
-
                 const cell = document.querySelectorAll('.cell');
+                ini();
                 startGame();
+
+                function ini() {
+                    if(ticTacToeDataString) {
+                        ticTacToeData = JSON.parse(ticTacToeDataString);
+                        huWins = ticTacToeData.huWins;
+                        aiWins = ticTacToeData.aiWins;
+                        huAiTies = ticTacToeData.huAiTies;
+                    }
+                }
 
                 function startGame() {
                     document.querySelector(".endgame").style.display = "none";
+                    gameEnded = false;
                     shouldWin = Math.floor(Math.random()*winRatio.length);
+                    turnFirst = turnFirst == 'x' ? 'o' : 'x';
                     console.log('User Win Possible:', winRatio[shouldWin] == "true" ? false : true);
+                    console.log('First Move:', turnFirst);
                     origBoard = Array.from(Array(9).keys());
                     for (var i = 0; i < cell.length; i++) {
                         cell[i].innerText = '';
                         cell[i].style.removeProperty('background-color');
                         cell[i].addEventListener('click', turnClick, false);
+                    }
+                    if(turnFirst === 'o') {
+                        removeGameClick();
+                        if (!checkTie()) turn(bestSpot(), aiPlayer);
+                        addGameClick();
                     }
                 }
 
@@ -177,7 +201,9 @@
                     if (typeof origBoard[square.target.id] === 'number') {
                         turn(square.target.id, huPlayer);
                         setTimeout(function() {
-                            if (!checkTie()) turn(bestSpot(), aiPlayer);
+                            if (!checkTie() && gameEnded == false) {
+                                turn(bestSpot(), aiPlayer);
+                            }
                             addGameClick();
                         }, 500);
                         //if (!checkTie()) turn(bestSpot(), aiPlayer);
@@ -190,7 +216,10 @@
                     document.getElementById(squarId).innerHTML = _player;
                     removeGameClick();
                     let gameWon = checkWin(origBoard, _player);
-                    if (gameWon) gameOver(gameWon);
+                    if (gameWon) {
+                        gameOver(gameWon);
+                        gameEnded = true;
+                    }
                 }
 
                 function checkWin(board, player) {
@@ -211,10 +240,16 @@
                         document.getElementById(index).style.backgroundColor =
                             gameWon.player == huPlayer ? "#4CAF50" : "#f44336";
                     }
+                    if(gameWon.player == huPlayer) {
+                        huWins++;
+                    } else {
+                        aiWins++;
+                    }
                     for (var i = 0; i < cell.length; i++) {
                         cell[i].removeEventListener('click', turnClick, false);
                     }
                     declareWinner(gameWon.player == huPlayer ? "You win!" : "You lose.");
+                    saveData();
                 }
 
                 function declareWinner(who) {
@@ -245,6 +280,7 @@
                             cell[i].removeEventListener('click', turnClick, false);
                         }
                         declareWinner("Draw!");
+                        huAiTies++;
                         return true;
                     }
                     return false;
@@ -330,6 +366,14 @@
                         td[i].style.width = boxSize;
                         td[i].style.height = boxSize;
                     }
+                }
+
+                function saveData() {
+                    ticTacToeData.huWins = huWins;
+                    ticTacToeData.aiWins = aiWins;
+                    ticTacToeData.huAiTies = huAiTies;
+                    localStorage.setItem('tic-tac-toe-data', JSON.stringify(ticTacToeData));
+                    console.log('Data Saved', JSON.parse(localStorage.getItem('tic-tac-toe-data')));
                 }
 
                 function isMobile() {
