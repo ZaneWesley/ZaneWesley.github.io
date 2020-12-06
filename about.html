@@ -70,8 +70,29 @@
 			font-size: 3em;
 			text-align: center;
 		}
+		input, textarea {
+			border: 1px solid #ccc;
+			padding: 8px;
+			display: block;
+			width: 50%;
+			outline: none;
+		}
+		textarea {
+			resize: vertical;
+		}
+		button {
+			padding: 8px 16px;
+			user-select: none;
+			border: none;
+			text-align: center;
+    		cursor: pointer;
+    		color: #fff;
+    		background-color: #00b0ff;
+		}
 		@media (max-width:755px) {
-			/**/
+			input, textarea {
+				width: 100%;
+			}
 		}
 	</style>
 </head>
@@ -104,13 +125,13 @@
 		<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScBYpKgMvnS19PHhM4M3ZycGi2tlfokvxHtKz_fQf8hbETD_g/formResponse" target="hidden_iframe" onsubmit="submitted=true;" method="POST"><!--target="_self"-->
 			<label for="name">Name</label>
 			<input id="name" name="entry.149048477" type="text" placeholder="Zane Wesley" required>
-			<br>
+
 			<label for="email">Email</label>
 			<input id="email" name="entry.1578033212" type="email" placeholder="you@email.com" required>
-			<br>
+
 			<label for="msg">Message</label>
 			<textarea id="msg" name="entry.1950191769" required></textarea>
-			<br>
+
 			<button tyoe="submit">Send</button>
 		</form>
 		<!--https://docs.google.com/forms/d/e/1FAIpQLScBYpKgMvnS19PHhM4M3ZycGi2tlfokvxHtKz_fQf8hbETD_g/viewform?usp=pp_url&entry.149048477=Zane+Harrison&entry.1578033212=zane.wesley@outlook.com&entry.1950191769=Test+message-->
@@ -129,7 +150,7 @@
 				document.querySelector('header').classList.remove('animate__animated', 'animate__slideOutUp', 'animate__faster');
 				document.querySelector('header').classList.add('animate__animated', 'animate__zoomInDown', 'animate__fast');
 				setTimeout(function() {
-					document.querySelector('ul').style.visibility="hidden";
+					document.querySelector('ul').style.display="none";
 				}, 200);
 			}, 200);
 		}
@@ -143,7 +164,7 @@
 				document.querySelector('header h1').innerText="About Me";
 				document.querySelector('header').classList.remove('animate__animated', 'animate__slideOutUp', 'animate__faster');
 				document.querySelector('header').classList.add('animate__animated', 'animate__zoomInUp');
-				document.querySelector('ul').style.visibility="visible";
+				document.querySelector('ul').style.display="block";
 				document.querySelector('ul').classList.remove('animate__animated', 'animate__backInUp', 'animate__fadeOutUp', 'animate__faster', 'disabled');
 				document.querySelector('ul').classList.add('animate__animated', 'animate__backInUp');
 				document.getElementById(open).classList.remove('animate__animated', 'animate__fadeOutUp', 'animate__faster');
