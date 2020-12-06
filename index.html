@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <!--https://pixelcog.github.io/parallax.js/-->
-	<link rel="icon" type="icon/png" href="images/home-icon.svg">
+	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<title>Zane's Apps</title>
 	<style>
 		* {
@@ -94,6 +95,17 @@
 		}
 		li:hover {
 			border-bottom: 1px solid #00b0ff;
+			animation: headShake;
+			animation-duration: 0.7s;
+		}
+		.disabled:after {
+			content: '(Temporarily Unavailable)';
+		}
+		#dev, #comp, #more {
+			border-bottom: 1px solid #ccc;
+		}
+		#more img {
+			height: 25em;
 		}
 		.mobile-hidden {
 			display: inherit;
@@ -118,6 +130,9 @@
 			.right {
 				float: none;
 			}
+			#more img {
+				height: 15em;
+			}
 			.mobile-hidden {
 				display: none;
 			}
@@ -129,7 +144,7 @@
 </head>
 <body>
 	<header>
-		<h1>Zane's Apps</h1>
+		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
 	</header>
 	<div class="content">
 		<div id="dev">
@@ -189,15 +204,42 @@
 					<li id="whiteboard" data-url="/whiteboard">
 						Whiteboard
 					</li>
-					<li id="archive" data-url="/archive">
-						App Archive
-					</li>
 				</ul>
 			</div>
 			<div class="split right mobile-hidden">
 				<img src="images/complete-bg.svg" alt="Complete Image">
 			</div>
 		</div>
+		<div id="more">
+			<div class="split left">
+				<img src="images/more-bg.svg" alt="More Image">
+			</div>
+			<div class="split right">
+				<h1>More From Zane</h1>
+				<ul>
+					<li id="about" data-url="/about">
+						About Me
+					</li>
+					<li id="archive" data-url="/archive">
+						App Archive
+					</li>
+					<!--<li id="bulletinboard" data-url="/bulletinboard">
+						News and Updates - Zane's Bulletin Board
+					</li>
+					<li id="account" data-url="/account">
+						Your Account
+					</li>-->
+					<li id="contact" class="disabled" data-url="/contact">
+						Contact Me!
+					</li>
+				</ul>
+			</div>
+			<br>
+		</div>
+		<footer>
+			<br>
+			Copyright &copy; Zane Wesley 2020. All rights reserved.
+		</footer>
 	</div>
 
 	<script>
