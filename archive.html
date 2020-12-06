@@ -14,6 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <!--https://pixelcog.github.io/parallax.js/-->
 	<link rel="icon" type="icon/png" href="images/home-icon.svg">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<title>Zane's App Archive</title>
 	<style>
 		* {
@@ -94,6 +95,11 @@
 		}
 		li:hover {
 			border-bottom: 1px solid #00b0ff;
+			animation: headShake;
+			animation-duration: 0.7s;
+		}
+		.disabled:after {
+			content: '(Temporarily Unavailable)';
 		}
 		.mobile-hidden {
 			display: inherit;
@@ -129,7 +135,7 @@
 </head>
 <body>
 	<header>
-		<h1>Zane's App Archive</h1>
+		<h1 class="animate__animated animate__zoomInUp">Zane's App Archive</h1>
 	</header>
 	<div class="content">
 		<div id="dev">
