@@ -363,7 +363,7 @@ function isMobile() {
         function render(){
           ctx.clearRect(0, 0, cWidth, cHeight);
           drawSun();
-          //manageClouds();
+          manageClouds();
           for (var i = 0; i < clouds.length; i++) {
             clouds[i].render();
           }
