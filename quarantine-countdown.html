@@ -214,6 +214,9 @@ function isMobile() {
         var backCloudNum = 10;
         var clouds = [];
         var backClouds = [];
+        var treeNum = 8;
+        var trees = [];
+        var branchRad = 30 * Math.PI / 180;
 
         /********************
           Animation
@@ -311,6 +314,75 @@ function isMobile() {
         }
 
         /********************
+          Trees
+        ********************/
+
+        function Tree(ctx, x, y, t, w, c) {
+          this.ctx = ctx;
+          this.init(x, y, t, w, c);
+        }
+
+        Tree.prototype.init = function(x, y, t, w, c) {
+          this.ctx = ctx;
+          this.x = x;
+          this.y = y;
+          this.t = t;
+          this.w = w;
+          this.c = c;
+          this.splitNum = rand(10, 30);
+          this.tSplit = this.t / this.splitNum;
+          this.bSplit = this.w / this.splitNum;
+        };
+
+        Tree.prototype.draw = function() {
+          ctx = this.ctx;
+          ctx.lineCap = 'round';
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = this.c;
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.lineTo(this.x, this.y - this.t);
+          ctx.stroke();
+          ctx.lineWidth = 1;
+          for (var i = 1, j = this.splitNum; i < this.splitNum; i++, j--) {
+            var bX1 = this.x + this.bSplit * j;
+            var bX2 = this.x - this.bSplit * j;
+            var bY = this.y - (Math.tan(branchRad) * this.bSplit * j) - this.tSplit * i;
+            ctx.moveTo(this.x, this.y - this.tSplit * i);
+            ctx.lineTo(bX1, bY);
+            ctx.stroke();
+            ctx.moveTo(this.x, this.y - this.tSplit * i);
+            ctx.lineTo(bX2, bY);
+            ctx.stroke();
+          }
+        };
+
+        Tree.prototype.resize = function() {
+          this.x = rand(0, cWidth);
+          this.y = cHeight - cHeight * 0.1;
+        };
+
+        Tree.prototype.render = function() {
+          this.draw();
+        };
+
+        for (var i = 0; i < treeNum; i++) {
+          var tree = new Tree(ctx, rand(0, cWidth), cHeight - cHeight*0.1, rand(100, 300), rand(20, 100), 'rgb(0, 128, 0)');
+          trees.push(tree);
+        }
+
+        /********************
+          Ground
+        ********************/
+        
+        function drawGround() {
+          ctx.beginPath();
+          ctx.fillStyle = 'rgb(0, 128, 58)';
+          ctx.rect(0, cHeight - cHeight * 0.1, cWidth, cHeight - cHeight * -0.1);
+          ctx.fill();
+        }
+
+        /********************
           Sun
         ********************/
 
@@ -332,10 +404,12 @@ function isMobile() {
           if(isMobile()) {
             cloudNum = 3;
             backCloudNum = 3;
+            treeNum = 2;
           }
           if(isTablet()) {
             cloudNum = 7;
             backCloudNum = 7;
+            treeNum = 4;
           }
           console.log(cloudNum,backCloudNum);
         }
@@ -363,12 +437,16 @@ function isMobile() {
         function render(){
           ctx.clearRect(0, 0, cWidth, cHeight);
           drawSun();
+          drawGround();
           manageClouds();
           for (var i = 0; i < clouds.length; i++) {
             clouds[i].render();
           }
           for (var i = 0; i < backClouds.length; i++) {
             backClouds[i].render();
+          }
+          for (var i = 0; i < trees.length; i++) {
+            trees[i].render();
           }
           requestAnimationFrame(render);
         }
@@ -387,6 +465,9 @@ function isMobile() {
           cWidth = canvas.width;
           cHeight = canvas.height;
           init();
+          for (var i = 0; i < trees.length; i++) {
+            trees[i].resize();
+          }
         }
 
         window.addEventListener('resize', function() {
