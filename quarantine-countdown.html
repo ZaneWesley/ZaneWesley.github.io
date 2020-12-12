@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <title>Quarantine Countdown</title>
+    <style>
+	    html,body {
+	    	font-family: 'Sansita Swashed', cursive;
+	    	color: #ffffff;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+	    }
+      canvas {
+        /**/
+      }
+      .default {
+        background: #ACB6E5;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #ACB6E5, #74ebd5);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #ACB6E5, #74ebd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      .gray {
+        background: #868d96;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #868d96, #949494);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #868d96, #949494); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      .bluegray {
+        background: #87CEEB;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #959d9a, #87CEEB);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #959d9a, #87CEEB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      .blue {
+        background: #87CEEB;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #87BDEB, #87CEEB);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #87BDEB, #87CEEB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      #countdown-box {
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: justify;
+        width: 90%;
+      }
+      #countdown-box:after {
+        display:inline-block;
+        width:100%;
+        content:'';
+      }
+      .cdi {
+        display: inline-block;
+        font-size: 5em;
+        text-align: center;
+        color: rgb(126, 158, 209);
+        background: -webkit-linear-gradient(#7E9ED1, #ffffff);
+          background: linear-gradient(#7E9ED1, #ffffff);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          text-fill-color: transparent;
+          -webkit-text-stroke: 1px #fff;
+          text-stroke: 1px #fff;
+      }
+      .cdi-lbl {
+        font-size: .5em;
+      }
+      @media(max-width: 775px) {
+        #countdown-box {
+          text-align: center;
+        }
+        #countdown-box:after {
+          content: none;
+        }
+        .cdi {
+          display: block;
+          font-size: 4em;
+
+        }
+        .cdi-lbl {
+          color: rgb(126, 158, 209);
+          background: -webkit-linear-gradient(#7E9ED1, #ffffff);
+          background: linear-gradient(#7E9ED1, #ffffff);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          text-fill-color: transparent;
+          -webkit-text-stroke: 1px #fff;
+          text-stroke: 1px #fff;
+        }
+      }
+    </style>
+</head>
+
+<body class="gray">
+
+  <canvas id="canvas" class="clouds gray">This browser cannot use a canvas.</canvas>
+	
+	<h1 class="title">Until Freedom</h1>
+
+	<!-- countdown element -->
+	<div id="countdown-box" class="cdb">
+		<div class="cdi">
+			<span id="d">0</span>
+      <div id="d-lbl" class="cdi-lbl">DAYS</div>
+		</div>	
+		<div class="cdi">
+			<span id="h">0</span>
+      <div id="h-lbl" class="cdi-lbl">HOURS</div>
+		</div>
+		<div class="cdi">
+			<span id="m">0</span>
+      <div id="m-lbl" class="cdi-lbl">MINUTES</div>
+		</div>
+		<div class="cdi">
+			<span id="s">0</span>
+      <div id="s-lbl" class="cdi-lbl">SECONDS</div>
+		</div>
+	</div>
+
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256.00007 256.00002'%3E%3Cg transform='translate(-362.5464,-406.21469)' id='layer1'%3E%3Cpath id='path10000' d='m 465.83684,466.9869 c -18.8823,0 -37.6499,7.7751 -51.0017,21.127 -8.4122,8.4121 -14.6043,18.9734 -18.0383,30.3583 -8.2539,1.5581 -16.0492,5.5866 -21.9931,11.5304 -7.7473,7.7473 -12.2573,18.6331 -12.2573,29.5895 0,10.9565 4.51,21.8458 12.2573,29.5931 7.7474,7.7473 18.6367,12.2573 29.5931,12.2573 l 187.4365,0 c 6.9935,0 13.9453,-2.8775 18.8904,-7.8224 4.9452,-4.9451 7.8227,-11.8971 7.8227,-18.8906 0,-6.9935 -2.8775,-13.9417 -7.8227,-18.8868 -4.9147,-4.9149 -11.8119,-7.784 -18.7617,-7.8193 -1.3562,-12.6709 -7.0967,-24.867 -16.1148,-33.8851 -10.3847,-10.3847 -24.9798,-16.4314 -39.666,-16.4314 -3.5656,0 -7.1233,0.3656 -10.6192,1.0539 -2.5582,-3.8175 -5.4715,-7.3951 -8.7235,-10.6469 -13.3518,-13.3519 -32.1193,-21.127 -51.0017,-21.127 z' style='color:%23000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;color-interpolation:sRGB;color-interpolation-filters:linearRGB;fill:%235c626b;fill-opacity:0.9;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate' /%3E%3C/g%3E%3C/svg%3E" id="cloud" style="display: none;">
+
+<script>
+// Set the birthday date we're counting down to
+  var countdownDate = new Date("December 23, 2020 00:00:00").getTime();/* hrs: min: sec */
+  //var countdownDate = new Date("November 27, 2020 10:00:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countdownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element
+  $('#d').text(addZero(days));
+  $('#h').text(addZero(hours));
+  $('#m').text(addZero(minutes));
+  $('#s').text(addZero(seconds));
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("countdown-box").innerHTML = "<span class='cdi'>You\'re Free!!</span>";
+    $('.title').text("");
+  }
+  if(days <= 7) {
+    $('#canvas').removeClass('gray').addClass('bluegray');
+    $('body').removeClass('gray').addClass('bluegray');
+  }
+  if(days <= 3) {
+    $('#canvas').removeClass('bluegray').removeClass('clouds').addClass('blue');
+    $('body').removeClass('bluegray').addClass('blue');
+  }
+}, 1000);
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+function isMobile() {
+  if(window.innerWidth < 775) {
+    return true;
+  } else {
+    return false;
+  }
+}
+</script>
+<script>
+    (function () {
+      'use strict';
+      window.addEventListener('load', function() {
+        var canvas = document.getElementById('canvas');
+
+        if (!canvas || !canvas.getContext) {
+          return false;
+        }
+
+        /********************
+          Random Number
+        ********************/
+
+        function rand(min, max) {
+          return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        /********************
+          Var
+        ********************/
+
+        // canvas 
+        var ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var cWidth = canvas.width;
+        var cHeight = canvas.height;
+        var cloudNum = 10;
+        var backCloudNum = 10;
+        var clouds = [];
+        var backClouds = [];
+
+        /********************
+          Animation
+        ********************/
+
+        window.requestAnimationFrame =
+          window.requestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.msRequestAnimationFrame ||
+          function(cb) {
+            setTimeout(cb, 17);
+          };
+
+        /********************
+          Clouds
+        ********************/
+
+        function Cloud(x, y, w, h, t, i) {
+          this.ctx = ctx;
+          this.x = x;
+          this.y = y;
+          this.w = w;
+          this.h = h;
+          this.t = t;
+          this.i = i;
+          this.rate = Math.random()*2;
+          this.draw();
+        }
+
+        Cloud.prototype.draw = function() {
+          this.ctx = ctx;
+          ctx.drawImage(document.getElementById('cloud'), this.x, this.y, this.w, this.h);
+        }
+
+        Cloud.prototype.updatePosition = function() {
+          if(this.x < -200 && canvas.classList.contains('clouds')) {
+            this.x = cWidth+300;
+            this.y = rand(-200, 0);
+          } else {
+            if(!canvas.classList.contains('clouds')) this.rate += 3;
+            this.x = this.x - this.rate;
+          } 
+        }
+
+        Cloud.prototype.render = function() {
+          this.updatePosition();
+          this.draw();
+        }
+
+        function decreaseClouds() {
+          if((cloudNum + backCloudNum) != (clouds.length + backClouds.length)) {
+            for(var i = 0; i < cloudNum; i++) {
+              if(clouds.length > cloudNum) {
+                clouds.pop();
+              }
+            }
+            for(var i = 0; i < backCloudNum; i++) {
+              if(backClouds.length > backCloudNum) {
+                backClouds.pop();
+              }
+            }
+          }
+        }
+
+        function increaseClouds() {
+          if((cloudNum + backCloudNum) != (clouds.length + backClouds.length)) {
+            for (var i = 0; i < cloudNum; i++) {
+              var cloud = new Cloud(rand(0, cWidth), rand(-200, 0), rand(250, 300), rand(250, 300), 'front', i);
+              clouds.push(cloud);
+            }
+            for (var i = 0; i < backCloudNum; i++) {
+              var cloud = new Cloud(rand(0, cWidth), rand(-200, 0), rand(150, 200), rand(150, 200), 'back', i);
+              backClouds.push(cloud);
+            }
+          }
+        }
+
+        function manageClouds() {
+          /*if(cloudNum > clouds.length) {
+            decreaseClouds();
+          } else if(cloudNum < clouds.length) { 
+            increaseClouds();
+          }*/
+          decreaseClouds();
+        }
+        
+        for (var i = 0; i < cloudNum; i++) {
+          var cloud = new Cloud(rand(0, cWidth), rand(-200, 0), rand(250, 300), rand(250, 300), 'front', i);
+          clouds.push(cloud);
+        }
+        for (var i = 0; i < backCloudNum; i++) {
+          var cloud = new Cloud(rand(0, cWidth), rand(-200, 0), rand(150, 200), rand(150, 200), 'back', i);
+          backClouds.push(cloud);
+        }
+
+        /********************
+          Sun
+        ********************/
+
+        function drawSun() {
+          ctx.beginPath();
+          ctx.arc(cWidth, 20, cHeight*0.3, 0, 2 * Math.PI);
+          var g = ctx.createLinearGradient(0, 0, 0, 170);
+          g.addColorStop(0, "#FDB813");
+          g.addColorStop(1, "orange");
+          ctx.fillStyle = g;
+          ctx.fill();
+        }
+
+        /********************
+          Initialize
+        ********************/
+
+        function init() {
+          if(isMobile()) {
+            cloudNum = 3;
+            backCloudNum = 3;
+          }
+          if(isTablet()) {
+            cloudNum = 7;
+            backCloudNum = 7;
+          }
+          console.log(cloudNum,backCloudNum);
+        }
+
+        function isMobile() {
+            if(window.innerWidth <= 775) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function isTablet() {
+            if(window.innerWidth <= 1020 && window.innerWidth > 775) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /********************
+          Render
+        ********************/
+        
+        function render(){
+          ctx.clearRect(0, 0, cWidth, cHeight);
+          drawSun();
+          //manageClouds();
+          for (var i = 0; i < clouds.length; i++) {
+            clouds[i].render();
+          }
+          for (var i = 0; i < backClouds.length; i++) {
+            backClouds[i].render();
+          }
+          requestAnimationFrame(render);
+        }
+
+        init();
+        render();
+
+        /********************
+          Event
+        ********************/
+        
+        // resize
+        function onResize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          cWidth = canvas.width;
+          cHeight = canvas.height;
+          init();
+        }
+
+        window.addEventListener('resize', function() {
+          onResize();
+        });
+
+      });
+    })();
+
+  </script>
+</body>
+</html>
