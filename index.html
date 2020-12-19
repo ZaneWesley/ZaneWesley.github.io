@@ -12,6 +12,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/ui/christmaslights.js"></script>
     <!--https://pixelcog.github.io/parallax.js/-->
 	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -144,6 +145,7 @@
 </head>
 <body>
 	<header>
+		<div id="lights-container"></div>
 		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
 	</header>
 	<div class="content">
@@ -229,6 +231,9 @@
 					<li id="archive" data-url="/archive">
 						App Archive
 					</li>
+					<li id="codepen" data-url="https://codepen.io/zanewesley">
+						My CodePen
+					</li>
 					<!--<li id="bulletinboard" data-url="/bulletinboard">
 						News and Updates - Zane's Bulletin Board
 					</li>
@@ -251,6 +256,7 @@
 	<script>
 		function ini() {
 			$('.content').css('top', $('header').css('height'));
+			christmatize.stringLights('#lights-container');
 		}
 		$('li').click(function(e) {
 			if(!$(this).hasClass('disabled')) {
