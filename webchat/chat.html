@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
     <title>Web Chat</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/rtc-lib@0.5.4/dist/bundle/rtc.dep.min.js"></script>
@@ -117,6 +119,9 @@
           color: #ffffff;
           background-color: #e10000;
         }
+        #hangUp:after {
+          content: ' Leave';
+        }
         #guests {
             display: none;
             position: absolute;
@@ -159,6 +164,7 @@
           width: 50%;
           height: 50%;
           display: none;
+          transition: all 1s;
         }
 
         #settingsBox h1 {
@@ -348,11 +354,70 @@
             transform: transform(0%);
           }
         }
+        #muted-notice {
+          display:  none;
+          min-width: 250px;
+          margin-left: -125px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 2px;
+          padding: 16px;
+          position: fixed;
+          z-index: 1;
+          right: 3em;
+          bottom: 3em;
+          font-size: 17px;
+        }
     </style>
     <style id="mobile-styles">
       @media (max-width:755px) {
+        .room-name {
+            position: static;
+            display: block;
+        }
+        #chatFrame {
+          top: 9.7em;
+          height: 70vh;
+          width: 100%;
+        }
+        #hangUp:after {
+          content: '';
+        }
         #settingsBox {
           width: 90%;
+        }
+        #local-settings {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          z-index: 5;
+          background-color: #181818;
+          padding: 0;
+        }
+        #settingsBox {
+          width: 90%;
+          height: 100%;
+        }
+        .tooltip:hover .tooltiptext {
+          visibility: hidden;
+        }
+        #userPreview {
+          display: none!important;
+        }
+        #userPreview video {
+          width: 33%;
+          /*padding-right: 1.5em;*/
+          pointer-events: none;
+        }
+        #guests {
+          padding-bottom: 3em;
+        }
+        #guests video {
+          width: 90%;
+          /*padding-right: 1.5em;*/
+          pointer-events: none;
         }
       }
     </style>
@@ -400,7 +465,7 @@
 
             <span class="tooltip"><button id="toggleMute" class="control-btn" title="Toggle Microphone"><i class="fal fa-microphone"></i></button><span class="tooltiptext">Toggle Microphone</span></span>
 
-            <span class="tooltip"><button id="hangUp"  title="Leave Call" onclick="hangup()"><i class="fal fa-phone-slash"></i> Leave</button><span class="tooltiptext">Leave</span></span>
+            <span class="tooltip"><button id="hangUp"  title="Leave Call" onclick="hangup()"><i class="fal fa-phone-slash"></i></button><span class="tooltiptext">Leave</span></span>
         </div>
         <div id="guests">
             <!--<p>Guests:</p>-->
@@ -434,13 +499,20 @@
           <input type="checkbox"class="onoffswitch-checkbox" id="togglePreviewDrag" tabindex="0">
           <label class="onoffswitch-label" for="togglePreviewDrag"></label>
       </div>
+      <label for="toggleShowPreview"><h3>Show Camera Preview</h3></label>
+      <div class="onoffswitch">
+          <input type="checkbox"class="onoffswitch-checkbox" id="toggleShowPreview" tabindex="0" checked>
+          <label class="onoffswitch-label" for="toggleShowPreview"></label>
+      </div>
     </div>
 
+    <div id="muted-notice">You're microphone is muted.</div>
     <div id="snackbar"></div>
 
     <div class="menu">
       <ul class="menu-options">
         <li class="menu-option" onclick="chatDisplayToggle()">Toggle Chat</li>
+        <!--<li class="menu-option" onclick="previewDisplayToggle()">Toggle Camera Preview</li>-->
         <li class="menu-option" onclick="createShareLink()">Share Link</li>
         <li class="menu-option" onclick="hangup()">Leave Call</li>
       </ul>
@@ -497,6 +569,10 @@
                 //
             }*/
             document.getElementById('userCamera').muted=true;
+            if(isMobile()) {
+              document.getElementById('guests').appendChild(document.querySelector('#userPreview video'));
+              document.querySelector('header').appendChild(document.querySelector('.room-name'));
+            }
         }
         $('input').on('keypress', function(e) {
             if(e.which === 13) {
@@ -584,17 +660,22 @@
 
         function chatDisplayToggle() {
             if($('#chatFrame').css('display') === 'none') {
+              if(isMobile()) {
                 document.getElementById('chatFrame').style.display="block";
-                //document.getElementById('chatFrame').style.width="50%";
+                document.querySelector('.main').style.width="0%";
+                document.getElementById('userPreview').style.right="200%";
+                document.getElementById('guests').style.width="0%";
+              } else {
+                document.getElementById('chatFrame').style.display="block";
                 document.querySelector('.main').style.width="50%";
                 document.getElementById('userPreview').style.right="51%";
                 document.getElementById('local-settings').style.paddingRight="2em";
                 document.getElementById('guests').style.width="49%";
+              }
             } else {
                 document.querySelector('.main').style.width="100%";
                 document.getElementById('userPreview').style.right="2em";
                 document.getElementById('chatFrame').style.display="none";
-                //document.getElementById('chatFrame').style.width="0%";
                 document.getElementById('local-settings').style.paddingRight="2em";
                 document.getElementById('guests').style.width="100%";
             }
@@ -605,6 +686,22 @@
             document.getElementById('settingsBox').style.display="block";
           } else {
             document.getElementById('settingsBox').style.display="none";
+          }
+        }
+
+        function previewDisplayToggle() {
+          if(isMobile()) {
+            if($('#userCamera').css('display') === 'none') {
+              document.getElementById('userCamera').style.display="block";
+            } else {
+              document.getElementById('userCamera').style.display="none";
+            }
+          } else {
+            if($('#userPreview').css('display') === 'none') {
+              document.getElementById('userPreview').style.display="block";
+            } else {
+              document.getElementById('userPreview').style.display="none";
+            }
           }
         }
 
@@ -623,6 +720,11 @@
             canDrag(true);
           } else {
             canDrag(false);
+          }
+          if($('#toggleShowPreview').prop('checked') === true) {
+            previewDisplayToggle();
+          } else {
+            previewDisplayToggle();
           }
         });
 
@@ -667,6 +769,14 @@
             document.execCommand("copy");
             document.body.removeChild(tempInput);
             snackbarMessgae("Share link copied to the clipboard!");
+        }
+
+        function isMobile() {
+          if(window.innerWidth < 775) {
+            return true;
+          } else {
+            return false;
+          }
         }
 
         function customTitle() {
@@ -762,8 +872,10 @@
             hasAudio=!hasAudio;
             if(hasAudio == true) {
                 $('#toggleMute').html('<i class="fal fa-microphone"></i>');
+                $('#muted-notice').fadeOut();
             } else {
                 $('#toggleMute').html('<i class="fal fa-microphone-slash"></i>');
+                $('#muted-notice').fadeIn();
             }
             console.log('Mute Toggled. Has Audio:', hasAudio);
           });
