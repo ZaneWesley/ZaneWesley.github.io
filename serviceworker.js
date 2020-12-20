@@ -1,5 +1,5 @@
-const appCache = "zanes-apps-cache";
-const assets = [
+var CACHE_NAME = "zanes-apps-cache";
+var urlsToCache = [
   //index
   "/",
   "/index",
@@ -92,18 +92,45 @@ const assets = [
   "/whiteboard"
 ];
 
-self.addEventListener("install", installEvent => {
-  installEvent.waitUntil(
-    caches.open(appCache).then(cache => {
-      cache.addAll(assets);
-    })
+self.addEventListener('install', function(event) {
+  // Perform install steps
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
-self.addEventListener("fetch", fetchEvent => {
-  fetchEvent.respondWith(
-    caches.match(fetchEvent.request).then(res => {
-      return res || fetch(fetchEvent.request);
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      }
+    )
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  console.log('Updating Service Worker...')
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+          // Return true if you want to remove this cache,
+          // but remember that caches are shared across
+          // the whole origin
+          return true
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
     })
   );
 });
