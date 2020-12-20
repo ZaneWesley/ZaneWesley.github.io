@@ -1,10 +1,10 @@
 {
   "name": "Zane's Apps",
   "short_name": "Zane's Apps",
-  "start_url": "index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#00b0ff",
-  "theme_color": "#fff",
+  "theme_color": "transparent",
   "orientation": "portrait-primary",
   "icons": [
     {
