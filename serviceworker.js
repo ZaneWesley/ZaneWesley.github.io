@@ -1,0 +1,109 @@
+const appCache = "zanes-apps-cache";
+const assets = [
+  //index
+  "/",
+  "/index.html",
+  "/404.html",
+  "/about.html",
+  "/archive.html",
+  //ui
+  "/ui/christmaslights.js",
+  //2048
+  "/2048/",
+  "/2048/index.html",
+  "/2048/style/main.scss",
+  "/2048/style/main.css",
+  "/2048/style/helpers.scss",
+  "/2048/js/animframe_polyfill.js",
+  "/2048/js/application.js",
+  "/2048/js/bind_polyfill.js",
+  "/2048/js/classlist_polyfill.js",
+  "/2048/js/game_manager.js",
+  "/2048/js/grid.js",
+  "/2048/js/html_actuator.js",
+  "/2048/js/keyboard_input_manager.js",
+  "/2048/js/local_storage_manager.js",
+  "/2048/js/tile.js",
+  //ChromeDino
+  "/chromedino",
+  "/chromedino/index.html",
+  "/chromedino/dino.js",
+  "/chromedino/100-error-offline.png",
+  "/chromedino/100-offline-sprite.png",
+  "/chromedino/200-error-offline.png",
+  "/chromedino/200-offline-sprite.png",
+  //Colorsplosion
+  "/colorsplosion",
+  "/colorsplosion/index.html",
+  "/colorsplosion/colorsplosion.html",
+  "/colorsplosion/blob.html",
+  "/colorsplosion/trail.html",
+  //ColorSwirl
+  "/colorswirl/colorswirl.html",
+  "/colorswirl/colorswirl.js",
+  "/colorswirl/dat.gui.min.js",
+  "/colorswirl/paint-drops.jpg",
+  "/colorswirl/privacy.html",
+  //Corey (virtual assisstant)
+  "/corey",
+  "/corey/index.html",
+  "/corey/v1.html",
+  "/corey/v2.html",
+  "/corey/v3.html",
+  "/corey/v4.html",
+  "/corey/external/dev.jpg",
+  "/corey/external/spectrum.css",
+  "/corey/external/spectrum.js",
+  "/corey/external/trigger.js",
+  "/corey/external/wdtfs.mp3",
+  //Peace
+  "/peace",
+  "/peace/index.html",
+  "/peace/nature.html",
+  "/peace/breathe.html",
+  "/peace/dat.gui.min.js",
+  "/peace/breathe-icon.svg",
+  "/peace/icon.png",
+  "/peace/nature.jpg",
+  "/peace/colorswirl.js",
+  //WebChat
+  "/webchat/chat.html",
+  "/webchat/new.html",
+  "/webchat/test.html",
+  "/webchat/logo.ico",
+  //SPA
+  "/app.html",
+  "/chat.html",
+  "/christmas-countdown-2020.html",
+  "/imessage.html",
+  "/index-v1.html",
+  "/index-v2.html",
+  "/index-v3.html",
+  "/mmc.html",
+  "/numberguessing.html",
+  "/peopleselector.html",
+  "/quarantine-countdown.html",
+  "/search.html",
+  "/squery.html",
+  "/stack.html",
+  "/status.html",
+  "/tic-tac-toe.html",
+  "/todo.html",
+  "/whiteboard.html"
+];
+
+self.addEventListener("install", installEvent => {
+  installEvent.waitUntil(
+    caches.open(appCache).then(cache => {
+      cache.addAll(assets);
+    })
+  );
+});
+
+self.addEventListener("fetch", fetchEvent => {
+  fetchEvent.respondWith(
+    caches.match(fetchEvent.request).then(res => {
+      return res || fetch(fetchEvent.request);
+    })
+  );
+});
