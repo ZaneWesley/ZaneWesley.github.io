@@ -109,9 +109,6 @@
           /*color: #595354;*/
           color: #65a9e5;
         }
-        #toggleMute {
-          padding-right: 3em;
-        }
         #hangUp {
           background-color: red;
         }
@@ -162,7 +159,8 @@
           border-radius: 5px;
           padding: 20px;
           width: 50%;
-          height: 50%;
+          min-height: 50%;
+          height: auto;
           display: none;
           transition: all 1s;
         }
@@ -197,6 +195,9 @@
             display: inline-block;
             margin: 0;
             outline: none;
+        }
+        .desktop-hidden {
+          display: none;
         }
     </style>
     <style>
@@ -419,6 +420,12 @@
           /*padding-right: 1.5em;*/
           pointer-events: none;
         }
+        .mobile-hidden {
+          display: none;
+        }
+        .desktop-hidden {
+          display: inherit;
+        }
       }
     </style>
   </head>
@@ -465,6 +472,8 @@
 
             <span class="tooltip"><button id="toggleMute" class="control-btn" title="Toggle Microphone"><i class="fal fa-microphone"></i></button><span class="tooltiptext">Toggle Microphone</span></span>
 
+            <span class="tooltip mobile-hidden"><button id="shareScreen" class="control-btn" title="Share Screen"><i class="fal fa-share-square"></i></button><span class="tooltiptext">Share Screen</span></span>
+
             <span class="tooltip"><button id="hangUp"  title="Leave Call" onclick="hangup()"><i class="fal fa-phone-slash"></i></button><span class="tooltiptext">Leave</span></span>
         </div>
         <div id="guests">
@@ -503,6 +512,13 @@
       <div class="onoffswitch">
           <input type="checkbox"class="onoffswitch-checkbox" id="toggleShowPreview" tabindex="0" checked>
           <label class="onoffswitch-label" for="toggleShowPreview"></label>
+      </div>
+      <div class="desktop-hidden">
+        <label for="shareScreenCheckbox"><h3>Share Screen</h3></label>
+      <div class="onoffswitch">
+          <input type="checkbox"class="onoffswitch-checkbox" id="shareScreenCheckbox" tabindex="0">
+          <label class="onoffswitch-label" for="shareScreenCheckbox"></label>
+      </div>
       </div>
     </div>
 
@@ -689,15 +705,15 @@
           }
         }
 
-        function previewDisplayToggle() {
+        function previewDisplayToggle(bool) {
           if(isMobile()) {
-            if($('#userCamera').css('display') === 'none') {
+            if(bool) {
               document.getElementById('userCamera').style.display="block";
             } else {
               document.getElementById('userCamera').style.display="none";
             }
           } else {
-            if($('#userPreview').css('display') === 'none') {
+            if(bool) {
               document.getElementById('userPreview').style.display="block";
             } else {
               document.getElementById('userPreview').style.display="none";
@@ -722,9 +738,9 @@
             canDrag(false);
           }
           if($('#toggleShowPreview').prop('checked') === true) {
-            previewDisplayToggle();
+            previewDisplayToggle(true);
           } else {
-            previewDisplayToggle();
+            previewDisplayToggle(false);
           }
         });
 
@@ -890,8 +906,15 @@
             console.log('Cam Toggled. Cam On:', camOn);
           });
 
-          $('#share-screen').click(function() {
-            //
+          $('#shareScreen').click(function() {
+            snackbarMessgae('Feature not supported yet.');
+          });
+          $('#shareScreenCheckbox').click(function() {
+            if($('#shareScreenCheckbox').prop('checked') === true) {
+              snackbarMessgae('Feature not supported yet.');
+            } else {
+              //
+            }
           });
 
           // get notified whenever we meet a new peer
