@@ -108,14 +108,9 @@
 		@media(max-width: 775px) {
 	      aside {
 	        display: none;
-	        opacity: 0;
 	      }
 	      .memu-toggle {
 	        display: block;
-	      }
-	      aside.open {
-	        display: block;
-	        opacity: 1;
 	      }
 	      main {
 	        left: 0;
@@ -125,7 +120,7 @@
 </head>
 <body>
 	<header>
-		<h1><span class="manu-toggle" onclick="$('aside').toggleClass('open'); ">&#x2630; </span>Flashcard Maker</h1>
+		<h1><span class="manu-toggle" onclick="$('aside').fadeToggle().toggleClass('open'); ">&#x2630; </span>Flashcard Maker</h1>
 	</header>
 	<aside>
 		<ul>
