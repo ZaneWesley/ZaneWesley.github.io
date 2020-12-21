@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>Flashcard Maker</title>
+
+	<script>
+        if(!location.hash.replace('#', '').length) {
+            location.href = location.href.split('#')[0] + '#/home';
+            location.reload();
+    	}
+    </script>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+		html {
+			height: 100%;
+		}
+		body {
+			background-color: #f6f7fb;
+			display: block;
+			font-family: 'Open Sans', sans-serif;
+			font-size: 16px;
+			color: #303545;
+		}
+		header {
+			background-color: #23b26d;/*#00bfa6*/
+			height: 5rem;
+			color: #fff;
+			padding: 1.5rem 2.5rem;
+		}
+		header h1 {
+			font-size: 1.7em;
+		}
+		aside {
+			width: 17rem;
+			min-height: calc(100vh - 5rem);
+			height: 100%;
+			box-shadow: 0 0.25rem 1.25rem rgba(0,0,0,.08);
+			background-color: #fff;
+			position: relative;
+		}
+		ul {
+			width: 100%;
+		}
+		ul li {
+			list-style-type: none;
+			width: 100%;
+			padding: 0.5em;
+			cursor: pointer;
+			transition: 0.3s;
+			font-weight: bold;
+		}
+		ul li:hover {
+			background-color: #ffcd1f;
+		}
+		ul li:before {
+			content: "";
+			padding-left: 1.25rem;
+		}
+		ul li a {
+			text-decoration: none;
+			color: #000;
+			width: 100%;
+		}
+		.section {
+			padding-top: 1.25rem;
+			border-bottom: 2px solid #edeff4;
+		}
+		.section:last-child {
+			border-bottom: none;
+		}
+		.active {
+			background-color: #fff9e3;
+			border-left: 6px solid #ffcd1f;
+		}
+		.active:before {
+			content: "";
+			padding-left: calc(1.25rem - 6px);	
+		}
+		main {
+			position: absolute;
+			top: 5rem;
+			left: 17rem;
+			padding: 2rem;
+		}
+		main div {
+			display: none;
+		}
+		@media(max-width: 775px) {
+			aside {
+				height: 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Flashcard Maker</h1>
+	</header>
+	<aside>
+		<ul>
+			<div class="section">
+				<li id="btn-home"><a href="#/home">Home</a></li>
+				<li id="btn-new-flashcard"><a href="#/new-flashcard">New Flashcard Set</a></li>
+				<li id="btn-new-list"><a href="#/new-list">New List</a></li>
+			</div>
+			<div class="section">
+				<li id="btn-delete"><a href="#/delete">Delete All</a></li>
+			</div>
+			<div class="section">
+				<li id="btn-privacy"><a href="#/privacy" style="color: rgb(0, 176, 255);">Privacy Policy</a></li>
+			</div>
+		</ul>
+	</aside>
+	<main>
+		<div id="page-home">
+			<h1>Home</h1>
+		</div>
+		<div id="page-new-flashcard">
+			<h1>New Flashcard Set</h1>
+		</div>
+		<div id="page-new-list">
+			<h1>New List</h1>
+		</div>
+		<div id="page-delete">
+			<h1>Delete All Sets and Lists</h1>
+		</div>
+		<div id="page-privacy">
+			<h1>Privacy Policy</h1>
+		</div>
+	</main>
+
+	<script>
+		var page = location.href.split('#')[1].replace(/\/|:|#|%|\.|\[|\]/g, '');
+		console.log(page);
+		document.getElementById("btn-"+page).classList.add('active');
+		document.getElementById("page-"+page).style.display="block";
+		$('a').click(function(e) {
+			e.preventDefault();
+			location.href = this.href;
+			location.reload();
+		});
+		$('li').click(function(e) {
+			e.preventDefault();
+			this.querySelector('a').click();
+		});
+	</script>
+</body>
+</html>
