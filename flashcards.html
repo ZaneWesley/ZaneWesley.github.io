@@ -43,9 +43,9 @@
 		header h1 {
 			font-size: 1.7em;
 		}
-		.memu-toggle {
+		.menu-toggle {
 	        display: none;
-	      }
+	     }
 		aside {
 			width: 17rem;
 			min-height: calc(100vh - 5rem);
@@ -109,8 +109,9 @@
 	      aside {
 	        display: none;
 	      }
-	      .memu-toggle {
-	        display: block;
+	      .menu-toggle {
+	        display: inline-block;
+	        padding-right: 10px;
 	      }
 	      main {
 	        left: 0;
@@ -120,7 +121,7 @@
 </head>
 <body>
 	<header>
-		<h1><span class="manu-toggle" onclick="$('aside').fadeToggle().toggleClass('open'); ">&#x2630; </span>Flashcard Maker</h1>
+		<h1><span class="menu-toggle" onclick="$('aside').fadeToggle().toggleClass('open'); ">&#x2630; </span>Flashcard Maker</h1>
 	</header>
 	<aside>
 		<ul>
