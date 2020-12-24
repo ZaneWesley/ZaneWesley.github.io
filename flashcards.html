@@ -7,6 +7,8 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/monolith.min.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 	<title>Flashcard Maker</title>
 
 	<script>
@@ -32,6 +34,10 @@
 			font-size: 16px;
 			color: #303545;
 		}
+		.dark {
+			background-color: #303545!important;
+			color: #fff!important;
+		}
 		header {
 			background-color: #23b26d;/*#00bfa6*/
 			height: 5rem;
@@ -39,6 +45,7 @@
 			padding: 1.5rem 2.5rem;
 			width: 100%;
 			max-width: 100%;
+			transition: all 1s;
 		}
 		header h1 {
 			font-size: 1.7em;
@@ -78,6 +85,9 @@
 			color: #000;
 			width: 100%;
 		}
+		.dark ul li a {
+			color: #fff;
+		}
 		.section {
 			padding-top: 1.25rem;
 			border-bottom: 2px solid #edeff4;
@@ -88,6 +98,9 @@
 		.active {
 			background-color: #fff9e3;
 			border-left: 6px solid #ffcd1f;
+		}
+		.dark .active {
+			background-color: #464e66;
 		}
 		.active:before {
 			content: "";
@@ -102,9 +115,119 @@
 		main h1 {
 			font-size: 1.5em;
 		}
-		main div {
+		main .page {
 			display: none;
 		}
+		.no-data {
+			background-image: url('images/box.svg');
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center center;
+			position: absolute;
+			height: 15em;
+			width: 15em;
+			left: 50%;
+			top: 100%;
+			filter: grayscale(75%);
+		}
+		.no-data.trash {
+			background-image: url('images/no-data.svg');
+		}
+		button {
+			padding: 1em 2em;
+		    font-size: 1em;
+			white-space: nowrap;
+    		margin-top: 1.5rem!important;
+			appearance: none;
+		    border: none;
+		    border-radius: .25rem;
+		    cursor: pointer;
+		    display: inline-block;
+		    outline: none;
+			transition: all .12s cubic-bezier(.47,0,.745,.715);
+			background-color: #00abf7;
+			color: #fff;
+		}
+		button:hover {
+			background-color: #029de3;
+		}
+		#color-picker-wrapper {
+			position: absolute;
+			border-radius: 8px;
+			padding: 16px 24px;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			color: #000!important;
+			box-shadow: 0 0.25rem 1.25rem rgba(0,0,0,.08);
+			display: none;
+		}
+		#color-picker {
+			display: table;
+		}
+		.palette-row {
+			display: table-row;
+		}
+		.picker-color {
+			display: table-cell;
+			width: 3em;
+			height: 3em;
+			border: 1px solid #ccc;
+			cursor: pointer;
+		}
+		.onoffswitch {
+            position: relative; width: 55px;
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+        }
+        .onoffswitch-checkbox {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .onoffswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            height: 28px; padding: 0; line-height: 28px;
+            border: 0px solid #FFFFFF; border-radius: 30px;
+            background-color: #CCCCCC;
+        }
+        .onoffswitch-label:before {
+            content: "";
+            display: block; width: 30px; margin: -1px;
+            background: #595354;
+            position: absolute; top: 0; bottom: 0;
+            right: 23px;
+            border-radius: 30px;
+            box-shadow: 0 6px 12px 0px #757575;
+            transition: all 0.5s;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label {
+            background-color: #2ecc71;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label, .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+           border-color: #2ecc71;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label:before {
+            right: 0px; 
+            background-color: #fff;
+            box-shadow: 3px 6px 18px 0px rgba(0, 0, 0, 0.2);
+        }
+        /*@media (prefers-color-scheme: dark) {
+        	body {
+        		background-color: #303545!important;
+				color: #fff!important;
+        	}
+        	ul li a {
+				color: #fff;
+			}
+			.active {
+				background-color: #464e66;
+			}
+
+		}*/
 		@media(max-width: 775px) {
 	      aside {
 	        display: none;
@@ -131,7 +254,8 @@
 				<li id="btn-new-list"><a href="#/new-list">New List</a></li>
 			</div>
 			<div class="section">
-				<li id="btn-delete"><a href="#/delete">Delete All</a></li>
+				<li id="btn-preferences"><a href="#/preferences">Preferences</a></li>
+				<li id="btn-trash"><a href="#/trash">Trash</a></li>
 			</div>
 			<div class="section">
 				<li id="btn-privacy"><a href="#/privacy" style="color: rgb(0, 176, 255);">Privacy Policy</a></li>
@@ -139,28 +263,111 @@
 		</ul>
 	</aside>
 	<main>
-		<div id="page-home">
+		<div class="page" id="page-home">
 			<h1>Home</h1>
+			<div class="no-data"></div>
 		</div>
-		<div id="page-new-flashcard">
+		<div class="page" id="page-new-flashcard">
 			<h1>New Flashcard Set</h1>
 		</div>
-		<div id="page-new-list">
+		<div class="page" id="page-new-list">
 			<h1>New List</h1>
 		</div>
-		<div id="page-delete">
-			<h1>Delete All Sets and Lists</h1>
+		<div class="page" id="page-preferences">
+			<h1>Preferences</h1>
+			<h2>Theme</h2>
+			<button onclick="$('#color-picker-wrapper').fadeIn();">Change Theme</button>
+			<h2>Theme Mode</h2>
+			<label for="darkMode"><b>Dark Mode</b></label>
+			<div class="onoffswitch">
+	        	<input type="checkbox"class="onoffswitch-checkbox" id="darkMode" tabindex="0">
+	        	<label class="onoffswitch-label" for="darkMode"></label>
+	    	</div>
 		</div>
-		<div id="page-privacy">
+		<div class="page" id="page-trash">
+			<h1>Trash</h1>
+			<p>Trash is Empty.</p>
+			<div class="no-data trash"></div>
+		</div>
+		<div class="page" id="page-privacy">
 			<h1>Privacy Policy</h1>
 		</div>
 	</main>
+
+	<div id="color-picker-wrapper">
+		<h1>Theme Color</h1>
+		<span style="position: absolute;top:0;right:0.5em;font-size: 2em;cursor:pointer;" onclick="this.parentNode.style.display='none';">&times;</span>
+		<br>
+		<div id="color-picker">
+			<div class="palette-row">
+				<span class="picker-color" style="background-color: #1abc9c;"></span>
+				<span class="picker-color" style="background-color: #2ecc71"></span>
+				<span class="picker-color" style="background-color: #3498db"></span>
+				<span class="picker-color" style="background-color: #9b59b6"></span>
+				<span class="picker-color" style="background-color: #34495e"></span>
+			</div>
+			<div class="palette-row">
+				<span class="picker-color" style="background-color: #f1c40f"></span>
+				<span class="picker-color" style="background-color: #e67e22"></span>
+				<span class="picker-color" style="background-color: #e74c3c"></span>
+				<span class="picker-color" style="background-color: #ecf0f1"></span>
+				<span class="picker-color" style="background-color: #95a5a6"></span>
+			</div>
+			<div class="palette-row">
+				<span class="picker-color" style="background-color: #23b26d"></span>
+			</div>
+		</div>
+	</div>
 
 	<script>
 		var page = location.href.split('#')[1].replace(/\/|:|#|%|\.|\[|\]/g, '');
 		console.log(page);
 		document.getElementById("btn-"+page).classList.add('active');
 		document.getElementById("page-"+page).style.display="block";
+
+		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+		    if(localStorage.getItem("dark-mode") == 'on') {
+		    	$('#darkMode').prop('checked', true);
+		    	$('body').addClass('dark');
+				$('aside').addClass('dark');
+			}
+		}
+
+		if(localStorage.getItem("dark-mode") == 'on') {
+			$('#darkMode').prop('checked', true);
+		    $('body').addClass('dark');
+			$('aside').addClass('dark');	
+		}
+
+		if(localStorage.getItem("theme-color")) {
+			setPreferences(localStorage.getItem("theme-color"));
+		}
+
+		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+		    var newColorScheme = e.matches ? "dark" : "light";
+		    if(newColorScheme == "dark") {
+		    	$('#darkMode').prop('checked', true);
+		    	$('body').addClass('dark');
+				$('aside').addClass('dark');
+		    } else {
+		    	$('#darkMode').prop('checked', false);
+		    	$('body').removeClass('dark');
+				$('aside').removeClass('dark');
+		    }
+		});
+
+		$('#darkMode').on('click change', function(e) {
+			if($(this).prop('checked') === true) {
+				$('body').addClass('dark');
+				$('aside').addClass('dark');
+				localStorage.setItem("dark-mode", "on");
+			} else {
+				$('body').removeClass('dark');
+				$('aside').removeClass('dark');
+				localStorage.setItem("dark-mode", "off");
+			}
+		});
+
 		$('a').click(function(e) {
 			e.preventDefault();
 			location.href = this.href;
@@ -170,6 +377,61 @@
 			e.preventDefault();
 			this.querySelector('a').click();
 		});
+
+		$('.picker-color').click(function(e) {
+			setPreferences($(this).css('background-color'));
+		});
+
+		function setPreferences(newColor) {
+			$('header').css('background-color', newColor);
+			localStorage.setItem("theme-color", newColor);
+			if($('header').css('background-color') !== 'rgb(35, 178, 109)' && $('header').css('background-color') !== '#23b26d') {
+				if(colorMode(newColor) === 'light') {
+					$('header').css('color', '#303545');
+				} else {
+					$('header').css('color', '#fff');
+				}
+			} else {
+				$('header').css('color', '#fff');
+			}
+		}
+
+		function colorMode(color) {
+		    // Variables for red, green, blue values
+		    var r, g, b, hsp;
+		    // Check the format of the color, HEX or RGB?
+		    if (color.match(/^rgb/)) {
+
+		        // If RGB --> store the red, green, blue values in separate variables
+		        color = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+		        
+		        r = color[1];
+		        g = color[2];
+		        b = color[3];
+		    } else {
+		        // If hex --> Convert it to RGB: http://gist.github.com/983661
+		        color = +("0x" + color.slice(1).replace( 
+		        color.length < 5 && /./g, '$&$&'));
+
+		        r = color >> 16;
+		        g = color >> 8 & 255;
+		        b = color & 255;
+		    }
+		    // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+		    hsp = Math.sqrt(
+		    0.299 * (r * r) +
+		    0.587 * (g * g) +
+		    0.114 * (b * b)
+		    );
+		    // Using the HSP value, determine whether the color is light or dark
+		    if (hsp>127.5) {
+
+		        return 'light';
+		    } else {
+
+		        return 'dark';
+		    }
+		}
 	</script>
 </body>
 </html>
