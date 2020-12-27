@@ -7,8 +7,6 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/monolith.min.css"/>
-	<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 	<title>Flashcard Maker</title>
 
 	<script>
@@ -111,12 +109,19 @@
 			top: 5rem;
 			left: 17rem;
 			padding: 2rem;
+			width: calc(100% - 17rem);
 		}
 		main h1 {
 			font-size: 1.5em;
+			border-bottom: 1px solid #ccc;
+			width: 100%;
 		}
 		main .page {
 			display: none;
+			width: 100%;
+		}
+		.page h3 {
+			padding-top: 1em;
 		}
 		.no-data {
 			background-image: url('images/box.svg');
@@ -126,14 +131,43 @@
 			position: absolute;
 			height: 15em;
 			width: 15em;
-			left: 50%;
+			left: 40%;
 			top: 100%;
 			filter: grayscale(75%);
 		}
 		.no-data.trash {
 			background-image: url('images/no-data.svg');
 		}
-		button {
+		.card-wrapper {
+			padding: 1em;
+		}
+		.card {
+			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+			transition: 0.3s;
+			width: 50%;
+			border-radius: 5px;
+			padding: 1em;
+		}
+		.card:hover {
+			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		}
+		.card-content {
+			border: 1px solid #ccc;
+			padding: 0.5em;
+			height: 200px;
+		}
+		[contenteditable] {
+			outline: none;
+			border-bottom: 1px solid #ccc;
+		}
+		[placeholder]:empty:before {
+		    content: attr(placeholder);
+		    color: #A9A9A9; 
+		}
+		.card h2 {
+			text-align: center;
+		}
+		button:not(.menu) {
 			padding: 1em 2em;
 		    font-size: 1em;
 			white-space: nowrap;
@@ -148,7 +182,7 @@
 			background-color: #00abf7;
 			color: #fff;
 		}
-		button:hover {
+		button:not(.menu):hover {
 			background-color: #029de3;
 		}
 		#color-picker-wrapper {
@@ -215,6 +249,89 @@
             background-color: #fff;
             box-shadow: 3px 6px 18px 0px rgba(0, 0, 0, 0.2);
         }
+        #snackbar {
+			visibility: hidden;	
+			min-width: 250px;
+			margin-left: -125px;
+			background-color: #333;
+			color: #fff;
+			text-align: center;
+			border-radius: 2px;
+			padding: 16px;
+			position: fixed;
+			z-index: 1;
+			left: 50%;
+			bottom: 30px;
+			font-size: 17px;
+        }
+
+        #snackbar.show {
+			visibility: visible;
+			-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+			animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @-webkit-keyframes fadein {
+			from {bottom: 0; opacity: 0;} 
+			to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+			from {bottom: 0; opacity: 0;}
+			to {bottom: 30px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+			from {bottom: 30px; opacity: 1;} 
+			to {bottom: 0; opacity: 0;}
+        }
+
+        @keyframes fadeout {
+			from {bottom: 30px; opacity: 1;}
+			to {bottom: 0; opacity: 0;}
+        }
+        .menu {
+		  background-color: transparent;
+		  border: none;
+		  cursor: pointer;
+		  display: inline-flex;
+		  padding: 0;
+		  outline: none;
+		}
+		.line {
+		  fill: none;
+		  stroke: #fff;
+		  stroke-width: 6;
+		  transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+		    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+		}
+		.line1 {
+		  stroke-dasharray: 60 207;
+		  stroke-width: 6;
+		}
+		.line2 {
+		  stroke-dasharray: 60 60;
+		  stroke-width: 6;
+		}
+		.line3 {
+		  stroke-dasharray: 60 207;
+		  stroke-width: 6;
+		}
+		.opened .line1 {
+		  stroke-dasharray: 90 207;
+		  stroke-dashoffset: -134;
+		  stroke-width: 6;
+		}
+		.opened .line2 {
+		  stroke-dasharray: 1 60;
+		  stroke-dashoffset: -30;
+		  stroke-width: 6;
+		}
+		.opened .line3 {
+		  stroke-dasharray: 90 207;
+		  stroke-dashoffset: -134;
+		  stroke-width: 6;
+		}
         /*@media (prefers-color-scheme: dark) {
         	body {
         		background-color: #303545!important;
@@ -238,13 +355,27 @@
 	      }
 	      main {
 	        left: 0;
+	        width: 100%;
+	      }
+	      .card {
+	      	width: 100%;
 	      }
 	    }
 	</style>
 </head>
 <body>
 	<header>
-		<h1><span class="menu-toggle" onclick="$('aside').fadeToggle().toggleClass('open'); ">&#x2630; </span>Flashcard Maker</h1>
+		<h1>
+			<!--<span class="menu-toggle" onclick="$('aside').fadeToggle().toggleClass('open'); ">&#x2630; </span>-->
+			<button class="menu" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened'));$('aside').fadeToggle().toggleClass('open');" aria-label="Main Menu">
+		    	<svg width="50" height="50" viewBox="0 0 100 100">
+		    		<path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+		    		<path class="line line2" d="M 20,50 H 80" />
+		    		<path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+		    	</svg>
+		    </button>
+			Flashcard Maker
+		</h1>
 	</header>
 	<aside>
 		<ul>
@@ -269,16 +400,28 @@
 		</div>
 		<div class="page" id="page-new-flashcard">
 			<h1>New Flashcard Set</h1>
+			<div id="card-container">
+				<div class="card-wrapper">
+					<div class="card">
+						<h2  placeholder="Card Title" contenteditable="true">Card Title</h2>
+						<h3>Front Side</h3>
+						<div class="card-content" contenteditable="true"></div>
+						<h3>Back Side</h3>
+						<div class="card-content" contenteditable="true"></div>
+					</div>
+				</div>
+			</div>
+			<button id="addCard">Add Card</button>
+			<button id="saveSet">Save</button>
 		</div>
 		<div class="page" id="page-new-list">
 			<h1>New List</h1>
 		</div>
 		<div class="page" id="page-preferences">
 			<h1>Preferences</h1>
-			<h2>Theme</h2>
+			<h3>Theme</h3>
 			<button onclick="$('#color-picker-wrapper').fadeIn();">Change Theme</button>
-			<h2>Theme Mode</h2>
-			<label for="darkMode"><b>Dark Mode</b></label>
+			<label for="darkMode"><h3>Dark Mode</h3></label>
 			<div class="onoffswitch">
 	        	<input type="checkbox"class="onoffswitch-checkbox" id="darkMode" tabindex="0">
 	        	<label class="onoffswitch-label" for="darkMode"></label>
@@ -319,11 +462,13 @@
 		</div>
 	</div>
 
+	<div id="snackbar"></div>
+
 	<script>
 		var page = location.href.split('#')[1].replace(/\/|:|#|%|\.|\[|\]/g, '');
 		console.log(page);
 		document.getElementById("btn-"+page).classList.add('active');
-		document.getElementById("page-"+page).style.display="block";
+		$("#page-"+page).fadeIn();
 
 		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 		    if(localStorage.getItem("dark-mode") == 'on') {
@@ -373,6 +518,7 @@
 			location.href = this.href;
 			location.reload();
 		});
+
 		$('li').click(function(e) {
 			e.preventDefault();
 			this.querySelector('a').click();
@@ -380,6 +526,17 @@
 
 		$('.picker-color').click(function(e) {
 			setPreferences($(this).css('background-color'));
+		});
+
+		$(".card h2").keypress(function(e){ return e.which != 13; });
+
+		$('#addCard').click(function(e) {
+			$('#card-container').append('<div id="card-container"> <div class="card-wrapper"> <div class="card"> <h2  placeholder="Card Title" contenteditable="true">Card Title</h2> <h3>Front Side</h3> <div class="card-content" contenteditable="true"></div> <h3>Back Side</h3> <div class="card-content" contenteditable="true"></div> </div> </div> </div>');
+			$(".card h2").keypress(function(e){ return e.which != 13; });
+		});
+
+		$('#saveSet').click(function(e) {
+			snackbarMessgae('Error: Unable save set');
 		});
 
 		function setPreferences(newColor) {
@@ -395,6 +552,16 @@
 				$('header').css('color', '#fff');
 			}
 		}
+
+		function snackbarMessgae(msg) {
+            var snackbar = document.getElementById("snackbar");
+            snackbar.innerText=msg;
+            snackbar.className = "show";
+            setTimeout(function(){ 
+                snackbar.className = snackbar.className.replace("show", "");
+                snackbar.innerText="";
+            }, 3000);
+        }
 
 		function colorMode(color) {
 		    // Variables for red, green, blue values
