@@ -587,7 +587,7 @@
 		});
 		addEventListeners(document.getElementById('full-bg'), ['change', 'click'], function(e) {
 			if(document.getElementById('full-bg').checked == true) {
-				document.getElementById('preview').style.backgroundSize="contain";
+				document.getElementById('preview').style.backgroundSize="cover";
 				document.getElementById('preview').style.backgroundRepeat="no-repeat";
 				patternFullsize = true;
 			} else {
