@@ -142,7 +142,7 @@
 			document.getElementById('body').classList.add(pattern);
 		} else {
 			document.getElementById('body').style.backgroundImage='url("'+pattern+'")';
-			patternFullsize ? document.getElementById('body').style.backgroundSize="contain" : document.getElementById('body').style.backgroundSize="auto";
+			patternFullsize ? document.getElementById('body').style.backgroundSize="cover" : document.getElementById('body').style.backgroundSize="auto";
 			patternFullsize ? document.getElementById('body').style.backgroundRepeat="no-repeat" : document.getElementById('body').style.backgroundRepeat="repeat";
 		}
 		function addZero(i) {
