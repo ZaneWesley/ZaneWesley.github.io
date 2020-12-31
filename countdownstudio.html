@@ -549,6 +549,7 @@
 			while (document.getElementById('preview').classList.length > 0) {
 			   document.getElementById('preview').classList.remove(document.getElementById('preview').classList.item(0));
 			}
+			//
 		});
 		addEventListeners(document.getElementById('retro-bg'), ['click', 'change'], function(e) {
 			document.getElementById('solid-bg-settings').style.display='none';
@@ -573,8 +574,10 @@
 			}
 			if(document.getElementById('pattern-select').value !== 'url') {
 				document.getElementById('pattern-url').parentNode.style.display='none';
+				document.getElementById('preview').style.backgroundImage='';
 				document.getElementById('preview').classList.add(document.getElementById('pattern-select').value);
 				pattern = document.getElementById('pattern-select').value;
+				document.getElementById('preview').style.backgroundSize="40px 40px";
 			} else {
 				document.getElementById('pattern-url').parentNode.style.display='block';
 				document.getElementById('preview').style.backgroundImage = 'url("'+document.getElementById('pattern-url').value+'")';
