@@ -2,643 +2,295 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="theme-color" content="transparent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<link rel="apple-touch-icon" href="images/home-icon.svg">
+	<link rel="shortcut icon" href="images/home-icon.svg">
+	<link rel="manifest" href="manifest.json">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="CSS/spectrum.css">
-	<script src="JS/spectrum.js"></script>
-	<!-- https://bgrins.github.io/spectrum/#why-devtools -->
-	<title>Countdown Studio</title>
-
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!--<script src="/ui/christmaslights.js"></script>-->
+    <!--https://pixelcog.github.io/parallax.js/-->
+	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<title>Zane's Apps</title>
 	<style>
 		* {
 			box-sizing: border-box;
 			margin: 0;
-			padding: 0;
-		}
-		html, body {
-			width: 100%;
-			height: 100%;
 			overflow-x: hidden;
 		}
 		body {
-			background-color: #616161;
-			background-image: linear-gradient(to bottom, #616161, #000000);
-			color: #ffffff;
-			font-family: 'Open Sans', sans-serif;
+			background-color: #fff;
+			font-family: Calibri, sans-serif;
+			padding-top: 80%;
+			padding-left: 1em;
 		}
-		.header-wave {
-			clip-path: polygon(100% 0,0 0,0 77.5%,1% 77.4%,2% 77.1%,3% 76.6%,4% 75.9%,5% 75.05%,6% 74.05%,7% 72.95%,8% 71.75%,9% 70.55%,10% 69.3%,11% 68.05%,12% 66.9%,13% 65.8%,14% 64.8%,15% 64%,16% 63.35%,17% 62.85%,18% 62.6%,19% 62.5%,20% 62.65%,21% 63%,22% 63.5%,23% 64.2%,24% 65.1%,25% 66.1%,26% 67.2%,27% 68.4%,28% 69.65%,29% 70.9%,30% 72.15%,31% 73.3%,32% 74.35%,33% 75.3%,34% 76.1%,35% 76.75%,36% 77.2%,37% 77.45%,38% 77.5%,39% 77.3%,40% 76.95%,41% 76.4%,42% 75.65%,43% 74.75%,44% 73.75%,45% 72.6%,46% 71.4%,47% 70.15%,48% 68.9%,49% 67.7%,50% 66.55%,51% 65.5%,52% 64.55%,53% 63.75%,54% 63.15%,55% 62.75%,56% 62.55%,57% 62.5%,58% 62.7%,59% 63.1%,60% 63.7%,61% 64.45%,62% 65.4%,63% 66.45%,64% 67.6%,65% 68.8%,66% 70.05%,67% 71.3%,68% 72.5%,69% 73.6%,70% 74.65%,71% 75.55%,72% 76.35%,73% 76.9%,74% 77.3%,75% 77.5%,76% 77.45%,77% 77.25%,78% 76.8%,79% 76.2%,80% 75.4%,81% 74.45%,82% 73.4%,83% 72.25%,84% 71.05%,85% 69.8%,86% 68.55%,87% 67.35%,88% 66.2%,89% 65.2%,90% 64.3%,91% 63.55%,92% 63%,93% 62.65%,94% 62.5%,95% 62.55%,96% 62.8%,97% 63.3%,98% 63.9%,99% 64.75%,100% 65.7%);
-		}
-		/*blue: #2196F3*/
 		header {
-			background-color: #4daaf6;
-			padding: 1em;
-		}
-		main {
-			padding: 2em;
-			text-align: justify;
-		}
-		.section {
-			padding: 1em;
-			border: 1px solid #2196F3;
-			width: 49%;
-		}
-		main:after {
-			content: "";
-			display: inline-block;
+			background-image: url('images/header-bg.svg');
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			position: absolute;
+			top:0;
+			left:0;
+			min-height: 100%;
+			height: auto;
 			width: 100%;
-	    }
-	    h2 {
-	    	padding-bottom: 1em;
-	    }
-	    input[type="text"] {
-	    	padding: 8px;
-	    	border: 1px solid #fff;
-	    	background-color: transparent;
-	    	color: #fff;
-	    	outline: none;
-	    	display: block;
-	    }
-	    /*input[type="radio"] {
-	    	width: 24px;
-			height: 24px;
-			position: relative;
-			top: 6px;
-			background-color: transparent;
-	    }*/
-	    [type="radio"]:checked,
-		[type="radio"]:not(:checked) {
-		    position: absolute;
-		    left: -9999px;
 		}
-		[type="radio"]:checked + label,
-		[type="radio"]:not(:checked) + label
-		{
-		    position: relative;
-		    padding-left: 28px;
-		    cursor: pointer;
-		    line-height: 20px;
-		    display: inline-block;
-		    color: #fff;
-		}
-		[type="radio"]:checked + label:before,
-		[type="radio"]:not(:checked) + label:before {
-		    content: '';
-		    position: absolute;
-		    left: 0;
-		    top: 0;
-		    width: 18px;
-		    height: 18px;
-		    border: 1px solid #ddd;
-		    border-radius: 100%;
-		    background: #fff;
-		}
-		[type="radio"]:checked + label:after,
-		[type="radio"]:not(:checked) + label:after {
-		    content: '';
-		    width: 12px;
-		    height: 12px;
-		    background: #2196F3;
-		    position: absolute;
-		    top: 4px;
-		    left: 4px;
-		    border-radius: 100%;
-		    -webkit-transition: all 0.2s ease;
-		    transition: all 0.2s ease;
-		}
-		[type="radio"]:not(:checked) + label:after {
-		    opacity: 0;
-		    -webkit-transform: scale(0);
-		    transform: scale(0);
-		}
-		[type="radio"]:checked + label:after {
-		    opacity: 1;
-		    -webkit-transform: scale(1);
-		    transform: scale(1);
-		}
-		/* The container */
-		.container {
-		  display: block;
-		  position: relative;
-		  padding-left: 35px;
-		  margin-bottom: 12px;
-		  cursor: pointer;
-		  font-size: 22px;
-		  -webkit-user-select: none;
-		  -moz-user-select: none;
-		  -ms-user-select: none;
-		  user-select: none;
-		}
-
-		/* Hide the browser's default checkbox */
-		.container input {
-		  position: absolute;
-		  opacity: 0;
-		  cursor: pointer;
-		  height: 0;
-		  width: 0;
-		}
-
-		/* Create a custom checkbox */
-		.checkmark {
-		  position: absolute;
-		  top: 0;
-		  left: 0;
-		  height: 25px;
-		  width: 25px;
-		  background-color: #eee;
-		}
-
-		/* On mouse-over, add a grey background color */
-		.container:hover input ~ .checkmark {
-		  background-color: #ccc;
-		}
-
-		/* When the checkbox is checked, add a blue background */
-		.container input:checked ~ .checkmark {
-		  background-color: #2196F3;
-		}
-
-		/* Create the checkmark/indicator (hidden when not checked) */
-		.checkmark:after {
-		  content: "";
-		  position: absolute;
-		  display: none;
-		}
-
-		/* Show the checkmark when checked */
-		.container input:checked ~ .checkmark:after {
-		  display: block;
-		}
-
-		/* Style the checkmark/indicator */
-		.container .checkmark:after {
-		  left: 9px;
-		  top: 5px;
-		  width: 5px;
-		  height: 10px;
-		  border: solid white;
-		  border-width: 0 3px 3px 0;
-		  -webkit-transform: rotate(45deg);
-		  -ms-transform: rotate(45deg);
-		  transform: rotate(45deg);
-		}
-		select {
-			display: block;
-			font-size: 16px;
-			font-family: sans-serif;
-			font-weight: normal;
-			color: #fff;
-			line-height: 1.3;
+		header h1 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 6em;
+			color: #f2f2f2;
+			text-align: center;
+			background-color: #3f3d56;
 			padding: 8px;
-			width: 100%;
-			max-width: 100%;
-			box-sizing: border-box;
-			margin: 0;
-			border: 1px solid #fff;
-			box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
-			border-radius: 0px;
-			-moz-appearance: none;
-			-webkit-appearance: none;
-			appearance: none;
-			background-color: transparent;
-			background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')/*,
-			  linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%)*/;
-			background-repeat: no-repeat, repeat;
-			background-position: right .7em top 50%, 0 0;
-			background-size: .65em auto, 100%;
+			box-shadow: 7px 7px 12px #292838;
+			width: 75%;
 		}
-		select::-ms-expand {
+		.content {
+			position: absolute;
+			min-height: 100%;
+			height: auto;
+			width: 100%;
+			padding: 16px;
+		}
+		.split {
+			position: relative;
+			width: 50%;
+			min-height: 100%;
+			height: auto;
+		}
+		.left {
+			float: left;
+		}
+		.right {
+			float: right;
+		}
+		.bg-image {
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+		img {
+			width: 100%;
+		}
+		ul, li {
+			width: 100%;
+		}
+		ul {
+			list-style-type: none;
+			padding-left: 1em;
+		}
+		li {
+			font-size: 20px;
+			cursor: pointer;
+			padding: 5px;
+		}
+		li:hover {
+			border-bottom: 1px solid #00b0ff;
+			animation: headShake;
+			animation-duration: 0.7s;
+		}
+		.disabled:after {
+			content: '(Temporarily Unavailable)';
+		}
+		#dev, #comp, #more {
+			border-bottom: 1px solid #ccc;
+		}
+		#more img {
+			height: 25em;
+		}
+		.mobile-hidden {
+			display: inherit;
+		}
+		.mobile-visible {
 			display: none;
 		}
-		select:hover {
-			border-color: #888;
+		@media (max-width:755px) {
+			header {
+				background-position: right center;
+				background-attachment: scroll;
+			}
+			header h1 {
+				font-size: 3em;
+			}
+			.split {
+				width: 100%;
+			}
+			.left {
+				float: none;
+			}
+			.right {
+				float: none;
+			}
+			#more img {
+				height: 15em;
+			}
+			.mobile-hidden {
+				display: none;
+			}
+			.mobile-visible {
+				display: block;
+			}
 		}
-		select:focus {
-			border-color: #fff;
-			/*box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
-			box-shadow: 0 0 0 3px -moz-mac-focusring;*/
-			color: #fff;
-			outline: none;
-		}
-		select option {
-			font-weight: normal;
-			color: #000;
-		}
-		button {
-			background-color: transparent;
-			border: 1px solid #fff;
-			padding: 8px;
-			color: #fff;
-			outline: none;
-			cursor: pointer;
-		}
-		button:hover {
-			border-color: #aaa;
-			color: #aaa;
-		}
-	    #preview {
-	    	position: fixed;
-	    	top: 6.7em;
-	    	width: calc(49% - 2em);
-	    	height: calc(100% - 6.7em - 2em);
-	    	right: 2em;
-	    	border: 1px solid #2196f3;
-	    }
-	    #time-wrapper {
-	    	text-align: center;
-	    	position: absolute;
-	    	top: 50%;
-	    	transform: translateY(-50%);
-	    	font-size: 5em;
-	    	width: 100%;
-	    }
-	    .error {
-	    	animation: borderPulse 0.5s;
-	    	animation-fill-mode: forwards;
-	    }
-	    .errorChanged {
-	    	animation: textPulse 0.5s;
-	    	animation-fill-mode: forwards;
-	    }
-	    @keyframes borderPulse {
-	    	0% {
-	    		border-color: #fff;
-	    	}
-	    	50% {
-	    		border-color: #f50057;
-	    	}
-	    	100% {
-	    		border-color: #fff;
-	    	}
-	    }
-	    @keyframes textPulse {
-	    	0% {
-	    		color: #fff;
-	    	}
-	    	50% {
-	    		color: #f50057;
-	    	}
-	    	100% {
-	    		color: #fff;
-	    	}
-	    }
-	    .theme-settings {
-	    	display: none;
-	    }
-	    .diamond {
-	    	background-image: linear-gradient(135deg, #eceddc 25%, transparent 25%),
-				linear-gradient(225deg, #eceddc 25%, transparent 25%),
-				linear-gradient(315deg, #eceddc 25%, transparent 25%),
-				linear-gradient(45deg, #eceddc 25%, transparent 25%); 
-			background-size: 40px 40px;
-			background-color: #6c6c6c;
-	    }
-	    .zigzag {
-	    	background-image: linear-gradient(135deg, #eceddc 25%, transparent 25%) 50px 0,
-				linear-gradient(225deg, #eceddc 25%, transparent 25%) 50px 0,
-				linear-gradient(315deg, #eceddc 25%, transparent 25%),
-				linear-gradient(45deg, #eceddc 25%, transparent 25%);
-			background-size: 40px 40px;
-			background-color: #6c6c6c;
-	    }
-	    .checkerboard {
-	    	background-color: #6c6c6c;/*#e66464*/
-			background-image: linear-gradient(to right, transparent 50%, rgba(255, 255, 255, 0.5) 50%),
-				linear-gradient(to bottom, transparent 50%, rgba(255, 255, 255, 0.5) 50%);
-				background-size: 40px 40px;
-	    }
-	    .stripes {
-	    	background-color: #00ccd6;
-			background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.5) 50%);
-			background-size: 40px;
-	    }
-	    .animation-bounce {
-	    	animation: bounce 1s infinite;
-	    }
-	    .animation-flash {
-	    	animation: flash 1s infinite;
-	    }
-	    .animation-pulse {
-	    	animation: pulse 1s infinite;
-	    }
-	    .animation-rubberBand {
-	    	animation: rubberBand 1s infinite;
-	    }
-	    .animation-shakeX {
-	    	animation: shakeX 1s infinite;
-	    }
-	    .animation-shakeY {
-	    	animation: shakeY 1s infinite;
-	    }
-	    .animation-headShake {
-	    	animation: headShake 1s infinite;
-	    }
-	    .animation-jello {
-	    	animation: jello 1s infinite;
-	    }
-	    .animation-heartBeat {
-	    	animation: heartBeat 1s infinite;
-	    }
-	    .retro {
-	    	background-image: conic-gradient(#6c6 0deg, #ddd 20deg);
-	    }
-	    .mobile-visible {
-	    	display: none;
-	    }
-	    @media(max-width: 775px) {
-	    	.section {
-	    		width: 100%;
-	    	}
-	    	#preview {
-		    	position: relative;
-		    	width: 100%;
-		    	top: auto;
-		    	left: 50%;
-		    	transform: translateX(-50%);
-		    	border: 1px solid #2196f3;
-		    }
-		    #time-wrapper {
-		    	text-align: center;
-		    	position: static;
-		    	top: auto;
-		    	left: auto;
-		    	transform: translate(0%);
-		    	font-size: 5em;
-		    }
-	    	.mobile-visible {
-	    		display: block;
-	    	}
-	    }
 	</style>
 </head>
 <body>
 	<header>
-		<h1>Countdown Studio</h1>
+		<div id="lights-container"></div>
+		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
+		<!--<button id="install">Install</button>-->
 	</header>
-
-	<main>
-		<div class="section inline">
-			<h2>Durration</h2>
-			<label for="h">Hours</label>
-			<input id="h" pattern="[0-9]*" inputmode="numeric" type="text">
+	<div class="content">
+		<div id="comp">
+			<div class="split left">
+				<img src="images/complete-bg.svg" class="mobile-visible" alt="Complete Image">
+				<h1>Completed</h1>
+				<ul>
+					<li id="cs" data-url="/countdownstudio">
+						Countdown Studio
+					</li>
+					<li id="nyc2021" data-url="/new-years-countdown-2021">
+						2021 New Year's Countdown
+					</li>
+					<li id="stack" data-url="/stack">
+						Stack
+					</li>
+					<li id="cc2020" data-url="/christmas-countdown-2020">
+						Christmas Countdown 2020
+					</li>
+					<li id="chromedino" data-url="/chromedino">
+						Chrome Dino Runner
+					</li>
+					<li id="mmc" data-url="/mmc">
+						Molar Mass Calculator
+					</li>
+					<li id="colorsplosion" data-url="/colorsplosion">
+						Colorsplosion
+					</li>
+					<li id="numberguessing" data-url="/numberguessing">
+						Guess that Number
+					</li>
+					<li id="2048" data-url="/2048">
+						2048
+					</li>
+					<li id="tictactoe" data-url="/tic-tac-toe">
+						Tic Tac Toe
+					</li>
+					<li id="webchat" data-url="/webchat/new">
+						Webchat Video Conferencing
+					</li>
+					<li id="app" data-url="/app">
+						My App
+					</li>
+					<li id="colorswirl" data-url="/colorswirl/colorswirl">
+						Color Swirl - Updated
+					</li>
+					<li id="mrlangbucks" data-url="https://mrlangbucks.github.io">
+						Mr. Lang Bucks
+					</li>
+					<li id="whiteboard" data-url="/whiteboard">
+						Whiteboard
+					</li>
+				</ul>
+			</div>
+			<div class="split right mobile-hidden">
+				<img src="images/complete-bg.svg" alt="Complete Image">
+			</div>
+		</div>
+		<div id="dev">
+			<div class="split left">
+				<img src="images/dev-bg.svg" alt="Dev Image">
+			</div>
+			<div class="split right">
+				<h1>Under Developement</h1>
+				<ul>
+					<li id="corey-chat" data-url="/imessage">
+						Corey - The Texting Virtual Assistant
+					</li>
+					<li id="peace" data-url="/peace">
+						Peace
+					</li>
+					<li id="corey" data-url="/corey?ref=home">
+						Corey - Virtual Assistant
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="more">
+			<div class="split left">
+				<img src="images/more-bg.svg" alt="More Image">
+			</div>
+			<div class="split right">
+				<h1>More From Zane</h1>
+				<ul>
+					<li id="about" data-url="/about">
+						About Me
+					</li>
+					<li id="archive" data-url="/archive">
+						App Archive
+					</li>
+					<li id="codepen" data-url="https://codepen.io/zanewesley">
+						My CodePen
+					</li>
+					<!--<li id="bulletinboard" data-url="/bulletinboard">
+						News and Updates - Zane's Bulletin Board
+					</li>
+					<li id="account" data-url="/account">
+						Your Account
+					</li>-->
+					<li id="contact" class="disabled" data-url="/contact">
+						Contact Me!
+					</li>
+				</ul>
+			</div>
 			<br>
-			<label for="m">Minutes</label>
-			<input id="m" pattern="[0-9]*" inputmode="numeric" type="text">
+		</div>
+		<footer>
 			<br>
-			<label for="s">Seconds</label>
-			<input id="s" pattern="[0-9]*" inputmode="numeric" type="text">
-		</div>
-		<br>
-		<div class="section inline">
-			<h2>Background</h2>
-			<input type="radio" id="solid-bg" name="bg-opt" checked>
-			<label for="solid-bg">Solid</label>
-
-			<input type="radio" id="pattern-bg" name="bg-opt">
-			<label for="pattern-bg">Pattern</label>
-
-			<input style="display: none;" type="radio" id="retro-bg" name="bg-opt">
-			<label style="display: none;" for="retro-bg">Retro</label>
-		</div>
-		<br>
-		<div class="section inline">
-			<h2>Theme Settings</h2>
-			<div id="solid-bg-settings" class="theme-settings">
-				<!--<label for="backgroundColor">Background Color</label>
-				<input id="backgroundColor">-->
-			</div>
-			<div id="pattern-bg-settings" class="theme-settings">
-				Pattern
-				<select id="pattern-select">
-					<option value="">No Pattern</option>
-					<option value="diamond">Diamond</option>
-					<option value="zigzag">Zig-zag</option>
-					<option value="checkerboard">Checkerboard</option>
-					<option value="stripes">Sttripes</option>
-					<option value="url">Custom Pattern Image</option>
-				</select>
-				<div style="display: none;">
-					<label for="pattern-url">Custom Pattern URL</label>
-					<input id="pattern-url" type="text">
-					<label class="container">
-						Full Size Background
-						<input id="full-bg" type="checkbox">
-						<span class="checkmark"></span>
-					</label>
-					<br>
-				</div>
-			</div>
-			<div id="retro-bg-settings" class="theme-settings">
-				No Custom Styles
-			</div>
-			<div id="animated-bg-settings">
-				<label for="backgroundColor">Background Color</label>
-				<input id="backgroundColor">
-				<br>
-				<label for="textColor">Text Color</label>
-				<input id="textColor">
-				<br>
-				<label for="animated-select">Text Animation</label>
-				<select id="animated-select">
-					<option value="none">No Animation</option>
-					<option value="animation-bounce">Bounce</option>
-					<option value="animation-flash">Flash</option>
-					<option value="animation-pulse">Pulse</option>
-					<option value="animation-rubberBand">Rubber Band</option>
-					<option value="animation-shakeX">Shake Horizontally</option>
-					<option value="animation-shakeY">Shake Verdically</option>
-					<option value="animation-headShake">Shake Both</option>
-					<option value="animation-jello">Jello</option>
-					<option value="animation-heartBeat">Scale</option>
-				</select>
-			</div>
-		</div>
-		<br>
-		<div class="section inline">
-			<h2>Create</h2>
-			<button onclick="createCountdown()">Create Countdown</button>
-		</div>
-		<br class="mobile-visible">
-		<div id="preview" class="solid">
-			<div id="time-wrapper">
-				<span id="ht">00</span>:<span id="mt">00</span>:<span id="st">00</span>
-			</div>
-		</div>
-	</main>
+			Copyright &copy; Zane Wesley 2020. All rights reserved.
+		</footer>
+	</div>
 
 	<script>
-		var h='00', m='00', s='00', backgroundColor='#3a3a3a', textColor='#fff', animation='none', pattern='none', patternFullsize=false;
-		addEventListeners(document.getElementById('h'), ['change', 'keyup'], function(e) {
-			if(document.getElementById('h').value < 24 && document.getElementById('h').value.length <= 2) {
-				if(document.getElementById('h').value != "" && document.getElementById('h').value != null) {
-					document.getElementById('ht').innerText = addZero(document.getElementById('h').value);
-					h = addZero(document.getElementById('h').value);
-				} else {
-					document.getElementById('ht').innerText = "00";
-					h = '00';
-				}
-			} else {
-				document.getElementById('h').classList.add('error');
-				document.getElementById('ht').classList.add('errorChanged');
-				document.getElementById('h').value = 24;
-				document.getElementById('ht').innerText = 24;
-				setTimeout(function() {
-					document.getElementById('h').classList.remove('error');
-					document.getElementById('ht').classList.remove('errorChanged');
-				}, 1000);
-				
-			}
-		});
-		addEventListeners(document.getElementById('m'), ['change', 'keyup'], function(e) {
-			if(document.getElementById('m').value < 60 && document.getElementById('m').value.length <= 2) {
-				if(document.getElementById('m').value != "" && document.getElementById('m').value != null) {
-					document.getElementById('mt').innerText = addZero(document.getElementById('m').value);
-					m = addZero(document.getElementById('m').value);
-				} else {
-					document.getElementById('mt').innerText = "00";
-					m = '00';
-				}
-			} else {
-				document.getElementById('m').classList.add('error');
-				document.getElementById('mt').classList.add('errorChanged');
-				document.getElementById('m').value = 59;
-				document.getElementById('mt').innerText = 59;
-				setTimeout(function() {
-					document.getElementById('m').classList.remove('error');
-					document.getElementById('mt').classList.remove('errorChanged');
-				}, 1000);
-			}
-		});
-		addEventListeners(document.getElementById('s'), ['change', 'keyup'], function(e) {
-			if(document.getElementById('s').value < 60 && document.getElementById('s').value.length <= 2) {
-				if(document.getElementById('s').value != "" && document.getElementById('s').value != null) {
-					document.getElementById('st').innerText = addZero(document.getElementById('s').value);
-					s = addZero(document.getElementById('s').value);
-				} else {
-					document.getElementById('st').innerText = "00";
-					s = '00';
-				}
-			} else {
-				document.getElementById('s').classList.add('error');
-				document.getElementById('st').classList.add('errorChanged');
-				document.getElementById('s').value = 59;
-				document.getElementById('st').innerText = 59;
-				setTimeout(function() {
-					document.getElementById('s').classList.remove('error');
-					document.getElementById('st').classList.remove('errorChanged');
-				}, 1000);
-			}
-		});
-		document.getElementById('solid-bg-settings').style.display='block';
-		addEventListeners(document.getElementById('solid-bg'), ['click', 'change'], function(e) {
-			document.getElementById('solid-bg-settings').style.display='block';
-			document.getElementById('pattern-bg-settings').style.display='none';
-			document.getElementById('retro-bg-settings').style.display='none';
-			while (document.getElementById('preview').classList.length > 0) {
-			   document.getElementById('preview').classList.remove(document.getElementById('preview').classList.item(0));
-			}
-		});
-		addEventListeners(document.getElementById('pattern-bg'), ['click', 'change'], function(e) {
-			document.getElementById('solid-bg-settings').style.display='none';
-			document.getElementById('pattern-bg-settings').style.display='block';
-			document.getElementById('retro-bg-settings').style.display='none';
-			while (document.getElementById('preview').classList.length > 0) {
-			   document.getElementById('preview').classList.remove(document.getElementById('preview').classList.item(0));
-			}
-			//
-		});
-		addEventListeners(document.getElementById('retro-bg'), ['click', 'change'], function(e) {
-			document.getElementById('solid-bg-settings').style.display='none';
-			document.getElementById('pattern-bg-settings').style.display='none';
-			document.getElementById('retro-bg-settings').style.display='block';
-			pattern = 'retro';
-			while (document.getElementById('preview').classList.length > 0) {
-			   document.getElementById('preview').classList.remove(document.getElementById('preview').classList.item(0));
-			}
-			document.getElementById('preview').classList.add('retro');
-		});
-		addEventListeners(document.getElementById('animated-select'), ['click', 'change'], function(e) {
-			while (document.getElementById('time-wrapper').classList.length > 0) {
-			   document.getElementById('time-wrapper').classList.remove(document.getElementById('time-wrapper').classList.item(0));
-			}
-			document.getElementById('time-wrapper').classList.add(document.getElementById('animated-select').value);
-			animation = document.getElementById('animated-select').value;
-		});
-		addEventListeners(document.getElementById('pattern-select'), ['click', 'change'], function(e) {
-			while (document.getElementById('preview').classList.length > 0) {
-			   document.getElementById('preview').classList.remove(document.getElementById('preview').classList.item(0));
-			}
-			if(document.getElementById('pattern-select').value !== 'url') {
-				document.getElementById('pattern-url').parentNode.style.display='none';
-				document.getElementById('preview').style.backgroundImage='';
-				document.getElementById('preview').classList.add(document.getElementById('pattern-select').value);
-				pattern = document.getElementById('pattern-select').value;
-				document.getElementById('preview').style.backgroundSize="40px 40px";
-			} else {
-				document.getElementById('pattern-url').parentNode.style.display='block';
-				document.getElementById('preview').style.backgroundImage = 'url("'+document.getElementById('pattern-url').value+'")';
-				pattern = document.getElementById('pattern-url').value;
-			}
-		});
-		addEventListeners(document.getElementById('pattern-url'), ['change', 'keyup'], function(e) {
-			document.getElementById('preview').style.backgroundImage = 'url("'+document.getElementById('pattern-url').value+'")';
-			pattern = document.getElementById('pattern-url').value;
-		});
-		addEventListeners(document.getElementById('full-bg'), ['change', 'click'], function(e) {
-			if(document.getElementById('full-bg').checked == true) {
-				document.getElementById('preview').style.backgroundSize="cover";
-				document.getElementById('preview').style.backgroundRepeat="no-repeat";
-				patternFullsize = true;
-			} else {
-				document.getElementById('preview').style.backgroundSize="auto";
-				document.getElementById('preview').style.backgroundRepeat="repeat";
-				patternFullsize = false;
-			}
-		});
-		$("#backgroundColor").spectrum({
-		    color: "transparent",
-		    change: function(color) {
-		    	document.getElementById('preview').style.backgroundColor = color.toHexString();
-		    	backgroundColor = color.toHexString();
-		    },
-		    move: function(color) {
-		    	document.getElementById('preview').style.backgroundColor = color.toHexString();
-		    	backgroundColor = color.toHexString();
-		    }
-		});
-		$("#textColor").spectrum({
-		    color: "#fff",
-		    change: function(color) {
-		    	document.getElementById('preview').style.color = color.toHexString();
-		    	textColor = color.toHexString();
-		    },
-		    move: function(color) {
-		    	document.getElementById('preview').style.color = color.toHexString();
-		    	textColor = color.toHexString();
-		    }
-		});
+		if ('serviceWorker' in navigator) {
+		    navigator.serviceWorker.register('/serviceworker.js')
+		        .then(serviceWorker => {
+		            console.log('Service Worker registered');
+		            window.serviceWorker = serviceWorker
+		        });
+		}
 
-		function createCountdown() {
-			var baseUrl = window.location.protocol + "//" + window.location.host + "/" + 'countdown';
-			var countdownUrl = baseUrl + '?h='+h+'&m='+m+'&s='+s+'&backgroundColor='+backgroundColor.replace('#', '')+'&textColor='+textColor.replace('#', '')+'&animation='+animation.replace('animation-', '')+'&pattern='+pattern+'&patternFullsize='+patternFullsize;
-			window.open(countdownUrl);
+		window.addEventListener('beforeinstallprompt', e => {
+		    if (window.matchMedia('(display-mode: standalone)').matches) {
+		        // don't display install banner when installed
+		        return e.preventDefault();
+		    } else {
+		        const btn = document.querySelector('#install')
+		        btn.hidden = false;
+		        btn.onclick = _ => e.prompt();
+		        return e.preventDefault();
+		    }
+		});
+		function ini() {
+			$('.content').css('top', $('header').css('height'));
+			christmatize.stringLights('#lights-container');
 		}
-		function addZero(i) {
-		  if (i < 10) {
-		    i = "0" + i;
-		  }
-		  return i;
-		}
-		function addEventListeners(selector, eventArray, handler) {
-			for(var i = 0; i < eventArray.length; i++) {
-				selector.addEventListener(eventArray[i], handler);
+		$('li').click(function(e) {
+			if(!$(this).hasClass('disabled')) {
+				window.location=$(this).attr('data-url');
 			}
-		}
+		});
+		window.addEventListener('resize', ini);
+		ini();
 	</script>
-
 </body>
 </html>
