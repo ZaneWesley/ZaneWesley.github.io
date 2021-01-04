@@ -18,6 +18,7 @@
     <!--https://pixelcog.github.io/parallax.js/-->
 	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<title>Zane's Apps</title>
 	<style>
 		* {
@@ -110,6 +111,29 @@
 		#more img {
 			height: 25em;
 		}
+		#standalone-frame {
+			position: absolute;
+			overflow-x: hidden;
+			overflow-y: auto;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			max-width: 100%;
+			max-height: 100%;
+			border: none;
+		}
+		#standalone-home {
+			position: absolute;
+			z-index: 3;
+			left: 1em;
+			bottom: 1em;
+			color: #ccc;
+			font-size: 2em;
+		}
+		.standalone-ui {
+			display: none;
+		}
 		.mobile-hidden {
 			display: inherit;
 		}
@@ -190,7 +214,7 @@
 					<li id="colorswirl" data-url="/colorswirl/colorswirl">
 						Color Swirl - Updated
 					</li>
-					<li id="mrlangbucks" data-url="https://mrlangbucks.github.io">
+					<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
 						Mr. Lang Bucks
 					</li>
 					<li id="whiteboard" data-url="/whiteboard">
@@ -234,7 +258,7 @@
 					<li id="archive" data-url="/archive">
 						App Archive
 					</li>
-					<li id="codepen" data-url="https://codepen.io/zanewesley">
+					<li id="codepen" class="newframe" data-url="https://codepen.io/zanewesley">
 						My CodePen
 					</li>
 					<!--<li id="bulletinboard" data-url="/bulletinboard">
@@ -252,9 +276,12 @@
 		</div>
 		<footer>
 			<br>
-			Copyright &copy; Zane Wesley 2021. All rights reserved.
+			Copyright &copy; Zane Wesley 2020. All rights reserved.
 		</footer>
 	</div>
+
+	<iframe id="standalone-frame" class="standalone-ui"></iframe>
+	<div id="standalone-home" class="standalone-ui fas fa-home"></div>
 
 	<script>
 		if ('serviceWorker' in navigator) {
@@ -278,12 +305,34 @@
 		});
 		function ini() {
 			$('.content').css('top', $('header').css('height'));
-			christmatize.stringLights('#lights-container');
+			//christmatize.stringLights('#lights-container');
 		}
-		$('li').click(function(e) {
-			if(!$(this).hasClass('disabled')) {
-				window.location=$(this).attr('data-url');
-			}
+		if (window.matchMedia('(display-mode: standalone)').matches) {
+			$('li').click(function(e) {
+				if(!$(this).hasClass('disabled') && !$(this).hasClass('newframe')) {
+					$('#standalone-frame').prop('src', $(this).attr('data-url'));
+					window.scrollTo(0,0);
+					$('.standalone-ui').toggle('slide', {direction: 'right'}, 500);
+					$('header, .content').fadeOut();
+					$('body').css({
+						overflow: 'hidden',
+						padding: 0
+					});
+				} else if($(this).hasClass('newframe')) {
+					open($(this).attr('data-url'));
+				}
+			});
+		} else {
+			$('li').click(function(e) {
+				if(!$(this).hasClass('disabled')) {
+					window.location=$(this).attr('data-url');
+				}
+			});
+		}
+		$('#standalone-home').click(function(e) {
+			$('#standalone-frame').toggle('slide', {direction: 'right'}, 500, function() {
+				location.reload();
+			});
 		});
 		window.addEventListener('resize', ini);
 		ini();
