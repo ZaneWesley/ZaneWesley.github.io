@@ -137,6 +137,8 @@
                 $("#canvas").drawPointer();
                 $("#canvas").drawMouse();
                 //$("#canvas").on("touchstart click", dot);
+                var canvas = document.getElementById("canvas");
+                cHistory.saveState(canvas);
             }
             // prototype to start drawing on touch using canvas moveTo and lineTo
             $.fn.drawTouch = function() {
@@ -250,11 +252,12 @@
                 }
             }
             function dot() {
+                var canvas = document.getElementById("canvas");
+                cHistory.saveState(canvas);
                 ctx.beginPath();
                 ctx.arc(cx, cy, 3, 0, 2 * Math.PI);
                 ctx.fill();
-                var canvas = document.getElementById("canvas");
-                cHistory.redo(canvas, ctx);
+                cHistory.saveState(canvas);
             }
             var PASTE_CLIPBOARD = new pasteFromClipboard("canvas", true);
             function pasteFromClipboard(canvas_id, autoresize) {
@@ -339,6 +342,11 @@
                 var canvas = document.getElementById("canvas");
                 cHistory.redo(canvas, ctx);
             });
+
+            function save() {
+                var canvas = document.getElementById("canvas");
+                cHistory.saveState(canvas);
+            }
 
             function undo() {
                 var canvas = document.getElementById("canvas");
@@ -524,7 +532,7 @@
             #moreMenu {
                 position: absolute;
                 top: 5.6em;
-                left: -18em;
+                left: -18.5em;
                 width: 17em;
                 background-color: #fff;
                 z-index: 3;
