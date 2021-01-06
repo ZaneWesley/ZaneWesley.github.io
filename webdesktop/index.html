@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
+	<title>Web Desktop</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		body {
+			font-family: 'Roboto', sans-serif;
+		}
+		.desktop {
+			background-image: url('wallpaper.jpg');
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			z-index: -1;
+		}
+		#taskbar {
+			white-space: nowrap;
+		    width: 100%;
+		    height: 40px;
+		    background-color: rgba(0,0,0,0.8);
+		    margin-top: -40px;
+		    position: absolute;
+		    bottom: 0;
+		    left: 0;
+		    z-index: 110;
+		    user-select: none;
+		}
+		#startmenu {
+		    width: 902px;
+		    height: 497px;
+		    z-index: 100;
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    background-color: rgba(31, 30, 29, 0.9);
+		    border-top: 1px solid #313030;
+		    border-right: 1px solid #313030;
+		    display: block;
+		    visibility: hidden;
+		    opacity: 0;
+		    transition: all 0.3s;
+		}
+		#startmenu.open {
+			visibility: visible;
+			opacity: 1;
+			bottom: 40px;
+		}
+		#starticon {
+			position: relative;
+			height: 100%;
+			width: 50px;
+			background-image: url('start.svg');
+			background-repeat: no-repeat;
+			background-size: 50% 50%;
+			background-position: center center;
+			display: inline-block;
+		}
+		#starticon:hover {
+			background-color: rgba(255,255,255,0.2);
+		}
+		#openApps {
+			position: relative;
+			height: 100%;
+			width: calc(100% - 140px);
+			display: inline-block;
+		}
+		#dt-wrapper {
+			position: relative;
+			height: 100%;
+			width: 70px;
+			display: inline-block;
+			color: #fff;
+			text-align: center;
+		}
+		.desktop-icon {
+			width: 105px;
+		    height: 110px;
+		    overflow: hidden;
+		    padding: 10px 10px 1px 10px;
+		    text-align: center;
+		    line-height: 17px;
+		    border: none;
+		    box-shadow: none;
+		    cursor: pointer;
+		}
+		.desktop-icon-inner {
+			padding: 5px 5px;
+    		text-shadow: 1px 1px #000;
+    		border: 1px solid transparent;
+		}
+		.desktop-icon-inner:hover {
+			background-color: rgba(255,255,255, 0.3);
+		    border: 1px solid #ccc;
+		}
+		.desktop-icon-inner.selected {
+			background-color: rgba(255,255,255, 0.3);
+		    border: 1px solid #ccc;
+		}
+		.desktop-icon-text {
+			font-size: 13px;
+		    height: auto;
+		    color: #FFFFFF;
+		}
+		.desktop-app {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 50%;
+			height: 75%;
+			transform: translate(-50%, -50%);
+			border: 1px solid #ccc;
+			background-color: #fff;
+			font-style: normal;
+			transition: all 0.3s;
+			visibility: hidden;
+		}
+		.desktop-app.fullscreen {
+			top: 0;
+			left: 0;
+			height: calc(100% - 40px);
+			width: 100%;
+			transform: none;
+			transition: all 0.1s;
+		}
+		.desktop-app.minimized {
+			transform: scale(0.5) translate(-5%, -5%);
+			opacity: 0;
+		}
+		.desktop-app.closed {
+			visibility: hidden;
+			opacity: 0;
+			transition: all 0.1s;
+		}
+		.desktop-app-top {
+			text-align: right;
+			user-select: none;
+		}
+		.desktop-app-top span {
+			padding: 0.5em;
+			cursor: pointer;
+		}
+		.desktop-app-top span:hover {
+			background-color: lightgrey;
+		}
+		.desktop-app-top span.exit:hover {
+			background-color: red;
+			color: #fff;
+		}
+		#cover {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			z-index: 200;
+		}
+	</style>
+</head>
+<body>
+	<div class="desktop"></div>
+	<div id="taskbar">
+		<div id="starticon"></div>
+		<div id="openApps"></div>
+		<div id="dt-wrapper">
+			<div id="time">0:00 _M</div>
+			<div id="date">0/0/0000</div>
+		</div>
+	</div>
+
+	<div id="startmenu"></div>
+
+	<div class="desktop-icon">
+		<div id="google-icon" class="desktop-icon-inner">
+			<img src="google.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
+			<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Google</div>
+		</div>
+	</div>
+
+	<div class="desktop-app" id="google-app">
+		<div class="desktop-app-top">
+			<span class="minmize">&mdash;</span>
+			<span class="restore fal fa-window-restore"></span>
+			<span class="exit fal fa-times"></span>
+		</div>
+		<iframe src="https://www.google.com/search?igu=1" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
+	</div>
+
+	<div id="cover">
+		<h1>Welcome to Your Web Desktop</h1>
+		<p>Desktop loading&hellip;</p>
+		<button onclick="requestFullScreen(document.body)">Make Desktop Fullscreen</button>
+	</div>
+
+	<script>
+		setTimeout(function() {
+			document.getElementById('cover').style.display='none';
+		}, 2000);
+		document.getElementById('starticon').addEventListener('click', function(e) {
+			document.getElementById('startmenu').classList.toggle('open');
+		});
+		setInterval(function() {
+			var now = new Date();
+			var h = now.getHours(); 
+		    var m = now.getMinutes(); 
+		    var s = now.getSeconds(); 
+		    var mn = now.getMonth()+1;
+		    var d = now.getDate();
+		    var y = now.getFullYear();
+		    am_pm = "AM";
+		  
+		    if (h > 12) { 
+		        h -= 12; 
+		        am_pm = "PM"; 
+		    } 
+		    if (h == 0) { 
+		        hr = 12; 
+		        am_pm = "AM"; 
+		    } 
+		  
+		    //h = h < 10 ? "0" + h : h; 
+		    m = m < 10 ? "0" + m : m; 
+		    s = s < 10 ? "0" + s : s; 
+		  
+		    var currentTime = h + ":" + m + " " + am_pm;
+			document.getElementById('time').innerText=currentTime;
+			document.getElementById('date').innerText=mn+"/"+d+"/"+y;
+		}, 1000);
+		//Icon draggability
+		var draggableIcons = document.querySelectorAll('.desktop-icon');
+		// array of Draggabillies
+		var dragables = [];
+		// init Draggabillies
+		for ( var i=0; i < draggableIcons.length; i++ ) {
+		  var draggableElem = draggableIcons[i];
+		  var draggie = new Draggabilly( draggableElem, {
+		    // options...
+		    grid: [ 105, 110 ],
+		    containment: 'body'
+		  });
+		  dragables.push( draggie );
+		}
+		/*//App draggability
+		var draggableApps = document.querySelectorAll('.desktop-app');
+		// array of Draggabillies
+		var dragableAppsArray = [];
+		// init Draggabillies
+		for ( var i=0; i < draggableApps.length; i++ ) {
+		  var draggableElem = draggableApps[i];
+		  var draggie = new Draggabilly( draggableElem, {
+		    // options...
+		    handle: '.desktop-app-top',
+		    containment: 'body'
+		  });
+		  dragableAppsArray.push( draggie );
+		}*/
+		document.querySelectorAll('.desktop-icon-inner').forEach(function(elem) {
+		  elem.addEventListener('click', function(e) {
+		  	document.querySelectorAll('.desktop-icon-inner').forEach(function(el) {
+			    el.classList.remove('selected');
+			});
+		    elem.classList.add('selected');
+		  });
+		  elem.addEventListener('dblclick', function(e) {
+		  	handleAppOpen(e.target.id);
+		  });
+		});
+		document.addEventListener('click', function(e) {
+			if(!e.target.closest('.desktop-icon-inner')) {
+				document.querySelectorAll('.desktop-icon-inner').forEach(function(elem) {
+				    elem.classList.remove('selected');
+				});
+			}
+		});
+		document.querySelectorAll('.minmize').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				elem.parentNode.parentNode.classList.add('minimized');
+			});
+		});
+		document.querySelectorAll('.restore').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				elem.parentNode.parentNode.classList.toggle('fullscreen');
+			});
+		});
+		document.querySelectorAll('.exit').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				elem.parentNode.parentNode.classList.add('closed');
+			});
+		});
+		function requestFullScreen(element) {
+		    // Supports most browsers and their versions.
+		    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+		    if (requestMethod) { // Native full screen.
+		        requestMethod.call(element);
+		    } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+		        var wscript = new ActiveXObject("WScript.Shell");
+		        if (wscript !== null) {
+		            wscript.SendKeys("{F11}");
+		        }
+		    }
+		}
+
+		function handleAppOpen(appId) {
+			switch(appId) {
+				case 'google-icon':
+					document.getElementById('google-app').style.visibility='visible';
+					document.getElementById('google-app').classList.remove('closed');
+					document.getElementById('google-app').classList.remove('minimized');
+			}
+		}
+	</script>
+
+</body>
+</html>
