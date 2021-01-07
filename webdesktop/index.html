@@ -7,6 +7,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
+	<script src="http://sortablejs.github.io/Sortable/Sortable.js"></script>
 	<title>Web Desktop</title>
 
 	<style>
@@ -92,6 +93,7 @@
 			display: inline-block;
 			color: #fff;
 			text-align: center;
+			top: -5px;
 		}
 		.desktop-icon {
 			width: 105px;
@@ -147,7 +149,7 @@
 			transform: scale(0.5) translate(-5%, -5%);
 			opacity: 0;
 		}
-		.desktop-app.closed {
+		/*.desktop-app*/.closed {
 			visibility: hidden;
 			opacity: 0;
 			transition: all 0.1s;
@@ -167,6 +169,68 @@
 			background-color: red;
 			color: #fff;
 		}
+		.notification {
+			position: fixed;
+		    right: 20px;
+		    bottom: 50px;
+		    z-index: 999 !important;
+		    display: flex;
+		    max-width: 360px;
+		    border: 1px solid #eaeaea;
+		    border-radius: 2px;
+		    background: rgba(255,255,255,.95);
+		    box-shadow: rgba(0,0,0,.10) 1px 1px 15px 0;
+		    flex-direction: column;
+		    cursor: pointer;
+		}
+		.notification-inner {
+			position: relative;
+		    display: flex;
+		    padding: 10px 20px 10px 10px;
+		    text-decoration: none;
+		    margin: 0;
+		}
+		.notification-icon {
+			margin-right: 10px;
+		    padding: 10px;
+		    display: table;
+		    border-radius: 2px;
+		    line-height: 0;
+		}
+		.notification-icon img {
+			max-width: 40px;
+		}
+		.notification-text .title {
+			display: block;
+		    line-height: 1.5;
+		    font-weight: 600;
+		    font-size: 14px;
+		}
+		.notification-text .content {
+			display: block;
+		    max-width: 350px;
+		    color: #414141;
+		    line-height: 1.35;
+		    font-size: 13px;
+		}
+		.notification-close {
+			position: absolute;
+		    top: 7px;
+		    right: 7px;
+		    display: block;
+		    float: right;
+		    width: 18px;
+		    height: 18px;
+		    border-radius: 50px;
+		    background: rgba(0,0,0,.1);
+		    color: #fff;
+		    text-align: center;
+		    text-decoration: none;
+		    font-weight: bold;
+		    font-size: 12px;
+		    line-height: 150%;
+		    cursor: pointer;
+		}
 		#cover {
 			position: absolute;
 			left: 0;
@@ -175,6 +239,10 @@
 			height: 100%;
 			background-color: #fff;
 			z-index: 200;
+			text-align: center;
+			transition: all 0.3s;
+			visibility: visible;
+			opacity: 1;
 		}
 	</style>
 </head>
@@ -191,32 +259,68 @@
 
 	<div id="startmenu"></div>
 
-	<div class="desktop-icon">
-		<div id="google-icon" class="desktop-icon-inner">
-			<img src="google.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
-			<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Google</div>
+	<div id="desktop-icon-container">
+
+		<div class="desktop-icon">
+			<div id="google-icon" class="desktop-icon-inner">
+				<img src="google.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
+				<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Google</div>
+			</div>
 		</div>
+
+		<div class="desktop-icon">
+			<div id="zane-icon" class="desktop-icon-inner">
+				<img src="/images/home-icon.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
+				<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Zane's Apps</div>
+			</div>
+		</div>
+
 	</div>
 
-	<div class="desktop-app" id="google-app">
+	<div class="desktop-app" id="zane-app">
 		<div class="desktop-app-top">
 			<span class="minmize">&mdash;</span>
 			<span class="restore fal fa-window-restore"></span>
 			<span class="exit fal fa-times"></span>
 		</div>
-		<iframe src="https://www.google.com/search?igu=1" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
+		<iframe src="/" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
+	</div>
+
+	<div class="notification closed">
+		<div class="notification-inner" onclick="requestFullScreen(document.body); this.parentNode.classList.add('closed')">
+			<span class="notification-icon">
+				<img src="/images/home-icon.svg">
+			</span>
+			<span class="notification-text">
+				<span class="title">Tip for Use</span>
+				<span class="content">We recommend fullscreen mode when using your desktop. Click here to open fullscreen.</span>
+			</span>
+		</div>
+		<span class="notification-close" onclick="this.parentNode.classList.add('closed')">&times;</span>
 	</div>
 
 	<div id="cover">
-		<h1>Welcome to Your Web Desktop</h1>
-		<p>Desktop loading&hellip;</p>
-		<button onclick="requestFullScreen(document.body)">Make Desktop Fullscreen</button>
+		<h1>Your Web Desktop</h1>
+		<div id="loading-wrapper">
+			<p style="font-size: 1.5em;">Desktop loading&hellip;</p>
+			<img src="loader.png">
+		</div>
+		<!--<button id="open-btn" style="display: none;" onclick="requestFullScreen(document.body); this.parentNode.style.display='none'">Open Desktop Fullscreen</button>-->
 	</div>
 
 	<script>
-		setTimeout(function() {
-			document.getElementById('cover').style.display='none';
-		}, 2000);
+		document.addEventListener('DOMContentLoaded', function() {
+			setTimeout(function() {
+				//document.getElementById('open-btn').style.display='inline-block';
+				document.getElementById('cover').style.opacity='0';
+				document.getElementById('cover').style.visibility='hidden';
+				document.querySelector('.notification').classList.remove('closed');
+			}, 2000);
+			setTimeout(function() {
+				document.querySelector('.notification').classList.add('closed');
+			}, 10000);
+		});
+		
 		document.getElementById('starticon').addEventListener('click', function(e) {
 			document.getElementById('startmenu').classList.toggle('open');
 		});
@@ -247,34 +351,11 @@
 			document.getElementById('time').innerText=currentTime;
 			document.getElementById('date').innerText=mn+"/"+d+"/"+y;
 		}, 1000);
-		//Icon draggability
-		var draggableIcons = document.querySelectorAll('.desktop-icon');
-		// array of Draggabillies
-		var dragables = [];
-		// init Draggabillies
-		for ( var i=0; i < draggableIcons.length; i++ ) {
-		  var draggableElem = draggableIcons[i];
-		  var draggie = new Draggabilly( draggableElem, {
-		    // options...
-		    grid: [ 105, 110 ],
-		    containment: 'body'
-		  });
-		  dragables.push( draggie );
-		}
-		/*//App draggability
-		var draggableApps = document.querySelectorAll('.desktop-app');
-		// array of Draggabillies
-		var dragableAppsArray = [];
-		// init Draggabillies
-		for ( var i=0; i < draggableApps.length; i++ ) {
-		  var draggableElem = draggableApps[i];
-		  var draggie = new Draggabilly( draggableElem, {
-		    // options...
-		    handle: '.desktop-app-top',
-		    containment: 'body'
-		  });
-		  dragableAppsArray.push( draggie );
-		}*/
+		new Sortable(document.getElementById('desktop-icon-container'), {
+			name: '.desktop-icon',
+			animation: 150,
+			ghostClass: 'blue-background-class'
+		});
 		document.querySelectorAll('.desktop-icon-inner').forEach(function(elem) {
 		  elem.addEventListener('click', function(e) {
 		  	document.querySelectorAll('.desktop-icon-inner').forEach(function(el) {
@@ -325,9 +406,16 @@
 		function handleAppOpen(appId) {
 			switch(appId) {
 				case 'google-icon':
-					document.getElementById('google-app').style.visibility='visible';
+					/*document.getElementById('google-app').style.visibility='visible';
 					document.getElementById('google-app').classList.remove('closed');
-					document.getElementById('google-app').classList.remove('minimized');
+					document.getElementById('google-app').classList.remove('minimized');*/
+					var dw5 = document.innerWidth*0.5;
+					var dh4 = document.innerHeight*0.75;
+					open('https://www.google.com/search', dw5, dh4);
+				case 'zane-icon':
+					document.getElementById('zane-app').style.visibility='visible';
+					document.getElementById('zane-app').classList.remove('closed');
+					document.getElementById('zane-app').classList.remove('minimized');
 			}
 		}
 	</script>
