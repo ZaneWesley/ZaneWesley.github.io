@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
 	<script src="https://sortablejs.github.io/Sortable/Sortable.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@simonwep/selection-js/lib/selection.min.js"></script><!-- https://simonwep.github.io/selection/ -->
 	<title>Web Desktop</title>
 
 	<style>
@@ -105,6 +106,7 @@
 		    border: none;
 		    box-shadow: none;
 		    cursor: pointer;
+		    user-select: none;
 		}
 		.desktop-icon-inner {
 			padding: 5px 5px;
@@ -118,6 +120,11 @@
 		.desktop-icon-inner.selected {
 			background-color: rgba(255,255,255, 0.3);
 		    border: 1px solid #ccc;
+		}
+		.selection-area {
+		    background: rgba(46, 115, 252, 0.11);
+		    border: 2px solid rgba(98, 155, 255, 0.81);
+		    border-radius: 0.1em;
 		}
 		.desktop-icon-text {
 			font-size: 13px;
@@ -231,6 +238,59 @@
 		    line-height: 150%;
 		    cursor: pointer;
 		}
+		#contextmenu {
+		  visibility: hidden;
+		  opacity: 0;
+		  position: fixed;
+		  background: #fff;
+		  color: #555;
+		  font-family: sans-serif;
+		  font-size: 11px;
+		  -webkit-transition: opacity 0s ease-in-out;
+		  -moz-transition: opacity 0s ease-in-out;
+		  -ms-transition: opacity 0s ease-in-out;
+		  -o-transition: opacity 0s ease-in-out;
+		  transition: opacity 0s ease-in-out;
+		  -webkit-box-shadow: 2px 2px 2px 0px rgba(143, 144, 145, 1);
+		  -moz-box-shadow: 2px 2px 2px 0px rgba(143, 144, 145, 1);
+		  box-shadow: 2px 2px 2px 0px rgba(143, 144, 145, 1);
+		  padding: 0px;
+		  border: 1px solid #C6C6C6;
+		}
+
+		#contextmenu a {
+		  display: block;
+		  color: #555;
+		  text-decoration: none;
+		  padding: 6px 8px 6px 30px;
+		  width: 250px;
+		  position: relative;
+		}
+
+		#contextmenu a img,
+		#contextmenu a i.fa {
+		  height: 20px;
+		  font-size: 17px;
+		  width: 20px;
+		  position: absolute;
+		  left: 5px;
+		  top: 2px;
+		}
+
+		#contextmenu a span {
+		  color: #BCB1B3;
+		  float: right;
+		}
+
+		#contextmenu a:hover {
+		  color: #fff;
+		  background: #3879D9;
+		}
+
+		#contextmenu hr {
+		  border: 1px solid #EBEBEB;
+		  border-bottom: 0;
+		}
 		#cover {
 			position: absolute;
 			left: 0;
@@ -275,6 +335,13 @@
 			</div>
 		</div>
 
+		<div class="desktop-icon">
+			<div id="2048-icon" class="desktop-icon-inner">
+				<img src="/2048/icon.png" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
+				<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">2048</div>
+			</div>
+		</div>
+
 	</div>
 
 	<div class="desktop-app" id="zane-app">
@@ -284,6 +351,15 @@
 			<span class="exit fal fa-times"></span>
 		</div>
 		<iframe src="/" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
+	</div>
+
+	<div class="desktop-app" id="2048-app">
+		<div class="desktop-app-top">
+			<span class="minmize">&mdash;</span>
+			<span class="restore fal fa-window-restore"></span>
+			<span class="exit fal fa-times"></span>
+		</div>
+		<iframe src="/2048/index" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
 	</div>
 
 	<div class="notification closed">
@@ -299,6 +375,29 @@
 		<span class="notification-close" onclick="this.parentNode.classList.add('closed')">&times;</span>
 	</div>
 
+	<div id="contextmenu">
+	  <a href="#">
+	    Refresh <span>Ctrl+E</span>
+	  </a>
+	  <a href="#">
+	    Sleep <span>Ctrl+X</span>
+	  </a>
+	  <hr>
+	  <a href="#">
+	    Display Settings <span>Ctrl+G</span>
+	  </a>
+	  <a href="#">
+	    Personalize <span>Ctrl+I</span>
+	  </a>
+	  <hr>
+	  <a href="#">
+	    Close All Windows <span>Ctrl+A</span>
+	  </a>
+	  <a href="#">
+	    Reset Desktop
+	  </a>
+	</div>
+
 	<div id="cover">
 		<h1>Your Web Desktop</h1>
 		<div id="loading-wrapper">
@@ -309,6 +408,9 @@
 	</div>
 
 	<script>
+		/**********
+		 * ONLOAD *
+		***********/
 		document.addEventListener('DOMContentLoaded', function() {
 			setTimeout(function() {
 				//document.getElementById('open-btn').style.display='inline-block';
@@ -320,10 +422,59 @@
 				document.querySelector('.notification').classList.add('closed');
 			}, 10000);
 		});
+
+		/****************
+		 * CONTEXT MENU *
+		*****************/
+
+		var ctxMenu = document.getElementById("contextmenu").style;
+		if (document.addEventListener) {
+		  document.addEventListener('contextmenu', function(e) {
+		    var posX = e.clientX;
+		    var posY = e.clientY;
+		    ctxMenuHandler(posX, posY);
+		    e.preventDefault();
+		  }, false);
+		  document.addEventListener('click', function(e) {
+		    ctxMenu.opacity = "0";
+		    setTimeout(function() {
+		      ctxMenu.visibility = "hidden";
+		    }, 200);
+		  }, false);
+		} else {
+		  document.attachEvent('oncontextmenu', function(e) {
+		    var posX = e.clientX;
+		    var posY = e.clientY;
+		    ctxMenuHandler(posX, posY);
+		    e.preventDefault();
+		  });
+		  document.attachEvent('onclick', function(e) {
+		    ctxMenu.opacity = "0";
+		    setTimeout(function() {
+		      ctxMenu.visibility = "hidden";
+		    }, 200);
+		  });
+		}
+
+		function ctxMenuHandler(x, y) {
+		  ctxMenu.top = y + "px";
+		  ctxMenu.left = x + "px";
+		  ctxMenu.visibility = "visible";
+		  ctxMenu.opacity = "1";
+		}
+
+		/**************
+		 * START MENU *
+		***************/
 		
 		document.getElementById('starticon').addEventListener('click', function(e) {
 			document.getElementById('startmenu').classList.toggle('open');
 		});
+
+		/*****************
+		 * DATE AND TIME *
+		******************/
+
 		setInterval(function() {
 			var now = new Date();
 			var h = now.getHours(); 
@@ -351,6 +502,11 @@
 			document.getElementById('time').innerText=currentTime;
 			document.getElementById('date').innerText=mn+"/"+d+"/"+y;
 		}, 1000);
+
+		/***********************
+		 * DESKTOP ICON EVENTS *
+		************************/
+
 		new Sortable(document.getElementById('desktop-icon-container'), {
 			name: '.desktop-icon',
 			animation: 150,
@@ -374,6 +530,35 @@
 				});
 			}
 		});
+		const selection = new SelectionArea({
+		    // All elements in this container can be selected
+		    selectables: ['.desktop-icon > .desktop-icon-inner'],
+		    // The container is also the boundary in this case
+		    boundaries: ['body']
+		}).on('start', ({store, event}) => {
+		    // Remove class if the user isn't pressing the control key or ⌘ key
+		    if (!event.ctrlKey && !event.metaKey) {
+		        // Unselect all elements
+		        for (const el of store.stored) {
+		            el.classList.remove('selected');
+		        }
+		        // Clear previous selection
+		        selection.clearSelection();
+		    }
+		}).on('move', ({store: {changed: {added, removed}}}) => {
+		    // Add a custom class to the elements that where selected.
+		    for (const el of added) {
+		        el.classList.add('selected');
+		    }
+		    // Remove the class from elements that where removed
+		    // since the last selection
+		    for (const el of removed) {
+		        el.classList.remove('selected');
+		    }
+		}).on('stop', () => {
+		    selection.keepSelection();
+		});
+
 		document.querySelectorAll('.minmize').forEach(function(elem) {
 			elem.addEventListener('click', function(e) {
 				elem.parentNode.parentNode.classList.add('minimized');
@@ -389,6 +574,11 @@
 				elem.parentNode.parentNode.classList.add('closed');
 			});
 		});
+
+		/**************
+		 * FULLSCREEN *
+		***************/
+
 		function requestFullScreen(element) {
 		    // Supports most browsers and their versions.
 		    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
@@ -403,6 +593,10 @@
 		    }
 		}
 
+		/***************
+		 * APP HANDLER *
+		****************/
+
 		function handleAppOpen(appId) {
 			switch(appId) {
 				case 'google-icon':
@@ -412,10 +606,17 @@
 					var dw5 = document.innerWidth*0.5;
 					var dh4 = document.innerHeight*0.75;
 					open('https://www.google.com/search', dw5, dh4);
+					break;
 				case 'zane-icon':
 					document.getElementById('zane-app').style.visibility='visible';
 					document.getElementById('zane-app').classList.remove('closed');
 					document.getElementById('zane-app').classList.remove('minimized');
+					break;
+				case '2048-icon':
+					document.getElementById('2048-app').style.visibility='visible';
+					document.getElementById('2048-app').classList.remove('closed');
+					document.getElementById('2048-app').classList.remove('minimized');
+					break;
 			}
 		}
 	</script>
