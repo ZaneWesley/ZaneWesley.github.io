@@ -96,6 +96,9 @@
 			text-align: center;
 			top: -5px;
 		}
+		#desktop-wrapper {
+			height: 100%;
+		}
 		.desktop-icon {
 			width: 105px;
 		    height: 110px;
@@ -141,8 +144,8 @@
 			border: 1px solid #ccc;
 			background-color: #fff;
 			font-style: normal;
-			transition: all 0.3s;
-			visibility: hidden;
+			transition:  visibility 0.3s opacity 0.3s;
+			z-index: 90;
 		}
 		.desktop-app.fullscreen {
 			top: 0;
@@ -175,6 +178,9 @@
 		.desktop-app-top span.exit:hover {
 			background-color: red;
 			color: #fff;
+		}
+		.padding {
+			padding: 1em;
 		}
 		.notification {
 			position: fixed;
@@ -256,6 +262,7 @@
 		  box-shadow: 2px 2px 2px 0px rgba(143, 144, 145, 1);
 		  padding: 0px;
 		  border: 1px solid #C6C6C6;
+		  z-index: 900;
 		}
 
 		#contextmenu a {
@@ -307,44 +314,46 @@
 	</style>
 </head>
 <body>
-	<div class="desktop"></div>
-	<div id="taskbar">
-		<div id="starticon"></div>
-		<div id="openApps"></div>
-		<div id="dt-wrapper">
-			<div id="time">0:00 _M</div>
-			<div id="date">0/0/0000</div>
+	<div id="desktop-wrapper">
+		<div class="desktop"></div>
+		<div id="taskbar">
+			<div id="starticon"></div>
+			<div id="openApps"></div>
+			<div id="dt-wrapper">
+				<div id="time">0:00 _M</div>
+				<div id="date">0/0/0000</div>
+			</div>
+		</div>
+
+		<div id="startmenu"></div>
+
+		<div id="desktop-icon-container">
+
+			<div class="desktop-icon">
+				<div id="google-icon" class="desktop-icon-inner">
+					<img src="google.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
+					<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Google</div>
+				</div>
+			</div>
+
+			<div class="desktop-icon">
+				<div id="zane-icon" class="desktop-icon-inner">
+					<img src="/images/home-icon.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
+					<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Zane's Apps</div>
+				</div>
+			</div>
+
+			<div class="desktop-icon">
+				<div id="2048-icon" class="desktop-icon-inner">
+					<img src="/2048/icon.png" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
+					<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">2048</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 
-	<div id="startmenu"></div>
-
-	<div id="desktop-icon-container">
-
-		<div class="desktop-icon">
-			<div id="google-icon" class="desktop-icon-inner">
-				<img src="google.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
-				<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Google</div>
-			</div>
-		</div>
-
-		<div class="desktop-icon">
-			<div id="zane-icon" class="desktop-icon-inner">
-				<img src="/images/home-icon.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
-				<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Zane's Apps</div>
-			</div>
-		</div>
-
-		<div class="desktop-icon">
-			<div id="2048-icon" class="desktop-icon-inner">
-				<img src="/2048/icon.png" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)">
-				<div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">2048</div>
-			</div>
-		</div>
-
-	</div>
-
-	<div class="desktop-app" id="zane-app">
+	<div class="desktop-app closed" id="zane-app">
 		<div class="desktop-app-top">
 			<span class="minmize">&mdash;</span>
 			<span class="restore fal fa-window-restore"></span>
@@ -353,13 +362,29 @@
 		<iframe src="/" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
 	</div>
 
-	<div class="desktop-app" id="2048-app">
+	<div class="desktop-app closed" id="2048-app">
 		<div class="desktop-app-top">
 			<span class="minmize">&mdash;</span>
 			<span class="restore fal fa-window-restore"></span>
 			<span class="exit fal fa-times"></span>
 		</div>
 		<iframe src="/2048/index" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
+	</div>
+
+	<div class="desktop-app" id="display-settings-app">
+		<div class="desktop-app-top">
+			<span class="minmize">&mdash;</span>
+			<span class="restore fal fa-window-restore"></span>
+			<span class="exit fal fa-times"></span>
+		</div>
+		<div>
+			<div style="width: 20em; height: 100%; background-color: #91C1E7;float: left;">
+				//
+			</div>
+			<div>
+				<p style="font-size: 1.5em;">Display Settings</p>
+			</div>
+		</div>
 	</div>
 
 	<div class="notification closed">
@@ -383,7 +408,7 @@
 	    Sleep <span>Ctrl+X</span>
 	  </a>
 	  <hr>
-	  <a href="#">
+	  <a href="#" onclick="handleAppOpen('display-settings-app');">
 	    Display Settings <span>Ctrl+G</span>
 	  </a>
 	  <a href="#">
@@ -457,11 +482,29 @@
 		}
 
 		function ctxMenuHandler(x, y) {
-		  ctxMenu.top = y + "px";
-		  ctxMenu.left = x + "px";
-		  ctxMenu.visibility = "visible";
-		  ctxMenu.opacity = "1";
+			if(x <= (window.innerWidth - 250)) {
+				//if not too close to right edge, display at mouse x
+				ctxMenu.left = x + "px";
+			} else {
+				//display at mouse x - 250
+				ctxMenu.left = (x-250) + "px";
+			}
+			if(y <= (window.innerHeight - 150)) {
+				//if not too close to bottom edge, display at mouse y
+				ctxMenu.top = y + "px";
+			} else {
+				//display at mouse y - 150
+				ctxMenu.top = (y-150) + "px";
+			}
+			ctxMenu.visibility = "visible";
+			ctxMenu.opacity = "1";
 		}
+
+		document.querySelectorAll('#contextmenu a').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+			});
+		});
 
 		/**************
 		 * START MENU *
@@ -507,11 +550,11 @@
 		 * DESKTOP ICON EVENTS *
 		************************/
 
-		new Sortable(document.getElementById('desktop-icon-container'), {
+		/*new Sortable(document.getElementById('desktop-icon-container'), {
 			name: '.desktop-icon',
 			animation: 150,
 			ghostClass: 'blue-background-class'
-		});
+		});*/
 		document.querySelectorAll('.desktop-icon-inner').forEach(function(elem) {
 		  elem.addEventListener('click', function(e) {
 		  	document.querySelectorAll('.desktop-icon-inner').forEach(function(el) {
@@ -530,11 +573,11 @@
 				});
 			}
 		});
-		const selection = new SelectionArea({
+		const desktopSelection = new SelectionArea({
 		    // All elements in this container can be selected
 		    selectables: ['.desktop-icon > .desktop-icon-inner'],
 		    // The container is also the boundary in this case
-		    boundaries: ['body']
+		    boundaries: ['#desktop-wrapper']
 		}).on('start', ({store, event}) => {
 		    // Remove class if the user isn't pressing the control key or ⌘ key
 		    if (!event.ctrlKey && !event.metaKey) {
@@ -543,7 +586,7 @@
 		            el.classList.remove('selected');
 		        }
 		        // Clear previous selection
-		        selection.clearSelection();
+		        desktopSelection.clearSelection();
 		    }
 		}).on('move', ({store: {changed: {added, removed}}}) => {
 		    // Add a custom class to the elements that where selected.
@@ -556,8 +599,52 @@
 		        el.classList.remove('selected');
 		    }
 		}).on('stop', () => {
-		    selection.keepSelection();
+		    desktopSelection.keepSelection();
 		});
+
+		document.querySelectorAll('.desktop-app').forEach(function(elem) {
+			draggable(elem, '.desktop-app-top');
+		});
+
+		function draggable(elem, handle) {
+			var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+			if (handle) {
+				/* if present, the header is where you move the DIV from:*/
+				elem.querySelector(handle).onmousedown = dragMouseDown;
+			} else {
+				/* otherwise, move the DIV from anywhere inside the DIV:*/
+				elem.onmousedown = dragMouseDown;
+			}
+			function dragMouseDown(e) {
+			    e = e || window.event;
+			    e.preventDefault();
+			    // get the mouse cursor position at startup:
+			    pos3 = e.clientX;
+			    pos4 = e.clientY;
+			    document.onmouseup = closeDragElement;
+			    // call a function whenever the cursor moves:
+			    document.onmousemove = elementDrag;
+			}
+
+			function elementDrag(e) {
+			    e = e || window.event;
+			    e.preventDefault();
+			    // calculate the new cursor position:
+			    pos1 = pos3 - e.clientX;
+			    pos2 = pos4 - e.clientY;
+			    pos3 = e.clientX;
+			    pos4 = e.clientY;
+			    // set the element's new position:
+			    elem.style.top = (elem.offsetTop - pos2) + "px";
+			    elem.style.left = (elem.offsetLeft - pos1) + "px";
+			}
+
+			function closeDragElement() {
+			    /* stop moving when mouse button is released:*/
+			    document.onmouseup = null;
+			    document.onmousemove = null;
+			}
+		}
 
 		document.querySelectorAll('.minmize').forEach(function(elem) {
 			elem.addEventListener('click', function(e) {
@@ -608,14 +695,16 @@
 					open('https://www.google.com/search', dw5, dh4);
 					break;
 				case 'zane-icon':
-					document.getElementById('zane-app').style.visibility='visible';
 					document.getElementById('zane-app').classList.remove('closed');
 					document.getElementById('zane-app').classList.remove('minimized');
 					break;
 				case '2048-icon':
-					document.getElementById('2048-app').style.visibility='visible';
 					document.getElementById('2048-app').classList.remove('closed');
 					document.getElementById('2048-app').classList.remove('minimized');
+					break;
+				case 'display-settings-app':
+					document.getElementById('display-settings-app').classList.remove('closed');
+					document.getElementById('display-settings-app').classList.remove('minimized');
 					break;
 			}
 		}
