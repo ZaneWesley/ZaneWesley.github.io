@@ -146,14 +146,12 @@
 			font-style: normal;
 			transition:  visibility 0.3s opacity 0.3s;
 			z-index: 90;
-			resize: both;
-			overflow: auto;
 		}
 		.desktop-app.fullscreen {
 			top: 0!important;
 			left: 0!important;
-			height: calc(100% - 40px);
-			width: 100%;
+			height: calc(100% - 40px)!important;
+			width: 100%!important;
 			transform: none;
 			transition: all 0.1s;
 		}
@@ -181,8 +179,44 @@
 			background-color: red;
 			color: #fff;
 		}
+		.resizer {
+	        position: absolute;
+	        outline: none;
+	    }
+	    /* right side */
+	    .resizer-r {
+	        cursor: col-resize;
+	        height: 100%;
+	        right: 0;
+	        top: 0;
+	        width: 5px;
+	    }
+	    /* bottom */
+	    .resizer-b {
+	        bottom: 0;
+	        cursor: row-resize;
+	        height: 5px;
+	        left: 0;
+	        width: 100%;
+	    }
 		.padding {
 			padding: 1em;
+		}
+		.desktop-icon-order {
+			list-style-type: none;
+		}
+		.desktop-icon-order li {
+			padding: .75rem 1.25rem;
+    		margin-bottom: -1px;
+    		border-bottom: 1px solid rgba(0,0,0,.125);
+    		/*border-left: 4px solid #fff6b2;*/
+    		cursor: move;
+		}
+		.desktop-icon-order li:hover {
+			background-color: #eee;
+		}
+		.placeholder-ghost {
+			background-color: #C8EBFB;
 		}
 		.notification {
 			position: fixed;
@@ -313,6 +347,16 @@
 			visibility: visible;
 			opacity: 1;
 		}
+		@media(max-width: 775px) {
+			#startmenu {
+			    width: 100%;
+			    height: 90%;
+			}
+			.desktop-app {
+				width: 85%;
+				height: 75%;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -362,6 +406,8 @@
 			<span class="exit fal fa-times"></span>
 		</div>
 		<iframe src="/" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
+		<div class="resizer resizer-r"></div>
+        <div class="resizer resizer-b"></div>
 	</div>
 
 	<div class="desktop-app closed" id="2048-app">
@@ -371,9 +417,11 @@
 			<span class="exit fal fa-times"></span>
 		</div>
 		<iframe src="/2048/index" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
+		<div class="resizer resizer-r"></div>
+        <div class="resizer resizer-b"></div>
 	</div>
 
-	<div class="desktop-app closed" id="display-settings-app">
+	<div class="desktop-app fullscreen closed" id="display-settings-app">
 		<div class="desktop-app-top">
 			<span class="minmize">&mdash;</span>
 			<span class="restore fal fa-window-restore"></span>
@@ -381,8 +429,16 @@
 		</div>
 		<div style="padding: 0 1em 1em 1em;">
 				<p style="font-size: 1.5em;">Display Settings</p>
+				<b style="font-size: 1em; padding-top: 1em; display: block;">Reorder Desktop Icons</b>
+				<ul class="desktop-icon-order">
+					<li id="0">Google</li>
+					<li id="1">Zane's Apps</li>
+					<li id="2">2048</li>
+				</ul>
 			</div>
 		</div>
+		<div class="resizer resizer-r"></div>
+        <div class="resizer resizer-b"></div>
 	</div>
 
 	<div class="notification closed">
@@ -399,8 +455,8 @@
 	</div>
 
 	<div id="contextmenu">
-	  <a href="#">
-	    Refresh <span>Ctrl+E</span>
+	  <a href="#" onclick="location.reload();">
+	    Refresh <span>Ctrl+R</span>
 	  </a>
 	  <a href="#">
 	    Sleep <span>Ctrl+X</span>
@@ -409,12 +465,12 @@
 	  <a href="#" onclick="handleAppOpen('display-settings-app');">
 	    Display Settings <span>Ctrl+G</span>
 	  </a>
-	  <a href="#">
-	    Personalize <span>Ctrl+I</span>
+	  <a href="#" onclick="handleAppOpen('personalize-settings-app');">
+	    Personalize <span>Ctrl+E</span>
 	  </a>
 	  <hr>
-	  <a href="#">
-	    Close All Windows <span>Ctrl+A</span>
+	  <a href="#" onclick="closeAllWindows()">
+	    Close All Windows <span>Ctrl+L</span>
 	  </a>
 	  <a href="#">
 	    Reset Desktop
@@ -434,6 +490,11 @@
 		/**********
 		 * ONLOAD *
 		***********/
+		var iconsArray = [
+			'<div class="desktop-icon"> <div id="google-icon" class="desktop-icon-inner"> <img src="google.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)"> <div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Google</div> </div> </div>',//Google
+			'<div class="desktop-icon"> <div id="zane-icon" class="desktop-icon-inner"> <img src="/images/home-icon.svg" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)"> <div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">Zane\'s Apps</div> </div> </div>',//Zane's Apps
+			'<div class="desktop-icon"> <div id="2048-icon" class="desktop-icon-inner"> <img src="/2048/icon.png" style="width: 85%" ondblclick="handleAppOpen(this.parentNode.id)"> <div class="desktop-icon-text" ondblclick="handleAppOpen(this.parentNode.id)">2048</div> </div> </div>'//2048
+		];
 		document.addEventListener('DOMContentLoaded', function() {
 			setTimeout(function() {
 				//document.getElementById('open-btn').style.display='inline-block';
@@ -571,9 +632,7 @@
 				});
 			}
 		});
-		document.querySelectorAll('.desktop-app').forEach(function(elem) {
-			elem.style.resize = "both";
-		});
+
 		const desktopSelection = new SelectionArea({
 		    // All elements in this container can be selected
 		    selectables: ['.desktop-icon > .desktop-icon-inner'],
@@ -605,7 +664,102 @@
 
 		document.querySelectorAll('.desktop-app').forEach(function(elem) {
 			draggable(elem, '.desktop-app-top');
+			makeResizable(elem);
 		});
+
+		function closeAllWindows() {
+			document.querySelectorAll('.desktop-app').forEach(function(elem) {
+				elem.classList.add('closed');
+			});
+		}
+
+		document.querySelectorAll('.minmize').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				elem.parentNode.parentNode.classList.add('minimized');
+			});
+		});
+		document.querySelectorAll('.restore').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				elem.parentNode.parentNode.classList.toggle('fullscreen');
+			});
+		});
+		document.querySelectorAll('.exit').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				elem.parentNode.parentNode.classList.add('closed');
+			});
+		});
+
+		/*document.querySelectorAll('.desktop-icon-order li').forEach(function(elem) {
+			elem.addEventListener('mousedown', function(e) {
+				var lis = elem.parentNode.children;
+				document.getElementById('desktop-icon-container').innerHTML="";
+				for(var i = 0; i < lis.length; i++) {
+					document.getElementById('desktop-icon-container').innerHTML+=iconsArray[lis[i]];
+				}
+
+			});
+		});*/
+
+		/**************
+		 * FULLSCREEN *
+		***************/
+
+		function requestFullScreen(element) {
+		    // Supports most browsers and their versions.
+		    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+		    if (requestMethod) { // Native full screen.
+		        requestMethod.call(element);
+		    } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+		        var wscript = new ActiveXObject("WScript.Shell");
+		        if (wscript !== null) {
+		            wscript.SendKeys("{F11}");
+		        }
+		    }
+		}
+
+		function exitFullScreen(element) {
+			if (document.exitFullscreen) {
+			    document.exitFullscreen();
+			} else if (document.webkitExitFullscreen) { /* Safari */
+			    document.webkitExitFullscreen();
+			} else if (document.msExitFullscreen) { /* IE11 */
+			    document.msExitFullscreen();
+			}
+		}
+
+		/***************
+		 * APP HANDLER *
+		****************/
+
+		function handleAppOpen(appId) {
+			switch(appId) {
+				case 'google-icon':
+					/*document.getElementById('google-app').style.visibility='visible';
+					document.getElementById('google-app').classList.remove('closed');
+					document.getElementById('google-app').classList.remove('minimized');*/
+					var dw5 = document.innerWidth*0.5;
+					var dh4 = document.innerHeight*0.75;
+					open('https://www.google.com/search', dw5, dh4);
+					break;
+				case 'zane-icon':
+					document.getElementById('zane-app').classList.remove('closed');
+					document.getElementById('zane-app').classList.remove('minimized');
+					break;
+				case '2048-icon':
+					document.getElementById('2048-app').classList.remove('closed');
+					document.getElementById('2048-app').classList.remove('minimized');
+					break;
+				case 'display-settings-app':
+					document.getElementById('display-settings-app').classList.remove('closed');
+					document.getElementById('display-settings-app').classList.remove('minimized');
+					break;
+			}
+		}
+
+		/**************
+		 * UI HANDLER *
+		***************/
 
 		function draggable(elem, handle) {
 			var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -647,68 +801,56 @@
 			}
 		}
 
-		document.querySelectorAll('.minmize').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				elem.parentNode.parentNode.classList.add('minimized');
-			});
-		});
-		document.querySelectorAll('.restore').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				elem.parentNode.parentNode.classList.toggle('fullscreen');
-			});
-		});
-		document.querySelectorAll('.exit').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				elem.parentNode.parentNode.classList.add('closed');
-			});
-		});
+		function makeResizable(elem) {
+			// Query the element
+			//const ele = document.querySelector(elem);
+			const ele = elem;
+			// The current position of mouse
+			let x = 0;
+			let y = 0;
+			// The dimension of the element
+			let w = 0;
+			let h = 0;
+			// Handle the mousedown event
+			// that's triggered when user drags the resizer
+			const mouseDownHandler = function(e) {
+			    // Get the current mouse position
+			    x = e.clientX;
+			    y = e.clientY;
+			    // Calculate the dimension of element
+			    const styles = window.getComputedStyle(ele);
+			    w = parseInt(styles.width, 10);
+			    h = parseInt(styles.height, 10);
 
-		/**************
-		 * FULLSCREEN *
-		***************/
+			    // Attach the listeners to `document`
+			    document.addEventListener('mousemove', mouseMoveHandler);
+			    document.addEventListener('mouseup', mouseUpHandler);
+			};
 
-		function requestFullScreen(element) {
-		    // Supports most browsers and their versions.
-		    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+			 const mouseMoveHandler = function(e) {
+			    // How far the mouse has been moved
+			    const dx = e.clientX - x;
+			    const dy = e.clientY - y;
+			    // Adjust the dimension of element
+			    ele.style.width = `${w + dx}px`;
+			    ele.style.height = `${h + dy}px`;
+			};
+			const mouseUpHandler = function() {
+			    // Remove the handlers of `mousemove` and `mouseup`
+			    document.removeEventListener('mousemove', mouseMoveHandler);
+			    document.removeEventListener('mouseup', mouseUpHandler);
+			};
 
-		    if (requestMethod) { // Native full screen.
-		        requestMethod.call(element);
-		    } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
-		        var wscript = new ActiveXObject("WScript.Shell");
-		        if (wscript !== null) {
-		            wscript.SendKeys("{F11}");
-		        }
-		    }
+			// Query all resizers
+			const resizers = ele.querySelectorAll('.resizer').forEach(function(resizer) {
+				resizer.addEventListener('mousedown', mouseDownHandler);
+			});
 		}
 
-		/***************
-		 * APP HANDLER *
-		****************/
-
-		function handleAppOpen(appId) {
-			switch(appId) {
-				case 'google-icon':
-					/*document.getElementById('google-app').style.visibility='visible';
-					document.getElementById('google-app').classList.remove('closed');
-					document.getElementById('google-app').classList.remove('minimized');*/
-					var dw5 = document.innerWidth*0.5;
-					var dh4 = document.innerHeight*0.75;
-					open('https://www.google.com/search', dw5, dh4);
-					break;
-				case 'zane-icon':
-					document.getElementById('zane-app').classList.remove('closed');
-					document.getElementById('zane-app').classList.remove('minimized');
-					break;
-				case '2048-icon':
-					document.getElementById('2048-app').classList.remove('closed');
-					document.getElementById('2048-app').classList.remove('minimized');
-					break;
-				case 'display-settings-app':
-					document.getElementById('display-settings-app').classList.remove('closed');
-					document.getElementById('display-settings-app').classList.remove('minimized');
-					break;
-			}
-		}
+		new Sortable(document.querySelector('.desktop-icon-order'), {
+		    animation: 150,
+		    ghostClass: 'placeholder-ghost'
+		});
 	</script>
 
 </body>
