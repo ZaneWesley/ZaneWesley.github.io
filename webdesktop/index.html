@@ -146,10 +146,12 @@
 			font-style: normal;
 			transition:  visibility 0.3s opacity 0.3s;
 			z-index: 90;
+			resize: both;
+			overflow: auto;
 		}
 		.desktop-app.fullscreen {
-			top: 0;
-			left: 0;
+			top: 0!important;
+			left: 0!important;
 			height: calc(100% - 40px);
 			width: 100%;
 			transform: none;
@@ -371,17 +373,13 @@
 		<iframe src="/2048/index" style="border: none; width: 100%; height: calc(100% - 40px);">Loading...</iframe>
 	</div>
 
-	<div class="desktop-app" id="display-settings-app">
+	<div class="desktop-app closed" id="display-settings-app">
 		<div class="desktop-app-top">
 			<span class="minmize">&mdash;</span>
 			<span class="restore fal fa-window-restore"></span>
 			<span class="exit fal fa-times"></span>
 		</div>
-		<div>
-			<div style="width: 20em; height: 100%; background-color: #91C1E7;float: left;">
-				//
-			</div>
-			<div>
+		<div style="padding: 0 1em 1em 1em;">
 				<p style="font-size: 1.5em;">Display Settings</p>
 			</div>
 		</div>
@@ -573,6 +571,9 @@
 				});
 			}
 		});
+		document.querySelectorAll('.desktop-app').forEach(function(elem) {
+			elem.style.resize = "both";
+		});
 		const desktopSelection = new SelectionArea({
 		    // All elements in this container can be selected
 		    selectables: ['.desktop-icon > .desktop-icon-inner'],
@@ -609,20 +610,20 @@
 		function draggable(elem, handle) {
 			var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 			if (handle) {
-				/* if present, the header is where you move the DIV from:*/
+				/* if present, the header is where you move the DIV from */
 				elem.querySelector(handle).onmousedown = dragMouseDown;
 			} else {
-				/* otherwise, move the DIV from anywhere inside the DIV:*/
+				/* otherwise, move the DIV from anywhere inside the DIV */
 				elem.onmousedown = dragMouseDown;
 			}
 			function dragMouseDown(e) {
 			    e = e || window.event;
 			    e.preventDefault();
-			    // get the mouse cursor position at startup:
+			    // get the mouse cursor position at startup
 			    pos3 = e.clientX;
 			    pos4 = e.clientY;
 			    document.onmouseup = closeDragElement;
-			    // call a function whenever the cursor moves:
+			    // call a function whenever the cursor moves
 			    document.onmousemove = elementDrag;
 			}
 
@@ -634,13 +635,13 @@
 			    pos2 = pos4 - e.clientY;
 			    pos3 = e.clientX;
 			    pos4 = e.clientY;
-			    // set the element's new position:
+			    // set the element's new position
 			    elem.style.top = (elem.offsetTop - pos2) + "px";
 			    elem.style.left = (elem.offsetLeft - pos1) + "px";
 			}
 
 			function closeDragElement() {
-			    /* stop moving when mouse button is released:*/
+			    /* stop moving when mouse button is released */
 			    document.onmouseup = null;
 			    document.onmousemove = null;
 			}
