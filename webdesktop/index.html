@@ -689,16 +689,11 @@
 			});
 		});
 
-		/*document.querySelectorAll('.desktop-icon-order li').forEach(function(elem) {
-			elem.addEventListener('mousedown', function(e) {
-				var lis = elem.parentNode.children;
-				document.getElementById('desktop-icon-container').innerHTML="";
-				for(var i = 0; i < lis.length; i++) {
-					document.getElementById('desktop-icon-container').innerHTML+=iconsArray[lis[i]];
-				}
-
+		document.querySelectorAll('.desktop-icon-order li').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				//
 			});
-		});*/
+		});
 
 		/**************
 		 * FULLSCREEN *
