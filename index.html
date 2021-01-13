@@ -134,6 +134,69 @@
 		.standalone-ui {
 			display: none;
 		}
+		.cookie-consent {
+			color: rgb(60, 64, 67);
+		    background-color: rgb(255, 255, 255);
+		    max-width: 24em;
+		    flex-direction: column;
+		    bottom: 1em;
+		    left: 1em;
+		    position: fixed;
+		    overflow: hidden;
+		    box-sizing: border-box;
+		    font-size: 16px;
+		    line-height: 1.5em;
+	        display: flex;
+	        flex-wrap: nowrap;
+		    z-index: 9999;
+		    opacity: 1;
+		    transition: opacity 1s ease;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 8px 3px rgba(60,64,67,.15), 0 1px 3px rgba(60,64,67,.3);
+		    padding: 22px 24px!important;
+		    font-weight: 400;
+		}
+		.cc-inner {
+			margin-bottom: 1em;
+		}
+		.cc-inner a {
+			color: #1a73e8!important;
+		    text-decoration: none;
+		    padding-left: 0;
+		    opacity: .8;
+		    display: inline-block;
+		    padding: .2em;
+		    transition: all .2s ease-out;
+		}
+		.cc-btn {
+			flex: 1 0 auto;
+			align-self: flex-end;
+			display: flex;
+			align-items: center;
+			align-content: space-between;
+		}
+		.cc-btn a {
+			flex: 1;
+			font-weight: 400;
+		    padding: 8px 24px;
+		    border-radius: 4px;
+		    font-size: 14px;
+		    line-height: 20px;
+		    height: 36px;
+		    color: rgb(255, 255, 255);
+		    border-color: transparent;
+		    background-color: rgb(26, 115, 232);
+		    display: block;
+		    border-width: 2px;
+		    border-style: solid;
+		    text-align: center;
+		    white-space: nowrap;
+		    cursor: pointer;
+		    transition: all .2s ease-out;
+		    overflow: hidden;
+		    outline: none;
+		    text-decoration: none;
+		}
 		.mobile-hidden {
 			display: inherit;
 		}
@@ -283,6 +346,15 @@
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
 	<div id="standalone-home" class="standalone-ui fas fa-home"></div>
 
+	<div class="cookie-consent">
+		<span class="cc-inner">
+			This website uses cookies to ensure you get the best experience.
+		</span>
+		<div class="cc-btn">
+			<a href="#">Got It!</a>
+		</div>
+	</div>
+
 	<script>
 		if ('serviceWorker' in navigator) {
 		    navigator.serviceWorker.register('/serviceworker.js')
@@ -333,6 +405,11 @@
 			$('#standalone-frame').toggle('slide', {direction: 'right'}, 500, function() {
 				location.reload();
 			});
+		});
+		$('.cc-btn a').click(function(e) {
+			e.preventDefault();
+			this.parentNode.parentNode.style.opacity=0;
+			this.parentNode.parentNode.style.visibility='hidden';
 		});
 		window.addEventListener('resize', ini);
 		ini();
