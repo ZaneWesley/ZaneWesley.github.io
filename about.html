@@ -7,11 +7,10 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="transparent">
 	<link rel="apple-touch-icon-precomposed" href="images/home-icon.svg">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato&family=Paytone+One&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script>
 	<title>About Me</title>
 	<style>
 		* {
@@ -24,155 +23,265 @@
 			height: 100vh;
 		}
 		body {
-			background-color: #1F1B4E;
+			background-color: #131417;
+			font-family: 'Lato', sans-serif;
 			color: #fff;
-			font-family: Calibri, sans-serif;
-			background-image: linear-gradient(45deg, #02001F, #2980b9);
-			overflow: hidden;
+		}
+		/* width */
+		::-webkit-scrollbar {
+		  width: auto;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+		  background: #131417;
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+		  background: #1e1f26;
+		  transform: skew(45deg);
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+		  background: #00b0ff;
 		}
 		header {
-			text-align: center;
-			overflow: hidden;
-			font-size: 2em;
-			padding-bottom: 2em;
+			position: relative;
+			width: 100%;
+			background-image: url('https://zanewesley.github.io/images/codepen-profile-bg.svg');
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
 		}
-		header h1 {
-			cursor: pointer;
+		.header-content {
+			position: relative;
+    		padding: 110px 10px 75px 10px;
+    		text-align: center;
+    		line-height: 1.1;
+    		font-size: 3rem;
+    		max-width: 100%;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		}
+		h1, h2 {
+			overflow: hidden;
+			font-family: 'Paytone One', sans-serif;
+			font-weight: 100;
+		}
+		h2 {
+			padding: 1em 0 1em 0;
+		}
+		.spacebar {
+			position: relative;
+		    /*background: #1e1f26;*/
+		    background: #000;
+		    padding: 20px 10px;
+		    min-height: 1em;
+		    /*-webkit-clip-path: polygon(0 0, 100% 0%, 100% 23%, 0 83%);
+			clip-path: polygon(0 0, 100% 0%, 100% 23%, 0 83%);*/
+			/*-webkit-clip-path: polygon(0 75%, 100% 22%, 100% 100%, 0 100%);
+			clip-path: polygon(0 75%, 100% 22%, 100% 100%, 0 100%);*/
+		}
+		.body-section {
+			padding: 2em;
+			font-size: 1.2rem;
+			position: relative;
+		}
+		.body-section-content {
+			width: 75%;
+			margin: auto;
+		}
+		.diagonal {
+			-webkit-clip-path: polygon(0 20%, 100% 0, 100% 80%, 0 100%);
+			clip-path: polygon(0 20%, 100% 0, 100% 80%, 0 100%);
+			padding: 5rem 10rem 0 0;
+		}
+		.grey {
+			background: #1e1f26;
+			padding-bottom: 4em;
+		}
+		.devider {
+			margin-left: auto;
+    		margin-right: auto;
+    		border: 0;
+		    display: block;
+		    width: 50%;
+		    max-width: 100%;
+		    height: .5rem;
+		    /*background: #f4f4f4;*/
+		    background: #1e1f26;
+		    transform: skew(45deg);
 		}
 		ul {
-			color: #fff;
-			font-size: 3em;
-			animation-delay: 0.1s;/*0.3s*/
-			text-align: center;
-			overflow: hidden;
-			padding: 0;
-			display: block;
-		}
-		ul, li {
-			width: 100%;
-		}
-		ul.disabled > li {
-			cursor: default!important;
-		}
-		li {
-			cursor: pointer;
-		}
-		li:hover {
-			animation: rubberBand;
-			animation-duration: 0.7s;
+			list-style-type: circle;
+			display: list-item;
 		}
 		a {
-			color:#fff;
+			color: #fff;
 		}
-		.overlay {
-			display: none;
-			padding: 1em;
-			font-size: 1.5em;
-		}
-		.overlay h1 {
-			font-size: 3em;
-			text-align: center;
+		label {
+			display: block;
 		}
 		input, textarea {
 			border: 1px solid #ccc;
-			padding: 8px;
+			padding: 10px;
 			display: block;
-			width: 50%;
+			width: 75%;
 			outline: none;
+			font-family: 'Lato', sans-serif;
+		}
+		input:invalid, textarea:invalid {
+			/**/
 		}
 		textarea {
 			resize: vertical;
 		}
+		label:not(:first-child) {
+			padding-top: 0.5em;
+		}
 		button {
-			padding: 8px 16px;
-			user-select: none;
-			border: none;
-			text-align: center;
-    		cursor: pointer;
-    		color: #fff;
-    		background-color: #00b0ff;
+			border: 3px solid #444857;
+    		background: #131417;
+    		font-size: 1rem;
+		    text-shadow: none;
+		    line-height: 1.2;
+		    display: inline-block;
+		    padding: 10px 16px;
+		    margin: 0 10px 0 0;
+		    position: relative;
+		    border-radius: 4px;
+		    color: white;
+		    cursor: pointer;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		    text-decoration: none !important;
+		    text-align: center;
+		    font-weight: normal !important;
+		    outline: none;
+		}
+		button:hover {
+			background: #000;
 		}
 		@media (max-width:755px) {
-			input, textarea {
+			.header-content {
+				font-size: 2.2rem;
+			}
+			.diagonal {
+				-webkit-clip-path: none;
+				clip-path: none;
+				padding: 1em 1em 4em 1em;
+			}
+			h2 {
+				padding-top: 0;
+			}
+			.body-section-content {
+				width: 100%;
+				margin: 0;
+			}
+			textarea,input {
 				width: 100%;
 			}
 		}
 	</style>
 </head>
 <body>
-	<header class="animate__animated animate__zoomInUp">
-		<h1 onclick="if(open) {showMain()}">About Me</h1>
+	<header>
+		<div class="header-content">
+			<h1>About Me</h1>
+		</div>
 	</header>
+	<!--<div class="spacebar"></div>-->
+	<div class="body-section grey diagonal">
+		<div id="intro" class="body-section-content">
+			<h2><noscript>Intro</noscript></h2>
+			<p>Hi there! I'm Zane, and I love to code! I specialize in coding UX and UI for the web. I also like running, playing soccer, and hanging out with friends in my spare time. I absolutely LOVE Google! I plan on working for them, or starting a rival company someday. I love Jesus with all my heart and attend church regularly. Lastly, I am a survivor of COVID-19!</p>
+		</div>
+	</div>
+	<div class="body-section">
+		<div id="languages" class="body-section-content">
+			<h2><noscript>Coding Languages</noscript></h2>
+			<ul>
+				<li>HTML</li>
+				<li>CSS</li>
+				<li>JavaScript</li>
+				<li>jQuery</li>
+				<li>SVG</li>
+			</ul>
+		</div>
+	</div>
+	<div class="devider"></div>
+	<div class="body-section">
+		<div id="socials"  class="body-section-content">
+			<h2><noscript>Socials</noscript></h2>
+			<p>Follow me on <a href="https://codepen.io/zanewesley">CodePen</a> and <a href="https://github.com/zanewesley">GitHub</a>.</p>
+		</div>
+	</div>
+	<div class="body-section grey diagonal">
+		<div id="contact"  class="body-section-content">
+			<h2><noscript>Contact Me</noscript></h2>
+			<script type="text/javascript">var submitted=false;</script>
+	     	<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/about#contact';}"></iframe>
+			<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScBYpKgMvnS19PHhM4M3ZycGi2tlfokvxHtKz_fQf8hbETD_g/formResponse" target="hidden_iframe" onsubmit="submitted=true;" method="POST"><!--target="_self"-->
+				<label for="name">Name</label>
+				<input id="name" name="entry.149048477" type="text" placeholder="Zane Wesley" required>
 
-	<ul class="animate__animated animate__backInUp">
-		<li id="bio-li" onclick="if(!this.parentNode.classList.contains('disabled')) { showOverlay('bio', 'Bio') }">Bio</li>
-		<li id="projects-li" onclick="if(!this.parentNode.classList.contains('disabled')) { showOverlay('projects', 'Projects')}">Projects</li>
-		<li id="contact-li" onclick="if(!this.parentNode.classList.contains('disabled')) { showOverlay('contact', 'Contact Me')}">Contact Me</li>
-	</ul>
+				<label for="email">Email</label>
+				<input id="email" name="entry.1578033212" type="email" placeholder="you@email.com" required>
 
-	<div class="overlay" id="bio">
-		<p>Hi! I am Zane! I love to code, and I especially love coding useful web apps. I also love running, playing soccer, and hanging out with friends. I absolutely LOVE Google! I plan on working for them or starting a rival company someday. I am a Christian and love Jesus with all my heart. Lastly, I am a survivor of COVID-19. Follow me on <a href="https://github.com/zanewesley">GitHub</a> and <a href="https://codepen.io/zanewesley">CodePen</a>!</p>
+				<label for="msg">Message</label>
+				<textarea id="msg" name="entry.1950191769" required></textarea>
+
+				<button tyoe="submit">Send</button>
+			</form>
+
+			<p>* I promise to never give, rent or sell your information to anyone.</p>
+		</div>
 	</div>
 
-	<div class="overlay"  id="projects">
-		<p>All of my projects can be found on my homepage! Here are a few highlights:</p>
-		&cir; Corey, a virtual assisstant<br>
-		&cir; 2048 Remake<br>
-		&cir; Web Chat Video Conferencing<br>
-		&cir; Color Swirl<br>
-	</div>
-
-	<div class="overlay"  id="contact">
-		<script type="text/javascript">var submitted=false;</script>
-     	<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/about';}"></iframe>
-		<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScBYpKgMvnS19PHhM4M3ZycGi2tlfokvxHtKz_fQf8hbETD_g/formResponse" target="hidden_iframe" onsubmit="submitted=true;" method="POST"><!--target="_self"-->
-			<label for="name">Name</label>
-			<input id="name" name="entry.149048477" type="text" placeholder="Zane Wesley" required>
-
-			<label for="email">Email</label>
-			<input id="email" name="entry.1578033212" type="email" placeholder="you@email.com" required>
-
-			<label for="msg">Message</label>
-			<textarea id="msg" name="entry.1950191769" required></textarea>
-
-			<button tyoe="submit">Send</button>
-		</form>
-		<!--https://docs.google.com/forms/d/e/1FAIpQLScBYpKgMvnS19PHhM4M3ZycGi2tlfokvxHtKz_fQf8hbETD_g/viewform?usp=pp_url&entry.149048477=Zane+Harrison&entry.1578033212=zane.wesley@outlook.com&entry.1950191769=Test+message-->
-	</div>
+	<footer>
+		<br>
+		Copyright &copy; Zane Wesley 2021. All rights reserved.
+	</footer>
 
 	<script>
-		var open;
-		function showOverlay(overlay, text) {
-			open = overlay;
-			document.getElementById(overlay).style.display="block";
-			document.getElementById(overlay).classList.add('animate__animated', 'animate__bounceInUp');
-			document.querySelector('header').classList.add('animate__animated', 'animate__slideOutUp', 'animate__faster');
-			document.querySelector('ul').classList.add('animate__animated', 'animate__fadeOutUp', 'animate__faster', 'disabled');
-			setTimeout(function() {
-				document.querySelector('header h1').innerHTML='<span>&#8592;</div> '+text;
-				document.querySelector('header').classList.remove('animate__animated', 'animate__slideOutUp', 'animate__faster');
-				document.querySelector('header').classList.add('animate__animated', 'animate__zoomInDown', 'animate__fast');
-				setTimeout(function() {
-					document.querySelector('ul').style.display="none";
-				}, 200);
-			}, 200);
-		}
+		var typeIntro = new TypeIt("#intro h2", {
+			speed: 50,
+			startDelay: 900
+		})
+		.type("Intro", {delay: 100});
 
-		function showMain() {
-			document.getElementById(open).style.display="none";
-			document.getElementById(open).classList.remove('animate__animated', 'animate__bounceInUp');
-			document.querySelector('header').classList.add('animate__animated', 'animate__slideOutUp', 'animate__faster');
-			document.getElementById(open).classList.add('animate__animated', 'animate__fadeOutUp', 'animate__faster');
-			setTimeout(function() {
-				document.querySelector('header h1').innerText="About Me";
-				document.querySelector('header').classList.remove('animate__animated', 'animate__slideOutUp', 'animate__faster');
-				document.querySelector('header').classList.add('animate__animated', 'animate__zoomInUp');
-				document.querySelector('ul').style.display="block";
-				document.querySelector('ul').classList.remove('animate__animated', 'animate__backInUp', 'animate__fadeOutUp', 'animate__faster', 'disabled');
-				document.querySelector('ul').classList.add('animate__animated', 'animate__backInUp');
-				document.getElementById(open).classList.remove('animate__animated', 'animate__fadeOutUp', 'animate__faster');
-			}, 200);
-		}
+		var typeLanguages = new TypeIt("#languages h2", {
+			speed: 50,
+			startDelay: 900
+		})
+		.type("Coding Languages", {delay: 100});
+
+		var typeSocials = new TypeIt("#socials h2", {
+			speed: 50,
+			startDelay: 900
+		})
+		.type("Socials", {delay: 100});
+
+		var typeForm = new TypeIt("#contact h2", {
+			speed: 50,
+			startDelay: 900
+		})
+		.type("Contact Me", {delay: 100});
+
+		typeIntro.go();
+		typeLanguages.go();
+		typeSocials.go();
+		typeForm.go();
+
+		setTimeout(function() {
+			document.querySelectorAll('.ti-cursor').forEach(function(elem) {
+				elem.style.display='none';
+			});
+		}, 5000);
+		
 	</script>
 </body>
 </html>
