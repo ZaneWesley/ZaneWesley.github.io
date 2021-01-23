@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+	<link rel="apple-touch-icon-precomposed" href="images/home-icon.svg">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<title>About Me</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			overflow-x: hidden;
+		}
+		html, body {
+			width: 100vw;
+			height: 100vh;
+		}
+		body {
+			background-color: #1F1B4E;
+			color: #fff;
+			font-family: Calibri, sans-serif;
+			background-image: linear-gradient(45deg, #02001F, #2980b9);
+			overflow: hidden;
+		}
+		header {
+			text-align: center;
+			overflow: hidden;
+			font-size: 2em;
+			padding-bottom: 2em;
+		}
+		header h1 {
+			cursor: pointer;
+		}
+		ul {
+			color: #fff;
+			font-size: 3em;
+			animation-delay: 0.1s;/*0.3s*/
+			text-align: center;
+			overflow: hidden;
+			padding: 0;
+			display: block;
+		}
+		ul, li {
+			width: 100%;
+		}
+		ul.disabled > li {
+			cursor: default!important;
+		}
+		li {
+			cursor: pointer;
+		}
+		li:hover {
+			animation: rubberBand;
+			animation-duration: 0.7s;
+		}
+		a {
+			color:#fff;
+		}
+		.overlay {
+			display: none;
+			padding: 1em;
+			font-size: 1.5em;
+		}
+		.overlay h1 {
+			font-size: 3em;
+			text-align: center;
+		}
+		input, textarea {
+			border: 1px solid #ccc;
+			padding: 8px;
+			display: block;
+			width: 50%;
+			outline: none;
+		}
+		textarea {
+			resize: vertical;
+		}
+		button {
+			padding: 8px 16px;
+			user-select: none;
+			border: none;
+			text-align: center;
+    		cursor: pointer;
+    		color: #fff;
+    		background-color: #00b0ff;
+		}
+		@media (max-width:755px) {
+			input, textarea {
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header class="animate__animated animate__zoomInUp">
+		<h1 onclick="if(open) {showMain()}">About Me</h1>
+	</header>
+
+	<ul class="animate__animated animate__backInUp">
+		<li id="bio-li" onclick="if(!this.parentNode.classList.contains('disabled')) { showOverlay('bio', 'Bio') }">Bio</li>
+		<li id="projects-li" onclick="if(!this.parentNode.classList.contains('disabled')) { showOverlay('projects', 'Projects')}">Projects</li>
+		<li id="contact-li" onclick="if(!this.parentNode.classList.contains('disabled')) { showOverlay('contact', 'Contact Me')}">Contact Me</li>
+	</ul>
+
+	<div class="overlay" id="bio">
+		<p>Hi! I am Zane! I love to code, and I especially love coding useful web apps. I also love running, playing soccer, and hanging out with friends. I absolutely LOVE Google! I plan on working for them or starting a rival company someday. I am a Christian and love Jesus with all my heart. Lastly, I am a survivor of COVID-19. Follow me on <a href="https://github.com/zanewesley">GitHub</a> and <a href="https://codepen.io/zanewesley">CodePen</a>!</p>
+	</div>
+
+	<div class="overlay"  id="projects">
+		<p>All of my projects can be found on my homepage! Here are a few highlights:</p>
+		&cir; Corey, a virtual assisstant<br>
+		&cir; 2048 Remake<br>
+		&cir; Web Chat Videeo Conferencing<br>
+		&cir; Color Swirl<br>
+	</div>
+
+	<div class="overlay"  id="contact">
+		<script type="text/javascript">var submitted=false;</script>
+     	<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/about';}"></iframe>
+		<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScBYpKgMvnS19PHhM4M3ZycGi2tlfokvxHtKz_fQf8hbETD_g/formResponse" target="hidden_iframe" onsubmit="submitted=true;" method="POST"><!--target="_self"-->
+			<label for="name">Name</label>
+			<input id="name" name="entry.149048477" type="text" placeholder="Zane Wesley" required>
+
+			<label for="email">Email</label>
+			<input id="email" name="entry.1578033212" type="email" placeholder="you@email.com" required>
+
+			<label for="msg">Message</label>
+			<textarea id="msg" name="entry.1950191769" required></textarea>
+
+			<button tyoe="submit">Send</button>
+		</form>
+		<!--https://docs.google.com/forms/d/e/1FAIpQLScBYpKgMvnS19PHhM4M3ZycGi2tlfokvxHtKz_fQf8hbETD_g/viewform?usp=pp_url&entry.149048477=Zane+Harrison&entry.1578033212=zane.wesley@outlook.com&entry.1950191769=Test+message-->
+	</div>
+
+	<script>
+		var open;
+		function showOverlay(overlay, text) {
+			open = overlay;
+			document.getElementById(overlay).style.display="block";
+			document.getElementById(overlay).classList.add('animate__animated', 'animate__bounceInUp');
+			document.querySelector('header').classList.add('animate__animated', 'animate__slideOutUp', 'animate__faster');
+			document.querySelector('ul').classList.add('animate__animated', 'animate__fadeOutUp', 'animate__faster', 'disabled');
+			setTimeout(function() {
+				document.querySelector('header h1').innerHTML='<span>&#8592;</div> '+text;
+				document.querySelector('header').classList.remove('animate__animated', 'animate__slideOutUp', 'animate__faster');
+				document.querySelector('header').classList.add('animate__animated', 'animate__zoomInDown', 'animate__fast');
+				setTimeout(function() {
+					document.querySelector('ul').style.display="none";
+				}, 200);
+			}, 200);
+		}
+
+		function showMain() {
+			document.getElementById(open).style.display="none";
+			document.getElementById(open).classList.remove('animate__animated', 'animate__bounceInUp');
+			document.querySelector('header').classList.add('animate__animated', 'animate__slideOutUp', 'animate__faster');
+			document.getElementById(open).classList.add('animate__animated', 'animate__fadeOutUp', 'animate__faster');
+			setTimeout(function() {
+				document.querySelector('header h1').innerText="About Me";
+				document.querySelector('header').classList.remove('animate__animated', 'animate__slideOutUp', 'animate__faster');
+				document.querySelector('header').classList.add('animate__animated', 'animate__zoomInUp');
+				document.querySelector('ul').style.display="block";
+				document.querySelector('ul').classList.remove('animate__animated', 'animate__backInUp', 'animate__fadeOutUp', 'animate__faster', 'disabled');
+				document.querySelector('ul').classList.add('animate__animated', 'animate__backInUp');
+				document.getElementById(open).classList.remove('animate__animated', 'animate__fadeOutUp', 'animate__faster');
+			}, 200);
+		}
+	</script>
+</body>
+</html>
