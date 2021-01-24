@@ -389,10 +389,10 @@
 
 		swipedetect(canvas, function(swipedir){
 		    //swipedir contains either "none", "left", "right", "top", or "down"
-		    if (swipedir =='up') {
+		    if (swipedir =='down') {
 		        runnerLane = laneUp();
 				runner.y = getLaneY(runnerLane);
-		    } else if(swipedir =='down') {
+		    } else if(swipedir =='up') {
 		    	runnerLane = laneDown();
 				runner.y = getLaneY(runnerLane);
 		    }
