@@ -5,7 +5,9 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="icon" type="icon/jpg" href="street.jpg">
-	<title>Strata Sprint</title>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+	<script src="touchswipe.js"></script>
+	<title>Road Runner</title>
 
 	<style>
 		html, body {
@@ -17,6 +19,7 @@
 			padding: 0;
 			overflow: hidden;
 			user-select: none;
+			font-family: 'Open Sans', sans-serif;
 		}
 		canvas {
 			position: absolute;
@@ -26,15 +29,87 @@
 		img {
 			display: none;
 		}
+		button {
+			border: 3px solid yellow;
+    		background: #343434;
+    		font-size: 1rem;
+		    text-shadow: none;
+		    line-height: 1.2;
+		    display: inline-block;
+		    padding: 10px 16px;
+		    margin: 0 10px 0 0;
+		    position: relative;
+		    border-radius: 4px;
+		    color: white;
+		    cursor: pointer;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		    text-decoration: none !important;
+		    text-align: center;
+		    font-weight: normal !important;
+		    outline: none;
+		}
+		#startScreen, #endScreen {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 50%;
+			height: 75%;
+			background-color: #fff;
+			border-radius: 10px;
+			z-index: 5;
+			transition: all 1s;
+			padding: 1em;
+		}
+		#scoreboard {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 5;
+			text-align: right;
+		}
+		#scoreboard h3 {
+			padding-right: 1em;
+		}
+		#endScreen {
+			opacity: 0;
+			display: none;
+		}
+		@media(max-width: 775px) {
+			#startScreen, #endScreen {
+				width: 95%;
+				height: 90%;
+			}
+		}
 	</style>
 </head>
 <body>
+
+	<div id="scoreboard">
+		<h3>Score: <span id="score"></span></h3>
+	</div>
+
+	<div id="startScreen">
+		<h1>Road Runner</h1>
+		<p><b>OBJECTIVE:</b> To keep the cars from hitting the traffic cone.</p>
+		<p><b>HOW TO PLAY:</b> <span id="desktop-instr">Use the up arrow key or the <i>w</i> key to move up a lane. Use the down arrow or the <i>s</i> key to move down a lane.</span><span id="mobile-instr">Swipe up and down to change lanes.</span></p>
+		<button id="start" onclick="start()">Start</button>
+	</div>
+
 	<canvas id="canvas">Sorry, this game is not supported in this browser.</canvas>
 
 	<img id="car1" src="car-1.png">
 	<img id="car2" src="car-2.png">
 	<img id="car3" src="car-3.png">
 	<img id="car4" src="car-4.png">
+
+	<div id="endScreen">
+		<h1>Game Over!</h1>
+		<h3>Your Score: <span id="finalScore"></span></h3>
+		<button onclick="restart()">Restart</button>
+	</div>
 
 	<script>
 		window.requestAnimationFrame =
@@ -45,6 +120,7 @@
 		    function(cb) {
 		    	setTimeout(cb, 17);
 		    };
+		var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 		   var canvas = document.getElementById('canvas'),
 		   ctx = canvas.getContext('2d'),
 		   cWidth = canvas.width,
@@ -56,8 +132,9 @@
 		   dashLine = 100,
 		   dashGap = 100,
 		   dashOffset = 3,
-		   speed = 1,
-		   carSpeed = 3,
+		   speed = 3,
+		   carSpeed = 5,
+		   carWidth,
 		   maxCars = 4,
 		   lane1 = [],
 		   lane2 = [],
@@ -65,8 +142,52 @@
 		   lane1Delay = 0,
 		   lane2Delay = 3000,
 		   lane3Delay = 5000,
+		   runner,
+		   runnerLane,
 		   gameTimer = 0,
-		   speedIncreaseInterval = 0;
+		   score = 0,
+		   speedIncreaseInterval = 0,
+		   scoreInterval = 0;
+
+		function init() {
+			var urlParams = new URLSearchParams(window.location.search);
+			if(urlParams.has('restart') && urlParams.get('restart') == 'true') {
+				start();
+			}
+			if(isMobile()) {
+				document.getElementById('desktop-instr').style.display='none';
+			} else {
+				document.getElementById('mobile-instr').style.display='none';
+			}
+			ctx.clearRect(0, 0, cWidth, cHeight);
+			resize();
+			//Road rectangle
+			ctx.beginPath();
+			ctx.fillStyle="#343434";
+			ctx.fillRect(0, cHeight/10, cWidth, cHeight-cHeight/5);
+			ctx.fill();
+			//Dashed lines
+			ctx.beginPath();
+			ctx.setLineDash([dashLine, dashGap]);//20 10
+			ctx.lineDashOffset = dashOffset;
+			dashOffset+=speed;
+			ctx.strokeStyle='#fff';
+			ctx.lineWidth=5;
+			ctx.moveTo(0, cHeight/2.7);
+			ctx.lineTo(cWidth, cHeight/2.7);
+			ctx.moveTo(0, cHeight-cHeight/2.7);
+			ctx.lineTo(cWidth, cHeight-cHeight/2.7);
+			ctx.stroke();
+			//Side lines
+			ctx.beginPath();
+			ctx.setLineDash([]);
+			ctx.strokeStyle="yellow";
+			ctx.moveTo(0, cHeight/8);
+			ctx.lineTo(cWidth, cHeight/8);
+			ctx.moveTo(0, cHeight-cHeight/8);
+			ctx.lineTo(cWidth, cHeight-cHeight/8);
+			ctx.stroke();
+		}
 
 		function update() {
 			ctx.clearRect(0, 0, cWidth, cHeight);
@@ -103,39 +224,94 @@
 			ctx.drawImage(car3, 0, cHeight-cHeight/3.5, cWidth/6.5, cHeight/8);*/
 			for(var i=0; i< maxCars; i++) {
 				var car = lane1[i];
-				if(car && car.x < -1*cWidth/6.5) {
+				if(car && car.x < -1*carWidth) {
 					removeItemOnce(lane1, lane1[i]);
-					addCar(lane1);
+					setTimeout(function() {addCar(lane1)}, lane1Delay);
 				} else if(car) {
-					ctx.drawImage(car.color, car.x, car.y, cWidth/6.5, cHeight/8);
+					ctx.drawImage(car.color, car.x, car.y, carWidth, cHeight/8);
 					car.x-=car.speed;
 				}
 			}
 			for(var i=0; i< maxCars; i++) {
 				var car = lane2[i];
-				if(car && car.x < -1*cWidth/6.5) {
+				if(car && car.x < -1*carWidth) {
 					removeItemOnce(lane2, lane2[i]);
-					addCar(lane2);
+					setTimeout(function() {addCar(lane2)}, lane2Delay);
 				} else if(car) {
-					ctx.drawImage(car.color, car.x, car.y, cWidth/6.5, cHeight/8);
+					ctx.drawImage(car.color, car.x, car.y, carWidth, cHeight/8);
 					car.x-=car.speed;
 				}
 			}
 			for(var i=0; i< maxCars; i++) {
 				var car = lane3[i];
-				if(car && car.x < -1*cWidth/6.5) {
+				if(car && car.x < -1*carWidth) {
 					removeItemOnce(lane3, lane3[i]);
-					addCar(lane3);
+					setTimeout(function() {addCar(lane3)}, lane3Delay);
 				} else if(car) {
-					ctx.drawImage(car.color, car.x, car.y, cWidth/6.5, cHeight/8);
+					ctx.drawImage(car.color, car.x, car.y, carWidth, cHeight/8);
 					car.x-=car.speed;
 				}
 			}
 			lane1Delay = rand(0, 2000);
 		   	lane2Delay = rand(3000, 5000);
-		   	lane3Delay = rand(5000, 7000);
+		   	lane3Delay = rand(0, 5000);
+
+		   	//Player
+		   	ctx.fillStyle = "orange";
+		   	ctx.beginPath();
+		   	if(!isMobile()) {
+		   		ctx.arc(runner.x, runner.y, 50, 0, 2 * Math.PI);
+		   	} else {
+		   		ctx.arc(runner.x, runner.y, 30, 0, 2 * Math.PI);
+		   	}
+		   	ctx.fill();
+
+		   	//Hit detection
+		   	if(!isMobile()) {
+			   	for(var i=0; i< maxCars; i++) {
+					var car = lane1[i];
+					if(car && car.x == (runner.x+40) && runnerLane == 1) {
+						gameOver();
+					}
+				}
+				for(var i=0; i< maxCars; i++) {
+					var car = lane2[i];
+					if(car && car.x == (runner.x+40) && runnerLane == 2) {
+						gameOver();
+					}
+				}
+				for(var i=0; i< maxCars; i++) {
+					var car = lane3[i];
+					if(car && car.x == (runner.x+40) && runnerLane == 3) {
+						gameOver();
+					}
+				}
+			}
+			if(isMobile()) {
+				for(var i=0; i< maxCars; i++) {
+					var car = lane1[i];
+					if(car && car.x == (runner.x+20) && runnerLane == 1) {
+						gameOver();
+					}
+				}
+				for(var i=0; i< maxCars; i++) {
+					var car = lane2[i];
+					if(car && car.x == (runner.x+20) && runnerLane == 2) {
+						gameOver();
+					}
+				}
+				for(var i=0; i< maxCars; i++) {
+					var car = lane3[i];
+					if(car && car.x == (runner.x+20) && runnerLane == 3) {
+						gameOver();
+					}
+				}
+			}
+
+		   	//Game Timer, Pace & Score
 			gameTimer++;
-			if(speedIncreaseInterval > 600) {//3600
+			//60 fps * 10 seconds
+			if(speedIncreaseInterval > 600/*10s*/) {//3600?
 				speedIncreaseInterval = 0;
 				speed+=1;
 				carSpeed+=1;
@@ -143,10 +319,21 @@
 			} else {
 				speedIncreaseInterval++;
 			}
+			if(scoreInterval > 300/*5s*/) {
+				scoreInterval = 0;
+				score++;
+			} else {
+				scoreInterval++;
+			}
+			document.getElementById('score').innerText=score;
 			requestAnimationFrame(update);
 		}
 
 		function start() {
+			document.getElementById('start').disabled=true;
+			document.getElementById('startScreen').style.opacity='0';
+			setTimeout(function() {document.getElementById('startScreen').style.display='none';}, 1000);
+			resize();
 			setTimeout(function() {
 				addCar(lane1);
 			}, lane1Delay);
@@ -156,8 +343,61 @@
 			setTimeout(function() {
 				addCar(lane3);
 			}, lane3Delay);
+			runnerLane = rand(1, 3);
+			if(!isMobile()) {
+				runner = {ctx:ctx, x:100, y:getLaneY(runnerLane)};
+			} else {
+				runner = {ctx:ctx, x:50, y:getLaneY(runnerLane)};
+			}
 		    update();
 		}
+
+		function gameOver() {
+			update = null;
+			canvas.remove();
+			ctx.clearRect(0, 0, cWidth, cHeight);
+			document.getElementById('finalScore').innerText=score;
+			document.getElementById('endScreen').style.display='block';
+			setTimeout(function() {document.getElementById('endScreen').style.opacity='1'}, 100);
+		}
+
+		function restart() {
+			window.location="?restart=true";
+		}
+
+		document.addEventListener('keyup', function(e) {
+			var key = e.which || e.keyCode;
+			switch(key) {
+				case 40:
+					runnerLane = laneUp();
+					runner.y = getLaneY(runnerLane);
+					break;
+				case 119:
+					runnerLane = laneUp();
+					runner.y = getLaneY(runnerLane);
+					break;
+				case 38:
+					runnerLane = laneDown();
+					runner.y = getLaneY(runnerLane);
+					break;
+				case 115:
+					runnerLane = laneDown();
+					runner.y = getLaneY(runnerLane);
+					break;
+			}
+		});
+
+		swipedetect(canvas, function(swipedir){
+		    //swipedir contains either "none", "left", "right", "top", or "down"
+		    if (swipedir =='up') {
+		        runnerLane = laneUp();
+				runner.y = getLaneY(runnerLane);
+		    } else if(swipedir =='down') {
+		    	runnerLane = laneDown();
+				runner.y = getLaneY(runnerLane);
+		    }
+		});
+
 		function addCar(lane) {
 			switch(lane) {
 				case lane1:
@@ -171,7 +411,6 @@
 					break;
 			}
 		    lane.push(car);
-		    console.log('Car added');
 		}
 		function rand(min, max) {
 		    return Math.floor(Math.random() * (max - min + 1) + min);
@@ -185,7 +424,6 @@
 		  if (index > -1) {
 		    arr.splice(index, 1);
 		  }
-		  console.log('Removed Car');
 		  return arr;
 		}
 		function removeItemAll(arr, value) {
@@ -199,13 +437,62 @@
 		  }
 		  return arr;
 		}
-		start();
+
+		function laneUp() {
+			if(runnerLane+1 > 3) {
+				runnerLane = 3;
+				return runnerLane;
+			} else {
+				runnerLane++;
+				return runnerLane;
+			}
+		}
+
+		function laneDown() {
+			if(runnerLane-1 < 1) {
+				runnerLane = 1;
+				return runnerLane;
+			} else {
+				runnerLane--;
+				return runnerLane;
+			}
+		}
+
+		function getLaneY(lane) {
+			switch(lane) {
+				case 1:
+					return cHeight/4;
+					break;
+				case 2:
+					return cHeight/2;
+					break;
+				case 3:
+					return cHeight/1.3;
+					break;
+			}
+		}
+
+		function isMobile() {
+			if(window.innerWidth > 775) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
 		function resize() {
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
 			cWidth = canvas.width;
 		   cHeight = canvas.height;
+			if(!isMobile()) {
+		   		carWidth = cWidth/6.5;
+		   	} else {
+		   		carWidth = cWidth/3;
+		   	}
 		}
+
+		init();
 	</script>
 </body>
 </html>
