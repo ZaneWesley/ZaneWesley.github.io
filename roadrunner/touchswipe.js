@@ -6,9 +6,9 @@ function swipedetect(el, callback){
     startY,
     distX,
     distY,
-    threshold = 100, //required min distance traveled to be considered swipe
-    restraint = 100, // maximum distance allowed at the same time in perpendicular direction
-    allowedTime = 300, // maximum time allowed to travel that distance
+    threshold = 50, //required min distance traveled to be considered swipe
+    restraint = 50, // maximum distance allowed at the same time in perpendicular direction
+    allowedTime = 500, // maximum time allowed to travel that distance
     elapsedTime,
     startTime,
     handleswipe = callback || function(swipedir){}
@@ -49,7 +49,7 @@ function swipedetect(el, callback){
 /*
 var el = document.getElementById('someel')
 swipedetect(el, function(swipedir){
-    //swipedir contains either "none", "left", "right", "top", or "down"
+    //swipedir contains either "none", "left", "right", "up", or "down"
     if (swipedir =='left')
         alert('You just swiped left!')
 })
