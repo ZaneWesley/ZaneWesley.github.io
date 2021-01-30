@@ -29,7 +29,7 @@ var darkModeManager = (function () {
 	darkModeToggle.querySelector('svg').style = 'width: 100%; height: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);';
 
 	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-		if(localStorage.getItem("dark-mode") == 'on') {
+		if(!localStorage.getItem("dark-mode") == 'off') {
 			document.body.classList.add('dark');
 		}
 	}
