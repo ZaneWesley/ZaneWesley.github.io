@@ -19,6 +19,7 @@
 	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<script defer src="ui/dark-mode-manager.js"></script>
 	<title>Zane's Apps</title>
 	<style>
 		* {
@@ -30,7 +31,7 @@
 			background-color: #fff;
 			font-family: Calibri, sans-serif;
 			padding-top: 80%;
-			padding-left: 1em;
+			transition: all 1s;
 		}
 		header {
 			background-image: url('images/header-bg.svg');
@@ -64,6 +65,7 @@
 			height: auto;
 			width: 100%;
 			padding: 16px;
+			padding-left: calc(16px + 1em);
 		}
 		.split {
 			position: relative;
@@ -110,6 +112,9 @@
 		}
 		#more img {
 			height: 25em;
+		}
+		footer a {
+			color: #000;
 		}
 		#standalone-frame {
 			position: absolute;
@@ -203,6 +208,20 @@
 		.mobile-visible {
 			display: none;
 		}
+		.dark {
+			background-color: #131417;
+			color: #fff;
+		}
+		.dark .content {
+			background-color: #1e1f26;
+		}
+		.dark footer a {
+			color: #fff;
+		}
+		.dark .cookie-consent {
+			background-color: #3f3d56;
+			color: #fff;
+		}
 		@media (max-width:755px) {
 			header {
 				background-position: right center;
@@ -232,7 +251,7 @@
 		}
 	</style>
 </head>
-<body>
+<body class="">
 	<header>
 		<div id="lights-container"></div>
 		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
@@ -339,7 +358,11 @@
 		</div>
 		<footer>
 			<br>
-			Copyright &copy; Zane Wesley 2021. All rights reserved.
+			<p>Copyright &copy; Zane Wesley 2021. All rights reserved.</p>
+			<p>
+				<a href="/terms-of-service">Terms of Service</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/license">Code License</a>
+			</p>
 		</footer>
 	</div>
 
@@ -348,7 +371,7 @@
 
 	<div class="cookie-consent">
 		<span class="cc-inner">
-			This website uses cookies to ensure you get the best experience.
+			This website uses cookies to ensure you get the best experience. For more information, read the <a href="/terms-of-service">Terms of Service.</a>
 		</span>
 		<div class="cc-btn">
 			<a href="#">Got It!</a>
@@ -378,6 +401,9 @@
 		function ini() {
 			$('.content').css('top', $('header').css('height'));
 			//christmatize.stringLights('#lights-container');
+			if(localStorage.getItem('consent') == 'true') {
+				$('.cookie-consent').hide();
+			}
 		}
 		if (window.matchMedia('(display-mode: standalone)').matches) {
 			$('li').click(function(e) {
@@ -410,6 +436,7 @@
 			e.preventDefault();
 			this.parentNode.parentNode.style.opacity=0;
 			this.parentNode.parentNode.style.visibility='hidden';
+			localStorage.setItem('consent', 'true');
 		});
 		window.addEventListener('resize', ini);
 		ini();
