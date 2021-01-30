@@ -3,7 +3,7 @@
  * https://github.com/zanewesley/license
 */
 
-var darkModeManager = (function () {
+var darkModeManager = (function (mode) {
 
 	'use strict';
 
@@ -28,15 +28,38 @@ var darkModeManager = (function () {
 
 	darkModeToggle.querySelector('svg').style = 'width: 100%; height: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);';
 
-	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-		//if(!localStorage.getItem("dark-mode") == 'off') {
-			document.body.classList.add('dark');
-		//}
-	}
+		switch(mode) {
+			case 'match':
+				if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					localStorage.setItem("dark-mode", "on");
+					document.body.classList.add('dark');
+				} else {
+					localStorage.setItem("dark-mode", "off");
+					document.body.classList.remove('dark');
+				}
+				break;
+			case 'dark':
+				localStorage.setItem("dark-mode", "on");
+				document.body.classList.add('dark');
+				break;
+			case 'light':
+				localStorage.setItem("dark-mode", "off");
+				document.body.classList.remove('dark');
+				break;
+			default:
+				if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					localStorage.setItem("dark-mode", "on");
+					document.body.classList.add('dark');
+				} else {
+					localStorage.setItem("dark-mode", "off");
+					document.body.classList.remove('dark');
+				}
+				break;
+		}
 
-	if(localStorage.getItem("dark-mode") == 'on') {
+	/*if(localStorage.getItem("dark-mode") == 'on') {
 		document.body.classList.add('dark');
-	}
+	}*/
 
 	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
 	    var newColorScheme = e.matches ? "dark" : "light";
