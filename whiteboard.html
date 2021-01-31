@@ -75,7 +75,12 @@
         <button onclick="this.parentNode.toggleClass('open')">Close</button>
     </div>
         <script>
-            var ctx, color = "#000", cx = 0, cy = 55;
+            var ctx,
+            color = "#000",
+            clx = 0,//Click x
+            cly = 55,//click y
+            cx = 0,//mouse x
+            cy = 55;//mouse y
             $(document).ready(function() {
                 // setup a new canvas for drawing wait for device init
                 setTimeout(function() {
@@ -136,7 +141,6 @@
                 $("#canvas").drawTouch();
                 $("#canvas").drawPointer();
                 $("#canvas").drawMouse();
-                //$("#canvas").on("touchstart click", dot);
                 var canvas = document.getElementById("canvas");
                 cHistory.saveState(canvas);
             }
@@ -149,6 +153,8 @@
                     y = e.changedTouches[0].pageY - 44;
                     cx = x;
                     cy = y;
+                    clx = x;
+                    cly = y;
                     ctx.moveTo(x, y);
                     dot();
                 };
@@ -174,6 +180,8 @@
                     y = e.pageY - 44;
                     cx = x;
                     cy = y;
+                    clx = x;
+                    cly = y;
                     ctx.moveTo(x, y);
                     dot();
                 };
@@ -200,6 +208,8 @@
                     y = e.pageY - 44;
                     cx = x;
                     cy = y;
+                    clx = x;
+                    cly = y;
                     ctx.moveTo(x, y);
                     dot();
 
@@ -252,12 +262,21 @@
                 }
             }
             function dot() {
-                var canvas = document.getElementById("canvas");
-                cHistory.saveState(canvas);
-                ctx.beginPath();
-                ctx.arc(cx, cy, 3, 0, 2 * Math.PI);
-                ctx.fill();
-                cHistory.saveState(canvas);
+                setTimeout(function() {
+                    if(isDrag()) return;
+                    var canvas = document.getElementById("canvas");
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    cHistory.saveState(canvas);
+                }, 150);
+            }
+            function isDrag() {
+                if(clx != cx) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
             var PASTE_CLIPBOARD = new pasteFromClipboard("canvas", true);
             function pasteFromClipboard(canvas_id, autoresize) {
@@ -519,6 +538,7 @@
                 width: 100%;
                 border-bottom: 1px solid #ccc;
                 box-shadow: 0px 5px 5px #eee;
+                background: #fff;
             }
 
             #btn-container {
