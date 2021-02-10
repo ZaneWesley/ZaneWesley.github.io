@@ -16,7 +16,7 @@ var ch;
 var gameStarted = false;
 
 /*
-	Init Functions
+	Init Functions 
 */
 
 function initBack() {
