@@ -4,7 +4,7 @@
 */
 
 /*
-	Canvas Vard
+	Canvas Vars
 */
 var backCanvas = document.getElementById('backCanvas');
 var mainCanvas = document.getElementById('mainCanvas');
@@ -13,6 +13,7 @@ var mainContext = mainCanvas.getContext('2d');
 var orientation;
 var cw;
 var ch;
+var gameStarted = false;
 
 /*
 	Init Functions
@@ -21,14 +22,27 @@ var ch;
 function initBack() {
 	var img = document.getElementById('bg');
 	backContext.drawImage(img, 0, 0, cw, ch);
-	img = document.getElementById('text-bubble');
-	backContext.drawImage(img, 0, 0, 100, 50);
+	//img = document.getElementById('bg-bottom');
+	//backContext.drawImage(img, 0, ch-(ch/2.7), cw, ch/2.7);
 }
 
 function initFront() {
 	x = mainCanvas.width/2;
 	y = mainCanvas.height-60;
-	update();
+	mainContext.font = "50px Balsamiq Sans";
+	mainContext.fillStyle = "#FB6600";
+	mainContext.strokeStyle = "#9BCB1C";
+	mainContext.lineWidth = 15;
+	mainContext.strokeText("CLICK TO START", cw/6, ch-(ch/4));
+	mainContext.fillText("CLICK TO START", cw/6, ch-(ch/4));
+	mainCanvas.addEventListener('click', start);
+}
+
+function start() {
+	if(!gameStarted) {
+		update();
+		gameStarted = true;
+	}	
 }
 
 /*
@@ -165,6 +179,15 @@ function drawLives() {
   mainContext.fillText("Lives: "+lives, mainCanvas.width-80, 20);
   //mainContext.strokeText("Lives: "+lives, mainCanvas.width-80, 20);
 }
+function drawBackground() {
+	var img = document.getElementById('bg');
+	backContext.drawImage(img, 0, 0, cw, ch);
+	img = document.getElementById('bg-top');
+	backContext.drawImage(img, 0, 0, cw, ch/4.6);
+	img = document.getElementById('text-bubble');
+	backContext.drawImage(img, 0, 2, 100, 30);
+	backContext.drawImage(img, cw-100, 2, 100, 30);
+}
 
 function update() {
   mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
@@ -174,11 +197,7 @@ function update() {
   drawScore();
   drawLives();
   collisionDetection();
-  var img = document.getElementById('bg-top');
-  backContext.drawImage(img, 0, 0, cw, ch/4.6);
-  img = document.getElementById('text-bubble');
-  backContext.drawImage(img, 0, 2, 100, 30);
-  backContext.drawImage(img, cw-100, 2, 100, 30);
+  drawBackground();
 
   if(x + dx > mainCanvas.width-ballRadius || x + dx < ballRadius) {
     dx = -dx;
@@ -193,8 +212,7 @@ function update() {
     else {
       lives--;
       if(!lives) {
-        alert("GAME OVER");
-        document.location.reload();
+        looseHandler();
       }
       else {
         x = mainCanvas.width/2;
@@ -226,6 +244,19 @@ function winHandler() {
 		cancelAnimationFrame(update);
 	};
 	mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+	backContext.clearRect(0, 0, backCanvas.width, backCanvas.height);
+	var img = document.getElementById('bg');
+	backContext.drawImage(img, 0, 0, cw, ch);
+}
+
+function looseHandler() {
+	window.update=function() {
+		cancelAnimationFrame(update);
+	};
+	mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+	backContext.clearRect(0, 0, backCanvas.width, backCanvas.height);
+	var img = document.getElementById('bg');
+	backContext.drawImage(img, 0, 0, cw, ch);
 }
 
 /*
