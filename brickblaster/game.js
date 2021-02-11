@@ -19,8 +19,13 @@ var gameStarted = false;
 	Init Functions
 */
 
+function closeSplashScreen() {
+	document.getElementById('splash').remove();
+	document.getElementById('loader').remove();
+}
+
 function initBack() {
-	var img = document.getElementById('bg');
+	var img = document.getElementById('splash-bg');
 	backContext.drawImage(img, 0, 0, cw, ch);
 	//img = document.getElementById('bg-bottom');
 	//backContext.drawImage(img, 0, ch-(ch/2.7), cw, ch/2.7);
@@ -35,14 +40,7 @@ function initFront() {
 	mainContext.lineWidth = 15;
 	mainContext.strokeText("CLICK TO START", cw/6, ch-(ch/4));
 	mainContext.fillText("CLICK TO START", cw/6, ch-(ch/4));
-	mainCanvas.addEventListener('click', start);
-}
-
-function start() {
-	if(!gameStarted) {
-		update();
-		gameStarted = true;
-	}	
+	mainCanvas.addEventListener('click', toLevels);
 }
 
 /*
@@ -239,6 +237,23 @@ function update() {
 /*
 	Game Functions
 */
+function toLevels() {
+	mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+	backContext.clearRect(0, 0, backCanvas.width, backCanvas.height);
+	var img = document.getElementById('bg');
+	backContext.drawImage(img, 0, 0, cw, ch);
+
+	//
+}
+
+function start(level) {
+	if(gameStarted) {
+		return;
+	}
+	gameStarted = true;
+	update();
+}
+
 function winHandler() {
 	window.update=function() {
 		cancelAnimationFrame(update);
@@ -247,6 +262,7 @@ function winHandler() {
 	backContext.clearRect(0, 0, backCanvas.width, backCanvas.height);
 	var img = document.getElementById('bg');
 	backContext.drawImage(img, 0, 0, cw, ch);
+	gameStarted=false;
 }
 
 function looseHandler() {
@@ -257,6 +273,7 @@ function looseHandler() {
 	backContext.clearRect(0, 0, backCanvas.width, backCanvas.height);
 	var img = document.getElementById('bg');
 	backContext.drawImage(img, 0, 0, cw, ch);
+	gameStarted=false;
 }
 
 /*
@@ -323,7 +340,10 @@ window.addEventListener('orientationchange', function(e) {
 });
 
 window.addEventListener('DOMContentLoaded', function(e) {
-	resizeHandler();
-	initBack();
-	initFront();
+	setTimeout(function() {
+		resizeHandler();
+		closeSplashScreen();
+		initBack();
+		initFront();
+	}, 2000);
 });
