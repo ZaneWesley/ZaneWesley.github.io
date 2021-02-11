@@ -37,16 +37,199 @@
 		img {
 			display: none;
 		}
+		#splash {
+			position: absolute;
+			left: 50%;
+			top: 0;
+			transform: translateX(-50%);
+			z-index: 4;
+			width: 567.75px;
+			height: 100%;
+			background-image: url(images/splash.png);
+			background-size: 100% 100%;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		#loader {
+			position: absolute;
+			left: 50%;
+			bottom: 23%;
+			transform: translateX(-50%);
+			z-index: 5;
+		}
+		.loader {
+		  color: #FB6600;
+		  position: relative;
+		  display: inline-block;
+		  margin-top: 40px;
+		  font-family: Balsamiq Sans, sans-serif;
+		  font-size: 48px;
+		  letter-spacing: 4px;
+		  box-sizing: border-box;
+		}
+		.loader::before {
+		  content: '';  
+		  position: absolute;
+		  right: 72px;
+		  bottom: 10px;
+		  height: 28px;
+		  width: 5.15px;
+		  background: currentColor;
+		  box-sizing: border-box;
+		  animation: animloader1 1s linear infinite alternate;
+		}
+		.loader::after {
+		  content: '';  
+		  width: 10px;
+		  height: 10px;
+		  position: absolute;
+		  left: 125px;
+		  top: 2px;
+		  border-radius: 50%;
+		  background: #9BCB1C;
+		  box-sizing: border-box;
+		  animation: animloader 1s linear infinite alternate;
+		}
+
+		@keyframes animloader {
+		  0% {
+		    transform: translate(0px, 0px) scaleX(1);
+		  }
+		  14% {
+		    transform: translate(-12px, -16px) scaleX(1.05);
+		  }
+		  28% {
+		    transform: translate(-27px, -28px) scaleX(1.07);
+		  }
+		  42% {
+		    transform: translate(-46px, -35px) scaleX(1.1);
+		  }
+		  57% {
+		    transform: translate(-70px, -37px) scaleX(1.1);
+		  }
+		  71% {
+		    transform: translate(-94px, -32px) scaleX(1.07);
+		  }
+		  85% {
+		    transform: translate(-111px, -22px) scaleX(1.05);
+		  }
+		  100% {
+		    transform: translate(-125px, -9px) scaleX(1);
+		  }
+		}
+
+		@keyframes animloader1 {
+		  0% {
+		    box-shadow: 0 -6px, -122.9px -8px;
+		  }
+		  25%, 75% {
+		    box-shadow: 0 0px, -122.9px -8px;
+		  }
+		  100% {
+		    box-shadow: 0 0px, -122.9px -16px;
+		  }
+		}
+
+		#levels:before {
+			content: 'Levels';
+			font-size: 3em;
+			position: absolute;
+			top: -0.7em;
+			left: 0;
+			color: green;
+			width: 100%;
+			text-align: center;
+		}
+		#levels {
+			position: absolute;
+			left: 30%;
+			top: 30%;
+			transform: translate(-30%, -30%);
+			width: 350px;
+			height: 250px;
+			background-image: url('images/board.png');
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			z-index: 4;
+			padding: 3.5em 2em;
+			text-align: justify;
+		}
+		#levels:after {
+			content: '';
+			width: 100%;
+			display: inline-block;
+		}
+		#levels .level {
+			background-color: #5E3300;
+			color: #fff;
+			padding: 0.5em 0.8em;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: 0.2s;
+			font-size: 24px;
+		}
+		#levels .level:hover {
+			padding: 0.6em 0.9em;
+		}
+		.appear {
+	        animation-name: bounce-in;
+	        animation-duration: 2s;
+        	animation-iteration-count: 1;/*infinite*/
+        	animation-fill-mode: forwards;
+	        animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+	        transform-origin: bottom;
+	    }
+	    @keyframes bounce-in {
+	        0%   { transform: scale(1,1)      translateY(0); opacity: 0;}
+	        10%  { transform: scale(.9,1.1)   translateY(-100px); }
+	        30%  { transform: scale(1.05,.95) translateY(0); opacity: 1; }
+	        50%  { transform: scale(1,1)      translateY(-7px); }
+	        64%  { transform: scale(1,1)      translateY(0); }
+	        100% { transform: scale(1,1)      translateY(0);}
+	    }
+	    @keyframes bounce-in-proto {
+	        0%   { transform: scale(1,1)      translateY(0); }
+	        10%  { transform: scale(1.1,.9)   translateY(0); }
+	        30%  { transform: scale(.9,1.1)   translateY(-100px); }
+	        50%  { transform: scale(1.05,.95) translateY(0); }
+	        57%  { transform: scale(1,1)      translateY(-7px); }
+	        64%  { transform: scale(1,1)      translateY(0); }
+	        100% { transform: scale(1,1)      translateY(0); }
+	    }
+	    @media(max-width: 775px) {
+	    	#splash {
+	    		width: 100%;
+	    		height: 100%;
+	    		top: 0;
+	    		left: 0;
+	    		transform: none;
+	    	}
+	    	#levels {
+	    		left: 7%;
+	    		top: 30%;
+	    		width: 85%;
+	    	}
+	    }
 	</style>
 </head>
 <body>
 	<canvas id="backCanvas"></canvas>
 	<canvas id="mainCanvas"></canvas>
+	<div id="splash"></div>
+	<div id="loader">
+		<span class="loader">Load&nbsp;ng</span>
+	</div>
+	<div id="levels" class="appear">
+		<span class="level">1</span>
+		<span class="level">2</span>
+		<span class="level">3</span>
+		<span class="level">4</span>
+	</div>
+	<img id="splash-bg" src="images/splash.png">
 	<img id="bg" src="images/bg.png">
 	<img id="bg-top" src="images/bg-top.png">
 	<img id="bg-bottom" src="images/bg-bottom.png">
 	<img id="text-bubble" src="images/text-bubble.png">
-	<img id="board" src="images/board.png">
 	<script defer src="game.js"></script>
 </body>
 </html>
