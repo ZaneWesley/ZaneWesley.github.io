@@ -14,6 +14,7 @@ var orientation;
 var cw;
 var ch;
 var gameStarted = false;
+var paused = false;
 
 /*
 	Init Functions
@@ -34,12 +35,21 @@ function initBack() {
 function initFront() {
 	x = mainCanvas.width/2;
 	y = mainCanvas.height-60;
-	mainContext.font = "50px Balsamiq Sans";
+	if(!isMobile()) {
+		mainContext.font = "50px Balsamiq Sans";
+	} else {
+		mainContext.font = "40px Balsamiq Sans";
+	}
 	mainContext.fillStyle = "#FB6600";
 	mainContext.strokeStyle = "#9BCB1C";
 	mainContext.lineWidth = 15;
-	mainContext.strokeText("CLICK TO START", cw/6, ch-(ch/4));
-	mainContext.fillText("CLICK TO START", cw/6, ch-(ch/4));
+	if(!isMobile()) {
+		mainContext.strokeText("CLICK TO START", cw/6, ch-(ch/4));
+		mainContext.fillText("CLICK TO START", cw/6, ch-(ch/4));
+	} else {
+		mainContext.strokeText("CLICK TO START", cw/10, ch-(ch/4));
+		mainContext.fillText("CLICK TO START", cw/10, ch-(ch/4));
+	}
 	mainCanvas.addEventListener('click', toLevels);
 }
 
@@ -108,7 +118,7 @@ function mouseMoveHandler(e) {
   	var relativeX = e.clientX - mainCanvas.offsetLeft/2;
   } else if(e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel') {
   	var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-    var relativeX = x = touch.pageX;
+    var relativeX = touch.pageX;
   }
   if(relativeX > 0 && relativeX < mainCanvas.width) {
     paddleX = relativeX - paddleWidth/2;
@@ -240,18 +250,28 @@ function update() {
 function toLevels() {
 	mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
 	backContext.clearRect(0, 0, backCanvas.width, backCanvas.height);
-	var img = document.getElementById('bg');
+	var img = document.getElementById('splash-bg');
 	backContext.drawImage(img, 0, 0, cw, ch);
 
-	//
+	mainCanvas.removeEventListener('click', toLevels);
+
+	document.getElementById('levels').classList.add('appear');
 }
 
 function start(level) {
 	if(gameStarted) {
 		return;
 	}
-	gameStarted = true;
-	update();
+	if(!paused) {
+		switch(level) {
+			case 1:
+				//
+				break;
+		}
+		document.getElementById('levels').classList.remove('appear');
+		gameStarted = true;
+		update();
+	}
 }
 
 function winHandler() {
@@ -322,8 +342,12 @@ function orientationHandler() {
     console.log("changing orientation ...");
     if(window.innerHeight < window.innerWidth) {
     	orientation = 'landscape';
+    	document.getElementById('landscape').style.display='block';
+    	paused = true;
     } else if(window.innerHeight > window.innerWidth) {
     	orientation = 'portrait';
+    	document.getElementById('landscape').style.display='none';
+    	paused = false;
     }
 }
 
