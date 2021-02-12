@@ -135,26 +135,32 @@
 			font-size: 3em;
 			position: absolute;
 			top: -0.7em;
-			left: 0;
+			left: 50%;
+			transform: translateX(-50%);
 			color: green;
-			width: 100%;
+			width: 50%;
 			text-align: center;
+			background: rgba(255, 255, 255, 0.4);
+			border-radius: 16px;
 		}
 		#levels {
 			position: absolute;
-			left: 30%;
-			top: 30%;
-			transform: translate(-30%, -30%);
-			width: 350px;
-			height: 250px;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 300px;
+			height: 150px;
 			background-image: url('images/board.png');
 			background-repeat: no-repeat;
 			background-size: 100% 100%;
 			z-index: 4;
-			padding: 3.5em 2em;
+			padding: 3.5em 3em;
+			display: none;
+		}
+		.row {
 			text-align: justify;
 		}
-		#levels:after {
+		.row:after {
 			content: '';
 			width: 100%;
 			display: inline-block;
@@ -171,21 +177,28 @@
 		#levels .level:hover {
 			padding: 0.6em 0.9em;
 		}
+		#levels .db {
+			padding: 0.5em 0.7em!important;
+		}
+		#levels .db:hover {
+			padding: 0.6em 0.8em!important;
+		}
 		.appear {
+			display: block!important;
 	        animation-name: bounce-in;
 	        animation-duration: 2s;
         	animation-iteration-count: 1;/*infinite*/
-        	animation-fill-mode: forwards;
+        	/*animation-fill-mode: forwards;*/
 	        animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
 	        transform-origin: bottom;
 	    }
 	    @keyframes bounce-in {
-	        0%   { transform: scale(1,1)      translateY(0); opacity: 0;}
-	        10%  { transform: scale(.9,1.1)   translateY(-100px); }
-	        30%  { transform: scale(1.05,.95) translateY(0); opacity: 1; }
-	        50%  { transform: scale(1,1)      translateY(-7px); }
-	        64%  { transform: scale(1,1)      translateY(0); }
-	        100% { transform: scale(1,1)      translateY(0);}
+	        0%   { transform: scale(1,1)      translate(-50%, -50%); opacity: 0;}
+	        10%  { transform: scale(.9,1.1)   translate(-50%, calc(-100px + -50%)); }
+	        30%  { transform: scale(1.05,.95) translate(-50%, -50%); opacity: 1; }
+	        50%  { transform: scale(1,1)      translate(-50%, calc(-7px + -50%)); }
+	        64%  { transform: scale(1,1)      translate(-50%, -50%); }
+	        100% { transform: scale(1,1)      translate(-50%, -50%);}
 	    }
 	    @keyframes bounce-in-proto {
 	        0%   { transform: scale(1,1)      translateY(0); }
@@ -205,9 +218,9 @@
 	    		transform: none;
 	    	}
 	    	#levels {
-	    		left: 7%;
+	    		left: 5%;
 	    		top: 30%;
-	    		width: 85%;
+	    		width: 65%;
 	    	}
 	    }
 	</style>
@@ -219,12 +232,29 @@
 	<div id="loader">
 		<span class="loader">Load&nbsp;ng</span>
 	</div>
-	<div id="levels" class="appear">
-		<span class="level">1</span>
-		<span class="level">2</span>
-		<span class="level">3</span>
-		<span class="level">4</span>
+	<div id="levels">
+		<div class="row">
+			<span class="level" onclick="start(Number(this.innerText))">1</span>
+			<span class="level">2</span>
+			<span class="level">3</span>
+			<span class="level">4</span>
+		</div>
+		<br>
+		<div class="row">
+			<span class="level">5</span>
+			<span class="level">6</span>
+			<span class="level">7</span>
+			<span class="level">8</span>
+		</div>
+		<br>
+		<div class="row">
+			<span class="level">9</span>
+			<span class="level db">10</span>
+			<span class="level db">11</span>
+			<span class="level db">12</span>
+		</div>
 	</div>
+	<div id="landscape"></div>
 	<img id="splash-bg" src="images/splash.png">
 	<img id="bg" src="images/bg.png">
 	<img id="bg-top" src="images/bg-top.png">
