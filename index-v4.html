@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
+	<meta name="theme-color" content="transparent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<link rel="apple-touch-icon" href="images/home-icon.svg">
+	<link rel="shortcut icon" href="images/home-icon.svg">
+	<link rel="manifest" href="manifest.json">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!--<script src="/ui/christmaslights.js"></script>-->
+    <!--https://pixelcog.github.io/parallax.js/-->
+	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<script defer src="ui/dark-mode-manager.js"></script>
+	<title>Zane's Apps</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			overflow-x: hidden;
+		}
+		body {
+			background-color: #fff;
+			font-family: Calibri, sans-serif;
+			padding-top: 80%;
+			transition: all 1s;
+		}
+		header {
+			background-image: url('images/header-bg.svg');
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			position: absolute;
+			top:0;
+			left:0;
+			min-height: 100%;
+			height: auto;
+			width: 100%;
+		}
+		header h1 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 6em;
+			color: #f2f2f2;
+			text-align: center;
+			background-color: #3f3d56;
+			padding: 8px;
+			box-shadow: 7px 7px 12px #292838;
+			width: 75%;
+		}
+		.content {
+			position: absolute;
+			min-height: 100%;
+			height: auto;
+			width: 100%;
+			padding: 16px;
+			padding-left: calc(16px + 1em);
+		}
+		.split {
+			position: relative;
+			width: 50%;
+			min-height: 100%;
+			height: auto;
+		}
+		.left {
+			float: left;
+		}
+		.right {
+			float: right;
+		}
+		.bg-image {
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+		img {
+			width: 100%;
+		}
+		ul, li {
+			width: 100%;
+		}
+		ul {
+			list-style-type: none;
+			padding-left: 1em;
+		}
+		li {
+			font-size: 20px;
+			cursor: pointer;
+			padding: 5px;
+		}
+		li:hover {
+			border-bottom: 1px solid #00b0ff;
+			animation: headShake;
+			animation-duration: 0.7s;
+		}
+		.disabled:after {
+			content: '(Temporarily Unavailable)';
+		}
+		#dev, #comp, #more {
+			border-bottom: 1px solid #ccc;
+		}
+		#more img {
+			height: 25em;
+		}
+		footer a {
+			color: #000;
+		}
+		#standalone-frame {
+			position: absolute;
+			overflow-x: hidden;
+			overflow-y: auto;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			max-width: 100%;
+			max-height: 100%;
+			border: none;
+		}
+		#standalone-home {
+			position: absolute;
+			z-index: 3;
+			left: 1em;
+			bottom: 1em;
+			color: #ccc;
+			font-size: 2em;
+		}
+		.standalone-ui {
+			display: none;
+		}
+		.cookie-consent {
+			color: rgb(60, 64, 67);
+		    background-color: rgb(255, 255, 255);
+		    max-width: 24em;
+		    flex-direction: column;
+		    bottom: 1em;
+		    left: 1em;
+		    position: fixed;
+		    overflow: hidden;
+		    box-sizing: border-box;
+		    font-size: 16px;
+		    line-height: 1.5em;
+	        display: flex;
+	        flex-wrap: nowrap;
+		    z-index: 9999;
+		    opacity: 1;
+		    transition: opacity 1s ease;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 8px 3px rgba(60,64,67,.15), 0 1px 3px rgba(60,64,67,.3);
+		    padding: 22px 24px!important;
+		    font-weight: 400;
+		}
+		.cc-inner {
+			margin-bottom: 1em;
+		}
+		.cc-inner a {
+			color: #1a73e8!important;
+		    text-decoration: none;
+		    padding-left: 0;
+		    opacity: .8;
+		    display: inline-block;
+		    padding: .2em;
+		    transition: all .2s ease-out;
+		}
+		.cc-btn {
+			flex: 1 0 auto;
+			align-self: flex-end;
+			display: flex;
+			align-items: center;
+			align-content: space-between;
+		}
+		.cc-btn a {
+			flex: 1;
+			font-weight: 400;
+		    padding: 8px 24px;
+		    border-radius: 4px;
+		    font-size: 14px;
+		    line-height: 20px;
+		    height: 36px;
+		    color: rgb(255, 255, 255);
+		    border-color: transparent;
+		    background-color: rgb(26, 115, 232);
+		    display: block;
+		    border-width: 2px;
+		    border-style: solid;
+		    text-align: center;
+		    white-space: nowrap;
+		    cursor: pointer;
+		    transition: all .2s ease-out;
+		    overflow: hidden;
+		    outline: none;
+		    text-decoration: none;
+		}
+		.mobile-hidden {
+			display: inherit;
+		}
+		.mobile-visible {
+			display: none;
+		}
+		.dark {
+			background-color: #131417;
+			color: #fff;
+		}
+		.dark .content {
+			background-color: #1e1f26;
+		}
+		.dark footer a {
+			color: #fff;
+		}
+		.dark .cookie-consent {
+			background-color: #3f3d56;
+			color: #fff;
+		}
+		@media (max-width:755px) {
+			header {
+				background-position: right center;
+				background-attachment: scroll;
+			}
+			header h1 {
+				font-size: 3em;
+			}
+			.split {
+				width: 100%;
+			}
+			.left {
+				float: none;
+			}
+			.right {
+				float: none;
+			}
+			#more img {
+				height: 15em;
+			}
+			.mobile-hidden {
+				display: none;
+			}
+			.mobile-visible {
+				display: block;
+			}
+		}
+	</style>
+</head>
+<body class="">
+	<header>
+		<div id="lights-container"></div>
+		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
+		<!--<button id="install">Install</button>-->
+	</header>
+	<div class="content">
+		<div id="comp">
+			<div class="split left">
+				<img src="images/complete-bg.svg" class="mobile-visible" alt="Complete Image">
+				<h1>Completed</h1>
+				<ul>
+					<li id="calculator" data-url="/calculator">
+						Calculator
+					</li>
+					<li id="cs" data-url="/countdownstudio">
+						Countdown Studio
+					</li>
+					<li id="stack" data-url="/stack">
+						Stack
+					</li>
+					<li id="chromedino" data-url="/chromedino">
+						Chrome Dino Runner
+					</li>
+					<li id="mmc" data-url="/mmc">
+						Molar Mass Calculator
+					</li>
+					<li id="colorsplosion" data-url="/colorsplosion">
+						Colorsplosion
+					</li>
+					<li id="numberguessing" data-url="/numberguessing">
+						Guess that Number
+					</li>
+					<li id="2048" data-url="/2048">
+						2048
+					</li>
+					<li id="tictactoe" data-url="/tic-tac-toe">
+						Tic Tac Toe
+					</li>
+					<li id="webchat" data-url="/webchat/new">
+						Webchat Video Conferencing
+					</li>
+					<li id="app" data-url="/app">
+						My App
+					</li>
+					<li id="colorswirl" data-url="/colorswirl/colorswirl">
+						Color Swirl - Updated
+					</li>
+					<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
+						Mr. Lang Bucks
+					</li>
+					<li id="whiteboard" data-url="/whiteboard">
+						Whiteboard
+					</li>
+				</ul>
+			</div>
+			<div class="split right mobile-hidden">
+				<img src="images/complete-bg.svg" alt="Complete Image">
+			</div>
+		</div>
+		<div id="dev">
+			<div class="split left">
+				<img src="images/dev-bg.svg" alt="Dev Image">
+			</div>
+			<div class="split right">
+				<h1>Under Developement</h1>
+				<ul>
+					<li id="hextris" data-url="/hextris">
+						Hextris
+					</li>
+					<li id="corey-chat" data-url="/imessage">
+						Corey - The Texting Virtual Assistant
+					</li>
+					<li id="peace" data-url="/peace">
+						Peace
+					</li>
+					<li id="corey" data-url="/corey?ref=home">
+						Corey - Virtual Assistant
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="more">
+			<div class="split left">
+				<img src="images/more-bg.svg" alt="More Image">
+			</div>
+			<div class="split right">
+				<h1>More From Zane</h1>
+				<ul>
+					<li id="about" data-url="/about">
+						About Me
+					</li>
+					<li id="archive" data-url="/archive">
+						App Archive
+					</li>
+					<li id="codepen" class="newframe" data-url="https://codepen.io/zanewesley">
+						My CodePen
+					</li>
+					<!--<li id="bulletinboard" data-url="/bulletinboard">
+						News and Updates - Zane's Bulletin Board
+					</li>
+					<li id="account" data-url="/account">
+						Your Account
+					</li>-->
+					<li id="contact" class="disabled" data-url="/contact">
+						Contact Me!
+					</li>
+				</ul>
+			</div>
+			<br>
+		</div>
+		<footer>
+			<br>
+			<p>Copyright &copy; Zane Wesley 2021. All rights reserved.</p>
+			<p>
+				<a href="/terms-of-service">Terms of Service</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/license">Code License</a>
+			</p>
+		</footer>
+	</div>
+
+	<iframe id="standalone-frame" class="standalone-ui"></iframe>
+	<div id="standalone-home" class="standalone-ui fas fa-home"></div>
+
+	<div class="cookie-consent">
+		<span class="cc-inner">
+			This website uses cookies to ensure you get the best experience. For more information, read the <a href="/terms-of-service">Terms of Service.</a>
+		</span>
+		<div class="cc-btn">
+			<a href="#">Got It!</a>
+		</div>
+	</div>
+
+	<script>
+		if ('serviceWorker' in navigator) {
+		    navigator.serviceWorker.register('/serviceworker.js')
+		        .then(serviceWorker => {
+		            console.log('Service Worker registered');
+		            window.serviceWorker = serviceWorker
+		        });
+		}
+
+		window.addEventListener('beforeinstallprompt', e => {
+		    if (window.matchMedia('(display-mode: standalone)').matches) {
+		        // don't display install banner when installed
+		        return e.preventDefault();
+		    } else {
+		        const btn = document.querySelector('#install')
+		        btn.hidden = false;
+		        btn.onclick = _ => e.prompt();
+		        return e.preventDefault();
+		    }
+		});
+		function ini() {
+			$('.content').css('top', $('header').css('height'));
+			//christmatize.stringLights('#lights-container');
+			if(localStorage.getItem('consent') == 'true') {
+				$('.cookie-consent').hide();
+			}
+		}
+		if (window.matchMedia('(display-mode: standalone)').matches) {
+			$('li').click(function(e) {
+				if(!$(this).hasClass('disabled') && !$(this).hasClass('newframe')) {
+					$('#standalone-frame').prop('src', $(this).attr('data-url'));
+					window.scrollTo(0,0);
+					$('.standalone-ui').toggle('slide', {direction: 'right'}, 500);
+					$('header, .content').fadeOut();
+					$('body').css({
+						overflow: 'hidden',
+						padding: 0
+					});
+				} else if($(this).hasClass('newframe')) {
+					open($(this).attr('data-url'));
+				}
+			});
+		} else {
+			$('li').click(function(e) {
+				if(!$(this).hasClass('disabled')) {
+					window.location=$(this).attr('data-url');
+				}
+			});
+		}
+		$('#standalone-home').click(function(e) {
+			$('#standalone-frame').toggle('slide', {direction: 'right'}, 500, function() {
+				location.reload();
+			});
+		});
+		$('.cc-btn a').click(function(e) {
+			e.preventDefault();
+			this.parentNode.parentNode.style.opacity=0;
+			this.parentNode.parentNode.style.visibility='hidden';
+			localStorage.setItem('consent', 'true');
+		});
+		window.addEventListener('resize', ini);
+		ini();
+	</script>
+</body>
+</html>
