@@ -107,7 +107,7 @@
 		.disabled:after {
 			content: '(Temporarily Unavailable)';
 		}
-		#dev, #comp, #more {
+		.section {
 			border-bottom: 1px solid #ccc;
 		}
 		#more img {
@@ -255,32 +255,21 @@
 	<header>
 		<div id="lights-container"></div>
 		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
-		<!--<button id="install">Install</button>-->
 	</header>
 	<div class="content">
-		<div id="comp">
+		<div id="games" class="section">
 			<div class="split left">
-				<img src="images/complete-bg.svg" class="mobile-visible" alt="Complete Image">
-				<h1>Completed</h1>
+				<img src="images/games-bg.svg" class="mobile-visible" alt="Games Image">
+				<h1>Games</h1>
 				<ul>
-
-					<li id="vc" data-url="/valentines-countdown-2021">
-						Valentines Day Countdown 2021
-					</li>
-					<li id="calculator" data-url="/calculator">
-						Calculator
-					</li>
-					<li id="cs" data-url="/countdownstudio">
-						Countdown Studio
+					<li id="hextris" data-url="/hextris">
+						Hextris
 					</li>
 					<li id="stack" data-url="/stack">
 						Stack
 					</li>
 					<li id="chromedino" data-url="/chromedino">
 						Chrome Dino Runner
-					</li>
-					<li id="mmc" data-url="/mmc">
-						Molar Mass Calculator
 					</li>
 					<li id="colorsplosion" data-url="/colorsplosion">
 						Colorsplosion
@@ -294,47 +283,67 @@
 					<li id="tictactoe" data-url="/tic-tac-toe">
 						Tic Tac Toe
 					</li>
-					<li id="webchat" data-url="/webchat/new">
-						Webchat Video Conferencing
-					</li>
-					<li id="app" data-url="/app">
-						My App
+					<li id="peace" data-url="/peace">
+						Peace
 					</li>
 					<li id="colorswirl" data-url="/colorswirl/colorswirl">
 						Color Swirl - Updated
 					</li>
-					<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
-						Mr. Lang Bucks
+				</ul>
+			</div>
+			<div class="split right mobile-hidden">
+				<img src="images/games-bg.svg" alt="Games Image">
+			</div>
+		</div>
+		<div id="resources" class="section">
+			<div class="split left">
+				<img src="images/resources-bg.svg" alt="Resources Image">
+			</div>
+			<div class="split right">
+				<h1>Resources</h1>
+				<ul>
+					<li id="calculator" data-url="/calculator">
+						Calculator
+					</li>
+					<li id="cs" data-url="/countdownstudio">
+						Countdown Studio
+					</li>
+					<li id="mmc" data-url="/mmc">
+						Molar Mass Calculator
+					</li>
+					<li id="webchat" data-url="/webchat/new">
+						Webchat Video Conferencing
 					</li>
 					<li id="whiteboard" data-url="/whiteboard">
 						Whiteboard
 					</li>
 				</ul>
 			</div>
-			<div class="split right mobile-hidden">
-				<img src="images/complete-bg.svg" alt="Complete Image">
-			</div>
 		</div>
-		<div id="dev">
+		<div id="misc" class="section">
 			<div class="split left">
-				<img src="images/dev-bg.svg" alt="Dev Image">
-			</div>
-			<div class="split right">
-				<h1>Under Developement</h1>
+				<img src="images/misc-bg.svg" class="mobile-visible" alt="Miscellaneous Image">
+				<h1>Miscellaneous</h1>
 				<ul>
+					<li id="app" data-url="/app">
+						My App
+					</li>
+					<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
+						Mr. Lang Bucks
+					</li>
 					<li id="corey-chat" data-url="/imessage">
 						Corey - The Texting Virtual Assistant
-					</li>
-					<li id="peace" data-url="/peace">
-						Peace
 					</li>
 					<li id="corey" data-url="/corey?ref=home">
 						Corey - Virtual Assistant
 					</li>
 				</ul>
 			</div>
+			<div class="split right mobile-hidden">
+				<img src="images/misc-bg.svg" alt="Miscellaneous Image">
+			</div>
 		</div>
-		<div id="more">
+		<div id="more" class="section">
 			<div class="split left">
 				<img src="images/more-bg.svg" alt="More Image">
 			</div>
@@ -386,7 +395,7 @@
 	</div>
 
 	<script>
-		if ('serviceWorker' in navigator) {
+		/*if ('serviceWorker' in navigator) {
 		    navigator.serviceWorker.register('/serviceworker.js')
 		        .then(serviceWorker => {
 		            console.log('Service Worker registered');
@@ -404,7 +413,7 @@
 		        btn.onclick = _ => e.prompt();
 		        return e.preventDefault();
 		    }
-		});
+		});*/
 		function ini() {
 			$('.content').css('top', $('header').css('height'));
 			//christmatize.stringLights('#lights-container');
