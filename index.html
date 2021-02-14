@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
 	<meta name="author" content="Zane Wesley">
 	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
-	<meta name="theme-color" content="transparent">
+	<meta name="theme-color" content="#535461">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Zane's Apps">
 	<link rel="apple-touch-icon" href="images/home-icon.svg">
@@ -109,6 +109,13 @@
 		}
 		.section {
 			border-bottom: 1px solid #ccc;
+		}
+		.bg-iframe {
+			display: none;
+			position: relative;
+			width: 100%;
+			height: 100%;
+			border: none;
 		}
 		#more img {
 			height: 25em;
@@ -261,7 +268,7 @@
 			<div class="split left">
 				<img src="images/games-bg.svg" class="mobile-visible" alt="Games Image">
 				<h1>Games</h1>
-				<ul>
+				<ul id="games-li">
 					<li id="hextris" data-url="/hextris">
 						Hextris
 					</li>
@@ -292,16 +299,18 @@
 				</ul>
 			</div>
 			<div class="split right mobile-hidden">
-				<img src="images/games-bg.svg" alt="Games Image">
+				<img id="games-bg-img" src="images/games-bg.svg" alt="Games Image">
+				<iframe id="games-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
 			</div>
 		</div>
 		<div id="resources" class="section">
 			<div class="split left">
-				<img src="images/resources-bg.svg" alt="Resources Image">
+				<img id="resources-bg-img" src="images/resources-bg.svg" alt="Resources Image">
+				<iframe id="resources-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
 			</div>
 			<div class="split right">
 				<h1>Resources</h1>
-				<ul>
+				<ul id="resources-li">
 					<li id="calculator" data-url="/calculator">
 						Calculator
 					</li>
@@ -324,7 +333,7 @@
 			<div class="split left">
 				<img src="images/misc-bg.svg" class="mobile-visible" alt="Miscellaneous Image">
 				<h1>Miscellaneous</h1>
-				<ul>
+				<ul id="misc-li">
 					<li id="app" data-url="/app">
 						My App
 					</li>
@@ -340,7 +349,8 @@
 				</ul>
 			</div>
 			<div class="split right mobile-hidden">
-				<img src="images/misc-bg.svg" alt="Miscellaneous Image">
+				<img id="misc-bg-img" src="images/misc-bg.svg" alt="Miscellaneous Image">
+				<iframe id="misc-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
 			</div>
 		</div>
 		<div id="more" class="section">
@@ -395,25 +405,10 @@
 	</div>
 
 	<script>
-		/*if ('serviceWorker' in navigator) {
-		    navigator.serviceWorker.register('/serviceworker.js')
-		        .then(serviceWorker => {
-		            console.log('Service Worker registered');
-		            window.serviceWorker = serviceWorker
-		        });
-		}
-
-		window.addEventListener('beforeinstallprompt', e => {
-		    if (window.matchMedia('(display-mode: standalone)').matches) {
-		        // don't display install banner when installed
-		        return e.preventDefault();
-		    } else {
-		        const btn = document.querySelector('#install')
-		        btn.hidden = false;
-		        btn.onclick = _ => e.prompt();
-		        return e.preventDefault();
-		    }
-		});*/
+		navigator.serviceWorker.getRegistrations().then(function(registrations) {
+		 for(let registration of registrations) {
+		  registration.unregister()
+		} });
 		function ini() {
 			$('.content').css('top', $('header').css('height'));
 			//christmatize.stringLights('#lights-container');
@@ -443,6 +438,26 @@
 				}
 			});
 		}
+		$('#games-li li').hover(function(e) {
+			$('#games-bg-img').fadeOut();
+			$('#games-bg-iframe').attr('src', $(this).attr('data-url')).height($('#games-bg-img').height()).fadeIn();
+		});
+		$('#resources-li li').hover(function(e) {
+			$('#resources-bg-img').fadeOut();
+			$('#resources-bg-iframe').attr('src', $(this).attr('data-url')).height($('#resources-bg-img').height()).fadeIn();
+		});
+		$('#misc-li li').hover(function(e) {
+			$('#misc-bg-img').fadeOut();
+			$('#misc-bg-iframe').attr('src', $(this).attr('data-url')).height($('#misc-bg-img').height()).fadeIn();
+		});
+		var endPrevTimer;
+		$('li').mouseleave(function(e) {
+			clearTimeout(endPrevTimer);
+			endPrevTimer = setTimeout(function(e) {
+				$('#games-bg-iframe, #resources-bg-iframe, #misc-bg-iframe').fadeOut().attr('src', null);
+				$('#games-bg-img, #resources-bg-img, #misc-bg-img').fadeIn();
+			}, 3000);
+		});
 		$('#standalone-home').click(function(e) {
 			$('#standalone-frame').toggle('slide', {direction: 'right'}, 500, function() {
 				location.reload();
@@ -454,6 +469,7 @@
 			this.parentNode.parentNode.style.visibility='hidden';
 			localStorage.setItem('consent', 'true');
 		});
+		document.getElementById('games-bg-iframe').contentWindow.window.onerror=function(e) {e.preventDefault()};
 		window.addEventListener('resize', ini);
 		ini();
 	</script>
