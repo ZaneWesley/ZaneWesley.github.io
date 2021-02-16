@@ -311,7 +311,7 @@
 
         clear.addEventListener('click', function(e) {
             LIST.forEach(function(item) {
-                item.trash = true;
+                removeToDo(document.getElementById(item.id));
             });
         });
 
