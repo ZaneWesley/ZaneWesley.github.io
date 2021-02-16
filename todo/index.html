@@ -26,28 +26,29 @@
         }
         .header {
             width: 380px;
-            height:200px;
+            height: 200px;
             background-image: url('img/bg2.jpg');
             background-size: 100% 200%;
             background-repeat: no-repeat;
             border-radius: 15px 15px 0 0;
             position: relative;
         }
-        .clear{
-            width : 30px;
+        .more{
+            width: 30px;
             height: 30px;
             position: absolute;
             right:20px;
             top: 20px;
         }
-        .clear span{
+        .more span{
             font-size: 30px;
             color: #FFF;
             transition: 0.3s;
         }
-        .clear span:hover{
+        .more span:hover{
             cursor: pointer;
-            transform: rotate(45deg);
+            /*transform: rotate(45deg);*/
+            transform: translateY(5px);
         }
         #date{
             position: absolute;
@@ -60,9 +61,8 @@
         .content {
             width:380px;
             /*height: 350px;*/
-            height: calc(100vh - 265px);
+            height: calc(100vh - 240px);
             /*max-height:350px;*/
-            max-height: calc(100vh - 200px - 65px);
             background-color: #FFF;
             overflow: auto;
         }
@@ -122,7 +122,11 @@
             cursor: pointer;
         }
         .add-to-do{
-            position: relative;
+            /*position: relative;*/
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
             width: 360px;
             height:40px;
             background-color: #FFF;
@@ -166,6 +170,35 @@
             font-family: 'Titillium Web', sans-serif;
             font-size: 20px;
         }
+
+        .menu {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 360px;
+            background: transparent;
+            font-family: 'Titillium Web', sans-serif;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .menu.open {
+            visibility: visible;
+            opacity: 1;
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .menu ul li {
+            padding: 0.5em;
+            cursor: pointer;
+            display: block;
+            color: #fff;
+            font-size: 30px;
+            text-align: right;
+        }
         @media(max-width: 775px) {
             .container, .header, .content, .item, .add-to-do {
                 width: 100vw;
@@ -173,14 +206,17 @@
             .header {
                 border-radius: 0;
             }
+            .content {
+                height: calc(100vh - 330px);
+            }
         }
 	</style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="clear">
-                <span class="fa fa-refresh"></span>
+            <div class="more">
+                <span class="fa fa-bars"></span>
             </div>
             <div id="date"></div>
         </div>
@@ -197,11 +233,21 @@
             <span id="add-icon" class="fa fa-plus-circle"></span>
             <input type="text" id="input" placeholder="Add a to-do">
         </div>
+
+        <div class="menu">
+            <ul>
+                <li class="clear fa fa-refresh"></li>
+                <li class="reset fa fa-trash" title="Reset app"></li>
+            </ul>
+        </div>
     </div>
 
     <script>
         //Elems
         var clear = document.querySelector('.clear');
+        var reset = document.querySelector('.reset');
+        var menuToggle = document.querySelector('.more');
+        var menu = document.querySelector('.menu');
         var dateElem = document.querySelector('#date');
         var list = document.querySelector('#list');
         var input = document.querySelector('#input');
@@ -264,8 +310,20 @@
         }
 
         clear.addEventListener('click', function(e) {
+            LIST.forEach(function(item) {
+                item.trash = true;
+            });
+        });
+
+        reset.addEventListener('click', function(e) {
             localStorage.removeItem('TODO');
             location.reload();
+        });
+
+        menuToggle.addEventListener('click', function(e) {
+            menu.classList.toggle('open');
+            menuToggle.querySelector('span').classList.toggle('fa-bars');
+            menuToggle.querySelector('span').classList.toggle('fa-times');
         });
 
         function addToDo(toDo, id, done, trash) {
