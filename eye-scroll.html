@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+  <script src="https://webgazer.cs.brown.edu/webgazer.js?"></script>
   <title>Eye Scroll</title>
 
   <style>
@@ -38,14 +38,14 @@
   <script>
     window.saveDataAcrossSessions = true
 
-    const LOOK_DELAY = 1000; // 1 second
-    const LEFT_CUTOFF = window.innerWidth / 4;
-    const RIGHT_CUTOFF = window.innerWidth - window.innerWidth / 4;
+    const LOOK_DELAY = 1000 // 1 second
+    const LEFT_CUTOFF = window.innerWidth / 4
+    const RIGHT_CUTOFF = window.innerWidth - window.innerWidth / 4
 
-    let startLookTime = Number.POSITIVE_INFINITY;
-    let lookDirection = null;
-    let imageElement = getNewImage();
-    let nextImageElement = getNewImage(true);
+    let startLookTime = Number.POSITIVE_INFINITY
+    let lookDirection = null
+    let imageElement = getNewImage()
+    let nextImageElement = getNewImage(true)
 
     webgazer
       .setGazeListener((data, timestamp) => {
@@ -77,29 +77,27 @@
             imageElement.classList.add("right")
           }
 
-          startLookTime = Number.POSITIVE_INFINITY;
-          lookDirection = "STOP";
+          startLookTime = Number.POSITIVE_INFINITY
+          lookDirection = "STOP"
           setTimeout(() => {
-            imageElement.remove();
-            nextImageElement.classList.remove("next");
-            imageElement = nextImageElement;
-            nextImageElement = getNewImage(true);
-            lookDirection = "RESET";
-          }, 200);
+            imageElement.remove()
+            nextImageElement.classList.remove("next")
+            imageElement = nextImageElement
+            nextImageElement = getNewImage(true)
+            lookDirection = "RESET"
+          }, 200)
         }
       })
-      .begin();
+      .begin()
 
-    //webgazer.showVideoPreview(false).showPredictionPoints(false)
+    webgazer.showVideoPreview(false).showPredictionPoints(false)
 
     function getNewImage(next = false) {
-      var img = document.createElement('img' );
-      img.src = "https://picsum.photos/1000?" + Math.random();
-      if (next) {
-        img.classList.add("next");
-        document.body.appendChild(img);
-        return img;
-      }
+      const img = document.createElement("img")
+      img.src = "https://picsum.photos/1000?" + Math.random()
+      if (next) img.classList.add("next")
+      document.body.append(img)
+      return img
     }
   </script>
 </body>
