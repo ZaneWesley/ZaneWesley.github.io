@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui"/>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+	<title>Inspirabot</title>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+		}
+		body {
+			overflow: hidden;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			font-family: 'Open Sans', sans-serif;
+		}
+		.quotebox {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 50%;
+			border: 1px solid rgba(255, 255, 255, 0.4);
+			box-shadow: 5px 5px rgba(255, 255, 255, 0.1);
+			padding: 0.5em;
+			background-color: rgba(255, 255, 255, 0.4);
+			border-radius: 10px;
+			backdrop-filter: blur(5px);
+			-webkit-backdrop-filter: blur(5px);
+		}
+		.quote {
+			font-size: 3em;
+		}
+		.auth {
+			text-align: right;
+			font-size: 2em;
+		}
+	</style>
+</head>
+<body>
+	<div class="quotebox">
+		<p class="quote"></p>
+		<p class="auth"></p>
+	</div>
+
+	<script>
+		var quotes = [
+			{quote: "The Best Way To Get Started Is To Quit Talking And Begin Doing.", author: "Walt Disney"},
+			{quote: "The Pessimist Sees Difficulty In Every Opportunity. The Optimist Sees Opportunity In Every Difficulty.", author: "Winston Churchill"},
+			{quote: "Don’t Let Yesterday Take Up Too Much Of Today.", author: "Will Rogers"},
+			{quote: "You Learn More From Failure Than From Success. Don’t Let It Stop You. Failure Builds Character.", author: "unknown"},
+			{quote: "It’s Not Whether You Get Knocked Down, It’s Whether You Get Up.", author: "Vince Lombardi"},
+			{quote: "If You Are Working On Something That You Really Care About, You Don’t Have To Be Pushed. The Vision Pulls You.", author: "Steve Jobs"},
+			{quote: "People Who Are Crazy Enough To Think They Can Change The World, Are The Ones Who Do.", author: "Rob Siltanen"},
+			{quote: "Failure Will Never Overtake Me If My Determination To Succeed Is Strong Enough.", author: "Og Mandino"},
+			{quote: "Entrepreneurs Are Great At Dealing With Uncertainty And Also Very Good At Minimizing Risk. That’s The Classic Entrepreneur.", author: "Mohnish Pabrai"},
+			{quote: "We May Encounter Many Defeats But We Must Not Be Defeated.", author: "Maya Angelou"},
+			{quote: "Knowing Is Not Enough; We Must Apply. Wishing Is Not Enough; We Must Do.", author: "Johann Wolfgang Von Goethe"},
+			{quote: "We Generate Fears While We Sit. We Overcome Them By Action.", author: "Dr. Henry Link"},
+			{quote: "Whether You Think You Can Or Think You Can’t, You’re Right.", author: "Henry Ford"},
+			{quote: "Security Is Mostly A Superstition. Life Is Either A Daring Adventure Or Nothing.", author: "Helen Keller"},
+			{quote: "The Man Who Has Confidence In Himself Gains The Confidence Of Others.", author: "Hasidic Proverb"},
+			{quote: "The Only Limit To Our Realization Of Tomorrow Will Be Our Doubts Of Today.", author: "Franklin D. Roosevelt"},
+			{quote: "Creativity Is Intelligence Having Fun.", author: "Albert Einstein"},
+			{quote: "What You Lack In Talent Can Be Made Up With Desire, Hustle And Giving 110% All The Time.", author: "Don Zimmer"},
+			{quote: "Do What You Can With All You Have, Wherever You Are.", author: "Theodore Roosevelt"},
+			{quote: "You Are Never Too Old To Set Another Goal Or To Dream A New Dream.", author: "C.S. Lewis"},
+			{quote: "To See What Is Right And Not Do It Is A Lack Of Courage.", author: "Confucius"},
+			{quote: "Reading Is To The Mind, As Exercise Is To The Body.", author: "Brian Tracy"},
+			{quote: "Fake It Until You Make It! Act As If You Had All The Confidence You Require Until It Becomes Your Reality.", author: "Brian Tracy"},
+			{quote: "The Future Belongs To The Competent. Get Good, Get Better, Be The Best!", author: "Brian Tracy"},
+			{quote: "For Every Reason It’s Not Possible, There Are Hundreds Of People Who Have Faced The Same Circumstances And Succeeded.", author: "Jack Canfield"},
+			{quote: "Things Work Out Best For Those Who Make The Best Of How Things Work Out.", author: "John Wooden"},
+			{quote: "I Think Goals Should Never Be Easy, They Should Force You To Work, Even If They Are Uncomfortable At The Time.", author: "Michael Phelps"},
+			{quote: "One Of The Lessons That I Grew Up With Was To Always Stay True To Yourself And Never Let What Somebody Else Says Distract You From Your Goals.", author: "Michelle Obama"},
+			{quote: "Today’s Accomplishments Were Yesterday’s Impossibilities.", author: "Robert H. Schuller"},
+			{quote: "The Only Way To Do Great Work Is To Love What You Do. If You Haven’t Found It Yet, Keep Looking. Don’t Settle.", author: "Steve Jobs"},
+			{quote: "You Don’t Have To Be Great To Start, But You Have To Start To Be Great.", author: "Zig Ziglar"},
+			{quote: "A Clear Vision, Backed By Definite Plans, Gives You A Tremendous Feeling Of Confidence And Personal Power.", author: "Brian Tracy"},
+			{quote: "There Are No Limits To What You Can Accomplish, Except The Limits You Place On Your Own Thinking.", author: "Brian Tracy"},
+			{quote: "Never Use The Word Failure. Look Upon Setbacks As Learning Experiences.", author: "Brian Tracy"},
+			{quote: "Leaders Are Anticipatory Thinkers. They Consider All Consequences Of Their Behaviors Before They Act.", author: "Brian Tracy"},
+			{quote: "Concentrate Single-Mindedly On One Thing– The Most Important Thing, And They Stay At It Until It’s Complete.", author: "Brian Tracy"},
+			{quote: "It Is More Who You Are Than What You Do.", author: "Brian Tracy"},
+			{quote: "Leaders Are Never Satisfied; They Continually Strive To Be Better.", author: "Brian Tracy"},
+		];
+		var bg = [
+			"https://raw.githubusercontent.com/ZaneWesley/image-select/main/blue-swoosh.jpg",
+			"https://raw.githubusercontent.com/ZaneWesley/image-select/main/doc.jpg",
+			"https://raw.githubusercontent.com/ZaneWesley/image-select/main/green-splash.jpg",
+			"https://raw.githubusercontent.com/ZaneWesley/image-select/main/water.jpg"
+		];
+
+		function getQuote() {
+			var quoteInfo = quotes[Math.floor(Math.random()*quotes.length)];
+			var quote = quoteInfo.quote;
+			if(quote != document.querySelector('.quote').innerText) {
+				document.querySelector('.quote').innerText = quote;
+				document.querySelector('.auth').innerText = quoteInfo.author;
+				document.body.style.backgroundImage = `url(${bg[Math.floor(Math.random()*bg.length)]})`;
+			} else {
+				getQuote();
+			}
+		}
+		getQuote();
+	</script>
+</body>
+</html>
