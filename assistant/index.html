@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui"/>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+	<title>Virtual Assistant</title>
+
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			transition: all 1s ease-in-out;
+			font-family: 'Open Sans', sans-serif;
+		}
+		body {
+			width: 100%;
+			height: 100%;
+		}
+		h1 {
+			text-align: center;
+			padding: 0.5em;
+		}
+		#hamburger {
+			background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cg%3E%3Cpath fill='%23FDBA63' d='M16 288h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16z'%3E%3C/path%3E%3Cpath fill='%2300B0D7' d='M432 384H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H16A16 16 0 0 0 0 80v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center center;
+			position: absolute;
+			width: 35px;
+			height: 35px;
+			top: 1em;
+			left: 1em;
+			cursor: pointer;
+		}
+		.input-wrapper {
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 50%;
+		}
+		#text {
+			border: 1px solid #adb5bd;
+		    width: 90%;
+		    margin: 0;
+		    padding: 0.4em 0.4em 0.4em 0.4em;
+		    border-radius: 4px;
+		    font-size: 1.3rem;
+		    outline: none;
+		    /*background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cg%3E%3Cpath fill='%23DADEE2' d='M448 0H64A64.06 64.06 0 0 0 0 64v288a64.06 64.06 0 0 0 64 64h96v84a12 12 0 0 0 19.1 9.7L304 416h144a64.06 64.06 0 0 0 64-64V64a64.06 64.06 0 0 0-64-64zM288 264a8 8 0 0 1-8 8H136a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8h144a8 8 0 0 1 8 8zm96-96a8 8 0 0 1-8 8H136a8 8 0 0 1-8-8v-16a8 8 0 0 1 8-8h240a8 8 0 0 1 8 8z'%3E%3C/path%3E%3Cpath fill='%23ADB5BD' d='M280 240H136a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h144a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8zm96-96H136a8 8 0 0 0-8 8v16a8 8 0 0 0 8 8h240a8 8 0 0 0 8-8v-16a8 8 0 0 0-8-8z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+		    background-size: contain;
+			background-repeat: no-repeat;
+			background-position: left center;
+			text-indent: 2em;*/
+		}
+		.spacer {
+			padding-left: 1em;
+		}
+		#mic {
+			background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 352 512'%3E%3Cg %3E%3Cpath fill='%23FDBA63' d='M80 256V96a96 96 0 0 1 192 0v160a96 96 0 0 1-192 0z'%3E%3C/path%3E%3Cpath fill='%2300B0D7' d='M352 256c0 88.9-66.29 162.47-152 174.23V464h56a16 16 0 0 1 16 16v16a16 16 0 0 1-16 16H96a16 16 0 0 1-16-16v-16a16 16 0 0 1 16-16h56v-34.15C64 417.71 0 337.8 0 248.16V208a16 16 0 0 1 16-16h16a16 16 0 0 1 16 16v42.3c0 66.81 48.71 126.59 115.21 133.08A128.15 128.15 0 0 0 304 256v-48a16 16 0 0 1 16-16h16a16 16 0 0 1 16 16z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+			/*
+			Orange: #FDBA63
+			Light Blue: #AEDFE4
+			Dark Blue: #00B0D7
+			*/
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center center;
+			color: #adb5bd;
+			position: absolute;
+			width: 30px;
+			height: 100%;
+			cursor: pointer;
+		}
+		#results {
+			position: absolute;
+			top: 2em;
+			left: 50%;
+			transform: translateX(-50%);
+			border: 1px solid #AEDFE4;
+			height: 25%;
+			width: 75%;
+			font-size: 2em;
+			padding: 1em;
+			/*opacity: 0;*/
+			transition: 0.3s ease-in;
+			z-index: -1;
+		}
+		#results .survey {
+			font-size: 16px;
+			position: absolute;
+			bottom: 0;
+		}
+		#survey-link {
+			color: #000;
+			text-decoration-thickness: 0.1em;
+		}
+		#speech-dialog {
+			background-color: #fff;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			color: #5F6368;
+			display: none;
+		}
+		.mic-anim {
+			position: absolute;
+			width: 165px;
+			height: 165px;
+			border: 1px solid #eee;
+			border-radius: 50%;
+			background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 352 512'%3E%3Cg %3E%3Cpath fill='%23EA4335' d='M80 256V96a96 96 0 0 1 192 0v160a96 96 0 0 1-192 0z'%3E%3C/path%3E%3Cpath fill='%23EA4335' d='M352 256c0 88.9-66.29 162.47-152 174.23V464h56a16 16 0 0 1 16 16v16a16 16 0 0 1-16 16H96a16 16 0 0 1-16-16v-16a16 16 0 0 1 16-16h56v-34.15C64 417.71 0 337.8 0 248.16V208a16 16 0 0 1 16-16h16a16 16 0 0 1 16 16v42.3c0 66.81 48.71 126.59 115.21 133.08A128.15 128.15 0 0 0 304 256v-48a16 16 0 0 1 16-16h16a16 16 0 0 1 16 16z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+			background-size: 50% 50%;
+			background-repeat: no-repeat;
+			background-position: center center;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #DADCE0;
+			animation: micAnim 2s infinite;
+		}
+		@keyframes micAnim {
+			0% {
+				background-color: #DADCE0;
+			}
+			50% {
+				background-color: #b8babf;
+			}
+			100% {
+				background-color: #DADCE0;
+			}
+		}
+		button {
+			display: block;
+		    padding: 1em 2em;
+		    font-weight: 700;
+		    border-width: 2px;
+		    border-style: solid;
+		    text-align: center;
+		    white-space: nowrap;
+		    color: #fff;
+		    background-color: #00B0D7;
+		    border: 1px solid #ccc;
+		    border-radius: 4px;
+		    outline: none;
+		    position: absolute;
+		    top: 70%;
+		    left: 50%;
+		    transform: translate(-50%, -70%);
+		}
+		@media(max-width: 775px) {
+			.input-wrapper {
+				width: 90%;
+			}
+			#text {
+				width: calc(100% - 2em - 30px);
+			}
+			#results {
+				width: 70%;
+				height: 20%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>Virtual Assistant</h1>
+	<!--<div id="hamburger"></div>-->
+	<div id="results"></div>
+	<div class="input-wrapper">
+		<input type="text" id="text" autocomplete="off" placeholder="Ask a question...">
+		<span class="spacer"></span>
+		<span id="mic"></span>
+	</div>
+	<div id="speech-dialog">
+		<h1>Listening...</h1>
+		<div class="mic-anim"></div>
+		<button onclick="stopListening()">Close</button>
+	</div>
+	<script src="main.js"></script>
+	<script src="trigger.js"></script>
+</body>
+</html>
