@@ -1,10 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
   const inputField = document.getElementById("text");
   inputField.addEventListener("keydown", (e) => {
-    if (e.keyCode == 13) {
-      let input = inputField.value;
+    let input = inputField.value;
+    if (e.keyCode == 13 && input != "" && input != "null") {
       inputField.value = "";
-      output(input);
+      if(String( input ).match( /[()\\*+-/><=]/ )) {
+        input = input.trim();
+        var eqVar = input.replace(/[0-9]|[()\\*+-/><=^]/g, '').split('')[0];
+        console.log(eqVar);
+        if(input.match(/[a-z]/i) && input.match(/=|>|</i)) {
+          calculate(input, eqVar);
+        } else {
+          calculate(input);
+        }
+      } else {
+        output(input);
+      }
     }
   });
 });
@@ -94,7 +105,7 @@ function output(input) {
   /*if(speechConfidence) {
   	document.querySelector('.survey').innerHTML+=` These results were returned with ${Math.round(speechConfidence)}% confidence.`;
   }*/
-  document.querySelector('.survey').innerHTML+=` <i><a id="survey-link" onclick="openSurvey()" href="#">Were these the results you expected?</a></i>`;
+  document.querySelector('.survey').innerHTML+=` <i><a class="survey-link" onclick="openSurvey()" href="#">Were these the results you expected?</a></i>`;
 }
 
 function compare(promptsArray, repliesArray, string) {
@@ -118,12 +129,37 @@ function compare(promptsArray, repliesArray, string) {
   return reply;
 }
 
-function sendResults(input, product) {
+function calculate(input, eqVar) {
+  var exp = algebra.parse(input);
+  var ans;
+  if(eqVar) {
+    ans = exp.solveFor(eqVar);
+    ans = ans.toString();
+  } else {
+    ans = exp;
+  }
+  sendResults(input, ans, true, eqVar);
+}
+
+function sendResults(input, product, isMath, eqVar) {
 	document.getElementById('results').innerHTML="";
-	//setTimeout(function() {
+
+  if(!isMath) {
 		document.getElementById('results').innerHTML=`
 			<p class="result">${product}</p>
 			<p class="survey">You said <i>${input}.</i></p>
 		`;
-	//}, 1500);
+  } else {
+    if(eqVar) {
+      document.getElementById('results').innerHTML=`
+      <p class="result">${eqVar} = ${product}</p>
+      <p class="survey">You asked to calculate <i>${input}. <a class="survey-link" href="#">Solution doesn't look right? Click to see format regulations.</a></i></p>
+    `;
+    } else {
+      document.getElementById('results').innerHTML=`
+      <p class="result">${input} is ${product}</p>
+      <p class="survey">You asked to calculate <i>${input}. <a class="survey-link" href="#">Solution doesn't look right? Click to see format regulations.</a></i></p>
+    `;
+    }
+  }
 }
