@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui"/>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+	<link href="icon.svg" rel="icon" type="icon/svg">
 	<script src="algebra-0.2.6.min.js"></script>
 	<title>Virtual Assistant</title>
 
@@ -153,16 +154,73 @@
 		    left: 50%;
 		    transform: translate(-50%, -70%);
 		}
+		.dialog {
+			position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: 0;
+		    bottom: 0;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    background: rgba(0, 0, 0, 0.61);
+		    z-index: 10;
+		    transition: opacity 300ms;
+		    will-change: opacity;
+		    padding: 16px;
+		    opacity: 1;
+		}
+		.dialog.closed {
+			visibility: hidden;
+		    opacity: 0;
+		}
+		.dialog-inner {
+			box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 40%);
+			background-color: #fff;
+			z-index: 3;
+		    background: white;
+		    border-radius: 8px;
+		    padding: 16px 24px;
+		    width: 100%;
+		    max-width: 400px;
+		    box-sizing: border-box;
+		    transition: transform 300ms;
+		    will-change: transform;
+		}
+		.dialog-inner h3 {
+			font-size: 20px;
+		    font-weight: 500;
+		    margin: 16px 0;
+		}
+		.dialog-inner ul {
+			padding: 1em;
+		}
+		.dialog-inner a {
+			color: #4285f4;
+		    display: flex;
+		    padding: 16px;
+		    border-radius: 8px;
+		    transition: background-color 0.3s;
+		    cursor: pointer;
+		}
+		.dialog-inner a:hover {
+			background-color: rgba(66, 133, 244, 0.1);
+		}
+		.dialog-inner .button-wrapper {
+			display: flex;
+		}
 		@media(max-width: 775px) {
 			.input-wrapper {
 				width: 90%;
+				top: 60%;
+				transform: translate(-50%, -60%);
 			}
 			#text {
 				width: calc(100% - 2em - 30px);
 			}
 			#results {
 				width: 70%;
-				height: 20%;
+				height: 33%;
 			}
 		}
 	</style>
@@ -176,11 +234,38 @@
 		<span class="spacer"></span>
 		<span id="mic"></span>
 	</div>
+
 	<div id="speech-dialog">
 		<h1>Listening...</h1>
 		<div class="mic-anim"></div>
 		<button onclick="stopListening()">Close</button>
 	</div>
+
+	<div id="surveyDialog" class="dialog closed">
+		<div class="dialog-inner">
+			<h3>Were these the Results you Expected?</h3>
+			<div class="button-wrapper">
+				<a id="yes" class="dialog-button">Yes</a>
+				<a id="no" class="dialog-button">No</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="formatDialog" class="dialog closed">
+		<div class="dialog-inner">
+			<h3>Formatting Regulations</h3>
+			<ul>
+				<li>Equations can only have 1 variable</li>
+				<li>Spaces in expressions are ignored</li>
+				<li>Irrationals will be estimated to a decimal</li>
+				<li>Can only solve equations below a quartic equation</li>
+			</ul>
+			<div class="button-wrapper">
+				<a id="gotIt" class="dialog-button">Got It</a>
+			</div>
+		</div>
+	</div>
+
 	<script src="main.js"></script>
 	<script src="trigger.js"></script>
 </body>
