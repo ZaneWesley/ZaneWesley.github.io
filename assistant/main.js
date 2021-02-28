@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+  focusInput();
 });
 
 try {
@@ -40,10 +41,12 @@ recognition.onspeechend = function() {
     console.log("Stopped listening.");
     document.getElementById('speech-dialog').style.display='none';
     recognition.stop();
+    focusInput();
 }
 
 function stopListening() {
 	recognition.stop();
+  focusInput();
 }
 
 recognition.onresult = function(event) {
@@ -81,24 +84,30 @@ function output(input) {
     .replace(/youre/g, "you are")
     .replace(/arent/g, "are not")
     .replace(/im/g, "i am")
-    .replace(/thats/g, "that is");
+    .replace(/thats/g, "that is")
+    .replace(/luv/g, 'love');
 
   if (compare(prompts, replies, text)) { 
     // Search for exact match in `prompts`
     product = compare(prompts, replies, text);
-  } /*else if (text.match(/thank/gi)) {
-    product = "You're welcome!"
-  } */else if (text.match(/(corona|covid|virus)/gi)) {
+  } else if (text.match(/(corona|covid|virus)/gi)) {
     // If no match, check if message contains `coronavirus`
     product = coronavirus[Math.floor(Math.random() * coronavirus.length)];
   } else if (text.match(/time/gi)) {
     // If no match, check if message contains `time`
-    var d = new Date();
-    product = timePhrases[Math.floor(Math.random() * timePhrases.length)] + " " + d.getHours + ":" + d.getMinutes() + ":" + d.getSeconds() + "."
+    var dNow = new Date();
+    product = timePhrases[Math.floor(Math.random() * timePhrases.length)] + " " + dNow.getHours + ":" + dNow.getMinutes() + ":" + dNow.getSeconds() + ".";
+  } else if(text.match(/(weather|temp)/gi)) {
+    product = 'I don\t have access to that information. For now, go to <a href="https://weather.com/weather/today">weather.com</a>.';
+    //https://www.weather.com/wx/today/?lat=35.64&lon=-88.84&locale=en_US&temp=f
   } else {
     // If all else fails: random alternative
     product = alternative[Math.floor(Math.random() * alternative.length)];
   }
+
+  /*else if (text.match(/thank/gi)) {
+    product = "You're welcome!"
+  } */
 
   // Update DOM
   sendResults(input, product);
@@ -130,7 +139,14 @@ function compare(promptsArray, repliesArray, string) {
 }
 
 function calculate(input, eqVar) {
-  var exp = algebra.parse(input);
+  var exp;
+  try {
+    exp = algebra.parse(input);
+  } catch(error) {
+    error = error.toString().replace('EvalError: ', 'Cannot ').replace('TypeError: ', '').replace('Invalid Argument ', '').replace('(x)', '').replace(/:/g, '');
+    sendResults(input, error, false, false);
+    return;
+  }
   var ans;
   if(eqVar) {
     ans = exp.solveFor(eqVar);
@@ -153,13 +169,35 @@ function sendResults(input, product, isMath, eqVar) {
     if(eqVar) {
       document.getElementById('results').innerHTML=`
       <p class="result">${eqVar} = ${product}</p>
-      <p class="survey">You asked to calculate <i>${input}. <a class="survey-link" href="#">Solution doesn't look right? Click to see format regulations.</a></i></p>
+      <p class="survey">You asked to calculate <i>${input}. <a class="survey-link" href="#" onclick="openFormatting()">Solution doesn't look right? Click to see format regulations.</a></i></p>
     `;
     } else {
       document.getElementById('results').innerHTML=`
-      <p class="result">${input} is ${product}</p>
-      <p class="survey">You asked to calculate <i>${input}. <a class="survey-link" href="#">Solution doesn't look right? Click to see format regulations.</a></i></p>
+      <p class="result">${input} = ${product}</p>
+      <p class="survey">You asked to calculate <i>${input}. <a class="survey-link" href="#" onclick="openFormatting()">Solution doesn't look right? Click to see format regulations.</a></i></p>
     `;
     }
   }
+  focusInput();
 }
+
+function focusInput() {
+  document.getElementById("text").focus();
+}
+
+function openSurvey() {
+  document.getElementById('surveyDialog').classList.toggle('closed');
+}
+
+function openFormatting() {
+  document.getElementById('formatDialog').classList.toggle('closed');
+}
+
+document.querySelectorAll('.dialog-button').forEach(function(elem) {
+  elem.addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('surveyDialog').classList.add('closed');
+    document.getElementById('formatDialog').classList.add('closed');
+    focusInput();
+  });
+});
