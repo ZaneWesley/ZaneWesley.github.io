@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<script defer src="ui/dark-mode-manager.js"></script>
+	<script defer src="/ui/recommendation.js"></script>
 	<title>Zane's Apps</title>
 	<style>
 		* {
@@ -32,13 +33,19 @@
 			font-family: Calibri, sans-serif;
 			padding-top: 80%;
 			transition: all 1s;
+			/*background-image: url('https://wallpaperaccess.com/full/3122286.jpg');*/
+			/*background-image: url('https://i.pinimg.com/originals/12/11/17/1211177165c40aa84673897f4f3b367e.jpg');*/
+			/*background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;*/
 		}
 		header {
 			background-image: url('images/header-bg.svg');
 			background-size: cover;
 			background-position: center center;
 			background-repeat: no-repeat;
-			background-attachment: fixed;
+			/*background-sattachment: fixed;*/
 			position: absolute;
 			top:0;
 			left:0;
@@ -59,6 +66,17 @@
 			box-shadow: 7px 7px 12px #292838;
 			width: 75%;
 		}
+		#down {
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			bottom: 1em;
+			left: 45%;
+			transform: translateX(-45%);
+			animation: bounce 2s infinite;
+			overflow: hidden;
+			/*box-shadow: 7px 7px 12px #292838;*/
+		}
 		.content {
 			position: absolute;
 			min-height: 100%;
@@ -66,6 +84,11 @@
 			width: 100%;
 			padding: 16px;
 			padding-left: calc(16px + 1em);
+			/*background-image: url('https://1.bp.blogspot.com/-ew-OwCosX48/Xuoss_UDdPI/AAAAAAAAT6I/6bkTxtlC-L8wL-66-JYvHObWbGnKsHEFwCK4BGAsYHg/w640-h426/ultra-high-resolution-heroscreen.cc-wallpaper-5760x3840.png');
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;*/
 		}
 		.split {
 			position: relative;
@@ -105,7 +128,7 @@
 			animation-duration: 0.7s;
 		}
 		.disabled:after {
-			content: '(Temporarily Unavailable)';
+			content: ' (Temporarily Unavailable)';
 		}
 		.section {
 			border-bottom: 1px solid #ccc;
@@ -262,8 +285,18 @@
 	<header>
 		<div id="lights-container"></div>
 		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
+		<div id="down">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#3f3d56" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path></svg>
+		</div>
 	</header>
 	<div class="content">
+		<div id="recommended" class="section">
+			<h1>For You</h1>
+			<ul id="recommended-li">
+				<li data-url="#recommended">Use some apps to get recommendations!</li>
+			</ul>
+			<div style="padding: 1em"></div>
+		</div>
 		<div id="games" class="section">
 			<div class="split left">
 				<img src="images/games-bg.svg" class="mobile-visible" alt="Games Image">
@@ -314,7 +347,7 @@
 					<li id="calculator" data-url="/calculator">
 						Calculator
 					</li>
-					<li id="cs" data-url="/countdownstudio">
+					<li id="countdownstudio" data-url="/countdownstudio">
 						Countdown Studio
 					</li>
 					<li id="mmc" data-url="/mmc">
@@ -411,10 +444,10 @@
 	</div>
 
 	<script>
-		navigator.serviceWorker.getRegistrations().then(function(registrations) {
+		/*navigator.serviceWorker.getRegistrations().then(function(registrations) {
 		 for(let registration of registrations) {
 		  registration.unregister()
-		} });
+		} });*/
 		function ini() {
 			$('.content').css('top', $('header').css('height'));
 			//christmatize.stringLights('#lights-container');
@@ -425,6 +458,7 @@
 		if (window.matchMedia('(display-mode: standalone)').matches) {
 			$('li').click(function(e) {
 				if(!$(this).hasClass('disabled') && !$(this).hasClass('newframe')) {
+					updateHistory(this.id);
 					$('#standalone-frame').prop('src', $(this).attr('data-url'));
 					window.scrollTo(0,0);
 					$('.standalone-ui').toggle('slide', {direction: 'right'}, 500);
@@ -434,12 +468,14 @@
 						padding: 0
 					});
 				} else if($(this).hasClass('newframe')) {
+					updateHistory(this.id);
 					open($(this).attr('data-url'));
 				}
 			});
 		} else {
 			$('li').click(function(e) {
 				if(!$(this).hasClass('disabled')) {
+					updateHistory(this.id);
 					window.location=$(this).attr('data-url');
 				}
 			});
