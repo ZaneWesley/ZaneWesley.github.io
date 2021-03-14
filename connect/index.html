@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--<link rel="manifest" href="manifest.json">-->
+	<!-- Add to homescreen for Chrome on Android -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="application-name" content="Connect">
+	<meta name="theme-color" content="#0288d1">
+	<!-- Add to homescreen for Safari on iOS -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="Connect">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#0288d1">
+	<!-- App Styling -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+	<!--<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:thin,light&amp;lang=en">-->
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-vlOMx0hKjUCl4WzuhIhSNZSm2yQCaf0mOU1hEDK/iztH3gU4v5NMmJln9273A6Jz" crossorigin="anonymous">
+	<title>Connect</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+		html, body {
+		  font-family: 'Open Sans', 'Helvetica', sans-serif;
+		  width: 100%;
+		  height: 100%;
+		}
+		::selection {
+		    background: #b3d4fc;
+		    text-shadow: none;
+		}
+		:root {
+		  --transition: all 0.3s cubic-bezier(0,0,.2,1),width .3s cubic-bezier(0,0,.2,1),height .3s cubic-bezier(0,0,.2,1),opacity .6s cubic-bezier(0,0,.2,1);
+		}
+		body {
+			overflow-x: hidden;
+		}
+		header {
+			padding: 1em;
+			width: 100%;
+			background-color: #0288d1;
+			color: #fff;
+			vertical-align: middle;
+		}
+		header i {
+			font-size: 36px;
+		}
+		.title, .signin {
+			font-weight: 400;
+		}
+		.title {
+			font-size: 34px;
+			text-align: left;
+			float: left;
+		}
+		.signin {
+			font-size: 14px;
+			text-transform: uppercase;
+			line-height: 36px;
+			text-align: right;
+			transition: var(--transition);
+			cursor: pointer;
+		}
+		.out:hover {
+			color: rgba(255, 255, 255, 0.5);
+			font-size: 16px;
+		}
+		.in:hover {
+			font-size: 16px;
+		}
+		.signin-settings {
+			visibility: hidden;
+			opacity: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) scale(0.9);
+			width: 25%;
+			height: 50%;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			color: #000;
+			border-radius: 8px;
+			z-index: 5;
+			text-align: center;
+			transition: var(--transition);
+		}
+		.open {
+			visibility: visible;
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+		}
+		.signin-settings .close {
+			position: absolute;
+			right: 10px;
+			top: 0px;
+			font-size: 36px;
+			cursor: pointer;
+		}
+		.signin-settings h1 {
+			padding-bottom: 1em;
+		}
+		.signin-settings ul {
+			list-style-type: none;
+		}
+		.signin-settings li {
+			padding: 0.5em;
+			cursor: pointer;
+			transition: var(--transition);
+		}
+		.signin-settings li:hover {
+			background-color: rgba(158,158,158,0.2);;
+		}
+		input {
+			border: none;
+		    border-bottom: 1px solid rgba(0,0,0,.12);
+		    display: inline-block;
+		    font-size: 16px;
+		    font-family: 'Open Sans',"Helvetica","Arial",sans-serif;
+		    margin: 0;
+		    padding: 4px 0;
+		    width: calc(100% - 150px);
+		    background: 0 0;
+		    text-align: left;
+		    color: inherit;
+		    outline: none;
+		}
+		input:focus {
+			border-bottom: 2px solid #0288d1;
+			transition: var(--transition);
+		}
+		button {
+			width: 100px;
+			border: none;
+		    border-radius: 2px;
+		    height: 36px;
+		    min-width: 64px;
+		    padding: 0 16px;
+		    display: inline-block;
+		    font-family: "Open Sans","Helvetica","Arial",sans-serif;
+		    font-size: 14px;
+		    font-weight: 600;
+		    text-transform: uppercase;
+		    letter-spacing: 0;
+		    overflow: hidden;
+		    will-change: box-shadow;
+		    transition: box-all .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+		    outline: none;
+		    text-decoration: none;
+		    text-align: center;
+		    line-height: 36px;
+		    vertical-align: middle;
+		    background: rgba(158,158,158,0.2);
+		}
+		button:disabled {
+			background-color: rgba(0,0,0,.12);
+		    color: rgba(0,0,0,.26);
+		    box-shadow: none;
+		}
+		.content {
+			position: absolute;
+			height: calc(100% - 98px);
+			width: 100%;
+			padding: 1em;
+		}
+		.send-container {
+			position: fixed;
+			bottom: 2em;
+			width: 100%;
+			padding-left: 1em;
+		}
+		.message-container:first-of-type {
+			border-top-width: 0;
+		}
+		.message-container {
+			display: block;
+			padding: 1em;
+			margin-top: 10px;
+			border-top: 1px solid #f3f3f3;
+			padding-top: 10px;
+			opacity: 0;
+			transition: opacity 1s ease-in-out;
+		}
+		.message-container.visible {
+			opacity: 1;
+		}
+		.message-container .pic {
+			background-image: url('profile_placeholder.png');
+			background-repeat: no-repeat;
+			width: 30px;
+			height: 30px;
+			background-size: 30px;
+			border-radius: 20px;
+		}
+		.message-container .spacing {
+			display: table-cell;
+			vertical-align: top;
+		}
+		.message-container .message {
+			display: table-cell;
+			width: calc(100% - 40px);
+			padding: 5px 0 5px 10px;
+		}
+		.message-container .name {
+			display: inline-block;
+			width: 100%;
+			padding-left: 40px;
+			color: #bbb;
+			font-style: italic;
+			font-size: 12px;
+			box-sizing: border-box;
+		}
+		.message-container.currentUser {
+			background-color: rgba(2, 136, 209, 0.1)!important;
+		}
+
+		@media(max-width: 775px) {
+			.title, .signin {
+				display: block;
+			}
+			.signin-settings {
+				width: 100%;
+				height: 100%;
+				border-radius: 0px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h3 class="title"><i class="fal fa-comment-alt"></i> Connect</h3>
+		<h3 class="signin">Loading...</h3>
+	</header>
+	<div class="content">
+		<div class="messages"></div>
+		<div class="send-container">
+			<input id="message" type="text" placeholder="Message" autocomplete="off">
+			<button id="send" disabled>Send</button>
+		</div>
+	</div>
+
+	<div class="signin-settings">
+		<h1>Settings</h1>
+		<span class="close" onclick="this.parentNode.classList.toggle('open')">&times;</span>
+		<ul>
+			<li>Edit Profile</li>
+			<li onclick="signOut(); openSettings();">Sign Out</li>
+			<li>Code of Coduct</li>
+		</ul>
+	</div>
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-performance.js"></script>
+	<script id="firebaseConfiguration">
+	  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyCdgJ-ruUxauQFh99q0WFCIbR_VaC5WGZE",
+	    authDomain: "connect-messaging-724d1.firebaseapp.com",
+	    projectId: "connect-messaging-724d1",
+	    storageBucket: "connect-messaging-724d1.appspot.com",
+	    messagingSenderId: "350270123944",
+	    appId: "1:350270123944:web:16f2663d3a6d340576379d",
+	    measurementId: "G-0B6RHH96X0"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+	  firebase.analytics();
+	  firebase.performance();
+	</script>
+
+	<script>
+		var message = document.getElementById('message');
+		var signin = document.querySelector('.signin');
+		var messageListElement = document.querySelector('.messages');
+		var name, email, profilePicUrl, uid, emailVerified;
+
+		message.addEventListener('keyup', function(e) {
+			if(message.value && e.which == 13) {
+				messageHandler();
+			} else if(message.value) {
+				document.getElementById('send').disabled=false;
+			} else {
+				document.getElementById('send').disabled=true;
+			}
+		});
+		document.getElementById('send').addEventListener('click', messageHandler);
+
+		function signIn() {
+			var provider = new firebase.auth.GoogleAuthProvider();
+			firebase.auth()
+			  .signInWithPopup(provider)
+			  .then((result) => {
+			    /** @type {firebase.auth.OAuthCredential} */
+			    var credential = result.credential;
+
+			    // This gives you a Google Access Token. You can use it to access the Google API.
+			    var token = credential.accessToken;
+			    // The signed-in user info.
+			    var user = result.user;
+			    // ...
+			  }).catch((error) => {
+			    // Handle Errors here.
+			    var errorCode = error.code;
+			    var errorMessage = error.message;
+			    // The email of the user's account used.
+			    var email = error.email;
+			    // The firebase.auth.AuthCredential type that was used.
+			    var credential = error.credential;
+			    // ...
+			  });
+		}
+
+		function signOut() {
+			firebase.auth().signOut();
+		}
+
+		function getUserName() {
+			return firebase.auth().currentUser.displayName;
+		}
+
+		function getProfilePicUrl() {
+			return firebase.auth().currentUser.photoURL || 'profile_placeholder.png';
+		}
+
+		function isUserSignedIn() {
+			return !!firebase.auth().currentUser;
+		}
+
+		function openSettings() {
+			document.querySelector('.signin-settings').classList.toggle('open');
+		}
+
+		firebase.auth().onAuthStateChanged(function(user) {
+			if (user) {
+				// User is signed in.
+				name = user.displayName;
+				email = user.email;
+				profilePicUrl = getProfilePicUrl();
+				emailVerified = user.emailVerified;
+				uid = user.uid;
+
+				signin.innerText=user.displayName;
+				signin.classList.add('in');
+				signin.removeEventListener('click', signIn);
+				signin.addEventListener('click', openSettings);
+				loadMessages();
+			} else {
+				// No user is signed in.
+				signin.innerText='Sign-in with Google';
+				signin.classList.add('out');
+				signin.removeEventListener('click', openSettings);
+				signin.addEventListener('click', signIn);
+			}
+		});
+
+		// Template for messages.
+		var MESSAGE_TEMPLATE =
+		    '<div class="message-container">' +
+		      '<div class="spacing"><div class="pic"></div></div>' +
+		      '<div class="message"></div>' +
+		      '<div class="name"></div>' +
+		    '</div>';
+
+		function messageHandler() {
+			if(isUserSignedIn()) {
+				saveMessage(message.value);
+				message.value='';
+			}
+		}
+
+		// Saves a new message on the Cloud Firestore.
+		function saveMessage(messageText) {
+		  // Add a new message entry to the Firebase database.
+		  return firebase.firestore().collection('messages').add({
+		    name: getUserName(),
+		    text: messageText,
+		    profilePicUrl: getProfilePicUrl(),
+		    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+		  }).catch(function(error) {
+		    console.error('Error writing new message to Firebase Database', error);
+		  });
+		}
+
+		// Loads chat messages history and listens for upcoming ones.
+		function loadMessages() {
+		  // Create the query to load the last 12 messages and listen for new ones.
+		  var query = firebase.firestore().collection('messages').orderBy('timestamp', 'desc').limit(12);
+		  
+		  // Start listening to the query.
+		  query.onSnapshot(function(snapshot) {
+		    snapshot.docChanges().forEach(function(change) {
+		      if (change.type === 'removed') {
+		        deleteMessage(change.doc.id);
+		      } else {
+		        var message = change.doc.data();
+		        displayMessage(change.doc.id, message.timestamp, message.name,
+		                      message.text, message.profilePicUrl, message.imageUrl);
+		      }
+		    });
+		  });
+		}
+
+		function addSizeToGoogleProfilePic(url) {
+		  if (url.indexOf('googleusercontent.com') !== -1 && url.indexOf('?') === -1) {
+		    return url + '?sz=150';
+		  }
+		  return url;
+		}
+
+		// Delete a Message from the UI.
+		function deleteMessage(id) {
+		  var div = document.getElementById(id);
+		  // If an element for that message exists we delete it.
+		  if (div) {
+		    div.parentNode.removeChild(div);
+		  }
+		}
+
+		function createAndInsertMessage(id, timestamp) {
+		  const container = document.createElement('div');
+		  container.innerHTML = MESSAGE_TEMPLATE;
+		  const div = container.firstChild;
+		  div.setAttribute('id', id);
+
+		  // If timestamp is null, assume we've gotten a brand new message.
+		  // https://stackoverflow.com/a/47781432/4816918
+		  timestamp = timestamp ? timestamp.toMillis() : Date.now();
+		  div.setAttribute('timestamp', timestamp);
+
+		  // figure out where to insert new message
+		  const existingMessages = messageListElement.children;
+		  if (existingMessages.length === 0) {
+		    messageListElement.appendChild(div);
+		  } else {
+		    let messageListNode = existingMessages[0];
+
+		    while (messageListNode) {
+		      const messageListNodeTime = messageListNode.getAttribute('timestamp');
+
+		      if (!messageListNodeTime) {
+		        throw new Error(
+		          `Child ${messageListNode.id} has no 'timestamp' attribute`
+		        );
+		      }
+
+		      if (messageListNodeTime > timestamp) {
+		        break;
+		      }
+
+		      messageListNode = messageListNode.nextSibling;
+		    }
+
+		    messageListElement.insertBefore(div, messageListNode);
+		  }
+
+		  return div;
+		}
+
+		// Displays a Message in the UI.
+		function displayMessage(id, timestamp, name, text, picUrl, imageUrl) {
+		  var div = document.getElementById(id) || createAndInsertMessage(id, timestamp);
+
+		  // profile picture
+		  if (picUrl) {
+		    div.querySelector('.pic').style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(picUrl) + ')';
+		  }
+
+		  div.querySelector('.name').textContent = name;
+		  if(name == getUserName()) {
+		  	div.classList.add('currentUser');
+		  }
+		  var messageElement = div.querySelector('.message');
+
+		  if (text) { // If the message is text.
+		    messageElement.textContent = text;
+		    // Replace all line breaks by <br>.
+		    messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
+		  } else if (imageUrl) { // If the message is an image.
+		    var image = document.createElement('img');
+		    image.addEventListener('load', function() {
+		      messageListElement.scrollTop = messageListElement.scrollHeight;
+		    });
+		    image.src = imageUrl + '&' + new Date().getTime();
+		    messageElement.innerHTML = '';
+		    messageElement.appendChild(image);
+		  }
+		  // Show the card fading-in and scroll to view the new message.
+		  setTimeout(function() {div.classList.add('visible')}, 1);
+		  messageListElement.scrollTop = messageListElement.scrollHeight;
+		  message.focus();
+		}
+	</script>
+</body>
+</html>
