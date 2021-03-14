@@ -29,8 +29,10 @@
 		}
 		html, body {
 		  font-family: 'Open Sans', 'Helvetica', sans-serif;
-		  width: 100%;
-		  height: 100%;
+		  width: 100vw;
+		  height: 100vh;
+		  overflow-x: hidden;
+			webkit-overflow-x: hidden;
 		}
 		::selection {
 		    background: #b3d4fc;
@@ -39,15 +41,14 @@
 		:root {
 		  --transition: all 0.3s cubic-bezier(0,0,.2,1),width .3s cubic-bezier(0,0,.2,1),height .3s cubic-bezier(0,0,.2,1),opacity .6s cubic-bezier(0,0,.2,1);
 		}
-		body {
-			overflow-x: hidden;
-		}
 		header {
 			padding: 1em;
 			width: 100%;
 			background-color: #0288d1;
 			color: #fff;
 			vertical-align: middle;
+			position: fixed;
+			z-index: 3; 
 		}
 		header i {
 			font-size: 36px;
@@ -92,12 +93,12 @@
 			text-align: center;
 			transition: var(--transition);
 		}
-		.open {
+		.signin-settings.open {
 			visibility: visible;
 			opacity: 1;
 			transform: translate(-50%, -50%) scale(1);
 		}
-		.signin-settings .close {
+		.close {
 			position: absolute;
 			right: 10px;
 			top: 0px;
@@ -118,9 +119,43 @@
 		.signin-settings li:hover {
 			background-color: rgba(158,158,158,0.2);;
 		}
+		.conduct {
+			visibility: hidden;
+			opacity: 0;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			z-index: 5;
+			/*transform: translateX(100%);*/
+			transition: var(--transition);
+			padding: 2em;
+			color: #222;
+			font-size: 1.2em;
+		}
+		.conduct h1 {
+			text-align: center;
+			padding-bottom: 1em;
+			font-size: 2em;
+		}
+		.conduct h2, .conduct p {
+			padding-bottom: 1.5em;
+		}
+		.conduct ul {
+			margin-left: 2em;
+			margin-bottom: 20px;
+		}
+		.conduct.open {
+			visibility: visible;
+			opacity: 1;
+			/*transform: translateX(0%);*/
+		}
 		input {
 			border: none;
 		    border-bottom: 1px solid rgba(0,0,0,.12);
+		    border-radius: 0;
 		    display: inline-block;
 		    font-size: 16px;
 		    font-family: 'Open Sans',"Helvetica","Arial",sans-serif;
@@ -166,15 +201,16 @@
 		}
 		.content {
 			position: absolute;
-			height: calc(100% - 98px);
 			width: 100%;
-			padding: 1em;
+			padding: 5em 1em;
 		}
 		.send-container {
 			position: fixed;
-			bottom: 2em;
+			bottom: 0;
 			width: 100%;
 			padding-left: 1em;
+			padding-bottom: 2em;
+			background-color: #fff;
 		}
 		.message-container:first-of-type {
 			border-top-width: 0;
@@ -252,8 +288,56 @@
 		<ul>
 			<li>Edit Profile</li>
 			<li onclick="signOut(); openSettings();">Sign Out</li>
-			<li>Code of Coduct</li>
+			<li onclick="openConduct(); openSettings();">Code of Coduct</li>
 		</ul>
+	</div>
+
+	<div class="conduct">
+		<h1>Code of Conduct</h1>
+		<span class="close" onclick="this.parentNode.classList.toggle('open')">&times;</span>
+		<p>Hey everybody!</p>
+		<p>Connect is a public community. Everyone is welcome to participate here regardless of race, religion, gender, sexual orientation, appearance, or anything else that makes up a person. Not only is everyone welcome, we want everyone to feel comfortable and feel safe.</p>
+		<p>To make that happen, we present these rules of conduct that we promise to enforce.</p>
+
+		<h2>Unacceptable</h2>
+		<p>Any content of the following kind is unacceptable:</p>
+		<ul>
+			<li>Pornographic / Sexual</li>
+			<li>Bigoted</li>
+			<li>Sexist</li>
+			<li>Racist</li>
+			<li>Rude</li>
+			<li>Attacking</li>
+			<li>Intimidating</li>
+			<li>Harassing</li>
+			<li>Stalking</li>
+			<li>Disruptive</li>
+			<li>Offensive</li>
+			<li>Spam</li>
+		</ul>
+		<p>This isn&#8217;t a complete list. It&#8217;s so you understand the vibe here. You know what being a jerk is; don&#8217;t be one.</p>
+
+		<h2>Who decides what is unacceptable?</h2>
+		<p>We do. We realize there may be some subjectivity to these calls. We’re going to err on the side of keeping people feeling safe and comfortable. We’re also going to err on the side of someone telling us they are offended or being made uncomfortable. But again, ultimately it’s our call.</p>
+		<p>Remember: you don’t get to decide how other people feel about your actions, they do.</p>
+
+		<h2>What happens when an unacceptable action has occurred?</h2>
+		<p>If it is harmful content, we’ll delete it.</p>
+		<p>If you’ve been notified of unacceptable behavior, we expect it to stop immediately.</p>
+		<p>We understand that everyone makes mistakes, has bad days, and has learning to do when it comes to this stuff. We’re not going to delete your account for being slightly rude. But, we will delete your account and ban you for egregious or repeated violations.</p>
+
+		<h2>How to report unacceptable actions</h2>
+		<p>The best way is to submit a <a href="#">violation request</a>. Just let us know what’s going on and we’ll handle it as soon as we can.</p>
+
+		<h2>Acceptable</h2>
+		<p>Any content of the following kind is acceptable and welcomed:</p>
+		<ul>
+			<li>Kind</li>
+			<li>Supportive</li>
+			<li>Helpful</li>
+			<li>Informaative</li>
+		</ul>
+		<br><br><br>
 	</div>
 
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -339,6 +423,10 @@
 
 		function openSettings() {
 			document.querySelector('.signin-settings').classList.toggle('open');
+		}
+
+		function openConduct() {
+			document.querySelector('.conduct').classList.toggle('open');
 		}
 
 		firebase.auth().onAuthStateChanged(function(user) {
@@ -489,7 +577,8 @@
 		  } else if (imageUrl) { // If the message is an image.
 		    var image = document.createElement('img');
 		    image.addEventListener('load', function() {
-		      messageListElement.scrollTop = messageListElement.scrollHeight;
+		      //messageListElement.scrollTop = messageListElement.scrollHeight;
+		      window.scrollTo(0,document.body.scrollHeight);
 		    });
 		    image.src = imageUrl + '&' + new Date().getTime();
 		    messageElement.innerHTML = '';
@@ -497,7 +586,8 @@
 		  }
 		  // Show the card fading-in and scroll to view the new message.
 		  setTimeout(function() {div.classList.add('visible')}, 1);
-		  messageListElement.scrollTop = messageListElement.scrollHeight;
+		  //messageListElement.scrollTop = messageListElement.scrollHeight;
+		  window.scrollTo(0,document.body.scrollHeight);
 		  message.focus();
 		}
 	</script>
