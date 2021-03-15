@@ -28,11 +28,11 @@
 			margin: 0;
 		}
 		html, body {
-		  font-family: 'Open Sans', 'Helvetica', sans-serif;
-		  width: 100vw;
-		  height: 100vh;
-		  overflow-x: hidden;
-			webkit-overflow-x: hidden;
+			font-family: 'Open Sans', 'Helvetica', sans-serif;
+			width: 100vw;
+			height: 100vh;
+			overflow-x: hidden;
+			-webkit-overflow-x: hidden;
 		}
 		::selection {
 		    background: #b3d4fc;
@@ -40,6 +40,34 @@
 		}
 		:root {
 		  --transition: all 0.3s cubic-bezier(0,0,.2,1),width .3s cubic-bezier(0,0,.2,1),height .3s cubic-bezier(0,0,.2,1),opacity .6s cubic-bezier(0,0,.2,1);
+		}
+		body.dark, .dark .conduct {
+			background-color: #2B3134;
+			color: #fff;
+		}
+		.dark .send-container {
+			background-color: #2B3134;
+		}
+		.dark button {
+			background-color: #808080;
+			color: #fff;
+		}
+		.dark button:disabled {
+			background-color: #a9a9a9;
+		}
+		.dark input {
+			border-bottom: 1px solid #ccc;
+		}
+		.dark a {
+			color: #b3d4fc;
+		}
+		.dark .signin-settings {
+			background-color: #2B3134;
+			border: 1px solid #a9a9a9;
+			color: #fff;
+		}
+		.dark .signin-settings li:hover {
+			background-color: rgba(158,158,158,0.9);
 		}
 		header {
 			padding: 1em;
@@ -53,6 +81,15 @@
 		header i {
 			font-size: 36px;
 		}
+		header .pic {
+			background-image: url('profile_placeholder.png');
+			background-repeat: no-repeat;
+			width: 40px;
+			height: 40px;
+			background-size: 40px;
+			border-radius: 50%;
+			display: inline-block;
+		}
 		.title, .signin {
 			font-weight: 400;
 		}
@@ -64,18 +101,20 @@
 		.signin {
 			font-size: 14px;
 			text-transform: uppercase;
-			line-height: 36px;
+			line-height: 30px;
 			text-align: right;
 			transition: var(--transition);
 			cursor: pointer;
+			user-select: none;
+			-webkit-user-select: none;
 		}
 		.out:hover {
 			color: rgba(255, 255, 255, 0.5);
 			font-size: 16px;
 		}
-		.in:hover {
+		/*.in:hover {
 			font-size: 16px;
-		}
+		}*/
 		.signin-settings {
 			visibility: hidden;
 			opacity: 0;
@@ -117,7 +156,7 @@
 			transition: var(--transition);
 		}
 		.signin-settings li:hover {
-			background-color: rgba(158,158,158,0.2);;
+			background-color: rgba(158,158,158,0.2);
 		}
 		.conduct {
 			visibility: hidden;
@@ -134,6 +173,7 @@
 			padding: 2em;
 			color: #222;
 			font-size: 1.2em;
+			overflow-y: hidden;
 		}
 		.conduct h1 {
 			text-align: center;
@@ -151,6 +191,7 @@
 			visibility: visible;
 			opacity: 1;
 			/*transform: translateX(0%);*/
+			overflow-y: auto;
 		}
 		input {
 			border: none;
@@ -261,10 +302,12 @@
 			.title, .signin {
 				display: block;
 			}
-			.signin-settings {
+			.signin-settings, .dark .signin-settings {
 				width: 100%;
 				height: 100%;
 				border-radius: 0px;
+				border: none;
+				font-size: 1.2em;
 			}
 		}
 	</style>
@@ -272,7 +315,23 @@
 <body>
 	<header>
 		<h3 class="title"><i class="fal fa-comment-alt"></i> Connect</h3>
-		<h3 class="signin">Loading...</h3>
+		<h3 class="signin">
+			<!--Loading...-->
+				<div title="Loading...">
+				  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+				  <path fill="#fff" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+				    <animateTransform attributeType="xml"
+				      attributeName="transform"
+				      type="rotate"
+				      from="0 25 25"
+				      to="360 25 25"
+				      dur="0.6s"
+				      repeatCount="indefinite"/>
+				    </path>
+				  </svg>
+				</div>
+		</h3>
 	</header>
 	<div class="content">
 		<div class="messages"></div>
@@ -286,7 +345,8 @@
 		<h1>Settings</h1>
 		<span class="close" onclick="this.parentNode.classList.toggle('open')">&times;</span>
 		<ul>
-			<li>Edit Profile</li>
+			<!--<li>Edit Profile</li>-->
+			<li onclick="darkModeToggle()">Dark Mode</li>
 			<li onclick="signOut(); openSettings();">Sign Out</li>
 			<li onclick="openConduct(); openSettings();">Code of Coduct</li>
 		</ul>
@@ -327,7 +387,7 @@
 		<p>We understand that everyone makes mistakes, has bad days, and has learning to do when it comes to this stuff. We’re not going to delete your account for being slightly rude. But, we will delete your account and ban you for egregious or repeated violations.</p>
 
 		<h2>How to report unacceptable actions</h2>
-		<p>The best way is to submit a <a href="#">violation request</a>. Just let us know what’s going on and we’ll handle it as soon as we can.</p>
+		<p>The best way is to submit a <!--<a href="javascript:void(window.open('https://form.jotform.com/210728303525045','blank','scrollbars=yes,toolbar=no,width=700,height=500'))">violation report</a>--><a href="#">violation report</a>. Just let us know what’s going on and we’ll handle it as soon as we can.</p>
 
 		<h2>Acceptable</h2>
 		<p>Any content of the following kind is acceptable and welcomed:</p>
@@ -438,7 +498,7 @@
 				emailVerified = user.emailVerified;
 				uid = user.uid;
 
-				signin.innerText=user.displayName;
+				signin.innerHTML=`<div class="pic" style="background-image: url('${addSizeToGoogleProfilePic(getProfilePicUrl())}')" title="${user.displayName}"></div>`;/**/
 				signin.classList.add('in');
 				signin.removeEventListener('click', signIn);
 				signin.addEventListener('click', openSettings);
@@ -451,6 +511,19 @@
 				signin.addEventListener('click', signIn);
 			}
 		});
+
+		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+		    var newColorScheme = e.matches ? "dark" : "light";
+		    if(newColorScheme == "dark") {
+		    	document.body.classList.add('dark');
+		    } else {
+		    	document.body.classList.remove('dark');
+		    }
+		});
+
+		function darkModeToggle() {
+			document.body.classList.toggle('dark');
+		}
 
 		// Template for messages.
 		var MESSAGE_TEMPLATE =
@@ -562,9 +635,11 @@
 		  // profile picture
 		  if (picUrl) {
 		    div.querySelector('.pic').style.backgroundImage = 'url(' + addSizeToGoogleProfilePic(picUrl) + ')';
+		    div.querySelector('.pic').title=name;
 		  }
 
 		  div.querySelector('.name').textContent = name;
+		  div.querySelector('.name').title=name;
 		  if(name == getUserName()) {
 		  	div.classList.add('currentUser');
 		  }
