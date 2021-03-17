@@ -548,7 +548,7 @@
 		    text: messageText,
 		    profilePicUrl: getProfilePicUrl(),
 		    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-		    groupId: groupId;
+		    groupId: groupId
 		  }).catch(function(error) {
 		    console.error('Error writing new message to Firebase Database', error);
 		  });
