@@ -395,7 +395,7 @@
 			<li>Kind</li>
 			<li>Supportive</li>
 			<li>Helpful</li>
-			<li>Informaative</li>
+			<li>Informative</li>
 		</ul>
 		<br><br><br>
 	</div>
@@ -427,7 +427,7 @@
 		var message = document.getElementById('message');
 		var signin = document.querySelector('.signin');
 		var messageListElement = document.querySelector('.messages');
-		var name, email, profilePicUrl, uid, emailVerified, groupId;
+		var name, email, profilePicUrl, uid, emailVerified, groupId = undefined;
 
 		message.addEventListener('keyup', function(e) {
 			if(message.value && e.which == 13) {
@@ -498,6 +498,8 @@
 				emailVerified = user.emailVerified;
 				uid = user.uid;
 
+				saveUserData(uid, name, email, profilePicUrl);
+
 				signin.innerHTML=`<div class="pic" style="background-image: url('${addSizeToGoogleProfilePic(getProfilePicUrl())}')" title="${user.displayName}"></div>`;/**/
 				signin.classList.add('in');
 				signin.removeEventListener('click', signIn);
@@ -523,6 +525,17 @@
 
 		function darkModeToggle() {
 			document.body.classList.toggle('dark');
+		}
+
+		function saveUserData(userId, name, email, imageUrl) {
+			firebase.firestore().collection('users').doc(userId).set({
+				name: name,
+				email: email,
+				profilePicUrl: imageUrl,
+				userId: userId
+			}).catch(function(error) {
+				console.error('Error writing user to Firebase Database', error);
+			});
 		}
 
 		// Template for messages.
