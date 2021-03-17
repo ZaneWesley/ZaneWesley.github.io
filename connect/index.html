@@ -427,7 +427,7 @@
 		var message = document.getElementById('message');
 		var signin = document.querySelector('.signin');
 		var messageListElement = document.querySelector('.messages');
-		var name, email, profilePicUrl, uid, emailVerified;
+		var name, email, profilePicUrl, uid, emailVerified, groupId;
 
 		message.addEventListener('keyup', function(e) {
 			if(message.value && e.which == 13) {
@@ -547,7 +547,8 @@
 		    name: getUserName(),
 		    text: messageText,
 		    profilePicUrl: getProfilePicUrl(),
-		    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+		    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+		    groupId: groupId;
 		  }).catch(function(error) {
 		    console.error('Error writing new message to Firebase Database', error);
 		  });
