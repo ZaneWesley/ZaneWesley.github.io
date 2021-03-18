@@ -427,7 +427,7 @@
 		var message = document.getElementById('message');
 		var signin = document.querySelector('.signin');
 		var messageListElement = document.querySelector('.messages');
-		var name, email, profilePicUrl, uid, emailVerified, groupId = undefined;
+		var name, email, profilePicUrl, uid, emailVerified, groupId = 'public';
 
 		message.addEventListener('keyup', function(e) {
 			if(message.value && e.which == 13) {
