@@ -158,7 +158,7 @@
 		.signin-settings li:hover {
 			background-color: rgba(158,158,158,0.2);
 		}
-		.conduct {
+		.conduct, .privacy {
 			visibility: hidden;
 			opacity: 0;
 			position: absolute;
@@ -175,19 +175,19 @@
 			font-size: 1.2em;
 			overflow-y: hidden;
 		}
-		.conduct h1 {
+		.conduct h1, .privacy h1 {
 			text-align: center;
 			padding-bottom: 1em;
 			font-size: 2em;
 		}
-		.conduct h2, .conduct p {
+		.conduct h2, .conduct p, .privacy h2, .privacy p {
 			padding-bottom: 1.5em;
 		}
-		.conduct ul {
+		.conduct ul, .privacy ul {
 			margin-left: 2em;
 			margin-bottom: 20px;
 		}
-		.conduct.open {
+		.conduct.open, .privacy.open {
 			visibility: visible;
 			opacity: 1;
 			/*transform: translateX(0%);*/
@@ -349,6 +349,7 @@
 			<li onclick="darkModeToggle()">Dark Mode</li>
 			<li onclick="signOut(); openSettings();">Sign Out</li>
 			<li onclick="openConduct(); openSettings();">Code of Coduct</li>
+			<li onclick="openPrivacy(); openSettings();">Privacy</li>
 		</ul>
 	</div>
 
@@ -398,6 +399,30 @@
 			<li>Informative</li>
 		</ul>
 		<br><br><br>
+	</div>
+
+	<div class="privacy">
+		<h1>Privacy Policy</h1>
+		<span class="close" onclick="this.parentNode.classList.toggle('open')">&times;</span>
+
+		<h2>Public Information</h2>
+		<p>Your display name, your user avatar, and any public content you create are immediately visible to anyone who is a part of your messaging groups.</p>
+		<p>All of your public information is transfered and managed by your Google account, including your name and avatar. You can change your personal information by changing it in your Google account settings.</p>
+		<p>Because this is a public platform, please remember that your actions affect others. To learn more about appropriate usage of this service, please read our <a href="#" onclick="openPrivacy(); openConduct();">Code of Conduct</a>.</p>
+
+		<h2>Private Information</h2>
+		<p>We collect your email address at signup. We use your email address to send you communication essential to providing service, including registration confirmation. Your email will never be sold or spammed by our service.</p>
+		<p>When you sign up with a Google login account, we receive your email address from this service, but we do not collect a password for your account. This is managed through your Google account settings.</p>
+
+		<h2>Security</h2>
+		<p>We have implemented processes intended to protect user information and maintain security of data. These safeguards help prevent unauthorized access, maintain data accuracy, and ensure the appropriate use of data. However, it is each user’s responsibility to protect the security of his or her login information.</p>
+
+		<h2>Cookies</h2>
+		<p>We use cookies and similar web browser technologies, like localStorage, to help make it easier to use our service. For example, we use them to help keep you logged in and remember your preferences.</p>
+		<p>We also use cookies to gather information about user behavior on this service. For example, we may measure how often you use one of its features. We use this information to help plan development of new features, and do not intend to make users uncomfortable.</p>
+		<p>While we support the protection of our people's privacy on the internet, we expressly disclaim any and all liability for the actions of third parties, including but without limitation to actions relating to the use and/or disclosure of personal information by third parties and other users of the service.</p>
+		<p>You can adjust your browser settings to block cookies or access to localStorage. Some features will not work if cookies are blocked.</p>
+
 	</div>
 
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -487,6 +512,10 @@
 
 		function openConduct() {
 			document.querySelector('.conduct').classList.toggle('open');
+		}
+
+		function openPrivacy() {
+			document.querySelector('.privacy').classList.toggle('open');
 		}
 
 		firebase.auth().onAuthStateChanged(function(user) {
