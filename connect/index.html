@@ -1050,15 +1050,16 @@
 			if(name !== null && name !== "") {
 				// Add a new group entry to the Firebase database.
 			  	return firebase.firestore().collection('groups').add({
-				    groupId: groupId,
+				    groupId: firebase.firestore().collection('groups').doc().id,
 				    imageUrl: "",
 				    name: name,
 				    owner: getUserName()
 			  }).catch(function(error) {
 			    console.error('Error writing new message to Firebase Database', error);
+			  }).then(function() {
+			  	document.querySelector('.new-group-form').classList.remove('open');
+				document.getElementById('new-group').value="";
 			  });
-			  document.querySelector('.new-group-form').classList.remove('open');
-			  document.getElementById('new-group').value="";
 			}
 		}
 
