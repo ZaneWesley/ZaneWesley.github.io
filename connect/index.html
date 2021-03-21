@@ -263,7 +263,7 @@
 			background-color: rgba(158,158,158,0.2);
 		}
 		.signin-screen {
-			position: absolute;
+			position: fixed;
 			left: 0;
 			top: 0;
 			width: 100%;
@@ -907,7 +907,6 @@
 				signin.removeEventListener('click', openSettings);
 				signin.addEventListener('click', signIn);
 				openLoginScreen();
-				document.body.style.overflow="hidden";
 			}
 			document.querySelector('.splash').classList.add('closed');
 			setTimeout(function() {
