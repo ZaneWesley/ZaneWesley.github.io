@@ -41,7 +41,7 @@
 		:root {
 		  --transition: all 0.3s cubic-bezier(0,0,.2,1),width .3s cubic-bezier(0,0,.2,1),height .3s cubic-bezier(0,0,.2,1),opacity .6s cubic-bezier(0,0,.2,1);
 		}
-		body.dark, .dark .conduct {
+		body.dark, .dark .conduct, .dark .privacy {
 			background-color: #2B3134;
 			color: #fff;
 		}
@@ -79,6 +79,9 @@
 		}
 		.dark .splash {
 			background-color: #2B3134;
+		}
+		.dark .new-group:hover, .dark .group-container:hover {
+			background-color: rgba(158,158,158,0.9);
 		}
 		header {
 			padding: 1em;
@@ -542,13 +545,7 @@
 			background-color: #fff;
 		}
 		.group-container {
-			display: block;
-			padding: 1em;
-			margin-top: 10px;
-			border-top: 1px solid #f3f3f3;
-			padding-top: 10px;
-			opacity: 0;
-			transition: var(--transition);
+			transition: var(--transition)!important;
 			cursor: pointer;
 		}
 		.group-container:hover, .new-group:hover {
@@ -561,6 +558,14 @@
 			padding: 1em;
 			color: #0288d1;
 			cursor: pointer;
+			transition: var(--transition);
+		}
+		.groups .message-container .pic {
+			/*background-image: url('profile_placeholder.png');*/
+			display: none;
+		}
+		.groups .message-container .name {
+			display: none;
 		}
 		.message-container:first-of-type, .group-container:first-of-type {
 			border-top-width: 0;
@@ -611,7 +616,7 @@
 			.title, .signin {
 				display: block;
 			}
-			.signin-settings, .dark .signin-settings, .new-group-form {
+			.signin-settings, .dark .signin-settings, .new-group-form, .dark .new-group-form {
 				width: 100%;
 				height: 100%;
 				border-radius: 0px;
@@ -649,11 +654,7 @@
 		</h3>
 	</header>
 	<div class="groups-viewer">
-		<div class="groups">
-			<div class="group-container visible" data-group-id="public">Public</div>
-			<div class="group-container visible" data-group-id="public">Public Beta</div>
-			<div class="group-container visible" data-group-id="public">Public Beta 2</div>
-		</div>
+		<div class="groups"></div>
 		<div class="new-group">Start New Group</div>
 	</div>
 	<div class="message-viewer">
@@ -711,7 +712,7 @@
 		<label for="new-group">Group Name</label>
 		<input id="new-group" type="text" placeholder="Group Name">
 		<br>
-		<button id="create">Create</button>
+		<button id="create" onclick="createGroup(document.getElementById('new-group').value)">Create</button>
 	</div>
 
 	<div class="conduct">
@@ -813,6 +814,7 @@
 		var message = document.getElementById('message');
 		var signin = document.querySelector('.signin');
 		var messageListElement = document.querySelector('.messages');
+		var groupListElement = document.querySelector('.groups');
 		var name, email, profilePicUrl, uid, emailVerified, groupId = 'public';
 
 		message.addEventListener('keyup', function(e) {
@@ -899,7 +901,7 @@
 				signin.classList.add('in');
 				signin.removeEventListener('click', signIn);
 				signin.addEventListener('click', openSettings);
-				loadMessages();
+				loadGroups();
 			} else {
 				// No user is signed in.
 				signin.innerText='Sign-in with Google';
@@ -958,12 +960,15 @@
 			document.querySelector('.new-group-form').classList.add('open');
 		});
 
-		function openGroup(groupId, groupName) {
+		function openGroup(groupID, groupName) {
 			document.querySelector('.groups-viewer').classList.add('closed');
 			document.querySelector('.message-viewer').classList.add('open');
 			document.querySelector('.title').classList.remove('default');
 			document.querySelector('.title').classList.add('changed');
 			document.querySelector('.title').innerHTML=`<span onclick="backToViewer()"><i class="fal fa-chevron-left"></i> ${groupName}</span>`;
+			groupId = groupID;
+			loadMessages();
+			message.focus();
 		}
 
 		function backToViewer() {
@@ -972,6 +977,89 @@
 			document.querySelector('.title').classList.remove('changed');
 			document.querySelector('.title').classList.add('default');
 			document.querySelector('.title').innerHTML=`<i class="fal fa-comment-alt"></i> Connect`;
+			document.querySelector('.messages').innerHTML="";
+			groupId = "public";
+		}
+
+		function loadGroups() {
+			// Create the query to load the groups
+		  var query = firebase.firestore().collection('groups');
+		  
+		  // Start listening to the query
+		  query.onSnapshot(function(snapshot) {
+		    snapshot.docChanges().forEach(function(change) {
+		      if (change.type === 'removed') {
+		        deleteGroup(change.doc.id);
+		      } else {
+		        var group = change.doc.data();
+		        displayGroup(change.doc.id, group.groupId, group.name, group.imageUrl,
+		                      group.owner);
+		      }
+		    });
+		  });
+		}
+		
+		// Delete a group from the UI.
+		function deleteGroup(id) {
+		  var div = document.getElementById(id);
+		  // If an element for that message exists we delete it.
+		  if (div) {
+		    div.parentNode.removeChild(div);
+		  }
+		}
+
+		function displayGroup(id, groupID, name, imageUrl, owner) {
+			var div = document.getElementById(id) || createAndInsertGroup(id);
+
+			if(imageUrl) {
+				div.querySelector('.pic').style.backgroundImage = 'url(' + imageUrl + ')';
+		    	div.querySelector('.pic').title=name;
+			}
+
+			if(name) {
+				div.querySelector('.message').textContent = name;
+			}
+
+			if(owner) {
+				div.setAttribute('data-owner', owner);
+			}
+
+			div.addEventListener('click', function(e) {
+				e.preventDefault();
+				openGroup(id, name);
+			});
+
+			// Show the card fading-in to view the new group.
+			setTimeout(function() {div.classList.add('visible')}, 1);
+		}
+
+		function createAndInsertGroup(id) {
+			const container = document.createElement('div');
+			container.innerHTML = MESSAGE_TEMPLATE;
+			const div = container.firstChild;
+			div.setAttribute('id', id);
+			div.classList.add('group-container');
+
+			const existingGroups = groupListElement.children;
+			groupListElement.appendChild(div);
+
+			return div;
+		}
+
+		function createGroup(name, imageUrl) {
+			if(name !== null && name !== "") {
+				// Add a new group entry to the Firebase database.
+			  	return firebase.firestore().collection('groups').add({
+				    groupId: groupId,
+				    imageUrl: "",
+				    name: name,
+				    owner: getUserName()
+			  }).catch(function(error) {
+			    console.error('Error writing new message to Firebase Database', error);
+			  });
+			  document.querySelector('.new-group-form').classList.remove('open');
+			  document.getElementById('new-group').value="";
+			}
 		}
 
 		/****************************
@@ -996,7 +1084,8 @@
 		// Saves a new message on the Cloud Firestore.
 		function saveMessage(messageText) {
 		  // Add a new message entry to the Firebase database.
-		  return firebase.firestore().collection('messages').add({
+		  //return firebase.firestore().collection('messages').add({
+		  	return firebase.firestore().collection('groups').doc(groupId).collection('messages').add({
 		    name: getUserName(),
 		    text: messageText,
 		    profilePicUrl: getProfilePicUrl(),
@@ -1010,7 +1099,8 @@
 		// Loads chat messages history and listens for upcoming ones.
 		function loadMessages() {
 		  // Create the query to load the last 12 messages and listen for new ones.
-		  var query = firebase.firestore().collection('messages').orderBy('timestamp', 'desc').limit(12);
+		  //var query = firebase.firestore().collection('messages').orderBy('timestamp', 'desc').limit(12);
+		  var query = firebase.firestore().collection('groups').doc(groupId).collection('messages').orderBy('timestamp', 'desc').limit(12);
 		  
 		  // Start listening to the query.
 		  query.onSnapshot(function(snapshot) {
@@ -1092,6 +1182,29 @@
 		    div.querySelector('.pic').title=name;
 		  }
 
+		  //Time and Date
+		  /*var dateSent = Date(div.getAttribute('timestamp'));
+		  console.log(timestamp);
+		  console.log(dateSent);
+		  var dateParts = dateSent.split(" ");
+		  var timeParts = dateParts[4].split(":");
+		  var hours = Number(timeParts[0]);
+		  var minutes = Number(timeParts[1]);
+		  var seconds = Number(timeParts[2]);
+		  var timeValue;
+		  if (hours > 0 && hours <= 12) {
+			  timeValue= "" + hours;
+		  } else if (hours > 12) {
+			  timeValue= "" + (hours - 12);
+		  } else if (hours == 0) {
+			  timeValue= "12";
+		  } 
+		  timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+		  timeValue += (seconds < 10) ? ":0" + seconds : ":" + seconds;  // get seconds
+		  timeValue += (hours >= 12) ? " PM" : " AM";  // get AM/PM
+
+		  div.querySelector('.name').textContent = `${name} ${dateParts[1]} ${dateParts[2]}, ${dateParts[3]}, ${timeValue}`;*/
+
 		  div.querySelector('.name').textContent = name;
 		  div.querySelector('.name').title=name;
 		  if(name == getUserName()) {
@@ -1117,7 +1230,6 @@
 		  setTimeout(function() {div.classList.add('visible')}, 1);
 		  //messageListElement.scrollTop = messageListElement.scrollHeight;
 		  window.scrollTo(0,document.body.scrollHeight);
-		  message.focus();
 		}
 	</script>
 </body>
