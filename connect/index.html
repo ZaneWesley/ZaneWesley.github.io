@@ -623,7 +623,6 @@
 			}
 			.signin-screen .content {
 				width: 100%;
-				overflow: hidden;
 			}
 		}
 	</style>
@@ -908,6 +907,7 @@
 				signin.removeEventListener('click', openSettings);
 				signin.addEventListener('click', signIn);
 				openLoginScreen();
+				document.body.style.overflow="hidden";
 			}
 			document.querySelector('.splash').classList.add('closed');
 			setTimeout(function() {
