@@ -654,6 +654,7 @@
 		</h3>
 	</header>
 	<div class="groups-viewer">
+		<h3 style="padding-top: 1em;">Your Groups</h3>
 		<div class="groups"></div>
 		<div class="new-group">Start New Group</div>
 	</div>
@@ -693,10 +694,11 @@
 		<div class="content">
 			<h1>Sign In</h1>
 			<p>Please sign in to continue.</p>
-			<button onclick="signIn()"><i class="fab fa-google"></i> Sign in with Google</button>
+			<button onclick="signIn('google')"><i class="fab fa-google"></i> Sign in with Google</button>
 			<br><br>
 			<h4>Why Google?</h4>
-			<p>Connect uses Google as a third party authentication providor to keep your information secure. We don't see your credntials, and Google don't see you messages. Simple, Safe & Secure.</p>
+			<p>Connect uses Google as a third party authentication provider to keep your information secure. We don't see your credntials, and Google doesn't see you messages. Simple, Safe & Secure.</p>
+			<!--<p>If you do not want to sign in with Google, you can also sign in with our other authenication providers, namely <span class="link" onclick="signIn('apple')">Apple</span> and <span class="link" onclick="signIn('facebook')">Facebook</span></p>-->
 			<p>For more information, see our <span class="link" onclick="openPrivacy()">Privacy Policy</span>. For detailes about how app content is managed, read our <span class="link" onclick="openConduct()">Code of Conduct</span>.
 		</div>
 	</div>
@@ -828,10 +830,22 @@
 		});
 		document.getElementById('send').addEventListener('click', messageHandler);
 
-		function signIn() {
-			var provider = new firebase.auth.GoogleAuthProvider();
+		function signIn(authProvider) {
+			var provider;
+			switch(authProvider) {
+				case 'google':
+					provider = new firebase.auth.GoogleAuthProvider();
+					break;
+				case 'facebook':
+					provider = new firebase.auth.FacebookAuthProvider();
+					break;
+				case 'apple':
+					provider = new firebase.auth.OAuthProvider('apple.com');
+					break;
+			}
 			firebase.auth()
-			  .signInWithPopup(provider)
+			  //.signInWithPopup(provider)
+			  .signInWithRedirect(provider)
 			  .then((result) => {
 			    /** @type {firebase.auth.OAuthCredential} */
 			    var credential = result.credential;
