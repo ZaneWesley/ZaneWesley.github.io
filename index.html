@@ -478,7 +478,7 @@
 		if (window.matchMedia('(display-mode: standalone)').matches) {
 			$('li').click(function(e) {
 				if(!$(this).hasClass('disabled') && !$(this).hasClass('newframe')) {
-					updateHistory(this.id);
+					//updateHistory(this.id);
 					$('#standalone-frame').prop('src', $(this).attr('data-url'));
 					window.scrollTo(0,0);
 					$('.standalone-ui').toggle('slide', {direction: 'right'}, 500);
@@ -488,14 +488,14 @@
 						padding: 0
 					});
 				} else if($(this).hasClass('newframe')) {
-					updateHistory(this.id);
+					//updateHistory(this.id);
 					open($(this).attr('data-url'));
 				}
 			});
 		} else {
 			$('li').click(function(e) {
 				if(!$(this).hasClass('disabled')) {
-					updateHistory(this.id);
+					//updateHistory(this.id);
 					window.location=$(this).attr('data-url');
 				}
 			});
