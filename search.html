@@ -1,112 +1,246 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
+	<meta name="theme-color" content="#535461">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<link rel="apple-touch-icon" href="images/home-icon.svg">
+	<link rel="shortcut icon" href="images/home-icon.svg">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="icon" type="icon/png" href="/images/zsearch-logo.png">
-	<title>ZSearch</title>
-	<script async src="https://cse.google.com/cse.js?cx=004331449840494391267:-bsyz9uk9qg"></script>
+	<link rel="manifest" href="manifest.json">
+
+	<title>Search Zane's Apps</title>
+
 	<style>
-		body{
-			background-color:#FFFFFF;
-			color:#333333;
-			font-family:arial,sans-serif;
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
 		}
-		#search-title {
+		body {
+			width: 100vw;
+			height: 100vh;
+			max-width: 100vw;
+			max-height: 100vh;
+			overflow-x: hidden;
+			font-family: Calibri, sans-serif;
 			text-align: center;
-			font-size: 3rem;
-			color: #2196F3;
 		}
-		#search-wrapper {
-			padding:0 20px;
-			position: absolute;
-			top: 25%;
-			left: 50%;
-			width: 582px;
-			transform: translateX(-50%) translateY(-25%);
+		h1 {
+			text-align: center;
 		}
-		#gsc-i-id1 {/*Input*/
-			width: 100% !important;
-			height: 2em !important;
+		input {
+			background-image: url('http://w3schools.com/css/searchicon.png');
+			background-position: 10px 12px;
+			background-repeat: no-repeat;
+			width: 90%;
+			font-size: 16px;
+			padding: 12px 20px 12px 40px;
+			border: 1px solid #ddd;
+			margin-bottom: 12px;
+			outline: none;
 		}
-		#gsc-iw-id1 {/*Input Wrapper*/
-			border: 1px solid #ccc !important;
-			border-radius: 10px;
+		ul, li {
+			width: 100%;
+			text-align: left;
 		}
-		.gsc-search-button {
+		ul {
+			list-style-type: none;
+			padding-left: 1em;
+		}
+		li {
+			font-size: 20px;
+			cursor: pointer;
+			padding: 5px;
+		}
+		li:hover {
+			border-bottom: 1px solid #00b0ff;
+			animation: headShake;
+			animation-duration: 0.7s;
+		}
+		li.disabled {
+			opacity: 0.7;
+		}
+		li.disabled:hover {
+			border-bottom: none;
+			animation: none;
+		}
+		#no-results {
+			position: fixed;
+			z-index: -1;
+			width: 100%;
+			height: calc(100% - 6em);
+			top: 6em;
+			left: 0;
+			background-image: url('images/no-results.svg');
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+			font-size: 20px;
+			padding-left: 1em;
+			text-align: left;
 			display: none;
 		}
-		#footer{
-			font-size:82%;
-			text-align:center;
-			padding:16px;
-			position: absolute;
-			bottom: 0;
-		}
-
-		@media(max-width: 775px) {
-			#search-wrapper {
-				width: 95% !important; 
-			}
-		}
-</style>
+	</style>
 </head>
-<body onload="straightenURL(); setSearchTitleColor()">
-	<noscript>
-		<h3>ZSearch requires JavaScript</h3>
-		<p>JavaScript is either disabled or not supported by your browser. To use ZSearch, enable JavaScript by changing your browser options and reloading this page.</p>
-	</noscript>
-	<div id="search-wrapper">
-		<h1 id="search-title">ZSearch</h1>
-		<div class="gcse-searchbox-only" id="searchbox" data-resultsUrl="/squery" data-enableHistory="true" enableAutoComplete="true"></div>
+<body>
+	<h1>Search Apps</h1>
+	<input id="query" type="text" onkeyup="search()" placeholder="Search for apps..." title="Type in an app name">
+	<ul id="querySpace">
+		<li id="cakeninja" data-url="/cakeninja">
+			Cake Ninja
+		</li>
+		<li id="hextris" data-url="/hextris">
+			Hextris
+		</li>
+		<li id="stack" data-url="/stack">
+			Stack
+		</li>
+		<li id="chromedino" data-url="/chromedino">
+			Chrome Dino Runner
+		</li>
+		<li id="colorsplosion" data-url="/colorsplosion">
+			Colorsplosion
+		</li>
+		<li id="numberguessing" data-url="/numberguessing">
+			Guess that Number
+		</li>
+		<li id="2048" data-url="/2048">
+			2048
+		</li>
+		<li id="tictactoe" data-url="/tic-tac-toe">
+			Tic Tac Toe
+		</li>
+		<li id="colorswirl" data-url="/colorswirl/colorswirl">
+			Color Swirl - Updated
+		</li>
+		<li id="connect" data-url="/connect">
+			Connect Messaging
+		</li>
+		<li id="assistant" data-url="/assistant">
+			Corey 2.0
+		</li>
+		<li id="calculator" data-url="/calculator">
+			Calculator
+		</li>
+		<li id="countdownstudio" data-url="/countdownstudio">
+			Countdown Studio
+		</li>
+		<li id="mmc" data-url="/mmc">
+			Molar Mass Calculator
+		</li>
+		<li id="webchat" data-url="/webchat/new">
+			Webchat Video Conferencing
+		</li>
+		<li id="whiteboard" data-url="/whiteboard">
+			Whiteboard
+		</li>
+		<li id="inspiration" data-url="/inspiration">
+			Inspirational Quotes Generator
+		</li>
+		<li id="peace" data-url="/peace">
+			Peace
+		</li>
+		<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
+			Mr. Lang Bucks (This is currently being archived)
+		</li>
+		<li id="corey-chat" data-url="/imessage">
+			Texting Corey (This is currently being archived)
+		</li>
+		<li id="corey" data-url="/corey?ref=home">
+			Corey - Original Virtual Assistant (This is currently being archived)
+		</li>
+		<li id="about" data-url="/about">
+			About Me
+		</li>
+		<li id="archive" data-url="/archive">
+			App Archive
+		</li>
+	</ul>
+
+	<div id="no-results">
+		No Results
 	</div>
-	<div id="footer">&copy;&nbsp;2020&nbsp;Zane Wesley</div>
 
 	<script>
-		var refreshNum = 0;
-		var ifPreload = window.location.search;
-		ifPreload = urlParams = new URLSearchParams(ifPreload);
-		var preload = ifPreload.has('preload') ? true : false;
-		function straightenURL() {
-			if(!preload) {
-				var state = {
-					stateChangeNum: refreshNum
-				}, title = 'Search', url = '/search';
-				history.pushState(state, title, url);
-				refreshNum++;
-			} else {
-				document.getElementById('gsc-i-id1').value = ifPreload.get('preload');
+		var query = getParameterByName('q');
+		if(query) {
+			document.getElementById('query').value=query;
+			search();
+		}
+		function search() {
+		    var input, filter, ul, li, a, i, txtValue;
+		    input = document.getElementById("query");
+		    filter = input.value.toUpperCase();
+		    ul = document.getElementById("querySpace");
+		    li = ul.getElementsByTagName("li");
+		    for (i = 0; i < li.length; i++) {
+		        a = li[i];
+		        txtValue = a.textContent || a.innerText;
+		        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		            li[i].style.display = "";
+		            li[i].classList.add('visible');
+		        } else {
+		            li[i].style.display = "none";
+		            li[i].classList.remove('visible');
+		        }
+		    }
+		    if(ul.querySelectorAll('li.visible').length == 0) {
+		    	document.getElementById('no-results').style.display="block";
+		    } else {
+		    	document.getElementById('no-results').style.display="none";
+		    }
+		}
+		function alphaSortList() {
+		  var list, i, switching, b, shouldSwitch;
+		  list = document.getElementById("querySpace");
+		  switching = true;
+		  /* Make a loop that will continue until
+		  no switching has been done: */
+		  while (switching) {
+		    // start by saying: no switching is done:
+		    switching = false;
+		    b = list.getElementsByTagName("LI");
+		    // Loop through all list-items:
+		    for (i = 0; i < (b.length - 1); i++) {
+		      // start by saying there should be no switching:
+		      shouldSwitch = false;
+		      /* check if the next item should
+		      switch place with the current item: */
+		      if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+		        /* if next item is alphabetically
+		        lower than current item, mark as a switch
+		        and break the loop: */
+		        shouldSwitch = true;
+		        break;
+		      }
+		    }
+		    if (shouldSwitch) {
+		      /* If a switch has been marked, make the switch
+		      and mark the switch as done: */
+		      b[i].parentNode.insertBefore(b[i + 1], b[i]);
+		      switching = true;
+		    }
+		  }
+		}
+		function getParameterByName(name, url = window.location.href) {
+		    name = name.replace(/[\[\]]/g, '\\$&');
+		    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+		        results = regex.exec(url);
+		    if (!results) return null;
+		    if (!results[2]) return '';
+		    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+		}
+		$('li').click(function(e) {
+			if(!$(this).hasClass('disabled')) {
+				window.location=$(this).attr('data-url');
 			}
-		}
-		function setSearchTitleColor() {
-			var text = document.getElementById('search-title').innerText;
-			var characters = text.split("");
-			document.getElementById('search-title').innerText = "";
-			for(var i = 0; i < characters.length; i++) {
-				document.getElementById('search-title').innerHTML += "<span style='color:"+randColor()+";'>"+characters[i]+"</span>";
-			}
-		}
-		function randColor() {
-			var colors = ["#2196F3", "#ff9800", "#9e9e9e"];/*Blue, Orange, Grey*/
-			return colors[Math.floor(Math.random()*colors.length)];
-		}
-		setInterval(function() {
-			setSearchTitleColor();
-		}, 3000);
+		});
+		alphaSortList();
 	</script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-175572966-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-175572966-1');
-</script>
-
-
 </body>
-</html>
