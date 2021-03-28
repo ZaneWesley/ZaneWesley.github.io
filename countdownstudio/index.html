@@ -304,7 +304,16 @@
 		});
 
 		addEventListeners(document.getElementById('fs'), ['change', 'keyup'], function(e) {
-			createPreview();
+			if(document.getElementById('fs').value < 20 && document.getElementById('fs').value.length <= 2) {
+				createPreview();
+			} else {
+				document.getElementById('fs').classList.add('error');
+				document.getElementById('fs').value = 20;
+				setTimeout(function() {
+					document.getElementById('fs').classList.remove('error');
+				}, 1000);
+				createPreview();
+			}
 		});
 
 		$("#bc").spectrum({
