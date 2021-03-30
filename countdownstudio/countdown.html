@@ -44,13 +44,13 @@
 	    }
 	    @keyframes textPulse {
 	    	0% {
-	    		color: #fff;
+	    		color: inherit;
 	    	}
 	    	50% {
 	    		color: #f50057;
 	    	}
 	    	100% {
-	    		color: #fff;
+	    		color: inherit;
 	    	}
 	    }
 	</style>
@@ -68,10 +68,10 @@
 		var backgroundColor = urlParams.get('backColor');
 		var textColor = urlParams.get('fontColor');
 		var textSize = urlParams.get('fontSize');
-		var smallTextSize = textSize - 5;
+		var smallTextSize = textSize > 5 ? textSize - 5 : textSize - 3;
 		var animation = /*urlParams.get('animation')*/'none';
 		var embed = urlParams.get('embed');
-		var title = h !== null && h !== '' && m !== null && m !== '' && s !== null && s !== '' ? (h+'h'+m+'m'+s+'s') : window.location = '/countdownstudio';
+		var title = h !== null && h !== '' && m !== null && m !== '' && s !== null && s !== '' ? (h+'h '+m+'m '+s+'s') : window.location = '/countdownstudio';
 		document.title = title;
 		var ht = document.getElementById('ht');
 		var mt = document.getElementById('mt');
@@ -91,7 +91,7 @@
 		for(var i=0; i<spans.length;i++) {
 			spans[i].style.fontSize = textSize+'em';
 		};
-		var smalls = document.querySelectorAll('small')
+		var smalls = document.querySelectorAll('small');
 		for(var i=0; i<smalls.length;i++) {
 			smalls[i].style.fontSize = smallTextSize+'em';
 		};
@@ -117,7 +117,7 @@
 			ht.innerText = addZero(hours);
 			mt.innerText = addZero(minutes);
 			st.innerText = addZero(seconds);
-			document.title = addZero(hours)+':'+addZero(minutes)+':'+addZero(seconds)+' - Countdown';
+			document.title = addZero(hours)+'h '+addZero(minutes)+'m '+addZero(seconds)+'s - Countdown';
 			if (distance < 0) {
 				clearInterval(timerInterval);
 				timeBox.classList.add('done');
