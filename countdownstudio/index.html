@@ -6,7 +6,11 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-	<title>Countdown 2.0</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://zanewesley.github.io/CSS/spectrum.css">
+	<script src="https://zanewesley.github.io/JS/spectrum.js"></script>
+	<!-- https://bgrins.github.io/spectrum/#why-devtools -->
+	<title>Countdown Studio 2.0</title>
 
 	<style>
 		* {
@@ -19,83 +23,340 @@
 			height: 100%;
 			overflow: hidden;
 		}
-		#time-wrapper {
-	    	text-align: center;
-	    	position: absolute;
-	    	top: 50%;
-	    	transform: translateY(-50%);
-	    	width: 100%;
-	    }
-	    body {
-			font-family: 'Open Sans', sans-serif;
+		body {
 			background-color: #1E1E1E;
 			color: #fff;
+			font-family: 'Open Sans', sans-serif;
 		}
-		span {
-			font-size: 5em;
+		header {
+			background-color: #454545;
+			padding: 0.5em;
+			padding-left: 1em;
+			box-shadow: 3px 3px 3px #1c1c1c;
 		}
-		small {
-			font-size: 3em;
-			padding-right: 0.5em;
+		h2 {
+			padding-bottom: 1em;
 		}
-	    .done {
-	    	animation: textPulse 2s infinite;
+		button {
+			/*background: #454545;*/
+			background-color: transparent;
+			padding: 1em;
+			border: none;
+			color: #fff;
+			border: 1px solid #fff;
+			outline: none;
+			cursor: pointer;
+		}
+		button:hover {
+			border: 1px solid #4daaf6;
+		}
+		input[type="text"], input[type="number"] {
+	    	padding: 8px;
+	    	border: 1px solid #fff;
+	    	background-color: transparent;
+	    	color: #fff;
+	    	outline: none;
+	    	display: block;
+	    }
+	    input[type="text"]:focus, input[type="number"]:focus {
+	    	border: 1px solid #4daaf6;
+	    }
+	    input[type="number"] {
+	    	width: 187px;
+	    }
+	    /*input[type="radio"] {
+	    	width: 24px;
+			height: 24px;
+			position: relative;
+			top: 6px;
+			background-color: transparent;
+	    }*/
+	    [type="radio"]:checked,
+		[type="radio"]:not(:checked) {
+		    position: absolute;
+		    left: -9999px;
+		}
+		[type="radio"]:checked + label,
+		[type="radio"]:not(:checked) + label
+		{
+		    position: relative;
+		    padding-left: 28px;
+		    cursor: pointer;
+		    line-height: 20px;
+		    display: inline-block;
+		    color: #fff;
+		}
+		[type="radio"]:checked + label:before,
+		[type="radio"]:not(:checked) + label:before {
+		    content: '';
+		    position: absolute;
+		    left: 0;
+		    top: 0;
+		    width: 18px;
+		    height: 18px;
+		    border: 1px solid #ddd;
+		    border-radius: 100%;
+		    background: #fff;
+		}
+		[type="radio"]:checked + label:after,
+		[type="radio"]:not(:checked) + label:after {
+		    content: '';
+		    width: 12px;
+		    height: 12px;
+		    background: #2196F3;
+		    position: absolute;
+		    top: 4px;
+		    left: 4px;
+		    border-radius: 100%;
+		    -webkit-transition: all 0.2s ease;
+		    transition: all 0.2s ease;
+		}
+		[type="radio"]:not(:checked) + label:after {
+		    opacity: 0;
+		    -webkit-transform: scale(0);
+		    transform: scale(0);
+		}
+		[type="radio"]:checked + label:after {
+		    opacity: 1;
+		    -webkit-transform: scale(1);
+		    transform: scale(1);
+		}
+		.error {
+	    	animation: borderPulse 0.5s;
 	    	animation-fill-mode: forwards;
 	    }
-	    @keyframes textPulse {
+	    @keyframes borderPulse {
 	    	0% {
-	    		color: inherit;
+	    		border-color: inherit;
 	    	}
 	    	50% {
-	    		color: #f50057;
+	    		border-color: #f50057;
 	    	}
 	    	100% {
-	    		color: inherit;
+	    		border-color: inherit;
 	    	}
 	    }
+		/* Hide the browser's default checkbox */
+		.container input {
+		  position: absolute;
+		  opacity: 0;
+		  cursor: pointer;
+		  height: 0;
+		  width: 0;
+		}
+
+		/* Create a custom checkbox */
+		.checkmark {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  height: 25px;
+		  width: 25px;
+		  background-color: #eee;
+		}
+
+		/* On mouse-over, add a grey background color */
+		.container:hover input ~ .checkmark {
+		  background-color: #ccc;
+		}
+
+		/* When the checkbox is checked, add a blue background */
+		.container input:checked ~ .checkmark {
+		  background-color: #2196F3;
+		}
+
+		/* Create the checkmark/indicator (hidden when not checked) */
+		.checkmark:after {
+		  content: "";
+		  position: absolute;
+		  display: none;
+		}
+
+		/* Show the checkmark when checked */
+		.container input:checked ~ .checkmark:after {
+		  display: block;
+		}
+
+		/* Style the checkmark/indicator */
+		.container .checkmark:after {
+		  left: 9px;
+		  top: 5px;
+		  width: 5px;
+		  height: 10px;
+		  border: solid white;
+		  border-width: 0 3px 3px 0;
+		  -webkit-transform: rotate(45deg);
+		  -ms-transform: rotate(45deg);
+		  transform: rotate(45deg);
+		}
+		.panel {
+			position: absolute;
+			padding: 3em;
+			width: 35%;
+			height: calc(100% - 3.5em);
+			left: 0;
+		}
+		.preview {
+			position: absolute;
+			width: 65%;
+			height: calc(100% - 3.5em);
+			right: 0;
+		}
+		#preview-frame {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+		@media(max-width: 775px) {
+			body {
+				overflow-y: auto;
+			}
+			.panel, .preview {
+				position: static;
+				width: 100%;
+				display: block;
+				height: auto;
+			}
+		}
 	</style>
 </head>
-<body id="body">
-	<div id="time-wrapper">
-		<span id="ht">00</span><small>h</small> <span id="mt">00</span><small>m</small> <span id="st">00</span><small>s</small>
+<body>
+	<header>
+		<h1>Countdown Studio</h1>
+	</header>
+
+	<div class="content">
+		<div class="panel">
+			<div class="duration">
+				<h2>Duration</h2>
+				<label for="h">Hours</label>
+				<input id="h" value="0" pattern="[0-9]*" inputmode="numeric" type="text" autocomplete="off">
+				<br>
+				<label for="m">Minutes</label>
+				<input id="m" value="0" pattern="[0-9]*" inputmode="numeric" type="text" autocomplete="off">
+				<br>
+				<label for="s">Seconds</label>
+				<input id="s" value="0" pattern="[0-9]*" inputmode="numeric" type="text" autocomplete="off">
+			</div>
+			<br>
+			<div class="styling">
+				<h2>Styling</h2>
+				<label for="bc">Background Color</label>
+				<input id="bc" type="text" autocomplete="off">
+				<br>
+				<label for="fc">Font Color</label>
+				<input id="fc" type="text" autocomplete="off">
+				<br>
+				<label for="fs">Font Size</label>
+				<input id="fs" type="number" value="5" min="5" max="20" autocomplete="off">
+			</div>
+			<br>
+			<div class="create">
+				<h2>Create</h2>
+				<button id="create" onclick="createCountdown()">Create Countdown</button>
+			</div>
+		</div>
+		<div class="preview">
+			<iframe id="preview-frame" src="countdown?h=00&m=00&s=00&embed=true">Loading...</iframe>
+		</div>
+		<div style="clear:both;"></div>
 	</div>
 
 	<script>
-		var urlParams = new URLSearchParams(window.location.search);
-		var h = urlParams.get('h');
-		var m = urlParams.get('m');
-		var s = urlParams.get('s');
-		var backgroundColor = urlParams.get('backColor');
-		var textColor = urlParams.get('fontColor');
-		var textSize = urlParams.get('fontSize');
-		var smallTextSize = textSize > 5 ? textSize - 5 : textSize - 3;
-		var animation = /*urlParams.get('animation')*/'none';
-		var embed = urlParams.get('embed');
-		var title = h !== null && h !== '' && m !== null && m !== '' && s !== null && s !== '' ? (h+'h '+m+'m '+s+'s') : window.location = '/countdownstudio';
-		document.title = title;
-		var ht = document.getElementById('ht');
-		var mt = document.getElementById('mt');
-		var st = document.getElementById('st');
-		var timeBox = document.getElementById('time-wrapper');
-		var time;//new Date().getTime() + h*3600000 + m*60000 + s*1000
-		var timeInc;//time/360
-		var timeRaduis;
-		var timerStarted = false;
+		var textColor = "fff", backColor = "1E1E1E";
 
-		ht.innerText = h;
-		mt.innerText = m;
-		st.innerText = s;
-		document.getElementById('body').style.backgroundColor='#'+backgroundColor;
-		document.getElementById('body').style.color='#'+textColor;
-		var spans = document.querySelectorAll('span');
-		for(var i=0; i<spans.length;i++) {
-			spans[i].style.fontSize = textSize+'em';
-		};
-		var smalls = document.querySelectorAll('small');
-		for(var i=0; i<smalls.length;i++) {
-			smalls[i].style.fontSize = smallTextSize+'em';
-		};
-		timeBox.style.color='#'+textColor;
+		addEventListeners(document.getElementById('h'), ['change', 'keyup'], function(e) {
+			if(document.getElementById('h').value < 25 && document.getElementById('h').value.length <= 2) {
+				createPreview();
+			} else {
+				document.getElementById('h').classList.add('error');
+				document.getElementById('h').value = 24;
+				setTimeout(function() {
+					document.getElementById('h').classList.remove('error');
+				}, 1000);
+				createPreview();
+				
+			}
+		});
+		addEventListeners(document.getElementById('m'), ['change', 'keyup'], function(e) {
+			if(document.getElementById('m').value < 60 && document.getElementById('m').value.length <= 2) {
+				createPreview();
+			} else {
+				document.getElementById('m').classList.add('error');
+				document.getElementById('m').value = 59;
+				setTimeout(function() {
+					document.getElementById('m').classList.remove('error');
+				}, 1000);
+				createPreview();
+			}
+		});
+		addEventListeners(document.getElementById('s'), ['change', 'keyup'], function(e) {
+			if(document.getElementById('s').value < 60 && document.getElementById('s').value.length <= 2) {
+				createPreview();
+			} else {
+				document.getElementById('s').classList.add('error');
+				document.getElementById('s').value = 59;
+				setTimeout(function() {
+					document.getElementById('s').classList.remove('error');
+				}, 1000);
+				createPreview();
+			}
+		});
+
+		addEventListeners(document.getElementById('fs'), ['change', 'keyup'], function(e) {
+			if(document.getElementById('fs').value < 20 && document.getElementById('fs').value.length <= 2) {
+				createPreview();
+			} else {
+				document.getElementById('fs').classList.add('error');
+				document.getElementById('fs').value = 20;
+				setTimeout(function() {
+					document.getElementById('fs').classList.remove('error');
+				}, 1000);
+				createPreview();
+			}
+		});
+
+		$("#bc").spectrum({
+		    color: "transparent",
+		    change: function(color) {
+		    	setBackColor(color.toHexString());
+		    },
+		    move: function(color) {
+		    	setBackColor(color.toHexString());
+		    }
+		});
+		$("#fc").spectrum({
+		    color: "#fff",
+		    change: function(color) {
+		    	setTextColor(color.toHexString());
+		    },
+		    move: function(color) {
+		    	setTextColor(color.toHexString());
+		    }
+		});
+
+		function setBackColor(color) {
+			backColor = color.replace('#', '');
+			createPreview();
+		}
+
+		function setTextColor(color) {
+			textColor = color.replace('#', '');
+			createPreview();
+			console.log(color);
+		}
+
+		function createCountdown() {
+			var baseUrl = 'countdown';
+			var countdownUrl = `${baseUrl}?h=${addZero(document.getElementById('h').value)}&m=${addZero(document.getElementById('m').value)}&s=${addZero(document.getElementById('s').value)}&backColor=${backColor}&fontColor=${textColor}&fontSize=${document.getElementById('fs').value}`;
+			window.open(countdownUrl);
+		}
+
+		function createPreview() {
+			var baseUrl = 'countdown';
+			var countdownUrl = `${baseUrl}?h=${addZero(document.getElementById('h').value)}&m=${addZero(document.getElementById('m').value)}&s=${addZero(document.getElementById('s').value)}&embed=true&backColor=${backColor}&fontColor=${textColor}&fontSize=${document.getElementById('fs').value}`;
+			document.getElementById('preview-frame').src= countdownUrl;
+		}
 
 		function addZero(i) {
 		  if (i < 10) {
@@ -103,35 +364,13 @@
 		  }
 		  return i;
 		}
-		function decreaseTime() {
-			if(timerStarted == false) {
-				time = new Date().getTime() + h*3600000 + m*60000 + s*1000;
-				if(animation !== 'none') timeBox.classList.add('animation-'+animation);
-				timerStarted = true;
+
+		function addEventListeners(selector, eventArray, handler) {
+			for(var i = 0; i < eventArray.length; i++) {
+				selector.addEventListener(eventArray[i], handler);
 			}
-			var now = new Date().getTime();
-			var distance = time - now;
-			var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-			ht.innerText = addZero(hours);
-			mt.innerText = addZero(minutes);
-			st.innerText = addZero(seconds);
-			document.title = addZero(hours)+'h '+addZero(minutes)+'m '+addZero(seconds)+'s - Countdown';
-			if (distance < 0) {
-				clearInterval(timerInterval);
-				timeBox.classList.add('done');
-				ht.innerText = "00";
-				mt.innerText = "00";
-				st.innerText = "00";
-				document.title = 'Countdown Finished';
-			}
-		}
-		if(embed == "true" || embed == true) {
-			//
-		} else {
-			var timerInterval = setInterval(decreaseTime, 1000);
 		}
 	</script>
+
 </body>
 </html>
