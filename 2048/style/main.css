@@ -397,6 +397,9 @@ hr {
   /*
     * Dark Mode
   */
+  .dark {
+    transition: all 0.3s;
+  }
   html.dark, body.dark {
     color: #fff;
     background-color: #2E302D
@@ -413,43 +416,54 @@ hr {
     font-size: 55px; }
   .dark .tile.tile-2 .tile-inner {
     background: #212121;
+    font-size: 45px;
   }
   .dark .tile.tile-4 .tile-inner {
     background: #424242;
+    font-size: 45px;
   }
   .dark .tile.tile-8 .tile-inner {
     color: #f9f6f2;
-    background: #757575; }
+    background: #757575;
+    font-size: 45px; }
   .dark .tile.tile-16 .tile-inner {
     color: #fff;
     background: #BDBDBD;
+    font-size: 45px;
   }
   .dark .tile.tile-32 .tile-inner {
     color: #fff;
     background: #00487c;
+    font-size: 45px;
   }
   .dark .tile.tile-64 .tile-inner {
     color: #f9f6f2;
-    background: #005fa3; }
+    background: #005fa3;
+    font-size: 45px; }
   .dark .tile.tile-128 .tile-inner {
     color: #f9f6f2;
     background: #e14bfa;
+    font-size: 45px;
   }
   .dark .tile.tile-256 .tile-inner {
     color: #f9f6f2;
     background: #e35afa;
+    font-size: 45px;
   }
   .dark .tile.tile-512 .tile-inner {
     color: #f9f6f2;
     background: #e85eff;
+    font-size: 45px;
   }
   .dark .tile.tile-1024 .tile-inner {
     color: #f9f6f2;
     background: #e66efa;
+    font-size: 45px;
   }
   .dark .tile.tile-2048 .tile-inner {
     color: #f9f6f2;
     background: #ec7aff;
+    font-size: 45px;
   }
   .dark .tile.tile-super .tile-inner {
     color: #f9f6f2;
