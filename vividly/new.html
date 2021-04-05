@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+    <title>New Meeting - Vividly</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="icon/png" href="icon.png">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        font-family: 'Roboto', arial, sans-serif;
+      }
+      header {
+        color: #fff;
+        background-color: #9f00ff;
+        padding: 1em;
+        text-align: center;
+        height: 50%;
+        width: 100%;
+        align-items: center;
+        vertical-align: middle;
+        font-size: 1em;
+      }
+      body {
+        background: #fff;
+        color: #9f00ff;
+        font-size: 1.5em;
+        font-weight: 100;
+        text-align: center;
+      }
+      input {
+        font-size: 0.9em;
+        color: #9f00ff;
+        margin: 0.3em 0 1em 0;
+        border: none;
+        background: none;
+        border-bottom: 3px solid #9f00ff;
+        padding: 0.5em 0.1em;
+        transition: all 0.5s ease;
+        outline: none;
+        width: 50%;
+      }
+
+      label {
+        display: block;
+      }
+
+      .input-wrapper {
+        padding: 1em;
+      }
+      .button-wrapper {
+         padding-top: 2em;
+      }
+
+      .button-wrapper a {
+        font-size: 1em;
+        text-decoration: none;
+        color: #fff;
+        padding: 0.7em;
+        background: #9f00ff;
+        border-radius: 8px;
+      }
+
+      .button-wrapper a:hover {
+        box-shadow: 6px 6px 6px #ccc;
+      }
+    </style>
+</head>
+<body>
+  <header><h1>New Meeting</h1></header>
+
+  <div style="padding: 2em;"></div>
+
+  <div class="input-wrapper">
+    <label for="name">Hi, What's Your Name:</label>
+    <input id="name" type="text" placeholder="Enter your display name" autocomplete="off" autofocus>
+  </div>
+  <div class="input-wrapper">
+    <label for="name">Please Name Your Meeting</label>
+    <input id="room" type="text" placeholder="Name your meeting" autocomplete="off" autofocus>
+  </div>
+  <div class="button-wrapper">
+        <a id="create" href="javascript:void(0)">Create Meeting</a>
+    </div>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyBr2BdRPAN3Vrs2gpBEMAoEACoLls2zn40",
+        authDomain: "vividly-a87c6.firebaseapp.com",
+        projectId: "vividly-a87c6",
+        storageBucket: "vividly-a87c6.appspot.com",
+        messagingSenderId: "69460600594",
+        appId: "1:69460600594:web:efce620c78db87d6cdb5cb",
+        measurementId: "G-HS67FMZ4DF"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+    <script>
+      document.getElementById('create').addEventListener('click', function(e) {
+        e.preventDefault();
+        create();
+      });
+
+      document.body.addEventListener('keyup', function(e) {
+        if(e.keyCode == 13 || e.which == 13) {
+          create();
+        }
+      });
+
+      function create() {
+        var id, hostName, name;
+        if(document.getElementById('name').value !== "" && document.getElementById('name').value !== null && document.getElementById('room').value !== "" && document.getElementById('room').value !== null) {
+          roomId = makeId(10);
+          hostName = document.getElementById('name').value;
+          name = document.getElementById('room').value;
+          addRoom(roomId, name, hostName);
+        }
+      }
+
+      function addRoom(roomId, roomName, hostName) {
+        // Add a new room entry to the Firebase database.
+          return firebase.firestore().collection('rooms').add({
+            id: roomId,
+            name: roomName,
+            host: hostName
+        }).catch(function(error) {
+          console.error('Error writing new message to Firebase Database', error);
+        }).then(function() {
+          window.location = `chat?name=${encodeURIComponent(hostName)}&shareLink=true&id=${roomId}`;
+        });
+      }
+
+      function makeId(length) {
+         var result = '';
+         var characters = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789';
+         var charactersLength = characters.length;
+         for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+         }
+         return result;
+      }
+    </script>
+</body>
+</html>

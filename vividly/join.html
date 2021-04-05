@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+    <title>Joining Meeting... - Vividly</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="icon/png" href="icon.png">
+    <style>
+    	* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        font-family: 'Roboto', arial, sans-serif;
+      }
+      header {
+        color: #fff;
+        background-color: #9f00ff;
+        padding: 1em;
+        text-align: center;
+        height: 50%;
+        width: 100%;
+        align-items: center;
+        vertical-align: middle;
+        font-size: 1em;
+      }
+      body {
+        background: #fff;
+        color: #9f00ff;
+        font-size: 1.5em;
+        font-weight: 100;
+        text-align: center;
+      }
+      input {
+        font-size: 0.9em;
+        color: #9f00ff;
+        margin: 0.3em 0 1em 0;
+        border: none;
+        background: none;
+        border-bottom: 3px solid #9f00ff;
+        padding: 0.5em 0.1em;
+        transition: all 0.5s ease;
+        outline: none;
+      }
+      .button-wrapper {
+         padding-top: 2em;
+      }
+
+      .button-wrapper a {
+      	font-size: 1em;
+        text-decoration: none;
+        color: #fff;
+        padding: 0.7em;
+        background: #9f00ff;
+        border-radius: 8px;
+      }
+
+      .button-wrapper a:hover {
+        box-shadow: 6px 6px 6px #ccc;
+      }
+    </style>
+</head>
+<body>
+	<header><h1>Join Meeting</h1></header>
+
+	<div style="padding: 2em;"></div>
+
+	<label for="name">Your Name:</label>
+	<input id="name" type="text" placeholder="Enter your display name" autocomplete="off" autofocus>
+	<div class="button-wrapper">
+        <a id="join" href="javascript:void(0)">Join Meeting</a>
+    </div>
+
+    <script>
+      var query = window.location.search;
+      var urlParams = new URLSearchParams(query);
+
+      if(urlParams.get('id') !== "" && urlParams.get('id') !== null) {
+
+      	var roomId = urlParams.get('id');
+
+      	document.getElementById('join').addEventListener('click', function(e) {
+    		e.preventDefault();
+    		join();
+    	});
+
+    	document.body.addEventListener('keyup', function(e) {
+    		if(e.keyCode == 13 || e.which == 13) {
+    			join();
+    		}
+    	});
+
+      } else {
+      	window.location = '/vividly/index';
+      }
+
+      function join() {
+      	if(document.getElementById('name').value !== "" && document.getElementById('name').value !== null) {
+    		window.location = `chat?name=${encodeURIComponent(document.getElementById('name').value)}&id=${encodeURIComponent(roomId)}`;
+    	}
+      }
+    </script>
+</body>
+</html>

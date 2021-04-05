@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+    <title>Vividly</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="icon/png" href="icon.png">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        font-family: 'Roboto', arial, sans-serif;
+      }
+      header {
+        color: #fff;
+        background-color: #9f00ff;
+        padding: 1em;
+        font-size: 1.3em;
+        text-align: center;
+        height: 50%;
+        width: 100%;
+        align-items: center;
+        vertical-align: middle;
+      }
+      header h1 {
+        margin: 16px;
+      }
+      .content {
+        font-size: 1.2em;
+      }
+
+      .content h1 {
+        padding: 1em;
+      }
+
+      .content p {
+        padding: 0.5em;
+      }
+
+      /* Split the screen in half */
+      .split {
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        z-index: 1;
+        overflow-x: hidden;
+        padding-top: 20px;
+        padding: 2em;
+      }
+
+      /* Control the left side */
+      .left {
+        left: 0;
+      }
+
+      /* Control the right side */
+      .right {
+        right: 0;
+      }
+
+      img {
+        overflow: hidden;
+        user-select: none;
+      }
+
+      .button-wrapper {
+        padding-top: 2em;
+      }
+
+      .button-wrapper a {
+        text-decoration: none;
+        color: #fff;
+        padding: 0.7em;
+        background: #9f00ff;
+        border-radius: 8px;
+      }
+
+      .button-wrapper a:hover {
+        box-shadow: 6px 6px 6px #ccc;
+      }
+
+      @media(max-width: 775px) {
+        .split, .left, .right {
+          width: 100%;
+          display: block;
+          position: static;
+        }
+        .content img {
+          width: 100%;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <header><h1>Vividly</h1></header>
+
+
+    <div class="content">
+      <div class="split left">
+        <div>
+          <h1>Experience the Magic</h1>
+          <p>Vividly is a fast, secure video chatting software designed for the web. It's free for everyone, no strings attached.</p>
+          <p>Using Vividly is simple. Just set up a meeting and share the join link. It's that easy.</p>
+        </div>
+        <div class="button-wrapper">
+          <a href="new">Get Started</a>
+        </div>
+      </div>
+      <div class="split right">
+        <img src="home-bg.svg" alt="video chat" draggable="false">
+      </div>
+    </div>
+  </body>
+</html>
