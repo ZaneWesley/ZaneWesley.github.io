@@ -493,12 +493,12 @@
 		    });
 		    aComp.options = appsToSearch;
 		    aComp.startFrom = 0;
-		    aComp.hideDropDown();
+		    aComp.dropDown.style.display='none';
 		    document.getElementById('query').querySelector('div').style.overflowY = 'hidden';
 		    aComp.onChange = function (text) {
 		    	//aComp.startFrom = text.indexOf(' ')+1;
 		    	aComp.setText(toTitleCase(aComp.getText()));
-		    	aComp.hideDropDown();
+		    	aComp.dropDown.style.display='none';
 			    aComp.repaint();
 			};
 			aComp.onEnter = function() {
