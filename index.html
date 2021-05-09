@@ -2,114 +2,118 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
-	<meta name="author" content="Zane Wesley">
-	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
-	<meta name="theme-color" content="#535461">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Zane's Apps">
-	<link rel="apple-touch-icon" href="images/home-icon.svg">
-	<link rel="shortcut icon" href="images/home-icon.svg">
-	<link rel="manifest" href="manifest.json">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <!--<script src="/ui/christmaslights.js"></script>-->
-    <!--https://pixelcog.github.io/parallax.js/-->
-	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	<script defer src="/ui/dark-mode-manager.js"></script>
-	<!--<script defer src="/ui/recommendation.js"></script>-->
-	<script src="/ui/complete.ly.1.0.1.min.js"></script><!-- http://complete-ly.appspot.com/ -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
 	<title>Zane's Apps</title>
+
 	<style>
 		* {
 			box-sizing: border-box;
 			margin: 0;
-			overflow-x: hidden;
+			padding: 0;
+		}
+		::-webkit-scrollbar {
+			width: 14px;
+			height: 18px;
+			background-color: #23153c;
+		}
+
+		::-webkit-scrollbar-thumb {
+			height: 6px;
+			border: 4px solid rgba(0, 0, 0, 0);
+			background-clip: padding-box;
+			background-color: rgba(63, 61, 86,0.5);
+			-webkit-border-radius: 7px;
+			-webkit-box-shadow: inset -1px -1px 0px rgba(63, 61, 86, 0.05),
+				inset 1px 1px 0px rgba(63, 61, 86, 0.05);
+		}
+
+		::-webkit-scrollbar-button {
+			display: none;
+			width: 0;
+			height: 0;
+		}
+
+		::-webkit-scrollbar-corner {
+			background-color: transparent;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+			scroll-behavior: smooth;
+			background-color: #23153c;
 		}
 		body {
-			background-color: #fff;
-			font-family: Calibri, sans-serif;
-			padding-top: 80%;
-			transition: all 1s;
-			/*background-image: url('https://wallpaperaccess.com/full/3122286.jpg');*/
-			/*background-image: url('https://i.pinimg.com/originals/12/11/17/1211177165c40aa84673897f4f3b367e.jpg');*/
-			/*background-size: cover;
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-attachment: fixed;*/
+			overflow-x: hidden;
+			font-family: 'Noto Sans JP', sans-serif;
 		}
 		header {
-			background-image: url('images/header-bg.svg');
-			background-size: cover;
-			background-position: center center;
-			background-repeat: no-repeat;
-			/*background-sattachment: fixed;*/
-			position: absolute;
+			position: fixed;
 			top:0;
 			left:0;
 			min-height: 100%;
 			height: auto;
 			width: 100%;
 		}
-		header h1 {
+		.header {
 			position: absolute;
+			z-index: 2;
 			left: 50%;
 			top: 50%;
 			transform: translate(-50%, -50%);
-			font-size: 6em;
+			font-size: 3em;
 			color: #f2f2f2;
 			text-align: center;
-			background-color: #3f3d56;
+			background-color: rgba(63, 61, 86, 0.5);
 			padding: 8px;
-			box-shadow: 7px 7px 12px #292838;
 			width: 75%;
+			animation: enterLeft 2s;
+		}
+		.header.big {
+			transform: translate(-50%, -50%) scale(2);
+			transition: all 1s;
+			opacity: 0;
+		}
+		canvas {
+			background-color: #23153c;
 		}
 		#down {
 			position: absolute;
 			width: 50px;
 			height: 50px;
 			bottom: 1em;
-			left: 45%;
-			transform: translateX(-45%);
+			left: 50%;
+			transform: translateX(-50%);
 			animation: bounce 2s infinite;
 			overflow: hidden;
+			animation-timing-function:cubic-bezier(.215,.61,.355,1);
 			/*box-shadow: 7px 7px 12px #292838;*/
 		}
 		.content {
 			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
 			min-height: 100%;
 			height: auto;
-			width: 100%;
-			padding: 16px;
-			padding-left: calc(16px + 1em);
-			/*background-image: url('https://1.bp.blogspot.com/-ew-OwCosX48/Xuoss_UDdPI/AAAAAAAAT6I/6bkTxtlC-L8wL-66-JYvHObWbGnKsHEFwCK4BGAsYHg/w640-h426/ultra-high-resolution-heroscreen.cc-wallpaper-5760x3840.png');
-			background-size: cover;
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-attachment: fixed;*/
+			width: 80%;
+			padding: 20px;
+			background-color: rgba(63, 61, 86, 0.5);
 		}
-		.split {
-			position: relative;
-			width: 50%;
-			min-height: 100%;
-			height: auto;
+		.content h1 {
+			text-align: center;
+			color: #fff;
+			border-bottom: 1px solid #ccc;
 		}
-		.left {
-			float: left;
-		}
-		.right {
-			float: right;
-		}
-		.bg-image {
-			background-size: cover;
-			background-position: center center;
-			background-repeat: no-repeat;
-		}
-		img {
-			width: 100%;
+		.content.fadeout {
+			opacity: 0;
+			visibility: hidden;
+			height: 0;
+			transition: opacity 0.3s;
 		}
 		ul, li {
 			width: 100%;
@@ -119,44 +123,65 @@
 			padding-left: 1em;
 		}
 		li {
-			font-size: 20px;
 			cursor: pointer;
 			padding: 5px;
+			color: #fff;
+			text-align: center;
+			font-size: 2em;
+			transition: all 0.3s;
 		}
 		li:hover {
-			border-bottom: 1px solid #00b0ff;
-			animation: headShake;
-			animation-duration: 0.7s;
+			background-color: rgba(63, 61, 86, 0.7);
 		}
-		input, .input {
-			/*background-image: url('http://w3schools.com/css/searchicon.png');
-			background-position: 10px 12px;
-			background-repeat: no-repeat;*/
-			width: 100%;
-			font-size: 16px;
-			padding: 12px 20px 12px 40px;
-			border: 1px solid #ddd;
-			margin-bottom: 12px;
-			outline: none;
+		.apps li {
+			font-size: 1.5em;
 		}
-		.disabled:after {
-			content: ' (Temporarily Unavailable)';
+		.tabs {
+			display: flex;
+			justify-content: space-between;
 		}
-		.section {
-			border-bottom: 1px solid #ccc;
+		.tabs span {
+			cursor: pointer;
+			padding: 5px;
+			color: #fff;
+			text-align: center;
+			font-size: 2em;
+			width: 25%;
+			transition: all 0.3s;
 		}
-		.bg-iframe {
+		.tabs span:hover {
+			background-color: rgba(63, 61, 86, 0.7);
+		}
+		.tabs span.active {
+			background-color: rgba(63, 61, 86, 1);
+		}
+		#miscellaneous-tab {
+			font-size: 1.7em;
+		}
+		.app-section {
+			height: 0;
+			visibility: hidden;
+			opacity: 0;
+			transition: opacity 0.5s;
+		}
+		.app-section.active {
+			height: auto;
+			visibility: visible;
+			opacity: 1;
+		}
+		.apps h1 {
 			display: none;
-			position: relative;
-			width: 100%;
-			height: 100%;
-			border: none;
 		}
-		#more img {
-			height: 25em;
+		footer {
+			position: absolute;
+			left: 0;
+			padding: 1em;
+			color: #fff;
+			font-size: 1em;
+			display: none;
 		}
-		footer a {
-			color: #000;
+		footer a  {
+			color: #fff;
 		}
 		#standalone-frame {
 			position: absolute;
@@ -169,6 +194,10 @@
 			max-width: 100%;
 			max-height: 100%;
 			border: none;
+			z-index: 2;
+		}
+		.standalone-ui {
+			display: none;
 		}
 		#standalone-home {
 			position: absolute;
@@ -178,148 +207,62 @@
 			color: #ccc;
 			font-size: 2em;
 		}
-		.standalone-ui {
-			display: none;
+		#standalone-frame.slideIn {
+			display: block;
+			animation: slideIn 0.5s;
+			animation-fill-mode: forwards ease-in;
 		}
-		.cookie-consent {
-			color: rgb(60, 64, 67);
-		    background-color: rgb(255, 255, 255);
-		    max-width: 24em;
-		    flex-direction: column;
-		    bottom: 1em;
-		    left: 1em;
-		    position: fixed;
-		    overflow: hidden;
-		    box-sizing: border-box;
-		    font-size: 16px;
-		    line-height: 1.5em;
-	        display: flex;
-	        flex-wrap: nowrap;
-		    z-index: 9999;
-		    opacity: 1;
-		    transition: opacity 1s ease;
-		    border-radius: 8px;
-		    box-shadow: 0 4px 8px 3px rgba(60,64,67,.15), 0 1px 3px rgba(60,64,67,.3);
-		    padding: 22px 24px!important;
-		    font-weight: 400;
+		#standalone-home.fadeIn {
+			display: block;
+			animation: fadeIn 1s ease-in;
 		}
-		.cc-inner {
-			margin-bottom: 1em;
-		}
-		.cc-inner a {
-			color: #1a73e8!important;
-		    text-decoration: none;
-		    padding-left: 0;
-		    opacity: .8;
-		    display: inline-block;
-		    padding: .2em;
-		    transition: all .2s ease-out;
-		}
-		.cc-btn {
-			flex: 1 0 auto;
-			align-self: flex-end;
-			display: flex;
-			align-items: center;
-			align-content: space-between;
-		}
-		.cc-btn a {
-			flex: 1;
-			font-weight: 400;
-		    padding: 8px 24px;
-		    border-radius: 4px;
-		    font-size: 14px;
-		    line-height: 20px;
-		    height: 36px;
-		    color: rgb(255, 255, 255);
-		    border-color: transparent;
-		    background-color: rgb(26, 115, 232);
-		    display: block;
-		    border-width: 2px;
-		    border-style: solid;
-		    text-align: center;
-		    white-space: nowrap;
-		    cursor: pointer;
-		    transition: all .2s ease-out;
-		    overflow: hidden;
-		    outline: none;
-		    text-decoration: none;
-		}
-		.mobile-hidden {
-			display: inherit;
-		}
-		.mobile-visible {
-			display: none;
-		}
-		.dark {
-			background-color: #131417;
-			color: #fff;
-		}
-		.dark .content {
-			background-color: #1e1f26;
-		}
-		.dark footer a {
-			color: #fff;
-		}
-		.dark .cookie-consent {
-			background-color: #3f3d56;
-			color: #fff;
-		}
-		@media (max-width:755px) {
-			header {
-				background-position: right center;
-				background-attachment: scroll;
+
+		@keyframes bounce{0% {transform: translate3d(-50%, 0, 0) scaleY(1);} 60%{transform: translate3d(-50%, -30px, 0) scaleY(.8);} 80%{transform: translate3d(-50%, 0, 0) scaleY(1.1);} 90%{transform: translate3d(-50%, -15px, 0) scaleY(.9);} 99%{transform: translate3d(-50%, 0, 0) scaleY(1);}}
+		@keyframes enterLeft{0%{-webkit-transform:translate3d(-100%,-50%,0) skewX(0deg);transform:translate3d(-100%,-50%,0) skewX(0deg);opacity:0}60%{-webkit-transform:translate3d(-50%,-50%,0) skewX(-20deg);transform:translate3d(-50%,-50%,0) skewX(-20deg);opacity:1}80%{-webkit-transform:translate3d(-50%,-50%,0) skewX(5deg);transform:translate3d(-50%,-50%,0) skewX(5deg)}}
+		@keyframes slideIn{from {left: 100%;} to {left: 0;}}
+		@keyframes fadeIn{from {opacity: 1;} to {opacity: 0;}}
+
+		@media(max-width: 775px) {
+			.header {
+				font-size: 2em;
 			}
-			header h1 {
-				font-size: 3em;
+			.tabs {
+				display: block;
 			}
-			.split {
+			.tabs span {
+				display: block;
 				width: 100%;
 			}
-			.left {
-				float: none;
-			}
-			.right {
-				float: none;
-			}
-			#more img {
-				height: 15em;
-			}
-			.mobile-hidden {
-				display: none;
-			}
-			.mobile-visible {
-				display: block;
+			.apps h1 {
+				display: inherit;
+				padding-top: 1em;
 			}
 		}
 	</style>
 </head>
-<body class="">
-	<header>
-		<div id="lights-container"></div>
-		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
-		<div id="down">
-			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#3f3d56" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path></svg>
-		</div>
-	</header>
-	<div class="content">
-		<div id="recommended" class="section">
-			<!--<h1>For You</h1>
-			<ul id="recommended-li">
-				<li data-url="#recommended">Use some apps to get recommendations!</li>
-			</ul>
-			<div style="padding: 1em"></div>-->
+<body>
+	<header id="header"></header>
+	<div class="header">
+		<h1>Zane's Apps</h1>
+	</div>
 
-			<h1>Search Apps</h1>
-			<!--<form action="/search">-->
-				<div contenteditable="true" id="query" class="input" type="text" name="q" placeholder="Search for apps..." title="Type in an app name" autocomplete="off"></div>
-			<!--</form>-->
-			<div style="padding: 1em"></div>
+	<div id="down">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#3f3d56" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path></svg>
+	</div>
+
+	<div class="content">
+		<h1>Select a Category</h1>
+		<div class="tabs">
+			<span id="games-tab" class="active">Games</span>
+			<span id="resources-tab">Resources</span>
+			<span id="miscellaneous-tab">Miscellaneous</span>
+			<span id="more-tab">More</span>
 		</div>
-		<div id="games" class="section">
-			<div class="split left">
-				<img src="images/games-bg.svg" class="mobile-visible" alt="Games Image">
-				<h1>Games</h1>
-				<ul id="games-li">
+
+		<div class="apps">
+			<h1>Apps</h1>
+			<div id="games" class="app-section active">
+				<ul>
 					<li id="cakeninja" data-url="/cakeninja">
 						Cake Ninja
 					</li>
@@ -349,19 +292,8 @@
 					</li>
 				</ul>
 			</div>
-			<div class="split right mobile-hidden">
-				<img id="games-bg-img" src="images/games-bg.svg" alt="Games Image">
-				<iframe id="games-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
-			</div>
-		</div>
-		<div id="resources" class="section">
-			<div class="split left">
-				<img id="resources-bg-img" src="images/resources-bg.svg" alt="Resources Image">
-				<iframe id="resources-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
-			</div>
-			<div class="split right">
-				<h1>Resources</h1>
-				<ul id="resources-li">
+			<div id="resources" class="app-section">
+				<ul>
 					<li id="vividly" data-url="/vividly">
 						Vividly - Video Conferencing App
 					</li>
@@ -388,12 +320,8 @@
 					</li>
 				</ul>
 			</div>
-		</div>
-		<div id="misc" class="section">
-			<div class="split left">
-				<img src="images/misc-bg.svg" class="mobile-visible" alt="Miscellaneous Image">
-				<h1>Miscellaneous</h1>
-				<ul id="misc-li">
+			<div id="miscellaneous" class="app-section">
+				<ul>
 					<li id="inspiration" data-url="/inspiration">
 						Inspirational Quotes Generator
 					</li>
@@ -411,17 +339,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="split right mobile-hidden">
-				<img id="misc-bg-img" src="images/misc-bg.svg" alt="Miscellaneous Image">
-				<iframe id="misc-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
-			</div>
-		</div>
-		<div id="more" class="section">
-			<div class="split left">
-				<img src="images/more-bg.svg" alt="More Image">
-			</div>
-			<div class="split right">
-				<h1>More From Zane</h1>
+			<div id="more" class="app-section">
 				<ul>
 					<li id="about" data-url="/about">
 						About Me
@@ -443,148 +361,92 @@
 					</li>
 				</ul>
 			</div>
-			<br>
 		</div>
-		<footer>
-			<br>
-			<p>Copyright &copy; Zane Wesley 2021. All rights reserved.</p>
-			<p>
-				<a href="/terms-of-service">Terms of Service</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="/license">Code License</a>
-			</p>
-		</footer>
 	</div>
+	<footer>
+		<p>Copyright &copy; Zane Wesley 2021. All rights reserved.</p>
+		<p>
+			<a href="/terms-of-service">Terms of Service</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/license">Code License</a>
+		</p>
+	</footer>
 
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
 	<div id="standalone-home" class="standalone-ui fas fa-home"></div>
 
-	<div class="cookie-consent">
-		<span class="cc-inner">
-			This website uses cookies to ensure you get the best experience. For more information, read the <a href="/terms-of-service">Terms of Service.</a>
-		</span>
-		<div class="cc-btn">
-			<a href="#">Got It!</a>
-		</div>
-	</div>
-
 	<script>
-		/*navigator.serviceWorker.getRegistrations().then(function(registrations) {
-		 for(let registration of registrations) {
-		  registration.unregister()
-		} });*/
-		function ini() {
-			$('.content').css('top', $('header').css('height'));
-			//christmatize.stringLights('#lights-container');
-			if(localStorage.getItem('consent') == 'true') {
-				$('.cookie-consent').hide();
-			}
+		VANTA.NET({
+		  el: "#header",
+		  mouseControls: true,
+		  touchControls: true,
+		  gyroControls: false,
+		  minHeight: 200.00,
+		  minWidth: 200.00,
+		  scale: 1.00,
+		  scaleMobile: 1.00,
+		  color: 0x41a1ff
+		});
 
-			var appsToSearchArray = Array.prototype.slice.call(document.getElementById('games-li').getElementsByTagName('li')).concat(Array.prototype.slice.call(document.getElementById('resources-li').getElementsByTagName('li')), Array.prototype.slice.call(document.getElementById('misc-li').getElementsByTagName('li')));
-			var appsToSearch = [];
-			for (var i = 0; i<appsToSearchArray.length; i++) {
-				appsToSearch.push(appsToSearchArray[i].innerText);
-			}
-			console.log(appsToSearch);
+		document.getElementById('down').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelector('.content').scrollIntoView();
+		});
 
-			var aComp = completely(document.getElementById('query'), {
-		    	fontFamily:'sans-serif',
-		    	fontSize:'16px', 
-		    	promptInnerHTML : ''
-		    });
-		    aComp.options = appsToSearch;
-		    aComp.startFrom = 0;
-		    aComp.dropDown.style.display='none';
-		    document.getElementById('query').querySelector('div').style.overflowY = 'hidden';
-		    aComp.onChange = function (text) {
-		    	//aComp.startFrom = text.indexOf(' ')+1;
-		    	aComp.setText(toTitleCase(aComp.getText()));
-		    	aComp.dropDown.style.display='none';
-			    aComp.repaint();
-			};
-			aComp.onEnter = function() {
-				var q = aComp.hint.innerText || aComp.getText();
-				var found;
-				for (var i = 0; i < appsToSearchArray.length; i++) {
-				  if (appsToSearchArray[i].innerText == q) {
-				    found = appsToSearchArray[i].id;
-				    console.log(found);
-				    break;
-				  }
-				}
-				if(found) document.getElementById(found).scrollIntoView({behavior: "smooth"}); aComp.setText('');
-			}
+		document.getElementById('standalone-home').addEventListener('click', function(e) {
+			e.preventDefault();
+			window.location.reload();
+		});
 
-			$('#query').click(function() {
-				aComp.input.focus();
-			})
-		}
+		document.querySelectorAll('.tabs span').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				document.querySelectorAll('.tabs span').forEach(function(elem) {elem.classList.remove('active');});
+				document.querySelectorAll('.app-section').forEach(function(elem) {elem.classList.remove('active');});
+				this.classList.add('active');
+				document.getElementById(this.id.replace('-tab', '')).classList.add('active');
+			});
+		});
+
 		if (window.matchMedia('(display-mode: standalone)').matches) {
-			$('li').click(function(e) {
-				if(!$(this).hasClass('disabled') && !$(this).hasClass('newframe')) {
-					//updateHistory(this.id);
-					$('#standalone-frame').prop('src', $(this).attr('data-url'));
-					window.scrollTo(0,0);
-					$('.standalone-ui').toggle('slide', {direction: 'right'}, 500);
-					$('header, .content').fadeOut();
-					$('body').css({
-						overflow: 'hidden',
-						padding: 0
-					});
-				} else if($(this).hasClass('newframe')) {
-					//updateHistory(this.id);
-					open($(this).attr('data-url'));
-				}
+			//event listener for if the page is a PWA
+			document.querySelectorAll('li').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					if(!this.classList.contains('disabled') && !this.classList.contains('newframe')) {
+						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
+						//Layer iframe ontop
+						document.getElementById('standalone-frame').classList.add('slideIn');
+						document.getElementById('standalone-home').classList.add('fadeIn');
+						window.scrollTo(0,0);
+						//hide all page elements
+						document.querySelector('.content').style.display='none';
+						document.querySelector('.header').style.display='none';
+						document.querySelector('header').remove();
+						document.querySelector('#down').style.display='none';
+						document.body.overflow='hidden';
+						document.body.padding=0;
+					} else if(this.classList.contains('newframe')) {
+						open(this.getAttribute('data-url'));
+					}
+				});
 			});
 		} else {
-			$('li').click(function(e) {
-				if(!$(this).hasClass('disabled')) {
-					//updateHistory(this.id);
-					window.location=$(this).attr('data-url');
-				}
+			//event listener for if it is not a PWA
+			document.querySelectorAll('li').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					if(!this.classList.contains('disabled')) {
+						var _this = this;
+						document.querySelector('.content').classList.add('fadeout');
+						setTimeout(function() {
+							document.querySelector('.header').classList.add('big');
+						}, 500);
+						document.body.scrollTop = 0; // For Safari
+						document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+						setTimeout(function() {
+							window.location=_this.getAttribute('data-url');
+						}, 1000);
+					}
+				});
 			});
 		}
-		$('#games-li li').hover(function(e) {
-			$('#games-bg-img').fadeOut();
-			$('#games-bg-iframe').attr('src', $(this).attr('data-url')).height($('#games-bg-img').height()).fadeIn();
-		});
-		$('#resources-li li').hover(function(e) {
-			$('#resources-bg-img').fadeOut();
-			$('#resources-bg-iframe').attr('src', $(this).attr('data-url')).height($('#resources-bg-img').height()).fadeIn();
-		});
-		$('#misc-li li').hover(function(e) {
-			$('#misc-bg-img').fadeOut();
-			$('#misc-bg-iframe').attr('src', $(this).attr('data-url')).height($('#misc-bg-img').height()).fadeIn();
-		});
-		function toTitleCase(str) {
-		  return str.replace(
-		    /\w\S*/g,
-		    function(txt) {
-		      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-		    }
-		  );
-		}
-		var endPrevTimer;
-		$('li').mouseleave(function(e) {
-			clearTimeout(endPrevTimer);
-			endPrevTimer = setTimeout(function(e) {
-				$('#games-bg-iframe, #resources-bg-iframe, #misc-bg-iframe').fadeOut().attr('src', null);
-				$('#games-bg-img, #resources-bg-img, #misc-bg-img').fadeIn();
-			}, 3000);
-		});
-		$('#standalone-home').click(function(e) {
-			$('#standalone-frame').toggle('slide', {direction: 'right'}, 500, function() {
-				location.reload();
-			});
-		});
-		$('.cc-btn a').click(function(e) {
-			e.preventDefault();
-			this.parentNode.parentNode.style.opacity=0;
-			this.parentNode.parentNode.style.visibility='hidden';
-			localStorage.setItem('consent', 'true');
-		});
-		document.getElementById('games-bg-iframe').contentWindow.window.onerror=function(e) {e.preventDefault()};
-		window.addEventListener('resize', ini);
-		ini();
 	</script>
 </body>
 </html>
