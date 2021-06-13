@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- General -->
+	<meta name="theme-color" content="#ffffff">
+	<meta name="application-name" content="Chess">
+  	<link rel="shortcut icon" href="icon.png">
+	<link rel="icon" type="image/png" sizes="500x500" href="icon.png">
+	<!-- Apple -->
+	<meta name="apple-mobile-web-app-title" content="Chess">
+	<link rel="apple-touch-icon" sizes="500x500" href="icon.png">
+	<link rel="mask-icon" href="icon.png" color="#DFB698">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+	<!-- links -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Mate+SC&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="lib/chessboardjs/css/chessboard-0.3.0.css">
+	<!-- scripts -->
+	<script defer src="lib/jquery/jquery-3.2.1.min.js"></script>
+	<script defer src="lib/chessboardjs/js/chess.js"></script>
+	<script defer src="lib/chessboardjs/js/chessboard-0.3.0.js"></script>
+	<script defer src="script.js"></script>
+	<title>Chess</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+		html, body {
+			/*font-family: Noto Sans JP, sans-serif;*/
+			font-family: Mate SC, sans-serif;
+			background-image: url('img/bg.jpg');
+			overflow: hidden;
+		}
+		#bg, #bg-cover {
+			background-image: url('img/bg.jpg');
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 1;
+			transition: all 1s;
+		}
+		#bg {
+			transition: all 0.3s;
+			z-index: -2;
+		}
+		header {
+			font-family: Mate SC, sans-serif;
+			color: #FDE1A6;
+			background-color: #46392D;
+			border: 3px solid #FDE1A6;
+			font-size: 2em;
+			text-align: center;
+			text-shadow: 5px 5px #000;
+			position: fixed;
+			top: 2em;
+			left: 50%;
+			transform: translateX(-50%);
+			min-width: 50%;
+			transition: all 0.3s;
+			z-index: 2;
+		}
+		#start {
+			position: fixed;
+			left: 50%;
+			top: 90%;
+			transform: translate(-50%, -90%);
+			transition: all 0.3s;
+			/*display: none;*/
+			z-index: 3;
+			transform-origin: center;
+		}
+		#start svg {
+			width: 80px;
+			height: 80px;
+			cursor: pointer;
+			animation: pulse 1s infinite ease-in-out;
+		}
+		#board-img-wrapper {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 70%;
+			z-index: 2;
+			transition: all 0.3s;
+			transform-origin: center;
+		}
+		#board-img {
+			width: 100%;
+			animation: shift 6.3s infinite linear;
+		}
+		@keyframes pulse {
+			0% {
+				transform: scale(0.9);
+			}
+			50% {
+				transform: scale(1.1);
+			}
+			100% {
+				transform: scale(0.9);
+			}
+		}
+		@keyframes shift {0%{-webkit-transform:translate(-10.6066017178px,10.6066017178px);transform:translate(-10.6066017178px,10.6066017178px)}5%{-webkit-transform:translate(-11.1800177406px,8.9949376183px);transform:translate(-11.1800177406px,8.9949376183px)}10%{-webkit-transform:translate(-10.6590557312px,6.5027863534px);transform:translate(-10.6590557312px,6.5027863534px)}15%{-webkit-transform:translate(-9.0947110808px,3.3740970526px);transform:translate(-9.0947110808px,3.3740970526px)}20%{-webkit-transform:translate(-6.6401127432px,-.0848723765px);transform:translate(-6.6401127432px,-.0848723765px)}25%{-webkit-transform:translate(-3.5355339059px,-3.5355339059px);transform:translate(-3.5355339059px,-3.5355339059px)}30%{-webkit-transform:translate(-.0848723765px,-6.6401127432px);transform:translate(-.0848723765px,-6.6401127432px)}35%{-webkit-transform:translate(3.3740970526px,-9.0947110808px);transform:translate(3.3740970526px,-9.0947110808px)}40%{-webkit-transform:translate(6.5027863534px,-10.6590557312px);transform:translate(6.5027863534px,-10.6590557312px)}45%{-webkit-transform:translate(8.9949376183px,-11.1800177406px);transform:translate(8.9949376183px,-11.1800177406px)}50%{-webkit-transform:translate(10.6066017178px,-10.6066017178px);transform:translate(10.6066017178px,-10.6066017178px)}55%{-webkit-transform:translate(11.1800177406px,-8.9949376183px);transform:translate(11.1800177406px,-8.9949376183px)}60%{-webkit-transform:translate(10.6590557312px,-6.5027863534px);transform:translate(10.6590557312px,-6.5027863534px)}65%{-webkit-transform:translate(9.0947110808px,-3.3740970526px);transform:translate(9.0947110808px,-3.3740970526px)}70%{-webkit-transform:translate(6.6401127432px,.0848723765px);transform:translate(6.6401127432px,.0848723765px)}75%{-webkit-transform:translate(3.5355339059px,3.5355339059px);transform:translate(3.5355339059px,3.5355339059px)}80%{-webkit-transform:translate(.0848723765px,6.6401127432px);transform:translate(.0848723765px,6.6401127432px)}85%{-webkit-transform:translate(-3.3740970526px,9.0947110808px);transform:translate(-3.3740970526px,9.0947110808px)}90%{-webkit-transform:translate(-6.5027863534px,10.6590557312px);transform:translate(-6.5027863534px,10.6590557312px)}95%{-webkit-transform:translate(-8.9949376183px,11.1800177406px);transform:translate(-8.9949376183px,11.1800177406px)}to{-webkit-transform:translate(-10.6066017178px,10.6066017178px);transform:translate(-10.6066017178px,10.6066017178px)}}
+		#setup {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			/*border: 1px solid #FDE1A6;*/
+			width: 80%;
+			color: #DBBD78;
+			display: none;
+			opacity: 0;
+			transition: all 1s;
+			z-index: 2;
+		}
+		#setup h1 {
+			text-align: center;
+			text-shadow: 5px 5px #000;
+			font-size: 2.5em;
+		}
+		#levels {
+			display: grid;
+			grid-template-columns: 40px 40px 40px 40px 40px;
+			grid-template-rows: 40px;
+			grid-gap: 20px 20px;
+			justify-items: center;
+			width: 280px;
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		#levels div {
+			font-size: 1.5em;
+			font-weight: bold;
+			background-color: #46392D;
+			border: 1px solid #DBBD78;
+			box-shadow: 3px 3px 3px #000;
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			cursor: pointer;
+		}
+		#game {
+			/*width: 51%;*/
+			width: 90vh;
+			border: 10px solid #b58863;
+			position: fixed;
+			top: 50%;
+			/*top: 200%;*/
+			left: 50%;
+			transform: translate(-50%, -50%);
+			transition: all 0.3s;
+			z-index: -1;
+		}
+		.board {
+		    /*width: 600px;*/
+		    width: 100%;
+		    margin: auto
+		}
+		#controls {
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: grid;
+			grid-gap: 2em;
+			padding: 2em;
+			z-index: -1;
+		}
+		#controls svg {
+			width: 80px;
+			height: 80px;
+			cursor: pointer;
+		}
+		#pause, #reset {
+			transition: all 0.3s;
+		}
+		#reset:hover:not(:active) {
+			transform: rotate(22.5deg);
+		}
+		#reset:active {
+			transform: rotate(360deg);
+		}
+		#pause:hover:not(:active) {
+			transform: scale(0.9);
+		}
+		#pause:active {
+			transform: scale(0.5);
+		}
+		#pauseScreen {
+			color: #FDE1A6;
+			font-size: 2em;
+			text-align: center;
+			text-shadow: 5px 5px #000;
+			position: fixed;
+			top: -100%;
+			/*top: 2em;*/
+			left: 50%;
+			transform: translateX(-50%);
+			min-width: 50%;
+			transition: all 0.3s;
+			z-index: 2;
+		}
+		#play {
+			position: fixed;
+			left: 50%;
+			top: 200%;/*70%*/
+			transform: translateX(-50%);
+			transition: all 0.3s;
+			/*display: none;*/
+			z-index: 2;
+			display: none;
+		}
+		#play svg {
+			width: 80px;
+			height: 80px;
+			cursor: pointer;
+			animation: pulse 1s infinite ease-in-out;
+		}
+		@media(max-width: 600px) {
+			header {
+				display: block;
+			}
+			#board-img-wrapper {
+				width: 90%;
+			}
+			#game {
+				width: 90vw;
+			}
+			#controls {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				padding: 1em;
+			}
+			#controls svg {
+				width: 40px;
+				height: 40px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Chess</h1>
+	</header>
+
+	<div id="start">
+		<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#D1B67A" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>
+	</div>
+
+	<div id="board-img-wrapper">
+		<img id="board-img" src="img/chess.png">
+	</div>
+
+	<div id="bg-cover"></div>
+	<div id="bg"></div>
+
+	<div id="setup">
+		<h1>Difficulty</h1>
+		<br>
+		<div id="levels">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+		</div>
+		<br>
+		<!--<div id="play">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#46392D" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>
+		</div>-->
+	</div>
+
+	<div id="game">
+		<div id="board" class="board"></div>
+	</div>
+
+	<div id="controls">
+		<div id="pause"><svg focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#D1B67A" d="M144 479H48c-26.5 0-48-21.5-48-48V79c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48zm304-48V79c0-26.5-21.5-48-48-48h-96c-26.5 0-48 21.5-48 48v352c0 26.5 21.5 48 48 48h96c26.5 0 48-21.5 48-48z" class=""></path></svg></div>
+		<div id="reset" onclick="reset()"><svg focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" ><path fill="#D1B67A" d="M370.72 133.28C339.458 104.008 298.888 87.962 255.848 88c-77.458.068-144.328 53.178-162.791 126.85-1.344 5.363-6.122 9.15-11.651 9.15H24.103c-7.498 0-13.194-6.807-11.807-14.176C33.933 94.924 134.813 8 256 8c66.448 0 126.791 26.136 171.315 68.685L463.03 40.97C478.149 25.851 504 36.559 504 57.941V192c0 13.255-10.745 24-24 24H345.941c-21.382 0-32.09-25.851-16.971-40.971l41.75-41.749zM32 296h134.059c21.382 0 32.09 25.851 16.971 40.971l-41.75 41.75c31.262 29.273 71.835 45.319 114.876 45.28 77.418-.07 144.315-53.144 162.787-126.849 1.344-5.363 6.122-9.15 11.651-9.15h57.304c7.498 0 13.194 6.807 11.807 14.176C478.067 417.076 377.187 504 256 504c-66.448 0-126.791-26.136-171.315-68.685L48.97 471.03C33.851 486.149 8 475.441 8 454.059V320c0-13.255 10.745-24 24-24z"></path></svg></div>
+
+	</div>
+
+	<div id="pauseScreen">
+		<h1>Game Paused</h1>
+	</div>
+
+	<div id="play">
+		<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#D1B67A" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>
+	</div>
+
+	<script>
+		/***************************
+			* 	  Variables     *
+		****************************/
+		var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+		var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+		var difficultyLevel = 3;
+
+		/***************************
+			* Event Management 	*
+		****************************/
+		document.getElementById('start').addEventListener('click', function(e) {
+			e.preventDefault();
+			var _this = this;
+			this.style.transform="translate(-50%, -70%) scale(0)";
+			document.getElementById('board-img-wrapper').style.transform="translate(-50%, -50%) scale(0)";
+			setTimeout(function() {
+				_this.style.display="none";
+				document.getElementById('board-img-wrapper').style.display="none";
+				document.getElementById('setup').style.display ="block";
+				setTimeout(function() {
+					document.getElementById('setup').style.opacity ="1";
+				}, 101);
+			}, 301);
+		});
+
+		document.querySelectorAll('#levels div').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				difficultyLevel = this.innerHTML;
+				document.getElementById('setup').style.transform="translateX(-50%)";
+				document.getElementById('setup').style.top="-100%";
+				document.querySelector('header').style.transform="translateX(-50%)";
+				document.querySelector('header').style.top="-100%";
+				document.getElementById('bg-cover').style.opacity="0";
+				document.getElementById('controls').style.zIndex="1";
+
+				setTimeout(function() {
+					/*document.getElementById('game').style.top="50%";
+					document.getElementById('game').style.transform="translate(-50%, -50%)";*/
+					document.getElementById('bg-cover').style.display="none";
+					document.getElementById('setup').style.display="none";
+					document.querySelector('header').style.display="none";
+				}, 1001);
+			});
+		});
+
+		document.getElementById('pause').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.getElementById('bg-cover').style.display="block";
+			document.getElementById('play').style.display="block";
+			document.getElementById('pauseScreen').style.top="2em";
+			setTimeout(function() {
+				document.getElementById('bg-cover').style.opacity="0.5";
+				document.getElementById('play').style.top="70%";
+			}, 101);
+		});
+
+		document.getElementById('play').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.getElementById('bg-cover').style.opacity="0";
+			document.getElementById('play').style.top="200%";
+			document.getElementById('pauseScreen').style.top="-100%";
+			setTimeout(function() {
+				document.getElementById('bg-cover').style.display="none";
+				document.getElementById('play').style.display="none";
+			}, 101);
+		})
+	</script>
+</body>
+</html>
