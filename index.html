@@ -219,7 +219,7 @@
 			max-width: 100%;
 			max-height: 100%;
 			border: none;
-			z-index: 2;
+			z-index: 3;
 		}
 		.standalone-ui {
 			display: none;
@@ -231,6 +231,15 @@
 			bottom: 1em;
 			color: #23153c;
 			font-size: 2em;
+		}
+		#standalone-bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			z-index: 2;
 		}
 		#standalone-frame.slideIn {
 			display: block;
@@ -441,6 +450,7 @@
 	<!-- PWA page elems-->
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
 	<div id="standalone-home" class="standalone-ui fas fa-home"></div>
+	<div id="standalone-bg" class="standalone-ui"></div>
 
 	<!-- SVG Icon Library -->
     <svg style="display: none;">
@@ -526,6 +536,7 @@
 						document.getElementById('standalone-home').classList.add('fadeIn');
 						window.scrollTo(0,0);
 						document.body.classList.add('standalone-open');
+						document.getElementById('standalone-bg').style.display="block";
 					} else if(this.classList.contains('newframe')) {
 						open(this.getAttribute('data-url'));
 					}
@@ -546,6 +557,15 @@
 				});
 			});
 		}
+
+		document.getElementById('standalone-home').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.getElementById('standalone-frame').src="";
+			document.getElementById('standalone-frame').classList.remove('slideIn');
+			document.getElementById('standalone-home').classList.remove('fadeIn');
+			document.body.classList.remove('standalone-open');
+			document.getElementById('standalone-bg').style.display="none";
+		});
 	</script>
 </body>
 </html>
