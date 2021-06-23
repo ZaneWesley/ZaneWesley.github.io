@@ -22,6 +22,15 @@
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+	<!-- Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-YEEGMG5QT7');
+	</script>
 	<title>Zane's Apps</title>
 
 	<style>
@@ -530,6 +539,13 @@
 			document.querySelectorAll('li').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					if(!this.classList.contains('disabled') && !this.classList.contains('newframe')) {
+						var _this = this;
+						//Analytics
+						dataLayer.push({
+							'event': 'app_link_click',
+							'app_name': _this.id
+
+						});
 						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
 						//Layer iframe ontop
 						document.getElementById('standalone-frame').classList.add('slideIn');
@@ -538,6 +554,13 @@
 						document.body.classList.add('standalone-open');
 						document.getElementById('standalone-bg').style.display="block";
 					} else if(this.classList.contains('newframe')) {
+						var _this = this;
+						//Analytics
+						dataLayer.push({
+							'event': 'app_link_click',
+							'app_name': _this.id
+
+						});
 						open(this.getAttribute('data-url'));
 					}
 				});
@@ -548,6 +571,12 @@
 				elem.addEventListener('click', function(e) {
 					if(!this.classList.contains('disabled')) {
 						var _this = this;
+						//Analytics
+						dataLayer.push({
+							'event': 'app_link_click',
+							'app_name': _this.id
+
+						});
 						document.body.scrollTop = 0; // For Safari
 						document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 						setTimeout(function() {
