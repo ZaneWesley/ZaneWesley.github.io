@@ -541,10 +541,13 @@
 					if(!this.classList.contains('disabled') && !this.classList.contains('newframe')) {
 						var _this = this;
 						//Analytics
-						dataLayer.push({
+						/*dataLayer.push({
 							'event': 'app_link_click',
 							'app_name': _this.id
 
+						});*/
+						gtag('event', 'app_link_click', {
+						  'app_name': _this.id
 						});
 						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
 						//Layer iframe ontop
@@ -556,10 +559,13 @@
 					} else if(this.classList.contains('newframe')) {
 						var _this = this;
 						//Analytics
-						dataLayer.push({
+						/*dataLayer.push({
 							'event': 'app_link_click',
 							'app_name': _this.id
 
+						});*/
+						gtag('event', 'app_link_click', {
+						  'app_name': _this.id
 						});
 						open(this.getAttribute('data-url'));
 					}
@@ -572,10 +578,13 @@
 					if(!this.classList.contains('disabled')) {
 						var _this = this;
 						//Analytics
-						dataLayer.push({
+						/*dataLayer.push({
 							'event': 'app_link_click',
 							'app_name': _this.id
 
+						});*/
+						gtag('event', 'app_link_click', {
+						  'app_name': _this.id
 						});
 						document.body.scrollTop = 0; // For Safari
 						document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
