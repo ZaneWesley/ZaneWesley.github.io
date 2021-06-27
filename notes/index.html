@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- General -->
+    <meta name="theme-color" content="#ffffff">
+    <meta name="application-name" content="Notes">
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="icon" type="image/png" sizes="500x500" href="icon.png">
+    <!-- Apple -->
+    <meta name="apple-mobile-web-app-title" content="Notes">
+    <link rel="apple-touch-icon" sizes="500x500" href="icon.png">
+    <link rel="mask-icon" href="icon.png" color="#DFB698">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+    <!-- links -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <title>Notes</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            font-family: Noto Sans JP, sans-serif;
+            color: #202124;
+            font-size: 15px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            color: #000;
+            background-color: #fff;
+            padding: 8px;
+            box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 20%);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        header h1 {
+            /*color: #5f6368;*/
+            color: #353535;
+        }
+        header .icon {
+            width: 60px;
+            height: 60px;
+            padding: 8px;
+        }
+        header .icon img {
+            width: 100%;
+            height: 100%;
+        }
+        header .menu-btn {
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 4px;
+            padding: 12px;
+            overflow: hidden;
+            vertical-align: middle;
+            cursor: pointer;
+            height: 48px;
+            width: 48px;
+            user-select: none;
+            flex: 0 0 auto;
+            transition: all 0.3s;
+        }
+        header .menu-btn svg {
+            height: 24px;
+            width: 24px;
+            fill: #5f6368;
+        }
+        header .menu-btn:hover {
+           background-color: rgba(95, 99, 104, 0.1);
+        }
+        #notes-container {
+            display: flex;
+            flex-wrap: wrap;
+            /*justify-content: center;*/
+            align-items: flex-start;
+            padding: 2em;
+            padding-top: 6em;
+            transition: all 0.3s;
+        }
+        .note {
+            width: 240px;
+            /*margin: 16px;*/
+            margin: 4px;
+            /*position: absolute;*/
+            border-radius: 8px;
+            word-wrap: break-word;
+            background-color: #d7aefb;
+            border: 1px solid #e0e0e0;
+            padding: 16px;
+            transition: all 0.3s;
+        }
+        .note.open {
+            position: fixed;
+            top: 6em;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9;
+            width: 50%;
+            height: auto;
+            transition: all 0.5s;
+            padding-bottom: 8em;
+            border: none;
+            /*animation: openNote 0.5s;
+            animation-fill-mode: forwards;*/
+        }
+        .note.open .title {
+            font-size: 20px;
+        }
+        .note.open .content {
+            font-size: 16px;
+        }
+        @keyframes openNote {
+            to {
+                position: fixed;
+                top: 6em;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 9;
+                width: 50%;
+                height: auto;
+            }
+        }
+        .note .title, .new-note #title {
+            letter-spacing: 0.00625em;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5rem;
+            text-align: center;
+            outline: none;
+        }
+        .note .content, .new-note #content {
+            letter-spacing: .01428571em;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.25rem;
+            padding: 10px 0;
+            outline: none;
+        }
+        .note .settings {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            padding: 0.5em 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgb(0 0 0 / 20%);
+        }
+        .note .settings .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            font-size: 1.2em;
+        }
+        .note .settings .row:nth-child(2) {
+            padding: 0.5em 0.5em 0 0.5em;
+            justify-content: flex-end;
+        }
+        .note.open .settings {
+            display: block;
+        }
+        .new-note {
+            margin: 4px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            padding: 16px;
+        }
+        #new-modal .settings {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            font-size: 1.2em;
+        }
+        .settings .color-palette {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .settings .color-palette .splotch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+        }
+        .settings .color-palette .splotch:hover {
+            border: 1px solid #353535;
+        }
+        .settings .clear-note, .settings .delete-note {
+            cursor: pointer;
+        }
+        .settings .clear-note:hover, .settings .delete-note:hover {
+            opacity: 0.6;
+        }
+        button {
+            background-color: transparent;
+            border: none;
+            border-radius: 8px;
+            color: #202124;
+            cursor: pointer;
+            padding: 8px 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5rem;
+            transition: all 0.3s;
+        }
+        button:hover, .add:hover {
+            background-color: rgba(95, 99, 104, 0.1);
+        }
+        .add {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            color: #80868b;
+            border: 1px solid #e0e0e0;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+            padding: 4px 16px 12px 16px;
+            padding-top: 12px;
+            z-index: 0;
+            font-size: 1.5em;
+            width: 54px;
+            height: 54px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);/**/
+            width: 50%;
+            height: auto;
+            background-color: #fff;
+            border-radius: 5px;
+            z-index: 3;
+            transition: all 0.3s;
+            visibility: hidden;
+            opacity: 0;
+            padding: 1em;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .overlay {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: rgba(0,0,0, 0.5);
+            /*background-color: #202124;*/
+            overflow-x: hidden;
+            transition: all 0.3s;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 2;
+
+        }
+        .modal h2 {
+            text-align: center;
+        }
+        .modal button {
+            float: right;
+        }
+        .open .modal {
+            transform: translate(-50%, -50%) scale(1);
+            /*animation: elastic 0.3s ease;
+            -webkit-animation: elastic 0.3s ease;*/
+            visibility: visible;
+            opacity: 1;
+        }
+        .open .overlay {
+            visibility: visible;
+            opacity: 1;
+            /*opacity: 0.6;*/
+        }
+        label {
+            display: block;
+            font-size: 1.1em;
+            padding-top: 1em;
+        }
+        input {
+            width: 100%;
+            outline: none;
+            padding: 16px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            background-color: transparent;
+        }
+        #signup-modal {
+            z-index: 2;
+        }
+        #login, #signup {
+            background-color: #353535;
+            color: #fff;
+        }
+        #signup {
+            float: left;
+        }
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -25%;
+            width: 25%;
+            height: 100%;
+            z-index: 2;
+            background-color: #fff;
+            box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 20%);
+            padding-top: 1em;
+            transition: all 0.3s;
+        }
+        .menu.open {
+            left: 0;
+        }
+        .menu h1 {
+            padding: 0 1em;
+        }
+        .menu ul {
+            list-style-type: none;
+            width: 100%;
+        }
+        .menu ul li {
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 1.1em;
+        }
+        .menu ul li i {
+            padding: 0 1em;
+        }
+        .menu ul li:hover, .menu ul li:active {
+            background-color: rgba(95, 99, 104, 0.1);
+        }
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            background-color: #FFCE08;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 1s;
+        }
+        #preloader.open {
+            visibility: visible;
+            opacity: 1;
+        }
+        #preloader svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10vw;
+            height: 10vw;
+        }
+
+        @media(max-width: 600px) {
+            #notes-container {
+                padding: 0.5em;
+                padding-top: 6em;
+            }
+            .note {
+                width: calc(50% - 1em);
+            }
+            .note.open {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+            .modal {
+                width: 85%;
+            }
+            .settings .color-palette .splotch:not(.primary) {
+                display: none;
+            }
+            .note .title, .new-note #title {
+                font-size: 20px;
+            }
+            .note .content, .new-note #content {
+                font-size: 16px;
+            }
+            .menu {
+                width: 70%;
+                left: -70%;
+            }
+            #preloader svg {
+                width: 20vw;
+                height: 20vw;
+            }
+        }
+    </style>
+    </head>
+    <body>
+        <header>
+            <div class="menu-btn">
+                <svg focusable="false" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+            </div>
+            <div class="icon">
+                <img src="icon.png" alt="Notes icon">
+            </div>
+            <h1>Notes</h1>
+        </header>
+
+        <div id="notes-container">
+            <!--<div class="note">
+                <div class="title">New Note</div>
+                <div class="content">No Content</div>
+                <div class="settings">
+                    <div class="row">
+                        <div class="color-palette">
+                            <div class="splotch primary" style="background-color: #ffffff;"></div>
+                            <div class="splotch" style="background-color: #f28b82;"></div>
+                            <div class="splotch" style="background-color: #fbbc04;"></div>
+                            <div class="splotch primary" style="background-color: #fff475;"></div>
+                            <div class="splotch primary" style="background-color: #ccff90;"></div>
+                            <div class="splotch" style="background-color: #a7ffeb;"></div>
+                            <div class="splotch" style="background-color: #cbf0f8;"></div>
+                            <div class="splotch primary" style="background-color: #aecbfa;"></div>
+                            <div class="splotch primary" style="background-color: #d7aefb;"></div>
+                            <div class="splotch primary" style="background-color: #fdcfe8;"></div>
+                            <div class="splotch" style="background-color: #e6c9a8;"></div>
+                            <div class="splotch primary" style="background-color: #e8eaed;"></div>
+                        </div>
+                        <div class="clear-note" title="Clear note"><i class="fas fa-sync-alt"></i></div>
+                        <div class="delete-note" title="Delete note"><i class="fas fa-trash-alt"></i></div>
+                    </div>
+                    <div class="row">
+                        <button class="close" onclick="closeNote()">Done</button>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <div id="open-overlay">
+            <div class="overlay"></div>
+        </div>
+        <div id="menu-overlay">
+            <div class="overlay"></div>
+        </div>
+
+        <button class="add" id="add">
+            <i class="fas fa-plus"></i><!-- Add note -->
+        </button>
+
+        <div id="new-modal">
+            <div class="overlay"></div>
+            <div class="modal">
+                <h2>Create Note</h2>
+                <div class="settings">
+                    <div class="color-palette">
+                        <div class="splotch primary" style="background-color: #ffffff;"></div>
+                        <div class="splotch" style="background-color: #f28b82;"></div>
+                        <div class="splotch" style="background-color: #fbbc04;"></div>
+                        <div class="splotch primary" style="background-color: #fff475;"></div>
+                        <div class="splotch primary" style="background-color: #ccff90;"></div>
+                        <div class="splotch" style="background-color: #a7ffeb;"></div>
+                        <div class="splotch" style="background-color: #cbf0f8;"></div>
+                        <div class="splotch primary" style="background-color: #aecbfa;"></div>
+                        <div class="splotch primary" style="background-color: #d7aefb;"></div>
+                        <div class="splotch primary" style="background-color: #fdcfe8;"></div>
+                        <div class="splotch" style="background-color: #e6c9a8;"></div>
+                        <div class="splotch primary" style="background-color: #e8eaed;"></div>
+                    </div>
+                    <div id="clear-note" title="Clear note"><i class="fas fa-sync-alt"></i></div>
+                    <div id="delete-note" title="Delete note"><i class="fas fa-trash-alt"></i></div>
+
+                    <input type="hidden" id="note-color" value="#ffffff">
+                </div>
+                <div class="new-note">
+                    <div id="title" contenteditable="true">New Note</div>
+                    <div id="content" contenteditable="true">No Content</div>
+                </div>
+                <button id="create">Create</button>
+            </div>
+        </div>
+
+        <div id="signup-modal" class="open">
+            <div class="overlay"></div>
+            <div class="modal">
+                <h2>Sign Up or Login</h2>
+                <p>Sign up or login to your Notes account so we can save your notes!</p>
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="user@example.com">
+                <label for="password">Password</label>
+                <input type="password" id="password">
+                <br>
+                <p id="signup-error" style="color: red; display: none;">Please enter a valid email and password.</p>
+                <br>
+                <button id="login">Login</button>
+                <button id="signup">Sign Up</button>
+            </div>
+        </div>
+
+        <div class="menu">
+            <h1>Menu</h1>
+            <ul>
+                <li onclick="document.getElementById('menu-overlay').click(); document.getElementById('add').click()"><i class="fas fa-plus"></i> New Note</li>
+                <li onclick="signout()"><i class="fas fa-sign-out-alt"></i> Sign Out</li>
+                <li onclick="deleteAccount()"><i class="fas fa-trash-alt"></i> Delete Account</li>
+            </ul>
+        </div>
+
+        <div id="preloader" class="open">
+            <!-- width="135" height="135" --><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 135" fill="#fff"><path d="M67.447 58c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm9.448 9.447c0 5.523 4.477 10 10 10 5.522 0 10-4.477 10-10s-4.478-10-10-10c-5.523 0-10 4.477-10 10zm-9.448 9.448c-5.523 0-10 4.477-10 10 0 5.522 4.477 10 10 10s10-4.478 10-10c0-5.523-4.477-10-10-10zM58 67.447c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10z"><animateTransform attributeName="transform" type="rotate" from="0 67 67" to="-360 67 67" dur="2.5s" repeatCount="indefinite"/></path><path d="M28.19 40.31c6.627 0 12-5.374 12-12 0-6.628-5.373-12-12-12-6.628 0-12 5.372-12 12 0 6.626 5.372 12 12 12zm30.72-19.825c4.686 4.687 12.284 4.687 16.97 0 4.686-4.686 4.686-12.284 0-16.97-4.686-4.687-12.284-4.687-16.97 0-4.687 4.686-4.687 12.284 0 16.97zm35.74 7.705c0 6.627 5.37 12 12 12 6.626 0 12-5.373 12-12 0-6.628-5.374-12-12-12-6.63 0-12 5.372-12 12zm19.822 30.72c-4.686 4.686-4.686 12.284 0 16.97 4.687 4.686 12.285 4.686 16.97 0 4.687-4.686 4.687-12.284 0-16.97-4.685-4.687-12.283-4.687-16.97 0zm-7.704 35.74c-6.627 0-12 5.37-12 12 0 6.626 5.373 12 12 12s12-5.374 12-12c0-6.63-5.373-12-12-12zm-30.72 19.822c-4.686-4.686-12.284-4.686-16.97 0-4.686 4.687-4.686 12.285 0 16.97 4.686 4.687 12.284 4.687 16.97 0 4.687-4.685 4.687-12.283 0-16.97zm-35.74-7.704c0-6.627-5.372-12-12-12-6.626 0-12 5.373-12 12s5.374 12 12 12c6.628 0 12-5.373 12-12zm-19.823-30.72c4.687-4.686 4.687-12.284 0-16.97-4.686-4.686-12.284-4.686-16.97 0-4.687 4.686-4.687 12.284 0 16.97 4.686 4.687 12.284 4.687 16.97 0z"><animateTransform attributeName="transform" type="rotate" from="0 67 67" to="360 67 67" dur="8s" repeatCount="indefinite"/></path></svg>
+        </div>
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+        <script>
+          // Your web app's Firebase configuration
+          var firebaseConfig = {
+            apiKey: "AIzaSyDv2qv-4E5XOIHs6Y6RCi7RResxPpJbY3Y",
+            authDomain: "small-project-database.firebaseapp.com",
+            projectId: "small-project-database",
+            storageBucket: "small-project-database.appspot.com",
+            messagingSenderId: "255081195502",
+            appId: "1:255081195502:web:52f7553077c6162bddd0ff"
+          };
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+        </script>
+
+        <script>
+            var colors = ["#ffffff", "#f28b82", "#fbbc04", "#fff475", "#ccff90", "#a7ffeb", "#cbf0f8", "#aecbfa", "#d7aefb", "#fdcfe8", "#e6c9a8", "#e8eaed"];
+            /* var colors = [white, red, orange, yellow, green, teal, lightblue, blue, purple, pink, brown, grey] */
+            document.getElementById('add').addEventListener('click', openNoteModal);
+            document.getElementById('create').addEventListener('click', createNote);
+            document.getElementById('login').addEventListener('click', login);
+            document.getElementById('signup').addEventListener('click', signup);
+
+            document.querySelector('.menu-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('.menu').classList.toggle('open');
+                document.getElementById('menu-overlay').classList.toggle('open');
+            });
+
+            document.getElementById('clear-note').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('title').innerHTML = "New Note";
+                document.getElementById('content').innerHTML = "Note Content";
+            });
+
+            document.getElementById('delete-note').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('title').innerHTML = "New Note";
+                document.getElementById('content').innerHTML = "No Content";
+                document.getElementById('new-modal').classList.remove('open');
+            });
+
+            document.querySelectorAll('.overlay').forEach(function(elem) {
+                elem.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if(this.parentNode.id !== 'open-overlay' && this.parentNode.id !== 'signup-modal' && this.parentNode.id !== 'menu-overlay') this.parentNode.classList.remove('open');
+                });
+            });
+
+            document.querySelectorAll('#new-modal .splotch').forEach(function(elem) {
+                elem.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('note-color').value = this.style.backgroundColor;
+                    document.querySelector('.new-note').style.backgroundColor = document.getElementById('note-color').value;
+                    //document.getElementById(openNote).style.backgroundColor = document.getElementById('note-color').value;
+                });
+            });
+
+            document.getElementById('open-overlay').addEventListener('click', function(e) {
+                e.preventDefault();
+                this.classList.remove('open');
+                closeNote();
+            });
+
+            document.getElementById('menu-overlay').addEventListener('click', function(e) {
+                e.preventDefault();
+                this.classList.remove('open');
+                document.querySelector('.menu').classList.remove('open');
+            });
+
+            function addEventListeners(selector, eventArray, handler) {
+                for(var i = 0; i < eventArray.length; i++) {
+                    selector.addEventListener(eventArray[i], handler);
+                }
+            }
+            /*
+            addEventListeners(document.getElementById('note-color'), ['change', 'keyup'], function(e) {
+                if(document.getElementById('note-color').value == null || document.getElementById('note-color') == "") {
+                    //
+                } else {
+                    //
+                }
+            });
+            */
+
+            function openNoteModal() {
+                document.getElementById('new-modal').classList.add('open');
+            }
+
+            var NOTE_TEMPLATE = `
+                <div class="title">New Note</div>
+                <div class="content">No Content</div>
+                <div class="settings">
+                    <div class="row">
+                        <div class="color-palette">
+                            <div class="splotch primary" style="background-color: #ffffff;"></div>
+                            <div class="splotch" style="background-color: #f28b82;"></div>
+                            <div class="splotch" style="background-color: #fbbc04;"></div>
+                            <div class="splotch primary" style="background-color: #fff475;"></div>
+                            <div class="splotch primary" style="background-color: #ccff90;"></div>
+                            <div class="splotch" style="background-color: #a7ffeb;"></div>
+                            <div class="splotch" style="background-color: #cbf0f8;"></div>
+                            <div class="splotch primary" style="background-color: #aecbfa;"></div>
+                            <div class="splotch primary" style="background-color: #d7aefb;"></div>
+                            <div class="splotch primary" style="background-color: #fdcfe8;"></div>
+                            <div class="splotch" style="background-color: #e6c9a8;"></div>
+                            <div class="splotch primary" style="background-color: #e8eaed;"></div>
+                        </div>
+                        <div class="clear-note" title="Clear note"><i class="fas fa-sync-alt"></i></div>
+                        <div class="delete-note" title="Delete note"><i class="fas fa-trash-alt"></i></div>
+                    </div>
+                    <div class="row">
+                        <button class="close">Done</button>
+                    </div>
+                </div>
+            `;
+            var uid, openNote;
+
+            function createNote() {
+                var note = document.createElement('div');
+                note.classList.add('note');
+                note.innerHTML = NOTE_TEMPLATE;
+                note.querySelector('.title').innerHTML=document.getElementById('title').innerHTML ?? "New Note";
+                note.querySelector('.content').innerHTML=document.getElementById('content').innerHTML ?? "No content";
+                note.style.backgroundColor=document.getElementById('note-color').value;
+                //document.getElementById('notes-container').appendChild(note);
+                addNoteEventListener(note);
+                document.getElementById('new-modal').classList.toggle('open');
+                saveNote(document.getElementById('title').innerHTML, document.getElementById('content').innerHTML, document.getElementById('note-color').value);
+            }
+
+            function editNote(note) {
+                openNote = note.id;
+                note.classList.add('open');
+                document.getElementById('open-overlay').classList.add('open');
+                note.querySelector('.title').setAttribute('contenteditable', true);
+                note.querySelector('.content').setAttribute('contenteditable', true);
+            }
+
+            function closeNote() {
+                var note = document.getElementById(openNote);
+                note.classList.remove('open');
+                document.getElementById('open-overlay').classList.remove('open');
+                note.querySelector('.title').setAttribute('contenteditable', false);
+                note.querySelector('.content').setAttribute('contenteditable', false);
+                updateNote(note.id, note.querySelector('.title').innerHTML, note.querySelector('.content').innerHTML, note.style.backgroundColor);
+                //addNoteEventListener(note);
+            }
+
+            function addNoteEventListener(note) {
+                note.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if(!hasClass(note, 'open')) {
+                        editNote(note);
+                    } else if(hasClass(e.target, 'close')) {
+                        closeNote();
+                    }
+                });
+                note.querySelector('.title').addEventListener('keyup', function(e) {
+                    if(e.which == 13 || e.keyCode == 13) e.preventDefault();
+                });
+                note.querySelectorAll('.splotch').forEach(function(elem) {
+                    elem.addEventListener('click', function(e) {
+                        note.style.backgroundColor = elem.style.backgroundColor;
+                    });
+                });
+                note.querySelector('.clear-note').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    note.querySelector('.title').innerHTML = "New Note";
+                    note.querySelector('.content').innerHTML = "No Content";
+                });
+                note.querySelector('.delete-note').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('open-overlay').classList.remove('open');
+                    deleteNote(openNote);
+                    removeItem(openNote);
+                });
+            }
+
+            function hasClass(element, className) {
+                return (' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1;
+            }
+
+            function saveNote(title, content, backgroundColor) {
+                // Add a new message entry to the Firebase database.
+              //return firebase.firestore().collection('messages').add({
+                return firebase.firestore().collection('notes').doc(uid).collection('notes').add({
+                    title: title,
+                    content: content,
+                    backgroundColor: backgroundColor,
+                    noteId: firebase.firestore().collection('notes').doc(uid).collection('notes').doc().id
+                }).catch(function(error) {
+                    console.error('Error writing new message to Firebase Database', error);
+                });
+                loadNotes();
+            }
+
+            function updateNote(id, title, content, backgroundColor) {
+                return firebase.firestore().collection('notes').doc(uid).collection('notes').doc(id).update({
+                    title: title,
+                    content: content,
+                    backgroundColor: backgroundColor,
+                    noteId: id
+                }).catch(function(error) {
+                    console.error('Error writing new message to Firebase Database', error);
+                });
+                loadNotes();
+            }
+
+            function loadNotes() {
+                //Query the notes
+                var query = firebase.firestore().collection('notes').doc(uid).collection('notes');
+                  // Start listening to the query.
+                  query.onSnapshot(function(snapshot) {
+                    snapshot.docChanges().forEach(function(change) {
+                      if (change.type === 'removed') {
+                        deleteNote(change.doc.id);
+                      } else {
+                        var note = change.doc.data();
+                        deleteNote(change.doc.id);
+                        displayNote(change.doc.id, note.title, note.content, note.backgroundColor);
+                      }
+                    });
+                  });
+                document.getElementById('preloader').classList.remove('open');
+            }
+
+            // Delete an note from the UI.
+            function deleteNote(id) {
+              var div = document.getElementById(id);
+              // If an element for that message exists we delete it.
+              if (div) {
+                div.parentNode.removeChild(div);
+              }
+            }
+
+            function removeItem(id) {
+                // Remove item entry from the Firebase database.
+                return firebase.firestore().collection('notes').doc(uid).collection('notes').doc(id).delete().catch(function(error) {
+                    console.error('Error deleting item from database', error);
+                });
+            }
+
+            function displayNote(id, title, content, backgroundColor) {
+                var note = document.createElement('div');
+                note.id = id;
+                note.classList.add('note');
+                note.innerHTML = NOTE_TEMPLATE;
+                note.querySelector('.title').innerHTML = title;
+                note.querySelector('.content').innerHTML=content;
+                note.style.backgroundColor=backgroundColor;
+                document.getElementById('notes-container').appendChild(note);
+                addNoteEventListener(note);
+            }
+
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    uid = user.uid;
+                    // ...
+                    document.getElementById('signup-modal').classList.remove('open');
+                    loadNotes();
+                } else {
+                    // User is signed out
+                    // ...
+                    document.getElementById('signup-modal').classList.add('open');
+                    document.getElementById('preloader').classList.remove('open');
+                }
+            });
+
+            function login() {
+                var _email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+                if(isValidEmail(_email) == true && password !== null && password !== "") {
+                    firebase.auth().signInWithEmailAndPassword(_email, password)
+                      .then((userCredential) => {
+                        // Signed in
+                        var user = userCredential.user;
+                        // ...
+                        document.getElementById('signup-modal').classList.remove('open');
+                      })
+                      .catch((error) => {
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        alert(error);
+                      });
+                } else {
+                    document.getElementById('signup-error').style.display='block';
+                }
+            }
+
+            function signup() {
+                var _email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+                if(isValidEmail(_email) == true && password !== null && password !== "") {
+                    firebase.auth().createUserWithEmailAndPassword(_email, password)
+                      .then((userCredential) => {
+                        // Signed in 
+                        var user = userCredential.user;
+                        // ...
+                        document.getElementById('signup-modal').classList.remove('open');
+                        saveUserData(user.uid, _email);
+
+                      })
+                      .catch((error) => {
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // ..
+                        alert(error);
+                      });
+                } else {
+                    document.getElementById('signup-error').style.display='block';
+                }
+            }
+
+            function signout() {
+                firebase.auth().signOut();
+                document.getElementById('menu-overlay').click();
+            }
+
+            function deleteAccount() {
+                firebase.auth().currentUser.delete().then(() => {
+                    // User deleted.
+                    firebase.firestore().collection('notes').doc(uid).delete().catch(function(error) {
+                        console.error('Error deleting item from database', error);
+                    });
+                    location.reload();
+                }).catch((error) => {
+                    // An error ocurred
+                    // ...
+                    alert(error);
+                });
+            }
+
+            function isValidEmail(email) {
+                const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i
+
+                return expression.test(String(email).toLowerCase())
+            }
+
+            function saveUserData(userId, email) {
+                /*firebase.firestore().collection('users').doc(userId).set({
+                    email: email,
+                    userId: userId
+                }).catch(function(error) {
+                    console.error('Error writing user to Firebase Database', error);
+                });*/
+                firebase.firestore().collection('notes').doc(userId).set({
+                    userId: userId,
+                    email: email
+                }).catch(function(error) {
+                    console.error('Error writing user to Firebase Database', error);
+                })
+            }
+        </script>
+    </body>
+</html>
