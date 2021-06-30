@@ -1,5 +1,18 @@
 const counterDOM = document.getElementById('counter');  
-const endDOM = document.getElementById('end');  
+const endDOM = document.getElementById('end');
+
+let HIGH_SCORE = 0;
+let score = 0;
+
+Lockr.prefix = 'lockr_';
+
+if(Number(Lockr.get('crossyroad_hs')) !== NaN && Lockr.get('crossyroad_hs') !== undefined) {
+  HIGH_SCORE = Lockr.get('crossyroad_hs');
+  document.getElementById('high').innerHTML=HIGH_SCORE;
+} else {
+  HIGH_SCORE = 0;
+  Lockr.set('crossyroad_hs', 0);
+}
 
 const scene = new THREE.Scene();
 
@@ -100,6 +113,8 @@ const initaliseValues = () => {
 
   currentLane = 0;
   currentColumn = Math.floor(columns/2);
+
+  score = 0;
 
   previousTimestamp = null;
 
@@ -426,13 +441,36 @@ document.querySelector("#retry").addEventListener("click", () => {
     //document.getElementsByTagName('canvas')[1].style.display='block';
 });
 
-document.getElementById('forward').addEventListener("click", () => move('forward'));
+//document.getElementById('forward').addEventListener("click", () => move('forward'));
 
-document.getElementById('backward').addEventListener("click", () => move('backward'));
+//document.getElementById('backward').addEventListener("click", () => move('backward'));
 
-document.getElementById('left').addEventListener("click", () => move('left'));
+//document.getElementById('left').addEventListener("click", () => move('left'));
 
-document.getElementById('right').addEventListener("click", () => move('right'));
+//document.getElementById('right').addEventListener("click", () => move('right'));
+
+SwipeListener(document.querySelectorAll('canvas')[1]);
+document.querySelectorAll('canvas')[1].addEventListener('swipe', function (e) {
+  var directions = e.detail.directions;
+  var x = e.detail.x;
+  var y = e.detail.y;
+
+  if (directions.left) {
+    move('left');
+  }
+
+  if (directions.right) {
+    move('right');
+  }
+
+  if (directions.top) {
+    move('forward');
+  }
+
+  if (directions.bottom) {
+    move('backward');
+  }
+});
 
 window.addEventListener("keydown", event => {
   if (event.keyCode == '38') {
@@ -454,6 +492,7 @@ window.addEventListener("keydown", event => {
 });
 
 function move(direction) {
+  document.getElementById('instr').style.display = 'none';
   const finalPositions = moves.reduce((position,move) => {
     if(move === 'forward') return {lane: position.lane+1, column: position.column};
     if(move === 'backward') return {lane: position.lane-1, column: position.column};
@@ -557,11 +596,13 @@ function animate(timestamp) {
       switch(moves[0]) {
         case 'forward': {
           currentLane++;
+          score++;
           counterDOM.innerHTML = currentLane;    
           break;
         }
         case 'backward': {
           currentLane--;
+          score--;
           counterDOM.innerHTML = currentLane;    
           break;
         }
@@ -593,6 +634,11 @@ function animate(timestamp) {
         document.getElementById('fcanvas').style.display='block';
         //document.getElementsByTagName('canvas')[1].style.display='none';
         clickButton();
+        if(score >= HIGH_SCORE) {
+          Lockr.set('crossyroad_hs', score);
+          document.getElementById('high').innerHTML=score;
+          HIGH_SCORE = score;
+        }
         lanes.forEach(lane => scene.remove( lane.mesh ));
         initaliseValues();
       }
