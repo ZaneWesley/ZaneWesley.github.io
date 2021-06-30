@@ -12,6 +12,9 @@
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="https://unpkg.com/tippy.js@6"></script>
 <style>
+  :root {
+    --tip-color: rgb(50,50,60);
+  }
   *:focus {
     outline: none;
   }
@@ -124,6 +127,65 @@
     font-family: 'Pacifico';
     text-align: center;
   }
+
+  .slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    height: 25px;
+    background: #d3d3d3;
+    border-radius: 30px;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+  }
+  .slider:hover {
+    opacity: 1;
+  }
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: var(--tip-color);/*#04AA6D*/
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    background: var(--tip-color);
+    cursor: pointer;
+    border-radius: 50%;
+  }
+
+  .slider.r::-webkit-slider-thumb {
+    background: red;
+  }
+
+  .slider.g::-webkit-slider-thumb {
+    background: green;
+  }
+
+  .slider.b::-webkit-slider-thumb {
+    background: blue;
+  }
+
+  .slider.r::-moz-range-thumb {
+    background: red;
+  }
+
+  .slider.g::-moz-range-thumb {
+    background: green;
+  }
+
+  .slider.b::-moz-range-thumb {
+    background: blue;
+  }
+
+
 </style>
 
 </head>
@@ -155,11 +217,11 @@
   
   <div id="sliders-wrapper">
   <span>R</span>
-  <input type="range" class="color-range" value="50" min="0" max="255">
+  <input type="range" class="color-range slider r" value="50" min="0" max="255">
   <span>G</span>
-  <input type="range" class="color-range" value="50" min="0" max="255">
+  <input type="range" class="color-range slider g" value="50" min="0" max="255">
   <span>B</span>
-  <input type="range" class="color-range" value="60" min="0" max="255">
+  <input type="range" class="color-range slider b" value="60" min="0" max="255">
   </div>
   
 </div>
@@ -173,7 +235,7 @@
   
   <div id="sliders-wrapper">
     <span>Tip Size</span>
-    <input type="range" value="10" min="0" max="255" id="radius-range">
+    <input class="slider" type="range" value="10" min="1" max="255" id="radius-range">
   </div>
   
 </div>
@@ -214,19 +276,15 @@
     }
 
     function setColor(c) {
-      drawColor = c
-      document.querySelector('#color-selector').style.backgroundColor = 
-        'rgb(' +
+      drawColor = c;
+      var compiledColor = 'rgb(' +
         drawColor[0] + ',' +
         drawColor[1] + ',' +
         drawColor[2] +
         ')';
-      document.querySelector('#color-picker').style.backgroundColor = 
-        'rgb(' +
-        drawColor[0] + ',' +
-        drawColor[1] + ',' +
-        drawColor[2] +
-        ')';
+      document.querySelector('#color-selector').style.backgroundColor = compiledColor;
+      document.querySelector('#color-picker').style.backgroundColor = compiledColor;
+        document.documentElement.style.setProperty('--tip-color', compiledColor);
       if ((drawColor[0] + drawColor[1] + drawColor[2]) / 3 < 122) {
         document.querySelector('#color-picker').style.color = 'white';
         document.querySelector('#color-selector').style.color = 'white';
@@ -264,13 +322,13 @@
     for (var range of document.querySelectorAll(".color-range")) {
       range.oninput = refreshColorPicker;
     }
-    document.querySelector("#radius-range").oninput = refreshRadius
+    document.querySelector("#radius-range").oninput = refreshRadius;
     function refreshColorPicker() {
       n = [0, 0, 0]
       for (var i = 0; i < document.querySelectorAll(".color-range").length; i++) {
         n[i] = parseInt(document.querySelectorAll(".color-range")[i].value);
       }
-      setColor(n)
+      setColor(n);
     }
     function refreshRadius() {
       radius = parseInt(document.querySelector("#radius-range").value);
