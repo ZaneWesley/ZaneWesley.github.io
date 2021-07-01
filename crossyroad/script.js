@@ -14,6 +14,11 @@ if(Number(Lockr.get('crossyroad_hs')) !== NaN && Lockr.get('crossyroad_hs') !== 
   Lockr.set('crossyroad_hs', 0);
 }
 
+window.addEventListener('scroll', function(e) {
+  e.preventDefault();
+  window.scrollTo(0, 0);
+});
+
 const scene = new THREE.Scene();
 
 const distance = 500;
