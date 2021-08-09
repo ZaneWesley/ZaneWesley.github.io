@@ -22,8 +22,8 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
 	<!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
@@ -33,7 +33,7 @@
 	  gtag('js', new Date());
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
-	<title>Zane's Apps Beta</title>
+	<title>Zane's Apps | Beta</title>
 
 	<style>
 		* {
@@ -43,159 +43,68 @@
             overflow-x: hidden;
 		}
 		html, body {
-			background-color: #F4F4FB;
+			background-color: #2d3e50;
 			font-family: 'Roboto', sans-serif;
 		}
-		header {
-			width: 100%;
-		    height: 215px;
-		    background: #1f8dd6;
-		    display: flex;
-		    align-items: center;
-		    justify-content: center;
-		    text-align: center;
-		    position: relative;
-		    color: #fff;
+		#bg {
+			width: 100vw;
+		    height: 100vh;
+		    background: transparent;
+		    position: fixed;
 		    user-select: none;
 			-webkit-user-select: none;
 			-moz-user-select: none;
+			z-index: 0;
+			opacity: 0;
+			animation: fadeIn 2s ease-in;
+			animation-fill-mode: forwards;
+			animation-delay: 1.5s;
 		}
-		.gallery {
-			display: flex;
-			flex: 1 1 auto;
-			flex-direction: column;
-			background-color: #2d3e50;
-			/*background: #23153c;*/
-			padding-bottom: 150px;
-		}
-		.section-new {
-			background-color: #fff;
-			color: #34495e;
-		}
-		.section-new .heading {
-			display: flex;
-			justify-content: space-between;
+		#splash {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
 			overflow: hidden;
 		}
-		.section-new .heading h3 {
+		#splash svg {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 20vw;
+			height: 20vw;
+			animation: settleIn 2s cubic-bezier(0,1.11,1,.99);
+			animation-fill-mode: forwards;
+		}
+		#nav {
+			position: fixed;
+			top: 25%;
+			left: 50%;
+			width: 80%;
+			height: 50%;
+			transform: translate(-50%, -25%);
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			align-items: flex-end;
+			z-index: 2;
+			animation: slideIn 2s cubic-bezier(.87,-.41,.19,1.44);
+			animation-fill-mode: forwards;
+		}
+		#nav .page-btn {
 			font-weight: 700;
-		    /*font-size: 18px;*/
-		    line-height: 24px;
-		    padding: 20px 20px 16px;
-		}
-		.section-new-gallery {
-			display: flex;
-		    flex-wrap: nowrap;
-		    overflow-x: auto;
-		    padding-bottom: 20px;
-		}
-		.section-new-gallery:before {
-			content: "";
-		    display: block;
-		    padding-left: 20px;
-		}
-		.section-new-gallery .grid-item {
-			overflow: hidden;
-		    width: calc(20% - 13.6px);
-		    margin-right: 8px;
-		    flex: 0 0 auto;
-		    border-radius: 12px;
-		    padding: 1em;
-		    display: flex;
-		    flex-direction: column;
-		    justify-content: flex-end;
-		    /*background: linear-gradient(rgba(0,2,81,0),#34495e);*/
-		    transition: all 0.3s;
-		    /*Overlay*/
-		    text-shadow: rgb(0 0 0 / 50%) 0px 0px 4px;
-			/*background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.9))!important;*/
-		}
-		.section-new-gallery .grid-item:hover {
-			filter: brightness(0.9);
-			box-shadow: 4px 4px 4px #dadce0;
-		}
-		.section-new-gallery .grid-item a {
-			text-decoration: none;
-			color: #34495e;
-			text-align: center;
-			user-select: none;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-		}
-		.section-new-gallery .grid-item a .icon-img img {
-			width: 50%;
-			height: auto;
-		}
-		.section-new-gallery .grid-item a .name {
-			font-weight: bold;
-			padding-top: 15%;
+			font-size: 2em;
+			cursor: pointer;
 			color: #fff;
+			border: 3px solid transparent;
+			border-radius: 5px;
+			transition: all 0.3s;
 		}
-		.section-new-gallery .grid-item a .genre {
-			text-align: left;
-			color: #dadce0;
-		}
-
-		.section-gallery .heading {
-			color: #f2f2f2;
-		    font-weight: 700;
-		    font-size: 18px;
-		    line-height: 24px;
-		    padding: 20px 20px 0;
-		    overflow: hidden;
-		}
-		.section-gallery .app-grid {
-			display: flex;
-		    justify-content: flex-start;
-		    align-items: stretch;
-		    flex-direction: row;
-		    flex-wrap: wrap;
-		    overflow-y: auto;
-		    padding-left: 20px;
-		    padding-top: 20px;
-		}
-		.section-gallery .app-grid .app {
-			border-radius: 15px;
-		    cursor: pointer;
-		    outline-color: transparent;
-		    position: relative;
-		    margin-bottom: 14px;
-		    margin-right: 12px;
-		    width: calc(25% - 14px);
-		    text-align: center;
-		    display: flex;
-		    flex-direction: column;
-		    justify-content: flex-end;
-		    transition: all 0.3s;
-		}
-		.section-gallery .app-grid .app:hover {
-			/*background: #3b5169;*/
-			filter: brightness(0.9);
-			box-shadow: 4px 4px 4px #202c38;
-		}
-		.section-gallery .app-grid .app a {
-			text-decoration: none;
-			user-select: none;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-		}
-		.section-gallery .app-grid .app a .icon-img img {
-			width: 50%;
-			height: auto;
-		}
-		.section-gallery .app-grid .app a .name {
-			font-size: 14px;
-			padding: 8px 0;
-		    font-weight: 700;
-		    text-align: center;
-		    width: 100%;
-		    position: relative;
-		    color: #fff;
-		}
-		footer {
-			padding: 16px;
-			font-weight: 500;
-			font-size: 12px;
+		#nav .page-btn:hover {
+			border-bottom: 3px solid #fff;
 		}
 
 		html.standalone-open, body.standalone-open {
@@ -259,273 +168,63 @@
 			animation-fill-mode: forwards;
 		}
 		@keyframes fadeIn{from {opacity: 0;} to {opacity: 1;}}
+		@keyframes settleIn{0% {opacity: 0; transform: translate(-50%, -50%) scale(2); fill: #208DD7;} 50% {fill: #208DD7;} 100% {top: 25%; opacity: 1; transform: translate(-50%, -25%) scale(1); fill: #CACFD2;}}
+		@keyframes slideIn{from { left: 100%; opacity: 0;} to {left: 50%; opacity: 1;}}
+
 		@media (max-width: 480px) {
-			.section-new-gallery .grid-item {
-				width: calc(40% - 15.2px);
+			#splash svg {
+				top: 10%;
+				width: 50vw;
+				height: 50vw;
 			}
-			.section-gallery .app-grid .app {
-				width: calc(50% - 16px);
+			#nav {
+				top: 50%;
+				flex-direction: column;
 			}
+			@keyframes settleIn{0% {opacity: 0; transform: translate(-50%, -50%) scale(2); fill: #208DD7;} 50% {fill: #208DD7;} 100% {top: 10%; opacity: 1; transform: translate(-50%, -10%) scale(1); fill: #CACFD2;}}
 		}
 	</style>
 </head>
 <body>
-	<header>
+	<!--<header>
 		<h1>Zane's Apps</h1>
-	</header>
-	<div class="gallery">
+	</header>-->
 
-		<div class="section-new">
-			<div class="heading"><h3>DISCLAIMER: This page is a beta version and may not work as expected. An official release will happen later this month.</h3></div>
-			<div class="heading"><h3>New Releases</h3></div>
-			<div class="section-new-gallery">
-				<!--
-				TEMPLATE
-				<div class="grid-item" style="background: APP_COLOR;">
-					<a href="APP_URL">
-						<div class="icon-img"><img src="IMG_URL"></div>
-						<div class="name">APP_NAME</div>
-						<div class="genre">APP_GENRE</div>
-					</a>
-				</div>
-				-->
-				<div class="grid-item" style="background: #69CEEC;">
-					<a href="crossyroad">
-						<div class="icon-img"><img src="crossyroad/icon.jpeg"></div>
-						<div class="name">Crossy Road</div>
-						<div class="genre">Entertainment</div>
-					</a>
-				</div>
-				<div class="grid-item" style="background: #fff; border: 1px solid #dadce0;">
-					<a href="whiteboard">
-						<div class="icon-img"><img src="images/whiteboard-icon.jpg"></div>
-						<div class="name" style="color: #000;">Whiteboard</div>
-						<div class="genre" style="color: #454545;">Resources</div>
-					</a>
-				</div>
-				<div class="grid-item" style="background: #FFCE08;">
-					<a href="notes">
-						<div class="icon-img"><img src="/notes/icon.png"></div>
-						<div class="name">Notes</div>
-						<div class="genre">Resources</div>
-					</a>
-				</div>
-				<div class="grid-item" style="background: #5A442E;">
-					<a href="chess">
-						<div class="icon-img"><img src="/chess/img/chess.png"></div>
-						<div class="name">Chess</div>
-						<div class="genre">Entertainment</div>
-					</a>
-				</div>
-				<div class="grid-item" style="background: #5257a2;">
-					<a href="cakeninja">
-						<div class="icon-img"><img src="/cakeninja/files/assets/32463581/1/caption.png"></div>
-						<div class="name">Cake Ninja</div>
-						<div class="genre">Entertainment</div>
-					</a>
-				</div>
-			</div>
-		</div>
+	<div id="bg"></div>
 
-		<div class="section-gallery">
-			<div class="heading"><h3 id="entertainment">Entertainment</h3></div>
-			<div class="app-grid">
-				<!--
-				TEMPLATE
-				<div class="app" style="background: APP_COLOR;">
-					<a href="APP_URL">
-						<div class="icon-img"><img src="IMG_URL"></div>
-						<div class="name">APP_NAME</div>
-					</a>
-				</div>
-				-->
-				<div class="app" style="background: #69CEEC;">
-					<a href="crossyroad">
-						<div class="icon-img"><img src="crossyroad/icon.jpeg"></div>
-						<div class="name">Crossy Road</div>
-					</a>
-				</div>
-				<div class="app" style="background: #5A442E;">
-					<a href="chess">
-						<div class="icon-img"><img src="/chess/img/chess.png"></div>
-						<div class="name">Chess</div>
-					</a>
-				</div>
-				<div class="app" style="background: #5257a2;">
-					<a href="cakeninja">
-						<div class="icon-img"><img src="/cakeninja/files/assets/32463581/1/caption.png"></div>
-						<div class="name">Cake Ninja</div>
-					</a>
-				</div>
-				<div class="app" style="background: #2C3E50;">
-					<a href="hextris">
-						<div class="icon-img"><img src="hextris/favicon.ico"></div>
-						<div class="name">Hextris</div>
-					</a>
-				</div>
-				<div class="app" style="background: #D0CBC7;">
-					<a href="stack">
-						<div class="icon-img"><img src="images/stack-icon.PNG"></div>
-						<div class="name" style="color: #000;">Stack</div>
-					</a>
-				</div>
-				<div class="app" style="background: #D0CBC7;">
-					<a href="chromedino">
-						<div class="icon-img"><img src="chromedino/200-error-offline.png"></div>
-						<div class="name">Chrome Dino Runner</div>
-					</a>
-				</div>
-				<div class="app" style="background: #4279A3;">
-					<a href="colorsplosion">
-						<div class="icon-img"><img src="colorsplosion/icon.PNG"></div>
-						<div class="name">Colorsplosion</div>
-					</a>
-				</div>
-				<div class="app" style="background: #f45303;">
-					<a href="numberguessing">
-						<div class="icon-img"><img src="images/numberguessing-icon.png"></div>
-						<div class="name">Guess that Number</div>
-					</a>
-				</div>
-				<div class="app" style="background: #2b6184;">
-					<a href="2048">
-						<div class="icon-img"><img src="2048/icon.png"></div>
-						<div class="name">2048</div>
-					</a>
-				</div>
-				<div class="app" style="background: #fff;">
-					<a href="tic-tac-toe">
-						<div class="icon-img"><img src="images/tic-tac-toe-icon.png"></div>
-						<div class="name" style="color: #000;">Tic Tac Toe</div>
-					</a>
-				</div>
-				<div class="app" style="background: #EADDFF;">
-					<a href="colorswirl">
-						<div class="icon-img"><img src="colorswirl/icon.jpg"></div>
-						<div class="name" style="color: #000;">Colorswirl</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="heading"><h3 id="resources">Resources</h3></div>
-			<div class="app-grid">
-				<!--
-				TEMPLATE
-				<div class="app" style="background: APP_COLOR;">
-					<a href="APP_URL">
-						<div class="icon-img"><img src="IMG_URL"></div>
-						<div class="name">APP_NAME</div>
-					</a>
-				</div>
-				-->
-				<div class="app" style="background: #FFCE08;">
-					<a href="notes">
-						<div class="icon-img"><img src="notes/icon.png"></div>
-						<div class="name">Notes</div>
-					</a>
-				</div>
-				<div class="app" style="background: #fff;">
-					<a href="vividly">
-						<div class="icon-img"><img src="vividly/icon.png"></div>
-						<div class="name" style="color: #000;">Vividly</div>
-					</a>
-				</div>
-				<div class="app" style="background: #0288d1;">
-					<a href="connect">
-						<div class="icon-img"><img src="connect/splash.svg"></div>
-						<div class="name">Connect Messaging</div>
-					</a>
-				</div>
-				<div class="app" style="background: #00B0FF;">
-					<a href="assistant">
-						<div class="icon-img"><img src="assistant/icon.svg"></div>
-						<div class="name">Corey 2.0</div>
-					</a>
-				</div>
-				<div class="app" style="background: #D4D4D2;">
-					<a href="calculator">
-						<div class="icon-img"><img src="images/calculator-icon.png"></div>
-						<div class="name" style="color: #000;">Calculator</div>
-					</a>
-				</div>
-				<div class="app" style="background: #1E1E1E;">
-					<a href="countdownstudio">
-						<div class="icon-img"><img src="images/countdownstudio-icon.svg" style="filter: invert(0.7)"></div>
-						<div class="name">Countdown Studio</div>
-					</a>
-				</div>
-				<div class="app" style="background: #009688;">
-					<a href="mmc">
-						<div class="icon-img"><img src="images/mmc-icon.png"></div>
-						<div class="name">Molar Mass Calculator</div>
-					</a>
-				</div>
-				<div class="app" style="background: #084049;">
-					<a href="webchat">
-						<div class="icon-img"><img src="webchat/logo.ico"></div>
-						<div class="name">Webchat Video Conferencing</div>
-					</a>
-				</div>
-				<div class="app" style="background: #fff;">
-					<a href="whiteboard">
-						<div class="icon-img"><img src="images/whiteboard-icon.jpg"></div>
-						<div class="name" style="color: #000;">Whiteboard</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="heading"><h3 id="miscellaneous">Miscellaneous</h3></div>
-			<div class="app-grid">
-				<!--
-				TEMPLATE
-				<div class="app" style="background: APP_COLOR;">
-					<a href="APP_URL">
-						<div class="icon-img"><img src="IMG_URL"></div>
-						<div class="name">APP_NAME</div>
-					</a>
-				</div>
-				-->
-				<div class="app" style="background: #fff;">
-					<a href="insperation">
-						<div class="icon-img"><img src="images/inspiration-icon.PNG"></div>
-						<div class="name" style="color: #000;">Inspirational Quotes Generator</div>
-					</a>
-				</div>
-			</div>
-
-			<div class="heading"><h3 id="more">More from Zane</h3></div>
-			<div class="app-grid">
-				<!--
-				TEMPLATE
-				<div class="app" style="background: APP_COLOR;">
-					<a href="APP_URL">
-						<div class="icon-img"><img src="IMG_URL"></div>
-						<div class="name">APP_NAME</div>
-					</a>
-				</div>
-				-->
-				<div class="app" style="background: #131417;">
-					<a href="about">
-						<div class="icon-img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
-						<div class="name">About Me</div>
-					</a>
-				</div>
-				<div class="app" style="background: #81D9FF;">
-					<a href="archive">
-						<div class="icon-img"><img src="images/home-icon.svg"></div>
-						<div class="name" style="color: #000;">App Archive</div>
-					</a>
-				</div>
-			</div>
-
-		</div>
-
+	<div id="splash">
+		<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
+			<g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" stroke="none">
+				<path d="M1283 2982 l-1083 -2 0 -263 0 -262 560 3 c308 1 560 1 560 -2 0 -2
+				-93 -154 -206 -337 -697 -1127 -1094 -1770 -1094 -1774 0 -3 511 -5 1135 -5
+				l1135 0 0 265 0 265 -615 0 -616 0 20 28 c16 22 581 932 839 1352 80 130 268
+				432 374 603 44 70 79 129 77 130 -2 1 -491 1 -1086 -1z m1040 -36 c-38 -67
+				-168 -272 -175 -274 -4 -2 -8 -8 -8 -12 0 -8 -110 -191 -197 -330 -58 -90
+				-181 -290 -246 -398 -33 -53 -62 -99 -67 -102 -4 -3 -10 -15 -14 -27 -4 -13
+				-12 -23 -17 -23 -5 0 -9 -4 -9 -10 0 -13 -62 -114 -72 -118 -4 -2 -8 -7 -8
+				-12 0 -10 -65 -118 -85 -140 -8 -9 -15 -20 -15 -24 0 -4 -13 -27 -30 -51 -16
+				-24 -30 -47 -30 -51 0 -4 -10 -21 -23 -38 -13 -17 -43 -65 -67 -106 -24 -41
+				-67 -111 -95 -155 -29 -44 -67 -108 -86 -143 -29 -53 -32 -64 -19 -72 9 -6
+				241 -10 607 -10 l592 0 3 -23 c2 -12 2 -120 0 -239 l-3 -218 -782 -1 c-430 -1
+				-852 -3 -937 -4 -85 -2 -228 0 -317 3 l-162 5 17 30 c9 16 22 37 27 46 25 39
+				81 128 92 146 31 51 90 146 129 207 24 37 44 70 44 73 0 16 54 84 63 78 6 -3
+				7 -1 3 5 -6 10 23 72 49 102 7 8 21 31 32 50 10 19 43 74 73 123 30 48 60 95
+				65 105 6 9 19 31 31 47 11 17 24 37 28 45 3 8 19 34 34 57 15 24 60 98 101
+				165 41 68 77 125 80 128 3 3 12 16 20 30 8 14 49 80 90 148 42 67 89 144 105
+				170 15 26 32 49 37 50 5 2 9 8 9 13 0 5 24 49 54 97 84 137 97 164 84 179 -8
+				10 -116 13 -553 13 l-543 0 -6 28 c-10 45 -3 211 9 204 5 -3 5 0 -1 9 -15 18
+				-12 218 3 227 20 12 2093 10 2086 -2z"/>
+			</g>
+		</svg>
 	</div>
 
-	<footer>
-		<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
-		<p>Copyright &copy; 2021 Zane Wesley. All Rights Reserved.</p>
-	</footer>
+	<div id="nav">
+		<div class="page-btn">Games</div>
+		<div class="page-btn">Resources</div>
+		<div class="page-btn">Miscellaneous</div>
+		<div class="page-btn">More</div>
+	</div>
+	
 
 	<!-- PWA page elems-->
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
@@ -537,18 +236,17 @@
 	<div id="standalone-bg" class="standalone-ui"></div>
 
 	<script>
-		VANTA.GLOBE({
-		  el: "header",
-		  mouseControls: true,
-		  touchControls: true,
-		  gyroControls: false,
-		  minHeight: 200.00,
-		  minWidth: 200.00,
-		  scale: 1.00,
-		  scaleMobile: 1.00,
-		  color: 0x1f8dd6,
-		  //backgrondColor: 0x23153c
-		  backgroundColor: 0x2d3e50
+		VANTA.TOPOLOGY({
+			  el: "#bg",
+			  mouseControls: true,
+			  touchControls: true,
+			  gyroControls: false,
+			  minHeight: 200.00,
+			  minWidth: 200.00,
+			  scale: 1.00,
+			  scaleMobile: 1.00,
+			  color: 0xCACFD2,
+			  backgroundColor: 0x2d3e50
 		});
 
 		/**/if (window.matchMedia('(display-mode: standalone)').matches) {/**/
