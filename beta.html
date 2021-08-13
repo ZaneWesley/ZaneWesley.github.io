@@ -45,6 +45,7 @@
 		html, body {
 			background-color: #2d3e50;
 			font-family: 'Roboto', sans-serif;
+			overflow: hidden;
 		}
 		#bg {
 			width: 100vw;
@@ -60,8 +61,15 @@
 			animation-fill-mode: forwards;
 			animation-delay: 1.5s;
 		}
-		#splash {
+		#main {
 			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		#splash {
+			position: relative;
 			top: 0;
 			left: 0;
 			width: 100%;
@@ -70,7 +78,7 @@
 			overflow: hidden;
 		}
 		#splash svg {
-			position: fixed;
+			position: relative;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
@@ -78,9 +86,11 @@
 			height: 20vw;
 			animation: settleIn 2s cubic-bezier(0,1.11,1,.99);
 			animation-fill-mode: forwards;
+			-webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+			filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
 		}
 		#nav {
-			position: fixed;
+			position: absolute;
 			top: 25%;
 			left: 50%;
 			width: 80%;
@@ -105,6 +115,87 @@
 		}
 		#nav .page-btn:hover {
 			border-bottom: 3px solid #fff;
+		}
+		#main.hidden {
+			top: -100%;
+			transition: all 1s;
+		}
+		.page {
+			position: absolute;
+			/*top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) scale(0);*/
+			top: 200vh;
+			left: 0;
+			/*width: 200px;
+			height: 200px;*/
+			width: 100%;
+			height: 100%;
+			/*border-radius: 50%;*/
+			padding: 20px;
+			/*background-color: rgba(63, 61, 86, 0.5);*/
+			transition: all 1s cubic-bezier(.25,.8,.25,1);
+		}
+		/*.page h2, .page ul {
+			display: none;
+		}*/
+		.page.active {
+			/*width: 85%;
+			height: 85%;*/
+			overflow-y: auto;
+			/*transform: translate(-50%, -50%) scale(1);*/
+			border-radius: 0;
+			top: 0;
+		}
+		.page h2 {
+			color: #fff;
+			text-align: center;
+			font-size: 2em;
+			margin-bottom: 2em;
+		}
+		.page.active h2, .page.active ul {
+			display: inherit;
+		}
+		.page .back {
+			width: 40px;
+			height: 40px;
+			color: #fff;
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			cursor: pointer;
+			overflow: hidden;
+		}
+		.page .back svg {
+			width: 100%;
+			height: 100%;
+		}
+		.page .back:hover {
+			color: rgb(65, 161, 255, 0.9);
+			transition: all 0.3s ease-in;
+		}
+		ul, li {
+			width: 100%;
+			font-size: 1.5em;
+		}
+		ul {
+			list-style-type: none;
+			padding-left: 1em;
+		}
+		li {
+			cursor: pointer;
+			padding: 10px;
+			color: #fff;
+			text-align: center;
+			font-size: 1em;
+			transition: all 0.3s;
+			/*border-bottom: 3px solid transparent;*/
+			text-decoration: underline;
+			text-decoration-color: transparent;
+		}
+		li:hover {
+			/*background-color: rgba(63, 61, 86, 0.7);*/
+			text-decoration-color: #fff;
 		}
 
 		html.standalone-open, body.standalone-open {
@@ -192,39 +283,173 @@
 
 	<div id="bg"></div>
 
-	<div id="splash">
-		<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-			<g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" stroke="none">
-				<path d="M1283 2982 l-1083 -2 0 -263 0 -262 560 3 c308 1 560 1 560 -2 0 -2
-				-93 -154 -206 -337 -697 -1127 -1094 -1770 -1094 -1774 0 -3 511 -5 1135 -5
-				l1135 0 0 265 0 265 -615 0 -616 0 20 28 c16 22 581 932 839 1352 80 130 268
-				432 374 603 44 70 79 129 77 130 -2 1 -491 1 -1086 -1z m1040 -36 c-38 -67
-				-168 -272 -175 -274 -4 -2 -8 -8 -8 -12 0 -8 -110 -191 -197 -330 -58 -90
-				-181 -290 -246 -398 -33 -53 -62 -99 -67 -102 -4 -3 -10 -15 -14 -27 -4 -13
-				-12 -23 -17 -23 -5 0 -9 -4 -9 -10 0 -13 -62 -114 -72 -118 -4 -2 -8 -7 -8
-				-12 0 -10 -65 -118 -85 -140 -8 -9 -15 -20 -15 -24 0 -4 -13 -27 -30 -51 -16
-				-24 -30 -47 -30 -51 0 -4 -10 -21 -23 -38 -13 -17 -43 -65 -67 -106 -24 -41
-				-67 -111 -95 -155 -29 -44 -67 -108 -86 -143 -29 -53 -32 -64 -19 -72 9 -6
-				241 -10 607 -10 l592 0 3 -23 c2 -12 2 -120 0 -239 l-3 -218 -782 -1 c-430 -1
-				-852 -3 -937 -4 -85 -2 -228 0 -317 3 l-162 5 17 30 c9 16 22 37 27 46 25 39
-				81 128 92 146 31 51 90 146 129 207 24 37 44 70 44 73 0 16 54 84 63 78 6 -3
-				7 -1 3 5 -6 10 23 72 49 102 7 8 21 31 32 50 10 19 43 74 73 123 30 48 60 95
-				65 105 6 9 19 31 31 47 11 17 24 37 28 45 3 8 19 34 34 57 15 24 60 98 101
-				165 41 68 77 125 80 128 3 3 12 16 20 30 8 14 49 80 90 148 42 67 89 144 105
-				170 15 26 32 49 37 50 5 2 9 8 9 13 0 5 24 49 54 97 84 137 97 164 84 179 -8
-				10 -116 13 -553 13 l-543 0 -6 28 c-10 45 -3 211 9 204 5 -3 5 0 -1 9 -15 18
-				-12 218 3 227 20 12 2093 10 2086 -2z"/>
-			</g>
-		</svg>
-	</div>
+	<div id="main">
+		<div id="splash">
+			<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
+				<g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" stroke="none">
+					<path d="M1283 2982 l-1083 -2 0 -263 0 -262 560 3 c308 1 560 1 560 -2 0 -2
+					-93 -154 -206 -337 -697 -1127 -1094 -1770 -1094 -1774 0 -3 511 -5 1135 -5
+					l1135 0 0 265 0 265 -615 0 -616 0 20 28 c16 22 581 932 839 1352 80 130 268
+					432 374 603 44 70 79 129 77 130 -2 1 -491 1 -1086 -1z m1040 -36 c-38 -67
+					-168 -272 -175 -274 -4 -2 -8 -8 -8 -12 0 -8 -110 -191 -197 -330 -58 -90
+					-181 -290 -246 -398 -33 -53 -62 -99 -67 -102 -4 -3 -10 -15 -14 -27 -4 -13
+					-12 -23 -17 -23 -5 0 -9 -4 -9 -10 0 -13 -62 -114 -72 -118 -4 -2 -8 -7 -8
+					-12 0 -10 -65 -118 -85 -140 -8 -9 -15 -20 -15 -24 0 -4 -13 -27 -30 -51 -16
+					-24 -30 -47 -30 -51 0 -4 -10 -21 -23 -38 -13 -17 -43 -65 -67 -106 -24 -41
+					-67 -111 -95 -155 -29 -44 -67 -108 -86 -143 -29 -53 -32 -64 -19 -72 9 -6
+					241 -10 607 -10 l592 0 3 -23 c2 -12 2 -120 0 -239 l-3 -218 -782 -1 c-430 -1
+					-852 -3 -937 -4 -85 -2 -228 0 -317 3 l-162 5 17 30 c9 16 22 37 27 46 25 39
+					81 128 92 146 31 51 90 146 129 207 24 37 44 70 44 73 0 16 54 84 63 78 6 -3
+					7 -1 3 5 -6 10 23 72 49 102 7 8 21 31 32 50 10 19 43 74 73 123 30 48 60 95
+					65 105 6 9 19 31 31 47 11 17 24 37 28 45 3 8 19 34 34 57 15 24 60 98 101
+					165 41 68 77 125 80 128 3 3 12 16 20 30 8 14 49 80 90 148 42 67 89 144 105
+					170 15 26 32 49 37 50 5 2 9 8 9 13 0 5 24 49 54 97 84 137 97 164 84 179 -8
+					10 -116 13 -553 13 l-543 0 -6 28 c-10 45 -3 211 9 204 5 -3 5 0 -1 9 -15 18
+					-12 218 3 227 20 12 2093 10 2086 -2z"/>
+				</g>
+			</svg>
+		</div>
 
-	<div id="nav">
-		<div class="page-btn">Games</div>
-		<div class="page-btn">Resources</div>
-		<div class="page-btn">Miscellaneous</div>
-		<div class="page-btn">More</div>
+		<div id="nav">
+			<div id="games-link" class="page-btn">Games</div>
+			<div id="resources-link" class="page-btn">Resources</div>
+			<div id="miscellaneous-link" class="page-btn">Miscellaneous</div>
+			<div id="more-link" class="page-btn">More</div>
+		</div>
 	</div>
 	
+	<div id="games" class="page">
+		<h2>Games</h2>
+		<div class="back">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+		</div>
+
+		<ul>
+			<li id="crossyroad" data-url="/crossyroad">
+				Crossy Road
+			</li>
+			<li id="chess" data-url="/chess">
+				Chess
+			</li>
+			<li id="cakeninja" data-url="/cakeninja">
+				Cake Ninja
+			</li>
+			<li id="hextris" data-url="/hextris">
+				Hextris
+			</li>
+			<li id="stack" data-url="/stack">
+				Stack
+			</li>
+			<li id="chromedino" data-url="/chromedino">
+				Chrome Dino Runner
+			</li>
+			<li id="colorsplosion" data-url="/colorsplosion">
+				Colorsplosion
+			</li>
+			<li id="numberguessing" data-url="/numberguessing">
+				Guess that Number
+			</li>
+			<li id="2048" data-url="/2048">
+				2048
+			</li>
+			<li id="tictactoe" data-url="/tic-tac-toe">
+				Tic Tac Toe
+			</li>
+			<li id="colorswirl" data-url="/colorswirl/colorswirl">
+				Color Swirl - Updated
+			</li>
+		</ul>
+	</div>
+
+	<div id="resources" class="page">
+		<h2>Resources</h2>
+		<div class="back">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+		</div>
+
+		<ul>
+			<li id="notes" data-url="/notes">
+				Notes App
+			</li>
+			<li id="vividly" data-url="/vividly">
+				Vividly - Video Conferencing App
+			</li>
+			<li id="connect" data-url="/connect">
+				Connect Messaging
+			</li>
+			<li id="assistant" data-url="/assistant">
+				Corey 2.0
+			</li>
+			<li id="calculator" data-url="/calculator">
+				Calculator
+			</li>
+			<li id="countdownstudio" data-url="/countdownstudio">
+				Countdown Studio
+			</li>
+			<li id="mmc" data-url="/mmc">
+				Molar Mass Calculator
+			</li>
+			<li id="webchat" data-url="/webchat/new">
+				Webchat Video Conferencing
+			</li>
+			<li id="whiteboard" data-url="/whiteboard">
+				Whiteboard
+			</li>
+		</ul>
+	</div>
+
+	<div id="miscellaneous" class="page">
+		<h2>Miscellaneous</h2>
+		<div class="back">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+		</div>
+
+		<ul>
+			<li id="inspiration" data-url="/inspiration">
+				Inspirational Quotes Generator
+			</li>
+			<li id="peace" data-url="/peace">
+				Peace
+			</li>
+			<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
+				Mr. Lang Bucks (This is currently being archived)
+			</li>
+			<li id="corey-chat" data-url="/imessage">
+				Texting Corey (This is currently being archived)
+			</li>
+			<li id="corey" data-url="/corey?ref=home">
+				Corey - Original Virtual Assistant (This is currently being archived)
+			</li>
+		</ul>
+	</div>
+
+	<div id="more" class="page">
+		<h2>More</h2>
+		<div class="back">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+		</div>
+
+		<ul>
+			<li id="about" data-url="/about">
+				About Me
+			</li>
+			<li id="archive" data-url="/archive">
+				App Archive
+			</li>
+			<!--<li id="codepen" class="newframe" data-url="https://codepen.io/zanewesley">
+				My CodePen
+			</li>-->
+			<!--<li id="bulletinboard" data-url="/bulletinboard">
+				News and Updates - Zane's Bulletin Board
+			</li>
+			<li id="account" data-url="/account">
+				Your Account
+			</li>
+			<li id="contact" class="disabled" data-url="/contact">
+				Contact Me!
+			</li>-->
+		</ul>
+	</div>
 
 	<!-- PWA page elems-->
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
@@ -247,6 +472,23 @@
 			  scaleMobile: 1.00,
 			  color: 0xCACFD2,
 			  backgroundColor: 0x2d3e50
+		});
+
+		document.querySelectorAll('.page-btn').forEach(function(elem) {
+			//document.getElementById(elem.id.replace('-link', '')).style.top='200vh';
+			elem.addEventListener('click', function(e) {
+				document.getElementById(elem.id.replace('-link', '')).classList.add('active');
+				document.getElementById('main').classList.add('hidden');
+			});
+		});
+
+		document.querySelectorAll('.back').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				document.querySelectorAll('.page').forEach(function(elem) {
+					elem.classList.remove('active');
+				});
+				document.getElementById('main').classList.remove('hidden');
+			});
 		});
 
 		/**/if (window.matchMedia('(display-mode: standalone)').matches) {/**/
