@@ -495,7 +495,7 @@
 
 		/**/if (window.matchMedia('(display-mode: standalone)').matches) {/**/
 			//event listener for if the page is a PWA
-			document.querySelectorAll('a').forEach(function(elem) {
+			document.querySelectorAll('li').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
 					if(!this.classList.contains('disabled') && !this.classList.contains('newframe')) {
@@ -509,7 +509,7 @@
 						gtag('event', 'app_link_click', {
 						  'app_name': _this.id
 						});
-						document.getElementById('standalone-frame').src=this.getAttribute('href');
+						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
 						//Layer iframe ontop
 						document.getElementById('standalone-frame').classList.add('fadeIn');
 						document.getElementById('standalone-nav').classList.add('fadeIn');
@@ -534,7 +534,7 @@
 			});
 		/**/} else {
 			//event listener for if it is not a PWA
-			document.querySelectorAll('a').forEach(function(elem) {
+			document.querySelectorAll('li').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
 					if(!this.classList.contains('disabled')) {
@@ -551,7 +551,7 @@
 						document.body.scrollTop = 0; // For Safari
 						document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 						setTimeout(function() {
-							window.location=_this.getAttribute('href');
+							window.location=_this.getAttribute('data-url');
 						}, 100);
 					}
 				});
