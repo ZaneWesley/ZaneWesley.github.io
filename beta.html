@@ -91,17 +91,18 @@
 		}
 		#nav {
 			position: absolute;
-			top: 25%;
+			top: 50%;
 			left: 50%;
 			width: 80%;
 			height: 50%;
-			transform: translate(-50%, -25%);
+			transform: translate(-50%, -50%);
 			display: flex;
 			flex-direction: row;
 			justify-content: space-around;
 			align-items: flex-end;
 			z-index: 2;
-			animation: slideIn 2s cubic-bezier(.87,-.41,.19,1.44);
+			/*animation: slideIn 2s cubic-bezier(.87,-.41,.19,1.44);*/
+			animation: enterLeft 2s;
 			animation-fill-mode: forwards;
 		}
 		#nav .page-btn {
@@ -112,9 +113,24 @@
 			border: 3px solid transparent;
 			border-radius: 5px;
 			transition: all 0.3s;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			animation: scaleDown 1s;
+			animation-fill-mode: forwards;
+			animation-delay: 2.3s;
 		}
 		#nav .page-btn:hover {
 			border-bottom: 3px solid #fff;
+		}
+		#nav .icon {
+			position: relative;
+			transform: scale(0);
+			animation: scaleUp 1s;
+			animation-fill-mode: forwards;
+			animation-delay: 2.3s;
+			margin-bottom: 1em;
 		}
 		#main.hidden {
 			top: -100%;
@@ -269,6 +285,9 @@
 		@keyframes fadeIn{from {opacity: 0;} to {opacity: 1;}}
 		@keyframes settleIn{0% {opacity: 0; transform: translate(-50%, -50%) scale(2); fill: #208DD7;} 50% {fill: #208DD7;} 100% {top: 25%; opacity: 1; transform: translate(-50%, -25%) scale(1); fill: #CACFD2;}}
 		@keyframes slideIn{from { left: 100%; opacity: 0;} to {left: 50%; opacity: 1;}}
+		@keyframes enterLeft{0%{-webkit-transform:translate3d(-100%,-50%,0) skewX(0deg);transform:translate3d(-100%,-50%,0) skewX(0deg);opacity:0}60%{-webkit-transform:translate3d(-50%,-50%,0) skewX(-20deg);transform:translate3d(-50%,-50%,0) skewX(-20deg);opacity:1}80%{-webkit-transform:translate3d(-50%,-50%,0) skewX(5deg);transform:translate3d(-50%,-50%,0) skewX(5deg)}}
+		@keyframes scaleUp{from {transform: scale(0);} to {transform: scale(1);}}
+		@keyframes scaleDown{from {transform: scale(1)} to {transform: scale(0.7)}}
 
 		@media (max-width: 480px) {
 			#splash svg {
@@ -278,9 +297,23 @@
 			}
 			#nav {
 				top: 50%;
+				transform: translate(-50%, -25%);
 				flex-direction: column;
 			}
+			#nav .page-btn {
+				justify-content: flex-end;
+				flex-direction: row;
+				flex-flow: row-reverse;
+			}
+			#nav .icon {
+				width: 40px;
+				height: 40px;
+				margin-left: 15px;
+				margin-bottom: 0;
+			}
 			@keyframes settleIn{0% {opacity: 0; transform: translate(-50%, -50%) scale(2); fill: #208DD7;} 50% {fill: #208DD7;} 100% {top: 10%; opacity: 1; transform: translate(-50%, -10%) scale(1); fill: #CACFD2;}}
+			@keyframes enterLeft{0%{-webkit-transform:translate3d(-100%,-25%,0) skewX(0deg);transform:translate3d(-100%,-25%,0) skewX(0deg);opacity:0}60%{-webkit-transform:translate3d(-50%,-25%,0) skewX(-20deg);transform:translate3d(-50%,-25%,0) skewX(-20deg);opacity:1}80%{-webkit-transform:translate3d(-50%,-25%,0) skewX(5deg);transform:translate3d(-50%,-25%,0) skewX(5deg)}}
+			@keyframes scaleDown{from {transform: scale(1)} to {transform: scale(1)}}
 		}
 	</style>
 </head>
@@ -319,10 +352,30 @@
 		</div>
 
 		<div id="nav">
-			<div id="games-link" class="page-btn">Games</div>
-			<div id="resources-link" class="page-btn">Resources</div>
-			<div id="miscellaneous-link" class="page-btn">Miscellaneous</div>
-			<div id="more-link" class="page-btn">More</div>
+			<div id="games-link" class="page-btn">
+				<svg class="icon">
+	                <use xlink:href="#games-icon"></use>
+	            </svg>
+				Games
+			</div>
+			<div id="resources-link" class="page-btn">
+				<svg class="icon">
+	                <use xlink:href="#resources-icon"></use>
+	            </svg>
+				Resources
+			</div>
+			<div id="miscellaneous-link" class="page-btn">
+				<svg class="icon">
+	                <use xlink:href="#miscellaneous-icon"></use>
+	            </svg>
+				Miscellaneous
+			</div>
+			<div id="more-link" class="page-btn">
+				<svg class="icon">
+	                <use xlink:href="#more-icon"></use>
+	            </svg>
+				More
+			</div>
 		</div>
 	</div>
 	
@@ -467,6 +520,25 @@
 		<span id="standalone-share" class="fas fa-share"></span>
 	</div>
 	<div id="standalone-bg" class="standalone-ui"></div>
+
+	<!-- SVG Icon Library -->
+    <svg style="display: none;">
+    	<symbol id="games-icon" viewbox="0 0 640 512">
+            <path fill="currentColor" d="M638.59 368.22l-33.37-211.59c-8.86-50.26-48.4-90.77-100.66-103.13h-.07a803.19 803.19 0 0 0-369 0C83.17 65.86 43.64 106.36 34.78 156.63L1.41 368.22C-8.9 426.73 38.8 480 101.51 480c49.67 0 93.77-30.07 109.48-74.64l7.52-21.36h203l7.49 21.36C444.72 449.93 488.82 480 538.49 480c62.71 0 110.41-53.27 100.1-111.78zM280 236a12 12 0 0 1-12 12h-52v52a12 12 0 0 1-12 12h-24a12 12 0 0 1-12-12v-52h-52a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h52v-52a12 12 0 0 1 12-12h24a12 12 0 0 1 12 12v52h52a12 12 0 0 1 12 12zm152 76a40 40 0 1 1 40-40 40 40 0 0 1-40 40zm64-96a40 40 0 1 1 40-40 40 40 0 0 1-40 40z" class=""></path>
+        </symbol>
+        <symbol id="resources-icon" viewbox="0 0 512 512">
+        	<path fill="currentColor" d="M109.46 244.04l134.58-134.56-44.12-44.12-61.68 61.68a7.919 7.919 0 0 1-11.21 0l-11.21-11.21c-3.1-3.1-3.1-8.12 0-11.21l61.68-61.68-33.64-33.65C131.47-3.1 111.39-3.1 99 9.29L9.29 99c-12.38 12.39-12.39 32.47 0 44.86l100.17 100.18zm388.47-116.8c18.76-18.76 18.75-49.17 0-67.93l-45.25-45.25c-18.76-18.76-49.18-18.76-67.95 0l-46.02 46.01 113.2 113.2 46.02-46.03zM316.08 82.71l-297 296.96L.32 487.11c-2.53 14.49 10.09 27.11 24.59 24.56l107.45-18.84L429.28 195.9 316.08 82.71zm186.63 285.43l-33.64-33.64-61.68 61.68c-3.1 3.1-8.12 3.1-11.21 0l-11.21-11.21c-3.09-3.1-3.09-8.12 0-11.21l61.68-61.68-44.14-44.14L267.93 402.5l100.21 100.2c12.39 12.39 32.47 12.39 44.86 0l89.71-89.7c12.39-12.39 12.39-32.47 0-44.86z" class=""></path>
+        </symbol>
+        <symbol id="miscellaneous-icon" viewbox="0 0 512 512">
+        	<path fill="currentColor" d="M128,256A128,128,0,1,0,256,384,128,128,0,0,0,128,256Zm379-54.86L400.07,18.29a37.26,37.26,0,0,0-64.14,0L229,201.14C214.76,225.52,232.58,256,261.09,256H474.91C503.42,256,521.24,225.52,507,201.14ZM480,288H320a32,32,0,0,0-32,32V480a32,32,0,0,0,32,32H480a32,32,0,0,0,32-32V320A32,32,0,0,0,480,288Z" class=""></path>
+        </symbol>
+        <symbol id="more-icon" viewbox="0 0 512 512">
+        	<path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" class=""></path>
+        </symbol>
+        <symbol id="back-icon" viewbox="0 0 640 512">
+        	<path fill="currentColor" d="M576 64H205.26A63.97 63.97 0 0 0 160 82.75L9.37 233.37c-12.5 12.5-12.5 32.76 0 45.25L160 429.25c12 12 28.28 18.75 45.25 18.75H576c35.35 0 64-28.65 64-64V128c0-35.35-28.65-64-64-64zm-84.69 254.06c6.25 6.25 6.25 16.38 0 22.63l-22.62 22.62c-6.25 6.25-16.38 6.25-22.63 0L384 301.25l-62.06 62.06c-6.25 6.25-16.38 6.25-22.63 0l-22.62-22.62c-6.25-6.25-6.25-16.38 0-22.63L338.75 256l-62.06-62.06c-6.25-6.25-6.25-16.38 0-22.63l22.62-22.62c6.25-6.25 16.38-6.25 22.63 0L384 210.75l62.06-62.06c6.25-6.25 16.38-6.25 22.63 0l22.62 22.62c6.25 6.25 6.25 16.38 0 22.63L429.25 256l62.06 62.06z" class=""></path>
+        </symbol>
+    </svg>
 
 	<script>
 		VANTA.TOPOLOGY({
