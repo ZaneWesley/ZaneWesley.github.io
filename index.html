@@ -4,24 +4,27 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
 	<meta name="author" content="Zane Wesley">
-	<meta name="description" content="Zane Wesley's official website. The place where you can find all of Zane's apps and projects.">
+	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
 	<!-- General -->
 	<link rel="manifest" href="manifest.json">
-	<meta name="theme-color" content="#23153c">
+	<meta name="theme-color" content="#F4F4FB">
 	<meta name="application-name" content="Zane's Apps">
   	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
 	<!-- Apple -->
 	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
-	<meta name="apple-mobile-web-app-status-bar-style" content="#23153c">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#F4F4FB">
     <meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
-	<link rel="mask-icon" href="images/icon.png" color="#23153c">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="mask-icon" href="images/icon.png" color="#F4F4FB">
+	<!-- External -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
+	<script src="ui/type.min.js"></script>
 	<!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
@@ -31,215 +34,334 @@
 	  gtag('js', new Date());
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
-	<title>Zane's Apps</title>
+	<title>Zane's Apps | Beta</title>
 
 	<style>
 		* {
 			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
 		}
 		html, body {
+			scroll-behavior: smooth;
+			/*background-color: #2d3e50;*/
+			background-color: #16151a;
+			font-family: 'Roboto', sans-serif;
 			width: 100%;
 			height: 100%;
-			scroll-behavior: smooth;
-			background-color: #23153c;
 		}
-		body {
-			overflow: hidden;
-			font-family: 'Noto Sans JP', sans-serif;
-		}
+
 		header {
-			position: fixed;
-			top:0;
-			left:0;
-			min-height: 100%;
-			height: auto;
+			position: relative;
+			height: 100%;
 			width: 100%;
-		}
-		body.standalone-open {
-			padding: 0;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			font-family: 'Rajdhani', sans-serif;
 			overflow: hidden;
-			background-color: #fff;
-			transition: all 0.3s;
+			z-index: 3;
 		}
-		.header {
-			position: absolute;
-			z-index: 2;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%);
-			font-size: 3em;
-			color: #f2f2f2;
-			text-align: center;
-			background-color: rgba(63, 61, 86, 0.5);
-			padding: 8px;
-			width: 75%;
-			animation: enterLeft 2s;
+		header h1 {
+			font-size: 72px;
+			font-weight: 400;
+			margin-left: 50px;
+			color: transparent;
+			/*animation: fadeDown 2s ease-out;
+			animation-delay: 1s;
+			animation-fill-mode: forwards;
+			opacity: 0;*/
 		}
-		.header.big {
-			transform: translate(-50%, -50%) scale(2);
-			transition: all 1s;
-			opacity: 0;
-		}
-		.fadeout {
-			opacity: 0;
-			transition: all 1s;
-		}
-		.progress {
-			position: absolute;
-			left: 0;
-			bottom: -0.5em;
-			height: 0.5em;
-			width: 0;
-			background-color: rgb(65, 161, 255);
-			animation: progressAnim 3s /*cubic-bezier(1.000, 0.005, 0.240, 1.000)*/cubic-bezier(1.000, 0.005, 0.240, 0.905) 2.5s forwards;
-			/*animation: name | duration | easing | delay | fill mode*/
-		}
-		canvas {
-			background-color: #23153c;
-		}
-		#gallery {
+		header.sticky {
 			position: fixed;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%) scale(0);
-			z-index: 2;
-			width: 90vh;
-			height: 90vh;
-			transition: all 1s;
+			top: 0;
+			left: 0;
+			height: 50px;
+			width: 100%;
+			animation: fadeDown 0.3s ease-out;
 		}
-		#gallery.active {
-			transform: translate(-50%, -50%) scale(1);
-		}
-		.btn {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			background: rgba(63, 61, 86, 0.5);
-			color: transparent;/*#fff*/
+		header.sticky h1 {
+			margin-left: 12px;
 			font-size: 1.5em;
 			width: 200px;
-			height: 200px;
+		}
+		header.sticky .main {
+			padding-top: 60px;
+		}
+		header nav {
 			display: flex;
-			justify-content: center;
-			text-align: center;
 			align-items: center;
-			border-radius: 50%;
-			cursor: pointer;
-			transition: all 0.6s cubic-bezier(.87,-.41,.19,1.44);
-		}
-		.btn.active {
-			left: var(--pos-left);
-			top: var(--pos-top);
-			transform: var(--pos-translate);
-			color: rgba(255, 255, 255, 0.9);
-		}
-		.btn.active:first-child {
-			width: 300px;
-			height: 300px;
-			font-size: 2em;
-			cursor: default;
-			transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-		}
-		.btn.active:hover:not(:first-child) {
-			transform: var(--pos-translate) scale(1.1);
-			color: rgb(65, 161, 255, 0.9);
-			transition: all 0.3s ease-in;
-		}
-		.icon {
-			width: 150px;
-			height: 150px;
-		}
-		.page {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%) scale(0);
-			width: 200px;
-			height: 200px;
-			border-radius: 50%;
-			padding: 20px;
-			background-color: rgba(63, 61, 86, 0.5);
-			z-index: 2;
-			transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-		}
-		.page h1, .page ul {
+			justify-content: flex-end;
+			width: 100%;
 			display: none;
 		}
-		.page.active {
-			width: 85%;
-			height: 85%;
-			overflow-y: auto;
-			transform: translate(-50%, -50%) scale(1);
-			border-radius: 0;
-		}
-		.page h1 {
+		header nav .icon {
+			text-decoration: none;
 			color: #fff;
-			text-align: center;
-		}
-		.page.active h1, .page.active ul {
-			display: inherit;
-		}
-		.page .back {
+			position: relative;
 			width: 40px;
 			height: 40px;
+		}
+		header.sticky nav {
+			display: block;
+		}
+
+		.main {
 			color: #fff;
-			position: absolute;
-			top: 20px;
-			left: 20px;
-			cursor: pointer;
+			/*background-color: #2d3e50;*/
+			background-color: #16151a;
+			overflow: hidden;
 		}
-		.page .back svg {
-			width: 100%;
-			height: 100%;
+		.main h2 {
+			padding-bottom: 20px;
+			font-size: 2em;
+			font-family: 'Rajdhani', sans-serif;
 		}
-		.page .back:hover {
-			color: rgb(65, 161, 255, 0.9);
-			transition: all 0.3s ease-in;
+		.slice {
+			background-color: rgba(195, 207, 219, 0.7);
+			color: #16151a;
+			padding: 20px;
 		}
+		.section {
+			padding: 20px;
+			transition: all 0.4s ease;
+		}
+		.section.offscreen {
+			opacity: 0;
+			transform: translate3d(0,100px,0) scale(.6);
+		}
+		.split {
+			position: relative;
+		    width: 50%;
+		    min-height: 100%;
+		    height: auto;
+		}
+		.split.left, .split.right {
+			display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    flex-direction: column;
+		}
+		.split.left {
+			float: left;
+		}
+		.split.right {
+			float: right;
+		}
+		.section .split img {
+			width: 80%;
+			height: auto;
+		}
+
 		ul, li {
 			width: 100%;
+			font-size: 1.3em;
 		}
 		ul {
 			list-style-type: none;
-			padding-left: 1em;
+			/*padding-left: 1em;*/
 		}
 		li {
 			cursor: pointer;
-			padding: 5px;
-			color: #fff;
-			text-align: center;
+			padding: 10px;
+			text-align: left;
 			font-size: 1em;
 			transition: all 0.3s;
+			/*border-bottom: 3px solid transparent;*/
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			/*border: 1px solid #ccc;*/
+			border-radius: 8px;
+			margin-bottom: 10px;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+		.slice li {
+			background-color: rgba(195, 207, 219, 0.5);
+			color: #16151a;
+		}
+		.section li {
+			background-color: rgba(99, 116, 133, 0.5);
+			color: #fff;
+		}
+		li .img {
+			width: 50px;
+			height: auto;
+			min-height: 50px;
+			margin-right: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+		li .img img {
+			width: 100%;
+			height: auto;
 		}
 		li:hover {
-			background-color: rgba(63, 61, 86, 0.7);
+			/*background-color: rgba(63, 61, 86, 0.7);*/
+			/*text-decoration-color: #fff;*/
+			background-color: rgba(195, 207, 219, 0.9);
+		}
+		.section li:hover {
+			background-color: rgba(99, 116, 133, 0.9);
+			transform: scale(0.9);
+		}
+		/*#new, #games, #resources, #miscellaneous, #more {
+			background-size: contain;
+    		background-position: center center;
+    		background-repeat: no-repeat;
+    		background-attachment: fixed;
+		}
+		#new {
+			background-image: url('images/bg/new.svg');
+		}
+		#games {
+			background-image: url('images/bg/games.svg');
+		}*/
+		#hamburger {
+			position: fixed;
+			top: 1em;
+			right: 1em;
+			color: #fff;
+			width: 30px;
+			height: 30px;
+			overflow: hidden;
+			cursor: pointer;
+			z-index: 4;
+		}
+		#hamburger svg {
+			width: 100%;
+			height: 100%;
+		}
+		#hamburger .line{
+		  width: 30px;
+		  height: 4px;
+		  background-color: #fff;
+		  display: block;
+		  margin: 5px auto;
+		  -webkit-transition: all 0.3s ease-in-out;
+		  -o-transition: all 0.3s ease-in-out;
+		  transition: all 0.3s ease-in-out;
+		  border-radius: 25px;
+		}
+		#hamburger.open .line:nth-child(1){
+		  -webkit-transform: translateY(10px);
+		  -ms-transform: translateY(10px);
+		  -o-transform: translateY(10px);
+		  transform: translateY(10px);
+		}
+		#hamburger.open .line:nth-child(3){
+		  -webkit-transform: translateY(-10px);
+		  -ms-transform: translateY(-10px);
+		  -o-transform: translateY(-10px);
+		  transform: translateY(-10px);
+		}
+		#menu {
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 0;/*30%*/
+			height: 100vh;
+			z-index: 3;
+			background-color: rgba(45, 62, 80, 0.6);
+			text-align: left;
+			transition: all 0.3s;
+		}
+		#menu.open {
+			width: 30%;
+		}
+		/*#menu h2 {
+			text-align: center;
+		}*/
+		#menu h2 {
+			padding: 1em;
+		}
+		#menu a {
+			width: 100%;
+			display: block;
+			color: #fff;
+			text-decoration: none;
+			/*border-bottom: 1px solid rgba(99, 116, 133, 0.5);*/
+			padding: 1em 1em 1em 2em;
+		}
+		#menu a:hover {
+			/*border-bottom: 1px solid rgba(99, 116, 133, 0.9);*/
+			background-color: rgba(99, 116, 133, 0.5);
+		}
+		.mobile-only {
+			display: none;
+		}
+		.desktop-only {
+			display: block;
+		}
+
+		/* width */
+		::-webkit-scrollbar {
+		  width: auto;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+		  background: #16151a;
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+		  background: rgba(99, 116, 133, 0.5);;
+		  border-radius: 25px;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+		  background: rgba(99, 116, 133, 0.9);
+		}
+
+		html.standalone-open, body.standalone-open {
+			overflow: hidden;
 		}
 		#standalone-frame {
-			position: absolute;
+			position: fixed;
 			overflow-x: hidden;
 			overflow-y: auto;
 			left: 0;
-			top: 0;
+			top: 50px;
 			width: 100%;
-			height: 100%;
+			height: calc(100% - 50px);
 			max-width: 100%;
-			max-height: 100%;
+			max-height: calc(100% - 50px);
 			border: none;
 			z-index: 3;
 		}
 		.standalone-ui {
 			display: none;
 		}
-		#standalone-home {
-			position: absolute;
+		#standalone-nav {
+			position: fixed;
 			z-index: 3;
-			left: 1em;
-			bottom: 1em;
-			color: #23153c;
-			font-size: 2em;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 50px;
+			color: #fff;
+			font-size: 1.5em;
+			background-color: #2d3e50;
+			padding: 12px;
+			/*display: flex;*/
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			overflow: hidden;
+			transition: all 0.3s;
+		}
+		#standalone-home {
+			cursor: pointer;
+		}
+		#standalone-nav .fas:hover {
+			color: #ccc;
 		}
 		#standalone-bg {
 			position: fixed;
@@ -250,245 +372,256 @@
 			background-color: #fff;
 			z-index: 2;
 		}
-		#standalone-frame.slideIn {
-			display: block;
-			animation: slideIn 0.5s;
-			animation-fill-mode: forwards ease-in;
+		#standalone-nav.fadeIn {
+			display: flex;
 		}
-		#standalone-home.fadeIn {
+		.fadeIn {
 			display: block;
 			animation: fadeIn 1s ease-in;
+			animation-fill-mode: forwards;
 		}
 
-		@keyframes enterLeft{0%{-webkit-transform:translate3d(-100%,-50%,0) skewX(0deg);transform:translate3d(-100%,-50%,0) skewX(0deg);opacity:0}60%{-webkit-transform:translate3d(-50%,-50%,0) skewX(-20deg);transform:translate3d(-50%,-50%,0) skewX(-20deg);opacity:1}80%{-webkit-transform:translate3d(-50%,-50%,0) skewX(5deg);transform:translate3d(-50%,-50%,0) skewX(5deg)}}
-		@keyframes slideIn{from {left: 100%;} to {left: 0;}}
-		@keyframes fadeIn{from {opacity: 0;} to {opacity: 1;}}
-		@keyframes progressAnim{from{width: 0;}to{width: 100%;}}
+		@keyframes fadeDown {from {opacity: 0; transform: translateY(-50px);} to {opacity: 1; transform: translateY(50px;);}}
+		@keyframes fade{ from {opacity: 0;} to {opacity: 1;} }
 
-		@media(max-width: 775px) {
-			.header {
-				font-size: 2em;
+		@media (max-width: 480px) {
+			header h1 {
+				font-size: 62px;
+				text-align: center;
 			}
-			#gallery {
-				width: 90vw;
-				height: 90vw;
+			.split {
+				width: 100%;
 			}
-			.btn {
-				width: 100px;
-				height: 100px;
+			.split.left, .split.right {
+				float: none;
 			}
-			.btn.active:first-child {
-				width: 200px;
-				height: 200px;
+			#menu {
+				background-color: rgba(45, 62, 80, 0.9);
 			}
-			.icon {
-				width: 50px;
-				height: 50px;
+			#menu.open {
+				width: 100%;
 			}
-		}
-		.beta-promo {
-			position: fixed;
-			left: 0;
-			bottom: 0;
-			padding: 16px;
-			background-color: rgba(63, 61, 86, 0.5);
-			width: 100%;
-			color: #fff;
-		}
-		.beta-promo a {
-			color: #fff;
+			.mobile-only {
+				display: block;
+			}
+			.desktop-only {
+				display: none;
+			}
 		}
 	</style>
 </head>
 <body>
-	<header id="header"></header>
-	<div class="header">
-		<h1>Zane's Apps</h1>
-		<div class="progress"></div>
-	</div>
+	
+	<header id="header">
+		<h1 class="typejs" data-type-period="2000" data-type-loop="false" data-type-cursor="true" data-type-delay="2000" data-type-text='["Zane&#39;s Apps"]'>Zane's Apps</h1>
+		<!--<nav>
+			<a href="new"><svg class="icon"><use xlink:href="#new-icon"></use></svg></a>
+			<a href="#games"><svg class="icon"><use xlink:href="#games-icon"></use></svg></a>
+			<a href="#resources"><svg class="icon"><use xlink:href="#resources-icon"></use></svg></a>
+			<a href="#miscellaneous"><svg class="icon"><use xlink:href="#miscellaneous-icon"></use></svg></a>
+			<a href="#more"><svg class="icon"><use xlink:href="#more-icon"></use></svg></a>
+			<a href="#header" onclick="document.getElementById('header').classList.remove('sticky')"><svg class="icon"><use xlink:href="#expand-icon"></use></svg></a>
+		</nav>-->
+	</header>
 
-	<div id="gallery">
-		<!--<div class="btn" style="--pos-left: 50%; --pos-top: 50%; --pos-translate: translate(-50%, -50%);">Zane's Apps</div>
-		<div class="btn" style="--pos-left: 50%; --pos-top: 0; --pos-translate: translate(-50%, 0);">Games</div>
-		<div class="btn" style="--pos-left: 100%; --pos-top: 50%; --pos-translate: translate(-100%, -50%);">Resources</div>
-		<div class="btn" style="--pos-left: 50%; --pos-top: 100%; --pos-translate: translate(-50%, -100%);">Miscellaneous</div>
-		<div class="btn" style="--pos-left: 0; --pos-top: 50%; --pos-translate: translate(0%, -50%);">More</div>-->
-		<div class="btn" style="--pos-left: 50%; --pos-top: 50%; --pos-translate: translate(-50%, -50%);">Zane's Apps</div>
-		<div id="resources-btn" class="btn" style="--pos-left: 100%; --pos-top: 0; --pos-translate: translate(-100%, 0);">
-			<!--Resources-->
-			<svg class="icon">
-                <use xlink:href="#resouces-icon"></use>
-            </svg>
+	<div class="main">
+		<div class="section">
+			<h2 style="padding-bottom: 0; font-weight: 500; font-size: 1.2em;">DISCLAIMER: This page is a beta version and may not work as expected. An official release is coming soon.</h2>
 		</div>
-		<div id="miscellaneous-btn" class="btn" style="--pos-left: 100%; --pos-top: 100%; --pos-translate: translate(-100%, -100%);">
-			<!--Miscellaneous-->
-			<svg class="icon">
-                <use xlink:href="#miscellaneous-icon"></use>
-            </svg>
+		<div id="new" class="section">
+			<div class="split"><img src="images/bg/new.svg" class="mobile-only"></div>
+			<div class="split left">
+				<h2>New Releases</h2>
+				<ul>
+					<li id="crossyroad" data-url="crossyroad">
+						<div class="img"><img src="crossyroad/icon.jpeg"></div>
+						<div class="name">Crossy Road</div>
+					</li>
+					<li id="whiteboard" data-url="whiteboard">
+						<div class="img"><img src="images/whiteboard-icon.jpg"></div>
+						<div class="name">Whiteboard</div>
+					</li>
+					<li id="notes" data-url="notes">
+						<div class="img"><img src="notes/icon.png"></div>
+						<div class="name">Notes</div>
+					</li>
+					<li id="chess" data-url="chess">
+						<div class="img"><img src="chess/img/chess.png"></div>
+						<div class="name">Chess</div>
+					</li>
+					<li id="cakeninja" data-url="cakeninja">
+						<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
+						<div class="name">Cake Ninja</div>
+					</li>
+				</ul>
+			</div>
+			<div class="split right"><img src="images/bg/new.svg" class="desktop-only"></div>
 		</div>
-		<div id="more-btn" class="btn" style="--pos-left: 0%; --pos-top: 100%; --pos-translate: translate(0, -100%);">
-			<!--More-->
-			<svg class="icon">
-                <use xlink:href="#more-icon"></use>
-            </svg>
-		</div>
-		<div id="games-btn" class="btn" style="--pos-left: 0; --pos-top: 0%; --pos-translate: translate(0%, 0%);">
-			<!--Games-->
-			<svg class="icon">
-                <use xlink:href="#games-icon"></use>
-            </svg>
-		</div>
-	</div>
 
-	<div id="games" class="page">
-		<h1>Games</h1>
-		<div class="back">
-			<svg>
-                <use xlink:href="#back-icon"></use>
-            </svg>
+		<div id="games" class="section">
+			<div class="split left"><img src="images/bg/games.svg"></div>
+			<div class="split right">
+				<h2>Games</h2>
+				<ul>
+					<li id="crossyroad" data-url="crossyroad">
+						<div class="img"><img src="crossyroad/icon.jpeg"></div>
+						<div class="name">Crossy Road</div>
+					</li>
+					<li id="chess" data-url="chess">
+						<div class="img"><img src="chess/img/chess.png"></div>
+						<div class="name">Chess</div>
+					</li>
+					<li id="cakeninja" data-url="cakeninja">
+						<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
+						<div class="name">Cake Ninja</div>
+					</li>
+					<li id="hextris" data-url="hextris">
+						<div class="img"><img src="hextris/favicon.ico"></div>
+						<div class="name">Hextris</div>
+					</li>
+					<li id="stack" data-url="stack">
+						<div class="img"><img src="images/stack-icon.PNG"></div>
+						<div class="name">Stack</div>
+					</li>
+					<li id="chromedino" data-url="chromedino">
+						<div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
+						<div class="name">Chrome Dino Runner</div>
+					</li>
+					<li id="colorsplosion" data-url="colorsplosion">
+						<div class="img"><img src="colorsplosion/icon.PNG"></div>
+						<div class="name">Colorsplosion</div>
+					</li>
+					<li id="numberguessing" data-url="numberguessing">
+						<div class="img"><img src="images/numberguessing-icon.png"></div>
+						<div class="name">Guess that Number</div>
+					</li>
+					<li id="2048" data-url="2048">
+						<div class="img"><img src="2048/icon.png"></div>
+						<div class="name">2048</div>
+					</li>
+					<li id="tic-tac-toe" data-url="tic-tac-toe">
+						<div class="img"><img src="images/tic-tac-toe-icon.png"></div>
+						<div class="name">Tic Tac Toe</div>
+					</li>
+					<li id="colorswirl" data-url="chess">
+						<div class="img"><img src="colorswirl/icon.jpg"></div>
+						<div class="name">Colorswirl</div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<ul>
-			<li id="crossyroad" data-url="/crossyroad">
-				Crossy Road
-			</li>
-			<li id="chess" data-url="/chess">
-				Chess
-			</li>
-			<li id="cakeninja" data-url="/cakeninja">
-				Cake Ninja
-			</li>
-			<li id="hextris" data-url="/hextris">
-				Hextris
-			</li>
-			<li id="stack" data-url="/stack">
-				Stack
-			</li>
-			<li id="chromedino" data-url="/chromedino">
-				Chrome Dino Runner
-			</li>
-			<li id="colorsplosion" data-url="/colorsplosion">
-				Colorsplosion
-			</li>
-			<li id="numberguessing" data-url="/numberguessing">
-				Guess that Number
-			</li>
-			<li id="2048" data-url="/2048">
-				2048
-			</li>
-			<li id="tictactoe" data-url="/tic-tac-toe">
-				Tic Tac Toe
-			</li>
-			<li id="colorswirl" data-url="/colorswirl/colorswirl">
-				Color Swirl - Updated
-			</li>
-		</ul>
-	</div>
-	<div id="resources" class="page">
-		<h1>Resources</h1>
-		<div class="back">
-			<svg>
-                <use xlink:href="#back-icon"></use>
-            </svg>
-		</div>
-		<ul>
-			<li id="notes" data-url="/notes">
-				Notes App
-			</li>
-			<li id="vividly" data-url="/vividly">
-				Vividly - Video Conferencing App
-			</li>
-			<li id="connect" data-url="/connect">
-				Connect Messaging
-			</li>
-			<li id="assistant" data-url="/assistant">
-				Corey 2.0
-			</li>
-			<li id="calculator" data-url="/calculator">
-				Calculator
-			</li>
-			<li id="countdownstudio" data-url="/countdownstudio">
-				Countdown Studio
-			</li>
-			<li id="mmc" data-url="/mmc">
-				Molar Mass Calculator
-			</li>
-			<li id="webchat" data-url="/webchat/new">
-				Webchat Video Conferencing
-			</li>
-			<li id="whiteboard" data-url="/whiteboard">
-				Whiteboard
-			</li>
-		</ul>
-	</div>
-	<div id="miscellaneous" class="page">
-		<h1>Miscellaneous</h1>
-		<div class="back">
-			<svg>
-                <use xlink:href="#back-icon"></use>
-            </svg>
-		</div>
-		<ul>
-			<li id="inspiration" data-url="/inspiration">
-				Inspirational Quotes Generator
-			</li>
-			<li id="peace" data-url="/peace">
-				Peace
-			</li>
-			<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
-				Mr. Lang Bucks (This is currently being archived)
-			</li>
-			<li id="corey-chat" data-url="/imessage">
-				Texting Corey (This is currently being archived)
-			</li>
-			<li id="corey" data-url="/corey?ref=home">
-				Corey - Original Virtual Assistant (This is currently being archived)
-			</li>
-		</ul>
-	</div>
-	<div id="more" class="page">
-		<h1>More</h1>
-		<div class="back">
-			<svg>
-                <use xlink:href="#back-icon"></use>
-            </svg>
-		</div>
-		<ul>
-			<li id="about" data-url="/about">
-				About Me
-			</li>
-			<li id="archive" data-url="/archive">
-				App Archive
-			</li>
-			<!--<li id="codepen" class="newframe" data-url="https://codepen.io/zanewesley">
-				My CodePen
-			</li>-->
-			<!--<li id="bulletinboard" data-url="/bulletinboard">
-				News and Updates - Zane's Bulletin Board
-			</li>
-			<li id="account" data-url="/account">
-				Your Account
-			</li>-->
-			<li id="contact" class="disabled" data-url="/contact">
-				Contact Me!
-			</li>
-		</ul>
-	</div>
 
-	<div class="beta-promo">
-		<p>Want to see new designs and features before they are released? Check the <a href="beta">Beta Design</a> page to see upcoming changes!</p>
-	</div>
+		<div id="resources" class="section">
+			<div class="split"><img src="images/bg/resources.svg" class="mobile-only"></div>
+			<div class="split left">
+				<h2>Resources</h2>
+				<ul>
+					<li id="notes" data-url="notes">
+						<div class="img"><img src="notes/icon.png"></div>
+						<div class="name">Notes</div>
+					</li>
+					<li id="vividly" data-url="vividly">
+						<div class="img"><img src="vividly/icon.png"></div>
+						<div class="name">Notes</div>
+					</li>
+					<li id="connect" data-url="connect">
+						<div class="img"><img src="connect/splash.svg"></div>
+						<div class="name">Connect</div>
+					</li>
+					<li id="assistant" data-url="assistant">
+						<div class="img"><img src="assistant/icon.svg"></div>
+						<div class="name">Corey 2.0</div>
+					</li>
+					<li id="calculator" data-url="calculator">
+						<div class="img"><img src="images/calculator-icon.png"></div>
+						<div class="name">Calculator</div>
+					</li>
+					<li id="countdownstudio" data-url="countdownstudio">
+						<div class="img"><img src="images/countdownstudio-icon.svg"></div>
+						<div class="name">Countdown Studio</div>
+					</li>
+					<li id="mmc" data-url="mmc">
+						<div class="img"><img src="images/mmc-icon.png"></div>
+						<div class="name">Molar Mass Calculator</div>
+					</li>
+					<li id="webchat" data-url="webchat">
+						<div class="img"><img src="webchat/logo.ico"></div>
+						<div class="name">WebChat</div>
+					</li>
+					<li id="whiteboard" data-url="whiteboard">
+						<div class="img"><img src="images/whiteboard-icon.jpg"></div>
+						<div class="name">Whiteboard</div>
+					</li>
+				</ul>
+			</div>
+			<div class="split right"><img src="images/bg/resources.svg" class="desktop-only"></div>
+		</div>
+
+		<div id="miscellaneous" class="section">
+			<div class="split left"><img src="images/bg/miscellaneous.svg"></div>
+			<div class="split right">
+				<h2>Miscellaneous</h2>
+				<ul>
+					<li id="insperation" data-url="insperation">
+						<div class="img"><img src="images/inspiration-icon.PNG"></div>
+						<div class="name">Insperational Quotes Image Generator</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div id="more" class="section">
+			<div class="split"><img src="images/bg/more.svg" class="mobile-only"></div>
+			<div class="split left">
+				<h2>More</h2>
+				<ul>
+					<li id="about" data-url="about">
+						<div class="img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
+						<div class="name">About</div>
+					</li>
+					<li id="archive" data-url="archive">
+						<div class="img"><img src="images/home-icon.svg"></div>
+						<div class="name">App Archive</div>
+					</li>
+				</ul>
+			</div>
+			<div class="split right"><img src="images/bg/more.svg" class="desktop-only"></div>
+		</div>
+
+		<!--<div id="hamburger"><svg class="icon"><use xlink:href="#hamburger-icon"></use></svg></div>-->
+		<div id="hamburger">
+			<span class="line"></span>
+			<span class="line"></span>
+			<span class="line"></span>
+		</div>
+
+		<div id="menu">
+			<h2>Menu</h2>
+			<a href="#games">Games</a>
+			<a href="#resources">Resources</a>
+			<a href="#miscellaneous">Miscellaneous</a>
+			<a href="#more">More</a>
+		</div>
+
 
 	<!-- PWA page elems-->
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
-	<div id="standalone-home" class="standalone-ui fas fa-home"></div>
+	<div id="standalone-nav" class="standalone-ui">
+		<span id="standalone-home" class="fas fa-home-alt"></span>
+		<span style="font-size: 16px;">Zane's Apps</span>
+		<span id="standalone-share" class="fas fa-share"></span>
+	</div>
 	<div id="standalone-bg" class="standalone-ui"></div>
 
 	<!-- SVG Icon Library -->
     <svg style="display: none;">
+    	<symbol id="new-icon" viewBox="0 0 384 512">
+            <path fill="currentColor" d="M368 224H224V80c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v144H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h144v144c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V288h144c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" class=""></path>
+        </symbol>
     	<symbol id="games-icon" viewbox="0 0 640 512">
             <path fill="currentColor" d="M638.59 368.22l-33.37-211.59c-8.86-50.26-48.4-90.77-100.66-103.13h-.07a803.19 803.19 0 0 0-369 0C83.17 65.86 43.64 106.36 34.78 156.63L1.41 368.22C-8.9 426.73 38.8 480 101.51 480c49.67 0 93.77-30.07 109.48-74.64l7.52-21.36h203l7.49 21.36C444.72 449.93 488.82 480 538.49 480c62.71 0 110.41-53.27 100.1-111.78zM280 236a12 12 0 0 1-12 12h-52v52a12 12 0 0 1-12 12h-24a12 12 0 0 1-12-12v-52h-52a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h52v-52a12 12 0 0 1 12-12h24a12 12 0 0 1 12 12v52h52a12 12 0 0 1 12 12zm152 76a40 40 0 1 1 40-40 40 40 0 0 1-40 40zm64-96a40 40 0 1 1 40-40 40 40 0 0 1-40 40z" class=""></path>
         </symbol>
-        <symbol id="resouces-icon" viewbox="0 0 512 512">
+        <symbol id="resources-icon" viewbox="0 0 512 512">
         	<path fill="currentColor" d="M109.46 244.04l134.58-134.56-44.12-44.12-61.68 61.68a7.919 7.919 0 0 1-11.21 0l-11.21-11.21c-3.1-3.1-3.1-8.12 0-11.21l61.68-61.68-33.64-33.65C131.47-3.1 111.39-3.1 99 9.29L9.29 99c-12.38 12.39-12.39 32.47 0 44.86l100.17 100.18zm388.47-116.8c18.76-18.76 18.75-49.17 0-67.93l-45.25-45.25c-18.76-18.76-49.18-18.76-67.95 0l-46.02 46.01 113.2 113.2 46.02-46.03zM316.08 82.71l-297 296.96L.32 487.11c-2.53 14.49 10.09 27.11 24.59 24.56l107.45-18.84L429.28 195.9 316.08 82.71zm186.63 285.43l-33.64-33.64-61.68 61.68c-3.1 3.1-8.12 3.1-11.21 0l-11.21-11.21c-3.09-3.1-3.09-8.12 0-11.21l61.68-61.68-44.14-44.14L267.93 402.5l100.21 100.2c12.39 12.39 32.47 12.39 44.86 0l89.71-89.7c12.39-12.39 12.39-32.47 0-44.86z" class=""></path>
         </symbol>
         <symbol id="miscellaneous-icon" viewbox="0 0 512 512">
@@ -497,69 +630,84 @@
         <symbol id="more-icon" viewbox="0 0 512 512">
         	<path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" class=""></path>
         </symbol>
-        <symbol id="back-icon" viewbox="0 0 640 512">
-        	<path fill="currentColor" d="M576 64H205.26A63.97 63.97 0 0 0 160 82.75L9.37 233.37c-12.5 12.5-12.5 32.76 0 45.25L160 429.25c12 12 28.28 18.75 45.25 18.75H576c35.35 0 64-28.65 64-64V128c0-35.35-28.65-64-64-64zm-84.69 254.06c6.25 6.25 6.25 16.38 0 22.63l-22.62 22.62c-6.25 6.25-16.38 6.25-22.63 0L384 301.25l-62.06 62.06c-6.25 6.25-16.38 6.25-22.63 0l-22.62-22.62c-6.25-6.25-6.25-16.38 0-22.63L338.75 256l-62.06-62.06c-6.25-6.25-6.25-16.38 0-22.63l22.62-22.62c6.25-6.25 16.38-6.25 22.63 0L384 210.75l62.06-62.06c6.25-6.25 16.38-6.25 22.63 0l22.62 22.62c6.25 6.25 6.25 16.38 0 22.63L429.25 256l62.06 62.06z" class=""></path>
+        <symbol id="expand-icon" viewbox="0 0 448 512">
+        	<path fill="currentColor" d="M6.101 359.293L25.9 379.092c4.686 4.686 12.284 4.686 16.971 0L224 198.393l181.13 180.698c4.686 4.686 12.284 4.686 16.971 0l19.799-19.799c4.686-4.686 4.686-12.284 0-16.971L232.485 132.908c-4.686-4.686-12.284-4.686-16.971 0L6.101 342.322c-4.687 4.687-4.687 12.285 0 16.971z" class=""></path>
+        </symbol>
+        <symbol id="hamburger-icon" viewBox="0 0 448 512">
+        	<path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z" class=""></path>
+        </symbol>
+        <symbol id="close-icon" viewbox="0 0 320 512">
+        	<path fill="currentColor" d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z" class=""></path>
         </symbol>
     </svg>
 
 	<script>
-		VANTA.NET({
-		  el: "#header",
-		  mouseControls: true,
-		  touchControls: true,
-		  gyroControls: false,
-		  minHeight: 200.00,
-		  minWidth: 200.00,
-		  scale: 1.00,
-		  scaleMobile: 1.00,
-		  color: 0x41a1ff
+		VANTA.TOPOLOGY({
+			  el: "#header",
+			  mouseControls: true,
+			  touchControls: true,
+			  gyroControls: false,
+			  minHeight: 200.00,
+			  minWidth: 200.00,
+			  scale: 1.00,
+			  scaleMobile: 1.00,
+			  color: 0x2a3a4a,
+			  backgroundColor: 0x16151a
 		});
 
-		setTimeout(function() {
-			document.querySelector('.header').classList.add('fadeout');
-			document.querySelector('#gallery').classList.add('active');
-			setTimeout(function() {
-				document.querySelectorAll('.btn').forEach(function(elem) {
-					elem.classList.add('active');
-				});
-			}, 1000);
-		}, 6000);
-		//document.querySelector('.header').classList.add('fadeout');
-
-		document.querySelectorAll('.btn').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				openPage(this.id.replace('-btn', ''));
-			});
-		});
-
-		document.querySelectorAll('.page .back').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				closePage(this.parentNode.id);
-			});
-		});
-
-		function openPage(page) {
-			document.getElementById(page).classList.add('active');
-			document.querySelectorAll('.btn').forEach(function(elem) {
-				elem.classList.remove('active');
-				elem.classList.add('fadeout');
-			});
+		function isScrolledIntoView(el) {
+		    var rect = el.getBoundingClientRect(), top = rect.top, height = rect.height, 
+		    el = el.parentNode;
+		  do {
+		    rect = el.getBoundingClientRect();
+		    if (top <= rect.bottom === false) return false;
+		    // Check if the element is out of view due to a container scrolling
+		    if ((top + height) <= rect.top) return false
+		    el = el.parentNode;
+		  } while (el != document.body);
+		  // Check its within the document viewport
+		  return top <= document.documentElement.clientHeight;
 		}
 
-		function closePage(page) {
-			document.getElementById(page).classList.remove('active');
-			document.querySelectorAll('.btn').forEach(function(elem) {
-				elem.classList.add('active');
-				elem.classList.remove('fadeout');
+		var header = document.getElementById('header');
+
+		document.querySelectorAll('.page-btn').forEach(function(elem) {
+			//document.getElementById(elem.id.replace('-link', '')).style.top='200vh';
+			elem.addEventListener('click', function(e) {
+				document.getElementById(elem.id.replace('-link', '')).classList.add('active');
+				document.getElementById('main').classList.add('hidden');
 			});
+		});
+
+		document.getElementById('hamburger').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.getElementById('menu').classList.toggle('open');
+			document.getElementById('hamburger').classList.toggle('open');
+			/*if(document.getElementById('menu').classList.contains('open')) {
+				document.getElementById('hamburger').querySelector('svg use').setAttribute('xlink:href', '#close-icon');
+			} else {
+				document.getElementById('hamburger').querySelector('svg use').setAttribute('xlink:href', '#hamburger-icon');
+			}*/
+		});
+		document.querySelectorAll('#menu a').forEach(function(elem) {
+			elem.addEventListener('click', function() {
+				document.getElementById('menu').classList.toggle('open');
+				document.getElementById('hamburger').classList.toggle('open');
+			});
+		});
+
+		window.onload = function() {
+			document.querySelector('header h1').style.color="#fff";
+			/*document.querySelectorAll('.section').forEach(function(elem) {
+				elem.classList.add('offscreen');
+			});*/
 		}
 
-		if (window.matchMedia('(display-mode: standalone)').matches) {
+		/**/if (window.matchMedia('(display-mode: standalone)').matches) {/**/
 			//event listener for if the page is a PWA
 			document.querySelectorAll('li').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
+					e.preventDefault();
 					if(!this.classList.contains('disabled') && !this.classList.contains('newframe')) {
 						var _this = this;
 						//Analytics
@@ -573,10 +721,11 @@
 						});
 						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
 						//Layer iframe ontop
-						document.getElementById('standalone-frame').classList.add('slideIn');
-						document.getElementById('standalone-home').classList.add('fadeIn');
+						document.getElementById('standalone-frame').classList.add('fadeIn');
+						document.getElementById('standalone-nav').classList.add('fadeIn');
 						window.scrollTo(0,0);
 						document.body.classList.add('standalone-open');
+						document.getElementsByTagName('html')[0].classList.add('standalone-open');
 						document.getElementById('standalone-bg').style.display="block";
 					} else if(this.classList.contains('newframe')) {
 						var _this = this;
@@ -593,10 +742,11 @@
 					}
 				});
 			});
-		} else {
+		/**/} else {
 			//event listener for if it is not a PWA
 			document.querySelectorAll('li').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
+					e.preventDefault();
 					if(!this.classList.contains('disabled')) {
 						var _this = this;
 						//Analytics
@@ -616,16 +766,62 @@
 					}
 				});
 			});
-		}
+		}/**/
 
 		document.getElementById('standalone-home').addEventListener('click', function(e) {
 			e.preventDefault();
-			document.getElementById('standalone-frame').src="";
-			document.getElementById('standalone-frame').classList.remove('slideIn');
-			document.getElementById('standalone-home').classList.remove('fadeIn');
+			document.getElementById('standalone-frame').src=null;
+			//Layer iframe ontop
+			document.getElementById('standalone-frame').classList.remove('fadeIn');
+			document.getElementById('standalone-nav').classList.remove('fadeIn');
+			window.scrollTo(0,0);
 			document.body.classList.remove('standalone-open');
+			document.getElementsByTagName('html')[0].classList.remove('standalone-open');
 			document.getElementById('standalone-bg').style.display="none";
 		});
+
+		document.getElementById('standalone-share').addEventListener('click', function(e) {
+			e.preventDefault();
+			/*if (navigator.share) {
+			  navigator.share({
+			    title: document.title,
+			    text: "Check out Zane\'s apps!",
+			    url: window.location.href
+			  })
+			  .then(() => console.log('Successful share'))
+			  .catch(error => console.log('Error sharing:', error));
+			}*/
+			var a = document.createElement('a');
+			var osLink = getMobileOperatingSystem() == 'iOS' ? 'sms:&body=Check out Zane\'s Apps! https://zanewesley.github.io' : 'sms:?body=Check out Zane\'s Apps! https://zanewesley.github.io';
+			a.href = osLink;
+			document.body.appendChild(a);
+			a.click();
+		});
+
+		function getMobileOperatingSystem() {
+		    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+		    // Windows Phone must come first because its UA also contains "Android"
+		    if (/windows phone/i.test(userAgent)) {
+		        return "Windows Phone";
+		    }
+
+		    if (/android/i.test(userAgent)) {
+		        return "Android";
+		    }
+
+		    // iOS detection from: http://stackoverflow.com/a/9039885/177710
+		    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+		        return "iOS";
+		    }
+
+		    return "unknown";
+		}
+
+		setTimeout(function() {
+			document.querySelector('.typejs-wrap-cursor').style.display='none';
+		}, 6000);
+
 	</script>
 </body>
 </html>
