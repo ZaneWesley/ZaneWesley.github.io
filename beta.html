@@ -20,10 +20,11 @@
 	<!-- External -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
+	<script src="ui/type.min.js"></script>
 	<!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
@@ -43,193 +44,280 @@
             overflow-x: hidden;
 		}
 		html, body {
-			background-color: #2d3e50;
+			scroll-behavior: smooth;
+			/*background-color: #2d3e50;*/
+			background-color: #16151a;
 			font-family: 'Roboto', sans-serif;
+			width: 100%;
+			height: 100%;
+		}
+
+		header {
+			position: relative;
+			height: 100%;
+			width: 100%;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			font-family: 'Rajdhani', sans-serif;
 			overflow: hidden;
+			z-index: 3;
 		}
-		#bg {
-			width: 100vw;
-		    height: 100vh;
-		    background: transparent;
-		    position: fixed;
-		    user-select: none;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			z-index: 0;
-			/*opacity: 0;
-			animation: fadeIn 2s ease-in;
+		header h1 {
+			font-size: 72px;
+			font-weight: 400;
+			margin-left: 50px;
+			color: transparent;
+			/*animation: fadeDown 2s ease-out;
+			animation-delay: 1s;
 			animation-fill-mode: forwards;
-			animation-delay: 1.5s;*/
+			opacity: 0;*/
 		}
-		#main {
+		header.sticky {
 			position: fixed;
 			top: 0;
 			left: 0;
+			height: 50px;
 			width: 100%;
-			height: 100%;
+			animation: fadeDown 0.3s ease-out;
 		}
-		#splash {
-			position: relative;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			z-index: 1;
-			overflow: hidden;
+		header.sticky h1 {
+			margin-left: 12px;
+			font-size: 1.5em;
+			width: 200px;
 		}
-		#splash svg {
-			position: relative;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 20vw;
-			height: 20vw;
-			animation: settleIn 2s cubic-bezier(0,1.11,1,.99);
-			animation-fill-mode: forwards;
-			-webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
-			filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+		header.sticky .main {
+			padding-top: 60px;
 		}
-		#nav {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 80%;
-			height: 50%;
-			transform: translate(-50%, -50%);
+		header nav {
 			display: flex;
-			flex-direction: row;
-			justify-content: space-around;
-			align-items: flex-end;
-			z-index: 2;
-			/*animation: slideIn 2s cubic-bezier(.87,-.41,.19,1.44);*/
-			animation: enterLeft 2s;
-			animation-fill-mode: forwards;
-			overflow: hidden;
-		}
-		#nav .page-btn {
-			font-weight: 700;
-			font-size: 2em;
-			cursor: pointer;
-			color: #fff;
-			border: 3px solid transparent;
-			border-radius: 5px;
-			transition: all 0.3s;
-			display: flex;
-			flex-direction: column;
 			align-items: center;
-			justify-content: center;
-			animation: scaleDown 1s;
-			animation-fill-mode: forwards;
-			animation-delay: 2.3s;
-			transition: all 0.3s;
-		}
-		#nav .page-btn:hover {
-			border-bottom: 3px solid #fff;
-			border: 3px solid #fff;
-		    border-radius: 50%;
-		    padding: 1em 1.5em;
-		}
-		#nav .page-btn .icon {
-			position: relative;
-			transform: scale(0);
-			animation: scaleUp 1s;
-			animation-fill-mode: forwards;
-			animation-delay: 2.3s;
-			margin-bottom: 1em;
-			transition: all 0.3s;
-		}
-		#nav .page-btn:hover .icon {
-			color: rgba(32, 141, 215, 0.7);
-			/*transform: scale(0.9)!important;*/
-		}
-		#main.hidden {
-			top: -100%;
-			transition: all 1s;
-		}
-		.page {
-			position: absolute;
-			/*top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%) scale(0);*/
-			/*top: 200vh*/
-			bottom: 0;
-			left: 0;
-			/*width: 200px;
-			height: 200px;*/
+			justify-content: flex-end;
 			width: 100%;
-			height: 0;
-			/*border-radius: 50%;*/
-			padding: 20px;
-			z-index: -1;
-			/*background-color: rgba(63, 61, 86, 0.5);*/
-			transition: all 1s cubic-bezier(.25,.8,.25,1);
-			visibility: hidden;
-			opacity: 0;
-		}
-		/*.page h2, .page ul {
 			display: none;
-		}*/
-		.page.active {
-			/*width: 85%;
-			height: 85%;*/
-			overflow-y: auto;
-			/*transform: translate(-50%, -50%) scale(1);*/
-			border-radius: 0;
-			bottom: 0;
-			z-index: 1;
-			visibility: visible;
-			opacity: 1;
-			height: 100%;
 		}
-		.page h2 {
+		header nav .icon {
+			text-decoration: none;
 			color: #fff;
-			text-align: center;
-			font-size: 2em;
-			margin-bottom: 2em;
-		}
-		.page.active h2, .page.active ul {
-			display: inherit;
-		}
-		.page .back {
+			position: relative;
 			width: 40px;
 			height: 40px;
+		}
+		header.sticky nav {
+			display: block;
+		}
+
+		.main {
 			color: #fff;
-			position: absolute;
-			top: 20px;
-			left: 20px;
-			cursor: pointer;
+			/*background-color: #2d3e50;*/
+			background-color: #16151a;
 			overflow: hidden;
 		}
-		.page .back svg {
-			width: 100%;
-			height: 100%;
+		.main h2 {
+			padding-bottom: 20px;
+			font-size: 2em;
+			font-family: 'Rajdhani', sans-serif;
 		}
-		.page .back:hover {
-			color: rgb(65, 161, 255, 0.9);
-			transition: all 0.3s ease-in;
+		.slice {
+			background-color: rgba(195, 207, 219, 0.7);
+			color: #16151a;
+			padding: 20px;
 		}
+		.section {
+			padding: 20px;
+			transition: all 0.4s ease;
+		}
+		.section.offscreen {
+			opacity: 0;
+			transform: translate3d(0,100px,0) scale(.6);
+		}
+		.split {
+			position: relative;
+		    width: 50%;
+		    min-height: 100%;
+		    height: auto;
+		}
+		.split.left, .split.right {
+			display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    flex-direction: column;
+		}
+		.split.left {
+			float: left;
+		}
+		.split.right {
+			float: right;
+		}
+		.section .split img {
+			width: 80%;
+			height: auto;
+		}
+
 		ul, li {
 			width: 100%;
-			font-size: 1.5em;
+			font-size: 1.3em;
 		}
 		ul {
 			list-style-type: none;
-			padding-left: 1em;
+			/*padding-left: 1em;*/
 		}
 		li {
 			cursor: pointer;
 			padding: 10px;
-			color: #fff;
-			text-align: center;
+			text-align: left;
 			font-size: 1em;
 			transition: all 0.3s;
 			/*border-bottom: 3px solid transparent;*/
-			text-decoration: underline;
-			text-decoration-color: transparent;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			/*border: 1px solid #ccc;*/
+			border-radius: 8px;
+			margin-bottom: 10px;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+		.slice li {
+			background-color: rgba(195, 207, 219, 0.5);
+			color: #16151a;
+		}
+		.section li {
+			background-color: rgba(99, 116, 133, 0.5);
+			color: #fff;
+		}
+		li .img {
+			width: 50px;
+			height: auto;
+			min-height: 50px;
+			margin-right: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+		li .img img {
+			width: 100%;
+			height: auto;
 		}
 		li:hover {
 			/*background-color: rgba(63, 61, 86, 0.7);*/
-			text-decoration-color: #fff;
+			/*text-decoration-color: #fff;*/
+			background-color: rgba(195, 207, 219, 0.9);
+		}
+		.section li:hover {
+			background-color: rgba(99, 116, 133, 0.9);
+			transform: scale(0.9);
+		}
+		/*#new, #games, #resources, #miscellaneous, #more {
+			background-size: contain;
+    		background-position: center center;
+    		background-repeat: no-repeat;
+    		background-attachment: fixed;
+		}
+		#new {
+			background-image: url('images/bg/new.svg');
+		}
+		#games {
+			background-image: url('images/bg/games.svg');
+		}*/
+		#hamburger {
+			position: fixed;
+			top: 1em;
+			right: 1em;
+			color: #fff;
+			width: 30px;
+			height: 30px;
+			overflow: hidden;
+			cursor: pointer;
+			z-index: 4;
+		}
+		#hamburger svg {
+			width: 100%;
+			height: 100%;
+		}
+		#hamburger .line{
+		  width: 30px;
+		  height: 4px;
+		  background-color: #fff;
+		  display: block;
+		  margin: 5px auto;
+		  -webkit-transition: all 0.3s ease-in-out;
+		  -o-transition: all 0.3s ease-in-out;
+		  transition: all 0.3s ease-in-out;
+		  border-radius: 25px;
+		}
+		#hamburger.open .line:nth-child(1){
+		  -webkit-transform: translateY(10px);
+		  -ms-transform: translateY(10px);
+		  -o-transform: translateY(10px);
+		  transform: translateY(10px);
+		}
+		#hamburger.open .line:nth-child(3){
+		  -webkit-transform: translateY(-10px);
+		  -ms-transform: translateY(-10px);
+		  -o-transform: translateY(-10px);
+		  transform: translateY(-10px);
+		}
+		#menu {
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 0;/*30%*/
+			height: 100vh;
+			z-index: 3;
+			background-color: rgba(45, 62, 80, 0.6);
+			text-align: left;
+			transition: all 0.3s;
+		}
+		#menu.open {
+			width: 30%;
+		}
+		/*#menu h2 {
+			text-align: center;
+		}*/
+		#menu h2 {
+			padding: 1em;
+		}
+		#menu a {
+			width: 100%;
+			display: block;
+			color: #fff;
+			text-decoration: none;
+			/*border-bottom: 1px solid rgba(99, 116, 133, 0.5);*/
+			padding: 1em 1em 1em 2em;
+		}
+		#menu a:hover {
+			/*border-bottom: 1px solid rgba(99, 116, 133, 0.9);*/
+			background-color: rgba(99, 116, 133, 0.5);
+		}
+		.mobile-only {
+			display: none;
+		}
+		.desktop-only {
+			display: block;
+		}
+
+		/* width */
+		::-webkit-scrollbar {
+		  width: auto;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+		  background: #16151a;
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+		  background: rgba(99, 116, 133, 0.5);;
+		  border-radius: 25px;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+		  background: rgba(99, 116, 133, 0.9);
 		}
 
 		html.standalone-open, body.standalone-open {
@@ -292,241 +380,229 @@
 			animation: fadeIn 1s ease-in;
 			animation-fill-mode: forwards;
 		}
-		@keyframes fadeIn{from {opacity: 0;} to {opacity: 1;}}
-		@keyframes settleIn{0% {opacity: 0; transform: translate(-50%, -50%) scale(2); fill: #208DD7;} 50% {fill: #208DD7;} 100% {top: 25%; opacity: 1; transform: translate(-50%, -25%) scale(1); fill: #CACFD2;}}
-		@keyframes slideIn{from { left: 100%; opacity: 0;} to {left: 50%; opacity: 1;}}
-		@keyframes enterLeft{0%{-webkit-transform:translate3d(-100%,-50%,0) skewX(0deg);transform:translate3d(-100%,-50%,0) skewX(0deg);opacity:0}60%{-webkit-transform:translate3d(-50%,-50%,0) skewX(-20deg);transform:translate3d(-50%,-50%,0) skewX(-20deg);opacity:1}80%{-webkit-transform:translate3d(-50%,-50%,0) skewX(5deg);transform:translate3d(-50%,-50%,0) skewX(5deg)}}
-		@keyframes scaleUp{from {transform: scale(0);} to {transform: scale(1);}}
-		@keyframes scaleDown{from {transform: scale(1)} to {transform: scale(0.7)}}
+
+		@keyframes fadeDown {from {opacity: 0; transform: translateY(-50px);} to {opacity: 1; transform: translateY(50px;);}}
+		@keyframes fade{ from {opacity: 0;} to {opacity: 1;} }
 
 		@media (max-width: 480px) {
-			#splash svg {
-				top: 10%;
-				width: 50vw;
-				height: 50vw;
+			header h1 {
+				font-size: 62px;
+				text-align: center;
 			}
-			#nav {
-				top: 50%;
-				transform: translate(-50%, -25%);
-				flex-direction: column;
+			.split {
+				width: 100%;
 			}
-			#nav .page-btn {
-				justify-content: flex-end;
-				flex-direction: row;
-				flex-flow: row-reverse;
+			.split.left, .split.right {
+				float: none;
 			}
-			#nav .page-btn:hover {
-				border: 0px solid transparent;
-				border-bottom: 3px solid #fff;
-			    border-radius: 0;
-			    padding: 0;
+			#menu {
+				background-color: rgba(45, 62, 80, 0.9);
 			}
-			#nav .page-btn .icon {
-				width: 40px;
-				height: 40px;
-				margin-left: 15px;
-				margin-bottom: 0;
+			#menu.open {
+				width: 100%;
 			}
-			@keyframes settleIn{0% {opacity: 0; transform: translate(-50%, -50%) scale(2); fill: #208DD7;} 50% {fill: #208DD7;} 100% {top: 10%; opacity: 1; transform: translate(-50%, -10%) scale(1); fill: #CACFD2;}}
-			@keyframes enterLeft{0%{-webkit-transform:translate3d(-100%,-25%,0) skewX(0deg);transform:translate3d(-100%,-25%,0) skewX(0deg);opacity:0}60%{-webkit-transform:translate3d(-50%,-25%,0) skewX(-20deg);transform:translate3d(-50%,-25%,0) skewX(-20deg);opacity:1}80%{-webkit-transform:translate3d(-50%,-25%,0) skewX(5deg);transform:translate3d(-50%,-25%,0) skewX(5deg)}}
-			@keyframes scaleDown{from {transform: scale(1)} to {transform: scale(1)}}
+			.mobile-only {
+				display: block;
+			}
+			.desktop-only {
+				display: none;
+			}
 		}
 	</style>
 </head>
 <body>
-	<!--<header>
-		<h1>Zane's Apps</h1>
-	</header>-->
-
-	<div id="bg"></div>
-
-	<div id="main">
-		<div id="splash">
-			<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
-				<g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" stroke="none">
-					<path d="M1283 2982 l-1083 -2 0 -263 0 -262 560 3 c308 1 560 1 560 -2 0 -2
-					-93 -154 -206 -337 -697 -1127 -1094 -1770 -1094 -1774 0 -3 511 -5 1135 -5
-					l1135 0 0 265 0 265 -615 0 -616 0 20 28 c16 22 581 932 839 1352 80 130 268
-					432 374 603 44 70 79 129 77 130 -2 1 -491 1 -1086 -1z m1040 -36 c-38 -67
-					-168 -272 -175 -274 -4 -2 -8 -8 -8 -12 0 -8 -110 -191 -197 -330 -58 -90
-					-181 -290 -246 -398 -33 -53 -62 -99 -67 -102 -4 -3 -10 -15 -14 -27 -4 -13
-					-12 -23 -17 -23 -5 0 -9 -4 -9 -10 0 -13 -62 -114 -72 -118 -4 -2 -8 -7 -8
-					-12 0 -10 -65 -118 -85 -140 -8 -9 -15 -20 -15 -24 0 -4 -13 -27 -30 -51 -16
-					-24 -30 -47 -30 -51 0 -4 -10 -21 -23 -38 -13 -17 -43 -65 -67 -106 -24 -41
-					-67 -111 -95 -155 -29 -44 -67 -108 -86 -143 -29 -53 -32 -64 -19 -72 9 -6
-					241 -10 607 -10 l592 0 3 -23 c2 -12 2 -120 0 -239 l-3 -218 -782 -1 c-430 -1
-					-852 -3 -937 -4 -85 -2 -228 0 -317 3 l-162 5 17 30 c9 16 22 37 27 46 25 39
-					81 128 92 146 31 51 90 146 129 207 24 37 44 70 44 73 0 16 54 84 63 78 6 -3
-					7 -1 3 5 -6 10 23 72 49 102 7 8 21 31 32 50 10 19 43 74 73 123 30 48 60 95
-					65 105 6 9 19 31 31 47 11 17 24 37 28 45 3 8 19 34 34 57 15 24 60 98 101
-					165 41 68 77 125 80 128 3 3 12 16 20 30 8 14 49 80 90 148 42 67 89 144 105
-					170 15 26 32 49 37 50 5 2 9 8 9 13 0 5 24 49 54 97 84 137 97 164 84 179 -8
-					10 -116 13 -553 13 l-543 0 -6 28 c-10 45 -3 211 9 204 5 -3 5 0 -1 9 -15 18
-					-12 218 3 227 20 12 2093 10 2086 -2z"/>
-				</g>
-			</svg>
-		</div>
-
-		<div id="nav">
-			<div id="games-link" class="page-btn">
-				<svg class="icon">
-	                <use xlink:href="#games-icon"></use>
-	            </svg>
-				Games
-			</div>
-			<div id="resources-link" class="page-btn">
-				<svg class="icon">
-	                <use xlink:href="#resources-icon"></use>
-	            </svg>
-				Resources
-			</div>
-			<div id="miscellaneous-link" class="page-btn">
-				<svg class="icon">
-	                <use xlink:href="#miscellaneous-icon"></use>
-	            </svg>
-				Miscellaneous
-			</div>
-			<div id="more-link" class="page-btn">
-				<svg class="icon">
-	                <use xlink:href="#more-icon"></use>
-	            </svg>
-				More
-			</div>
-		</div>
-	</div>
 	
-	<div id="games" class="page">
-		<h2>Games</h2>
-		<div class="back">
-			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+	<header id="header">
+		<h1 class="typejs" data-type-period="2000" data-type-loop="false" data-type-cursor="true" data-type-delay="2000" data-type-text='["Zane&#39;s Apps"]'>Zane's Apps</h1>
+		<!--<nav>
+			<a href="new"><svg class="icon"><use xlink:href="#new-icon"></use></svg></a>
+			<a href="#games"><svg class="icon"><use xlink:href="#games-icon"></use></svg></a>
+			<a href="#resources"><svg class="icon"><use xlink:href="#resources-icon"></use></svg></a>
+			<a href="#miscellaneous"><svg class="icon"><use xlink:href="#miscellaneous-icon"></use></svg></a>
+			<a href="#more"><svg class="icon"><use xlink:href="#more-icon"></use></svg></a>
+			<a href="#header" onclick="document.getElementById('header').classList.remove('sticky')"><svg class="icon"><use xlink:href="#expand-icon"></use></svg></a>
+		</nav>-->
+	</header>
+
+	<div class="main">
+		<div class="section">
+			<h2 style="padding-bottom: 0; font-weight: 500; font-size: 1.2em;">DISCLAIMER: This page is a beta version and may not work as expected. An official release is coming soon.</h2>
+		</div>
+		<div id="new" class="section">
+			<div class="split"><img src="images/bg/new.svg" class="mobile-only"></div>
+			<div class="split left">
+				<h2>New Releases</h2>
+				<ul>
+					<li id="crossyroad" data-url="crossyroad">
+						<div class="img"><img src="crossyroad/icon.jpeg"></div>
+						<div class="name">Crossy Road</div>
+					</li>
+					<li id="whiteboard" data-url="whiteboard">
+						<div class="img"><img src="images/whiteboard-icon.jpg"></div>
+						<div class="name">Whiteboard</div>
+					</li>
+					<li id="notes" data-url="notes">
+						<div class="img"><img src="notes/icon.png"></div>
+						<div class="name">Notes</div>
+					</li>
+					<li id="chess" data-url="chess">
+						<div class="img"><img src="chess/img/chess.png"></div>
+						<div class="name">Chess</div>
+					</li>
+					<li id="cakeninja" data-url="cakeninja">
+						<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
+						<div class="name">Cake Ninja</div>
+					</li>
+				</ul>
+			</div>
+			<div class="split right"><img src="images/bg/new.svg" class="desktop-only"></div>
 		</div>
 
-		<ul>
-			<li id="crossyroad" data-url="/crossyroad">
-				Crossy Road
-			</li>
-			<li id="chess" data-url="/chess">
-				Chess
-			</li>
-			<li id="cakeninja" data-url="/cakeninja">
-				Cake Ninja
-			</li>
-			<li id="hextris" data-url="/hextris">
-				Hextris
-			</li>
-			<li id="stack" data-url="/stack">
-				Stack
-			</li>
-			<li id="chromedino" data-url="/chromedino">
-				Chrome Dino Runner
-			</li>
-			<li id="colorsplosion" data-url="/colorsplosion">
-				Colorsplosion
-			</li>
-			<li id="numberguessing" data-url="/numberguessing">
-				Guess that Number
-			</li>
-			<li id="2048" data-url="/2048">
-				2048
-			</li>
-			<li id="tictactoe" data-url="/tic-tac-toe">
-				Tic Tac Toe
-			</li>
-			<li id="colorswirl" data-url="/colorswirl/colorswirl">
-				Color Swirl - Updated
-			</li>
-		</ul>
-	</div>
-
-	<div id="resources" class="page">
-		<h2>Resources</h2>
-		<div class="back">
-			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+		<div id="games" class="section">
+			<div class="split left"><img src="images/bg/games.svg"></div>
+			<div class="split right">
+				<h2>Games</h2>
+				<ul>
+					<li id="crossyroad" data-url="crossyroad">
+						<div class="img"><img src="crossyroad/icon.jpeg"></div>
+						<div class="name">Crossy Road</div>
+					</li>
+					<li id="chess" data-url="chess">
+						<div class="img"><img src="chess/img/chess.png"></div>
+						<div class="name">Chess</div>
+					</li>
+					<li id="cakeninja" data-url="cakeninja">
+						<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
+						<div class="name">Cake Ninja</div>
+					</li>
+					<li id="hextris" data-url="hextris">
+						<div class="img"><img src="hextris/favicon.ico"></div>
+						<div class="name">Hextris</div>
+					</li>
+					<li id="stack" data-url="stack">
+						<div class="img"><img src="images/stack-icon.PNG"></div>
+						<div class="name">Stack</div>
+					</li>
+					<li id="chromedino" data-url="chromedino">
+						<div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
+						<div class="name">Chrome Dino Runner</div>
+					</li>
+					<li id="colorsplosion" data-url="colorsplosion">
+						<div class="img"><img src="colorsplosion/icon.PNG"></div>
+						<div class="name">Colorsplosion</div>
+					</li>
+					<li id="numberguessing" data-url="numberguessing">
+						<div class="img"><img src="images/numberguessing-icon.png"></div>
+						<div class="name">Guess that Number</div>
+					</li>
+					<li id="2048" data-url="2048">
+						<div class="img"><img src="2048/icon.png"></div>
+						<div class="name">2048</div>
+					</li>
+					<li id="tic-tac-toe" data-url="tic-tac-toe">
+						<div class="img"><img src="images/tic-tac-toe-icon.png"></div>
+						<div class="name">Tic Tac Toe</div>
+					</li>
+					<li id="colorswirl" data-url="chess">
+						<div class="img"><img src="colorswirl/icon.jpg"></div>
+						<div class="name">Colorswirl</div>
+					</li>
+				</ul>
+			</div>
 		</div>
 
-		<ul>
-			<li id="notes" data-url="/notes">
-				Notes App
-			</li>
-			<li id="vividly" data-url="/vividly">
-				Vividly - Video Conferencing App
-			</li>
-			<li id="connect" data-url="/connect">
-				Connect Messaging
-			</li>
-			<li id="assistant" data-url="/assistant">
-				Corey 2.0
-			</li>
-			<li id="calculator" data-url="/calculator">
-				Calculator
-			</li>
-			<li id="countdownstudio" data-url="/countdownstudio">
-				Countdown Studio
-			</li>
-			<li id="mmc" data-url="/mmc">
-				Molar Mass Calculator
-			</li>
-			<li id="webchat" data-url="/webchat/new">
-				Webchat Video Conferencing
-			</li>
-			<li id="whiteboard" data-url="/whiteboard">
-				Whiteboard
-			</li>
-		</ul>
-	</div>
-
-	<div id="miscellaneous" class="page">
-		<h2>Miscellaneous</h2>
-		<div class="back">
-			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+		<div id="resources" class="section">
+			<div class="split"><img src="images/bg/resources.svg" class="mobile-only"></div>
+			<div class="split left">
+				<h2>Resources</h2>
+				<ul>
+					<li id="notes" data-url="notes">
+						<div class="img"><img src="notes/icon.png"></div>
+						<div class="name">Notes</div>
+					</li>
+					<li id="vividly" data-url="vividly">
+						<div class="img"><img src="vividly/icon.png"></div>
+						<div class="name">Notes</div>
+					</li>
+					<li id="connect" data-url="connect">
+						<div class="img"><img src="connect/splash.svg"></div>
+						<div class="name">Connect</div>
+					</li>
+					<li id="assistant" data-url="assistant">
+						<div class="img"><img src="assistant/icon.svg"></div>
+						<div class="name">Corey 2.0</div>
+					</li>
+					<li id="calculator" data-url="calculator">
+						<div class="img"><img src="images/calculator-icon.png"></div>
+						<div class="name">Calculator</div>
+					</li>
+					<li id="countdownstudio" data-url="countdownstudio">
+						<div class="img"><img src="images/countdownstudio-icon.svg"></div>
+						<div class="name">Countdown Studio</div>
+					</li>
+					<li id="mmc" data-url="mmc">
+						<div class="img"><img src="images/mmc-icon.png"></div>
+						<div class="name">Molar Mass Calculator</div>
+					</li>
+					<li id="webchat" data-url="webchat">
+						<div class="img"><img src="webchat/logo.ico"></div>
+						<div class="name">WebChat</div>
+					</li>
+					<li id="whiteboard" data-url="whiteboard">
+						<div class="img"><img src="images/whiteboard-icon.jpg"></div>
+						<div class="name">Whiteboard</div>
+					</li>
+				</ul>
+			</div>
+			<div class="split right"><img src="images/bg/resources.svg" class="desktop-only"></div>
 		</div>
 
-		<ul>
-			<li id="inspiration" data-url="/inspiration">
-				Inspirational Quotes Generator
-			</li>
-			<li id="peace" data-url="/peace">
-				Peace
-			</li>
-			<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
-				Mr. Lang Bucks (This is currently being archived)
-			</li>
-			<li id="corey-chat" data-url="/imessage">
-				Texting Corey (This is currently being archived)
-			</li>
-			<li id="corey" data-url="/corey?ref=home">
-				Corey - Original Virtual Assistant (This is currently being archived)
-			</li>
-		</ul>
-	</div>
-
-	<div id="more" class="page">
-		<h2>More</h2>
-		<div class="back">
-			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+		<div id="miscellaneous" class="section">
+			<div class="split left"><img src="images/bg/miscellaneous.svg"></div>
+			<div class="split right">
+				<h2>Miscellaneous</h2>
+				<ul>
+					<li id="insperation" data-url="insperation">
+						<div class="img"><img src="images/inspiration-icon.PNG"></div>
+						<div class="name">Insperational Quotes Image Generator</div>
+					</li>
+				</ul>
+			</div>
 		</div>
 
-		<ul>
-			<li id="about" data-url="/about">
-				About Me
-			</li>
-			<li id="archive" data-url="/archive">
-				App Archive
-			</li>
-			<!--<li id="codepen" class="newframe" data-url="https://codepen.io/zanewesley">
-				My CodePen
-			</li>-->
-			<!--<li id="bulletinboard" data-url="/bulletinboard">
-				News and Updates - Zane's Bulletin Board
-			</li>
-			<li id="account" data-url="/account">
-				Your Account
-			</li>
-			<li id="contact" class="disabled" data-url="/contact">
-				Contact Me!
-			</li>-->
-		</ul>
-	</div>
+		<div id="more" class="section">
+			<div class="split"><img src="images/bg/more.svg" class="mobile-only"></div>
+			<div class="split left">
+				<h2>More</h2>
+				<ul>
+					<li id="about" data-url="about">
+						<div class="img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
+						<div class="name">About</div>
+					</li>
+					<li id="archive" data-url="archive">
+						<div class="img"><img src="images/home-icon.svg"></div>
+						<div class="name">App Archive</div>
+					</li>
+				</ul>
+			</div>
+			<div class="split right"><img src="images/bg/more.svg" class="desktop-only"></div>
+		</div>
+
+		<!--<div id="hamburger"><svg class="icon"><use xlink:href="#hamburger-icon"></use></svg></div>-->
+		<div id="hamburger">
+			<span class="line"></span>
+			<span class="line"></span>
+			<span class="line"></span>
+		</div>
+
+		<div id="menu">
+			<h2>Menu</h2>
+			<a href="#games">Games</a>
+			<a href="#resources">Resources</a>
+			<a href="#miscellaneous">Miscellaneous</a>
+			<a href="#more">More</a>
+		</div>
+
 
 	<!-- PWA page elems-->
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
@@ -539,6 +615,9 @@
 
 	<!-- SVG Icon Library -->
     <svg style="display: none;">
+    	<symbol id="new-icon" viewBox="0 0 384 512">
+            <path fill="currentColor" d="M368 224H224V80c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v144H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h144v144c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V288h144c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" class=""></path>
+        </symbol>
     	<symbol id="games-icon" viewbox="0 0 640 512">
             <path fill="currentColor" d="M638.59 368.22l-33.37-211.59c-8.86-50.26-48.4-90.77-100.66-103.13h-.07a803.19 803.19 0 0 0-369 0C83.17 65.86 43.64 106.36 34.78 156.63L1.41 368.22C-8.9 426.73 38.8 480 101.51 480c49.67 0 93.77-30.07 109.48-74.64l7.52-21.36h203l7.49 21.36C444.72 449.93 488.82 480 538.49 480c62.71 0 110.41-53.27 100.1-111.78zM280 236a12 12 0 0 1-12 12h-52v52a12 12 0 0 1-12 12h-24a12 12 0 0 1-12-12v-52h-52a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h52v-52a12 12 0 0 1 12-12h24a12 12 0 0 1 12 12v52h52a12 12 0 0 1 12 12zm152 76a40 40 0 1 1 40-40 40 40 0 0 1-40 40zm64-96a40 40 0 1 1 40-40 40 40 0 0 1-40 40z" class=""></path>
         </symbol>
@@ -551,14 +630,20 @@
         <symbol id="more-icon" viewbox="0 0 512 512">
         	<path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" class=""></path>
         </symbol>
-        <symbol id="back-icon" viewbox="0 0 640 512">
-        	<path fill="currentColor" d="M576 64H205.26A63.97 63.97 0 0 0 160 82.75L9.37 233.37c-12.5 12.5-12.5 32.76 0 45.25L160 429.25c12 12 28.28 18.75 45.25 18.75H576c35.35 0 64-28.65 64-64V128c0-35.35-28.65-64-64-64zm-84.69 254.06c6.25 6.25 6.25 16.38 0 22.63l-22.62 22.62c-6.25 6.25-16.38 6.25-22.63 0L384 301.25l-62.06 62.06c-6.25 6.25-16.38 6.25-22.63 0l-22.62-22.62c-6.25-6.25-6.25-16.38 0-22.63L338.75 256l-62.06-62.06c-6.25-6.25-6.25-16.38 0-22.63l22.62-22.62c6.25-6.25 16.38-6.25 22.63 0L384 210.75l62.06-62.06c6.25-6.25 16.38-6.25 22.63 0l22.62 22.62c6.25 6.25 6.25 16.38 0 22.63L429.25 256l62.06 62.06z" class=""></path>
+        <symbol id="expand-icon" viewbox="0 0 448 512">
+        	<path fill="currentColor" d="M6.101 359.293L25.9 379.092c4.686 4.686 12.284 4.686 16.971 0L224 198.393l181.13 180.698c4.686 4.686 12.284 4.686 16.971 0l19.799-19.799c4.686-4.686 4.686-12.284 0-16.971L232.485 132.908c-4.686-4.686-12.284-4.686-16.971 0L6.101 342.322c-4.687 4.687-4.687 12.285 0 16.971z" class=""></path>
+        </symbol>
+        <symbol id="hamburger-icon" viewBox="0 0 448 512">
+        	<path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z" class=""></path>
+        </symbol>
+        <symbol id="close-icon" viewbox="0 0 320 512">
+        	<path fill="currentColor" d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z" class=""></path>
         </symbol>
     </svg>
 
 	<script>
 		VANTA.TOPOLOGY({
-			  el: "#bg",
+			  el: "#header",
 			  mouseControls: true,
 			  touchControls: true,
 			  gyroControls: false,
@@ -566,9 +651,25 @@
 			  minWidth: 200.00,
 			  scale: 1.00,
 			  scaleMobile: 1.00,
-			  color: 0xCACFD2,
-			  backgroundColor: 0x2d3e50
+			  color: 0x2a3a4a,
+			  backgroundColor: 0x16151a
 		});
+
+		function isScrolledIntoView(el) {
+		    var rect = el.getBoundingClientRect(), top = rect.top, height = rect.height, 
+		    el = el.parentNode;
+		  do {
+		    rect = el.getBoundingClientRect();
+		    if (top <= rect.bottom === false) return false;
+		    // Check if the element is out of view due to a container scrolling
+		    if ((top + height) <= rect.top) return false
+		    el = el.parentNode;
+		  } while (el != document.body);
+		  // Check its within the document viewport
+		  return top <= document.documentElement.clientHeight;
+		}
+
+		var header = document.getElementById('header');
 
 		document.querySelectorAll('.page-btn').forEach(function(elem) {
 			//document.getElementById(elem.id.replace('-link', '')).style.top='200vh';
@@ -578,14 +679,29 @@
 			});
 		});
 
-		document.querySelectorAll('.back').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				document.querySelectorAll('.page').forEach(function(elem) {
-					elem.classList.remove('active');
-				});
-				document.getElementById('main').classList.remove('hidden');
+		document.getElementById('hamburger').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.getElementById('menu').classList.toggle('open');
+			document.getElementById('hamburger').classList.toggle('open');
+			/*if(document.getElementById('menu').classList.contains('open')) {
+				document.getElementById('hamburger').querySelector('svg use').setAttribute('xlink:href', '#close-icon');
+			} else {
+				document.getElementById('hamburger').querySelector('svg use').setAttribute('xlink:href', '#hamburger-icon');
+			}*/
+		});
+		document.querySelectorAll('#menu a').forEach(function(elem) {
+			elem.addEventListener('click', function() {
+				document.getElementById('menu').classList.toggle('open');
+				document.getElementById('hamburger').classList.toggle('open');
 			});
 		});
+
+		window.onload = function() {
+			document.querySelector('header h1').style.color="#fff";
+			/*document.querySelectorAll('.section').forEach(function(elem) {
+				elem.classList.add('offscreen');
+			});*/
+		}
 
 		/**/if (window.matchMedia('(display-mode: standalone)').matches) {/**/
 			//event listener for if the page is a PWA
@@ -701,6 +817,11 @@
 
 		    return "unknown";
 		}
+
+		setTimeout(function() {
+			document.querySelector('.typejs-wrap-cursor').style.display='none';
+		}, 6000);
+
 	</script>
 </body>
 </html>
