@@ -61,7 +61,7 @@
 			align-items: center;
 			font-family: 'Rajdhani', sans-serif;
 			overflow: hidden;
-			z-index: 3;
+			z-index: 4;
 		}
 		header h1 {
 			font-size: 72px;
@@ -110,8 +110,11 @@
 		.main {
 			color: #fff;
 			/*background-color: #2d3e50;*/
-			background-color: #16151a;
+			/*background-color: #16151a;*/
+			background-color: transparent;
 			overflow: hidden;
+			position: relative;
+			z-index: 2;
 		}
 		.main h2 {
 			padding-bottom: 20px;
@@ -234,13 +237,13 @@
 		#hamburger {
 			position: fixed;
 			top: 1em;
-			right: 1em;
+			right: calc(1em + 1px);
 			color: #fff;
 			width: 30px;
 			height: 30px;
 			overflow: hidden;
 			cursor: pointer;
-			z-index: 4;
+			z-index: 5;
 		}
 		#hamburger svg {
 			width: 100%;
@@ -301,6 +304,105 @@
 			/*border-bottom: 1px solid rgba(99, 116, 133, 0.9);*/
 			background-color: rgba(99, 116, 133, 0.5);
 		}
+
+		#shapes .circles{
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100vw;
+		    height: 100vh;
+		    overflow: hidden;
+		    z-index: -1;
+		}
+		.circles li{
+		    position: absolute;
+		    display: block;
+		    list-style: none;
+		    width: 20px;
+		    height: 20px;
+		    background: rgba(255, 255, 255, 0.2);
+		    animation: rotate 25s linear infinite;
+		    bottom: -150px;
+		}
+
+		.circles li:nth-child(1){
+		    left: 25%;
+		    width: 80px;
+		    height: 80px;
+		    animation-delay: 0s;
+		}
+
+
+		.circles li:nth-child(2){
+		    left: 10%;
+		    width: 20px;
+		    height: 20px;
+		    animation-delay: 2s;
+		    animation-duration: 12s;
+		}
+
+		.circles li:nth-child(3){
+		    left: 70%;
+		    width: 20px;
+		    height: 20px;
+		    animation-delay: 4s;
+		}
+
+		.circles li:nth-child(4){
+		    left: 40%;
+		    width: 60px;
+		    height: 60px;
+		    animation-delay: 0s;
+		    animation-duration: 18s;
+		}
+
+		.circles li:nth-child(5){
+		    left: 65%;
+		    width: 20px;
+		    height: 20px;
+		    animation-delay: 0s;
+		}
+
+		.circles li:nth-child(6){
+		    left: 75%;
+		    width: 110px;
+		    height: 110px;
+		    animation-delay: 3s;
+		}
+
+		.circles li:nth-child(7){
+		    left: 35%;
+		    width: 150px;
+		    height: 150px;
+		    animation-delay: 7s;
+		}
+
+		.circles li:nth-child(8){
+		    left: 50%;
+		    width: 25px;
+		    height: 25px;
+		    animation-delay: 15s;
+		    animation-duration: 45s;
+		}
+
+		.circles li:nth-child(9){
+		    left: 20%;
+		    width: 15px;
+		    height: 15px;
+		    animation-delay: 2s;
+		    animation-duration: 35s;
+		}
+
+		.circles li:nth-child(10){
+		    left: 85%;
+		    width: 150px;
+		    height: 150px;
+		    animation-delay: 0s;
+		    animation-duration: 11s;
+		}
+
+		@keyframes rotate { 0%{ transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; } 100%{ transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; } };
+
 		.mobile-only {
 			display: none;
 		}
@@ -515,7 +617,7 @@
 						<div class="img"><img src="images/tic-tac-toe-icon.png"></div>
 						<div class="name">Tic Tac Toe</div>
 					</li>
-					<li id="colorswirl" data-url="chess">
+					<li id="colorswirl" data-url="colorswirl">
 						<div class="img"><img src="colorswirl/icon.jpg"></div>
 						<div class="name">Colorswirl</div>
 					</li>
@@ -534,7 +636,7 @@
 					</li>
 					<li id="vividly" data-url="vividly">
 						<div class="img"><img src="vividly/icon.png"></div>
-						<div class="name">Notes</div>
+						<div class="name">Vividly</div>
 					</li>
 					<li id="connect" data-url="connect">
 						<div class="img"><img src="connect/splash.svg"></div>
@@ -556,7 +658,7 @@
 						<div class="img"><img src="images/mmc-icon.png"></div>
 						<div class="name">Molar Mass Calculator</div>
 					</li>
-					<li id="webchat" data-url="webchat">
+					<li id="webchat" data-url="webchat/webchat">
 						<div class="img"><img src="webchat/logo.ico"></div>
 						<div class="name">WebChat</div>
 					</li>
@@ -605,6 +707,21 @@
 			<p>Copyright &copy; 2021 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page.</p>
 		</footer>
 
+		<div id="shapes">
+			<ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+		</div>
+
 		<!--<div id="hamburger"><svg class="icon"><use xlink:href="#hamburger-icon"></use></svg></div>-->
 		<div id="hamburger">
 			<span class="line"></span>
@@ -614,6 +731,7 @@
 
 		<div id="menu">
 			<h2>Menu</h2>
+			<a href="#new">New Releases</a>
 			<a href="#games">Games</a>
 			<a href="#resources">Resources</a>
 			<a href="#miscellaneous">Miscellaneous</a>
