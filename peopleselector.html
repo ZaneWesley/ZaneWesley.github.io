@@ -7,23 +7,33 @@
 	<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700|Roboto:100,300,400,500,700,900&amp;lang=en" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<title>Select a Person</title>
+    <title>Random Name Selector</title>
 
 	<style>
         * {
-            box-shadow: border-box;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
         }
-        body {
-            font-family: Roboto, sans-serif;
+        body, html {
+            width: 100vw;
+            height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            background: #FF8B57;
+            background: linear-gradient(to bottom right, #FF8B57, #FB5656);
+            color: #fff;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            overflow-y: auto;
         }
         header {
+            /*text-align: center;
+            border-bottom: 1px solid #ccc;*/
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             text-align: center;
-            border-bottom: 1px solid #ccc;
-        }
-        header p {
-            line-height: 0;
+            padding: 0.5em;
         }
         ul {
             list-style-type: none;
@@ -59,19 +69,75 @@
             outline: none;
         }
         #setup {
-            padding-bottom: 6em;
+            position: absolute;
+            top: 5em;
+            left: 0;
+            width: 100%;
+            min-height: calc(100% - 5em);
+            height: auto;
         }
-        .col {
+        #setup label, #setup h2 {
+            color: #585858;
+            font-size: 1.5em;/*=24px*/
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 0.9375em;/*15px*/
+        }
+        #setup input {
+            width: 100%;
+            color: #898989;
+            background-color: #fff;
+            font-size: 1.25em;
+            font-weight: normal;
+            background-color: white;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
+            border-radius: 5px;
+            padding: 1.25em;/*20px*/
+            border: 1px solid #eee;
+            outline: none;
+            margin-bottom: 20px;/*75px*/
+        }
+        #setup input::placeholder {
+          color: #D9D9D9;
+        }
+        button {
+            color: white;
+            font-size: 1em;/*24px*/
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+            padding: 21px;/*21x161px*/
+            width: 80%;
+            background: linear-gradient(to right, #FF8757, #FC5F56);
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            border-radius: 1000px;
+            display: block;
+            margin: auto;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 75px;/*75px*/
+        }
+        .col, .card {
             position: absolute;
             width: 48%;
+            padding: 3.125em 2.1875em 3.125em 2.1875em;/*50x35px*/
+            background-color: #fcfcfc;
+            border-radius: 10px;
+            box-shadow: 0px 0px 2.5em rgba(0, 0, 0, 0.15);/*2.5em=40px*/
+            /*display: flex;
+            flex-direction: column;*/
+            animation: fadeIn 0.75s forwards 0s ease;
+            color: #000;
+            height: auto;
         }
         .col.left {
             left: 1em;
-            border-right: 1px solid #ccc;
-            height: 87vh;
+            min-height: 87vh;
         }
         .col.right {
             right: 1em;
+            min-height: 87vh;
         }
         #nameDisplay {
             position: absolute;
@@ -80,28 +146,72 @@
             transform: translate(-50%, -50%);
             display: none;
             text-align: center;
+            flex-direction: column;
+            color: #585858;
+            font-size: 1.5em;/*=24px*/
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 0.9375em;/*15px*/
         }
         #selectedName {
             font-size: 3em;
             text-align: center;
         }
-        #nextName {
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%);
+        .snackbar {
+          visibility: hidden;
+          min-width: 250px;
+          margin-left: -125px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 2px;
+          padding: 16px;
+          position: fixed;
+          z-index: 5;
+          left: 50%;
+          bottom: 30px;
+          font-size: 17px;
+        }
+
+        .snackbar.show {
+          visibility: visible;
+          -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+          animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @-webkit-keyframes fadein {
+          from {bottom: 0; opacity: 0;} 
+          to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+          from {bottom: 0; opacity: 0;}
+          to {bottom: 30px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+          from {bottom: 30px; opacity: 1;} 
+          to {bottom: 0; opacity: 0;}
+        }
+
+        @keyframes fadeout {
+          from {bottom: 30px; opacity: 1;}
+          to {bottom: 0; opacity: 0;}
         }
         @media (max-width: 775px) {
-        	.col {
+        	.col, .card {
                 position: static;
                 width: 90%;
             }
-            .col.left {
-                left: auto;
-                border: none;
-                height: auto;
+            .col.left, .col.right {
+                margin: 0 auto 1em auto;
+                /*height: auto;*/
             }
             .col.right {
-                right: auto;
+                margin-bottom: 1em;
+            }
+            button {
+                margin-bottom: 0.5em;
             }
         }
     </style>
@@ -109,7 +219,6 @@
 <body>
 	<header>
         <h1>Select a Person</h1>
-        <p>Randomly select a person for a task</p>
     </header>
     <div id="setup">
         <div id="setupContainer" class="col left">
@@ -117,21 +226,16 @@
             <label for="name">Name:</label>
             <input id="name" type="text" placeholder="Name" autocomplete="off">
             <button id="addName" onclick="addName()">Add</button>
-            <div>
-                <br>
-                <button id="startSelection" onclick="startSelection()">Done</button>
-            </div>
+            <button id="startSelection" onclick="startSelection()">Done</button>
         </div>
         <div id="nameListContainer" class="col right">
             <h2>Name Pool</h2>
             <div id="nameList"></div>
         </div>
     </div>
-    <div id="nameDisplay">
+    <div id="nameDisplay" class="card">
         <h1 id="selectedName">No Names in Pool</h1>
-        <div>
-            <button id="nextName" onclick="nextName()">Next</button>
-        </div>
+        <button id="nextName" onclick="nextName()">Next</button>
     </div>
 
     <script>
@@ -171,8 +275,9 @@
                 if(!selectedNames.includes($('#name').val())) {
                     selectedNames.push($('#name').val());
                     $('#name').val('');
+                    snackbarMessgae('Name added');
                 } else {
-                    if(confirm($('#name').val() + "is already in the name pool. Do you want to add it again?")) {
+                    if(confirm($('#name').val() + " is already in the name pool. Do you want to add it again?")) {
                         selectedNames.push($('#name').val());
                         $('#name').val('');
                     } else {
@@ -181,7 +286,7 @@
                 }
                 $('#nameList').html(makeList(selectedNames));
             } else {
-                alert('You must put in a name.');
+                snackbarMessgae('You must put in a name');
             }
         }
 
@@ -234,6 +339,7 @@
             history.pushState('', 'Save Name Pool', URLString);
             shareLink = URLString;
             CopyToClipboard(URLString);
+            snackbarMessgae('Share link copied to clipboard');
         }
         function CopyToClipboard(value) {
             var tempInput = document.createElement("input");
@@ -242,6 +348,16 @@
             tempInput.select();
             document.execCommand("copy");
             document.body.removeChild(tempInput);
+        }
+        function snackbarMessgae(msg) {
+            var snackbar = document.createElement("div");
+            snackbar.innerText=msg;
+            snackbar.classList.add('snackbar');
+            snackbar.classList.add('show');
+            document.body.appendChild(snackbar);
+            setTimeout(function(){ 
+                snackbar.remove();
+            }, 3000);
         }
         init();
     </script>
