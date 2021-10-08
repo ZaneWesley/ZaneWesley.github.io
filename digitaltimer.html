@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<title>Digital Timer</title>
+
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+		@font-face{font-family:AlarmClock;src:url(ui/AlarmClock.c02a5d05.ttf)}
+		* {
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+			background-color: #111;
+			color: #fff;
+			font-family: 'Roboto', sans-serif;
+		}
+		#bg {
+			position: absolute;
+			top: 0.1em;
+			left: 0.1em;
+			bottom: 0.1em;
+			right: 0.1em;
+			z-index: 1;
+			box-shadow: 0 0 .2rem #fff,
+              0 0 .2rem #fff,
+              0 0 2rem #f39,
+              0 0 0.8rem #f39,
+              0 0 2.8rem #f39,
+              inset 0 0 1.3rem #f39;
+            visibility: hidden;
+            opacity: 0;
+		}
+		#bg.open {
+			visibility: visible;
+			opacity: 1;
+			transition: all 10s;
+			/*background:radial-gradient(ellipse at 50% 50%, rgba(17, 17, 17, 1) 0%, rgba(51, 153, 255, 1) 50%, rgba(255, 51, 153, 1) 100%);*/
+		}
+		#inputs, #timer {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: flex;
+			/*display: none;*/
+			visibility: hidden;
+			opacity: 0;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+			z-index: 2;
+		}
+		#inputs {
+			padding: 1em;
+		}
+		#inputs.open {
+			visibility: visible;
+			opacity: 1;
+		}
+		#inputs, input {
+			font-family: AlarmClock, monospace;
+			color: #3f9;
+			font-weight: 700;
+			text-transform:capitalize;
+			/*font-size: 96px;*/
+		}
+		#inputs span {
+			font-size: 11em;
+		}
+		#inputs span.grey {
+			color: grey;
+		}
+		.blue {
+			color: #39f;
+		}
+		.pink {
+			color: #f39;
+		}
+		input {
+			background-color: transparent;
+			border: none;
+			outline: none;
+			/*width: 180px;
+		    height: 180px;
+		    font-size: 96px;*/
+		    width: 1.5em;
+		    font-size: 11em;
+		    padding: 0;
+		    text-align: center;
+			overflow: hidden;
+			user-select: none;
+			caret-color: transparent;
+		}
+		.btn {
+			border: 3px solid #fff;
+			border-radius: 50%;
+			font-weight: 700;
+			width: 50px;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s;
+			cursor: pointer;
+			z-index: 2;
+		}
+		#create {
+			position: fixed;
+			bottom: 1em;
+			right: 1em;
+		}
+		.btn:hover {
+			color: #3f9;
+			border-color: #3f9;
+		}
+		#timer {
+			font-family: AlarmClock, monospace;
+			color: #3f9;
+			font-size: 11em;
+			font-weight: 700;
+			text-transform:capitalize;
+			padding: 0.3em;
+			/*box-shadow: 4px 4px 40px 20px #39f;*/
+			/*box-shadow: 0 0 .2rem #fff,
+              0 0 .2rem #fff,
+              0 0 2rem #39f,
+              0 0 0.8rem #39f,
+              0 0 2.8rem #39f,
+              inset 0 0 1.3rem #39f;*/
+		}
+		#timer.open {
+			visibility: visible;
+			opacity: 1;
+			animation: border_fade 7s;
+			animation-fill-mode: forwards;
+		}
+		@keyframes border_fade {
+			from {
+				box-shadow: none;
+			}
+			to {
+				box-shadow: 0 0 .2rem #fff,
+              0 0 .2rem #fff,
+              0 0 2rem #39f,
+              0 0 0.8rem #39f,
+              0 0 2.8rem #39f,
+              inset 0 0 1.3rem #39f;
+			}
+		}
+		#timer span {
+			margin: 0 0.17em;
+		}
+		#timer.done  {
+			animation: flash 2s infinite;
+		}
+		@keyframes flash {
+			0% {
+				color: auto;
+			}
+			20% {
+				color: transparent;
+			}
+			40% {
+				color: auto;
+			}
+		}
+		/*.circle-wrapper {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 56vw;
+			height: 56vw;
+			border-radius: 50%;
+			background: linear-gradient(to left, #fff, #111);
+			animation: rotate 10s infinite;
+		}
+		.circle {
+			position: relative;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 55vw;
+			height: 55vw;
+			border-radius: 50%;
+			background: #111;
+		}
+		@keyframes rotate {
+			from {
+				transform: translate(-50%, -50%) rotate(0deg);
+			}
+			to {
+				transform: translate(-50%, -50%) rotate(360deg);
+			}
+		}*/
+		#opts {
+			position: fixed;
+			bottom: 1em;
+			right: 1em;
+			width: 200px;
+			height: 200px;
+			display: none;
+			z-index: 2;
+		}
+		#toggle, #start, #stop, #clear {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+		#start, #stop, #clear {
+			visibility: hidden;
+			transition: all 0.3s;
+			opacity: 0;
+		}
+		#opts.open #start, #opts.open #stop, #opts.open #clear {
+			visibility: visible;
+			transform: scale(1.1);
+			opacity: 1;
+		}
+		#opts.open #start {
+			transform: translate(-150%, -150%);
+		}
+		#opts.open #stop {
+			transform: translate(0, -200%);
+		}
+		#opts.open #clear {
+			transform: translate(-200%, 0);
+		}
+		@media(max-width: 775px) {
+			#timer, input, #inputs span {
+				font-size: 6em;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="inputs" class="open">
+		<input id="m" type="text" maxlength="2" placeholder="00" pattern="[0-9]*" inputmode="numeric" autocomplete="off"><span class="grey">:</span><input id="s" type="text" maxlength="2" placeholder="00" pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+	</div>	
+
+	<div id="timer">00<span>:</span>00</div>
+	<!--<div class="circle-wrapper">
+		<div class="circle"></div>
+	</div>-->
+
+	<div id="create" class="btn">Start</div>
+
+	<div id="bg"></div>
+
+	<div id="opts">
+		<div class="btn" id="toggle"><i class="fas fa-cog"></i></div>
+		<div class="btn" id="start" onclick="resumeTimer()"><i class="fas fa-play"></i></div>
+		<div class="btn" id="stop" onclick="stopTimer()"><i class="fas fa-stop"></i></div>
+		<div class="btn" id="clear" onclick="clearTimer()"><i class="fas fa-pen"></i></div>
+	</div>
+
+	<script>
+		/*
+			TIMER
+		*/
+		document.getElementById('create').addEventListener('click', function(e) {
+			e.preventDefault();
+			var m = Number(document.getElementById('m').value);
+			var s = Number(document.getElementById('s').value);
+			var t = document.getElementById('timer');
+			var tS = m*60 + s;
+			t.innerHTML = addZero(m)+'<span>:</span>'+addZero(s);
+			document.getElementById('inputs').classList.remove('open');
+			document.getElementById('timer').classList.add('open');
+			document.getElementById('opts').style.display='block';
+			document.getElementById('create').style.display='none';
+			document.getElementById('bg').classList.add('open');
+			startTimer(tS, t);
+		});
+
+		function addZero(i) {
+		  if (i < 10) {
+		    i = "0" + i;
+		  }
+		  return i;
+		}
+
+		var tInt, lTime, ticking = false;
+		function startTimer(duration, display) {
+		    var timer = duration, minutes, seconds;
+		    display.classList.remove('done');
+		    ticking = true;
+		    document.getElementById('toggle').style.borderColor="#3f9";
+		    tInt = setInterval(function () {
+		    	lTime = timer;
+		        minutes = parseInt(timer / 60, 10);
+		        seconds = parseInt(timer % 60, 10);
+
+		        minutes = minutes < 10 ? "0" + minutes : minutes;
+		        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+		        display.innerHTML = minutes + "<span>:</span>" + seconds;
+
+		        if (--timer < 0) {
+		            timer = duration;
+		            clearInterval(tInt);
+		            display.classList.add('done');
+		        }
+		    }, 1000);
+		}
+		function stopTimer() {
+			clearInterval(tInt);
+			ticking = false;
+			document.getElementById('toggle').style.borderColor="#ff5733";
+		}
+		function resumeTimer() {
+			if(!ticking) startTimer(lTime, document.getElementById('timer'));
+			document.getElementById('toggle').style.borderColor="#3f9";
+		}
+		function clearTimer() {
+			clearInterval(tInt);
+			lTime = 0;
+			ticking = false;
+			document.getElementById('timer').classList.remove('done');
+			document.getElementById('inputs').classList.add('open');
+			document.getElementById('timer').classList.remove('open');
+			document.getElementById('opts').style.display='none';
+			document.getElementById('create').style.display='flex';
+			document.getElementById('bg').classList.remove('open');
+		}
+		/*
+			* INPUTS
+		*/
+		var container = document.getElementById('inputs');
+		container.onkeyup = function(e) {
+		    var target = e.srcElement || e.target;
+		    var maxLength = parseInt(target.attributes["maxlength"].value, 10);
+		    var myLength = target.value.length;
+		    if (myLength >= maxLength) {
+		        var next = target;
+		        while (next = next.nextElementSibling) {
+		            if (next == null)
+		                break;
+		            if (next.tagName.toLowerCase() === "input") {
+		                next.focus();
+		                break;
+		            }
+		        }
+		    }
+		    // Move to previous field if empty (user pressed backspace)
+		    else if (myLength === 0) {
+		        var previous = target;
+		        while (previous = previous.previousElementSibling) {
+		            if (previous == null)
+		                break;
+		            if (previous.tagName.toLowerCase() === "input") {
+		                previous.focus();
+		                break;
+		            }
+		        }
+		    }
+		}
+		document.body.addEventListener('click', function(e) {
+			if(document.getElementById('inputs').classList.contains('open')) document.querySelector('input').focus();
+		});
+		/*document.querySelector('input').addEventListener('blur', refocus);
+		function refocus() {
+			this.focus();
+		}*/
+		document.querySelectorAll('input').forEach(function(elem) {
+			elem.addEventListener('keyup', function(e) {
+				if(document.querySelector('input:first-child').value == "") {
+					document.querySelector('#inputs span').classList.add('grey');
+				} else {
+					document.querySelector('#inputs span').classList.remove('grey');
+				}
+				if(e.which == 13) {
+					e.preventDefault();
+					document.getElementById('create').click();
+				}
+			});
+			elem.addEventListener('input', function(e) {
+				this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');
+			}); 
+		});
+
+		document.getElementById('toggle').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelector('#opts').classList.toggle('open');
+		});
+		document.addEventListener('keyup', function(e) {
+			if(e.which == 32) {
+				if(!ticking && lTime != null) {
+					resumeTimer();
+				} else {
+					stopTimer();
+				}
+			}
+		});
+	</script>
+</body>
+</html>
