@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title>Chrismas Countdown 2021</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+		}
+		html, body {
+			scroll-behavior: smooth;
+			font-family: 'Zen Kurenaido', sans-serif;
+			width: 100%;
+			height: 100%;
+		}
+		body {
+			background-color: #ecefef;
+		}
+		canvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			background-image: url('https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas/bg.jpg');
+			background-position: center top;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+		#world {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-image: url('https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas/world.png');
+			background-position: center bottom;
+			background-size: 90%;
+			background-repeat: no-repeat;
+			width: 100%;
+			max-width: 449px;
+			height: 30%;
+			margin: 0 auto;
+		}
+		.header {
+			font-family: 'Dancing Script', cursive;
+			position: fixed;
+			top: 0;
+			padding: 1em;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 1;
+			color: #7EE3B6;
+			text-align: center;
+		}
+		.header h1 {
+			font-size: 3em;
+		}
+		.header div {
+			font-size: 2.6em;
+		}
+		#countdown-box {
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: space-around;
+        align-content: center;
+        width: 100%;
+      }
+      .cdi {
+        display: inline-block;
+        font-size: 5em;
+        text-align: center;
+        color: #fff;
+      }
+      .cdi-lbl {
+        font-size: .5em;
+      }
+      #m-break {
+      	display: none;
+      }
+      @media(max-width: 775px) {
+        #countdown-box {
+          flex-wrap: wrap;
+        }
+        .cdi {
+          font-size: 3em;
+
+        }
+        .cdi-lbl {
+          color: #fff;
+        }
+        #m-break {
+        	display: block;
+        	flex-basis: 100%;
+			height: 0;
+        }
+      }
+	</style>
+</head>
+<body>
+	<div class="header">
+		<h1>Christmas Countdown</h1>
+		<div>2021</div>
+	</div>
+
+	<div id="countdown-box" class="cdb">
+		<div class="cdi">
+			<span id="d">0</span>
+      <div id="d-lbl" class="cdi-lbl">DAYS</div>
+		</div>	
+		<div class="cdi">
+			<span id="h">0</span>
+      <div id="h-lbl" class="cdi-lbl">HOURS</div>
+		</div>
+	  <div id="m-break"></div>
+		<div class="cdi">
+			<span id="m">0</span>
+      <div id="m-lbl" class="cdi-lbl">MINUTES</div>
+		</div>
+		<div class="cdi">
+			<span id="s">0</span>
+      <div id="s-lbl" class="cdi-lbl">SECONDS</div>
+		</div>
+	</div>
+
+	<canvas id="canvas"></canvas>
+	<div id="world"></div>
+
+<script>
+// Set the birthday date we're counting down to
+  var countdownDate = new Date("December 25, 2021 10:00:00").getTime();/* hrs: min: sec */
+  //var countdownDate = new Date("November 27, 2020 10:00:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countdownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element
+  $('#d').text(addZero(days));
+  $('#h').text(addZero(hours));
+  $('#m').text(addZero(minutes));
+  $('#s').text(addZero(seconds));
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("countdown-box").innerHTML = "<span class='cdi'>Merry Christmas!!</span>";
+    $('.title').text("");
+  }
+}, 1000);
+function addZero(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+function isMobile() {
+  if(window.innerWidth < 775) {
+    return true;
+  } else {
+    return false;
+  }
+}
+</script>
+<script>
+    (function () {
+      'use strict';
+      window.addEventListener('load', function() {
+        var canvas = document.getElementById('canvas');
+
+        if (!canvas || !canvas.getContext) {
+          return false;
+        }
+
+        /********************
+          Random Number
+        ********************/
+
+        function rand(min, max) {
+          return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        /********************
+          Var
+        ********************/
+
+        // canvas 
+        var ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var X = canvas.width;
+        var Y = canvas.height;
+
+        /********************
+          Animation
+        ********************/
+
+        window.requestAnimationFrame =
+          window.requestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.msRequestAnimationFrame ||
+          function(cb) {
+            setTimeout(cb, 17);
+          };
+
+        /* var bgImg = 'https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas/bg.jpg';
+
+         function drawBg() {
+         	//
+         }*/
+
+        /********************
+          Snow
+        ********************/
+        
+        // var
+        var snowNum = 80;
+        var backSnowNum = 80;
+        var snows = [];
+        var backSnows = [];
+
+        if (X < 768) {
+          snowNum = 25;
+          backSnowNum = 25;
+        }
+         
+        function Snow(ctx, x, y, r, g) {
+          this.ctx = ctx;
+          this.init(x, y, r, g);
+        }
+
+        Snow.prototype.init = function(x, y, r, g) {
+          this.x = x;
+          this.y = y;
+          this.r = r;
+          this.c = '255, 255, 255';
+          this.v = {
+            x: 0,
+            y: g
+          };
+        };
+
+        Snow.prototype.updatePosition = function() {
+          this.y += this.v.y;
+        };
+        
+        Snow.prototype.wrapPosition = function() {
+          if (this.x - this.r > X) {
+            this.x = 0;
+          }
+          if (this.x + this.r < 0) {
+            this.x = X;
+          }
+          if (this.y - this.r > Y) {
+            this.y = 0;
+          }
+          if (this.y + this.r < 0) {
+            this.y = Y;
+          }
+        };
+
+        Snow.prototype.draw = function() {
+          ctx = this.ctx;
+          ctx.save();
+          ctx.beginPath();
+          ctx.fillStyle = this.gradient();
+          ctx.arc(this.x, this.y, this.r, Math.PI * 2, false);
+          ctx.fill();
+          ctx.closePath();
+          ctx.restore();
+        };
+
+        Snow.prototype.gradient = function () {
+          var col = this.c;
+          var g = this.ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+          g.addColorStop(0, "rgba(" + col + ", " + (1 * 1) + ")");
+          g.addColorStop(0.5, "rgba(" + col + ", " + (1 * 0.2) + ")");
+          g.addColorStop(1, "rgba(" + col + ", " + (1 * 0) + ")");
+          return g;
+        };
+
+        Snow.prototype.resize = function() {
+          this.x = rand(0, X);
+          this.y = rand(0, Y);
+        };
+
+        Snow.prototype.render = function() {
+          this.updatePosition();
+          this.wrapPosition();
+          this.draw();
+        };
+
+        for (var i = 0; i < backSnowNum; i++) {
+          var snow = new Snow(ctx, rand(0, X), rand(0, Y), rand(1, 5), Math.random());
+          backSnows.push(snow);
+        }
+        
+        for (var i = 0; i < snowNum; i++) {
+          var snow = new Snow(ctx, rand(0, X), rand(0, Y), rand(7, 10), Math.random() + 0.3);
+          snows.push(snow);
+        }
+        
+        /********************
+          Render
+        ********************/
+        
+        function render(){
+          ctx.clearRect(0, 0, X, Y);
+          //drawBg();
+          for (var i = 0; i < backSnows.length; i++) {
+            backSnows[i].render();
+          }
+          for (var i = 0; i < snows.length; i++) {
+            snows[i].render();
+          }
+          requestAnimationFrame(render);
+        }
+
+        render();
+
+        /********************
+          Event
+        ********************/
+        
+        // resize
+        function onResize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          X = canvas.width;
+          Y = canvas.height;
+          //drawBg();
+          for (var i = 0; i < backSnows.length; i++) {
+            backSnows[i].resize();
+          }
+          for (var i = 0; i < snows.length; i++) {
+            snows[i].resize();
+          }
+        }
+
+        window.addEventListener('resize', function() {
+          onResize();
+        });
+
+      });
+    })();
+
+  </script>
+</body>
+</html>
