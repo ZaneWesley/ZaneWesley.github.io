@@ -115,6 +115,12 @@
 		    background: #1e1f26;
 		    transform: skew(45deg);
 		}
+		#languages .wrapper {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			align-items: center;
+		}
 		ul {
 			list-style-type: circle;
 			display: list-item;
@@ -197,40 +203,46 @@
 	<div class="body-section grey diagonal">
 		<div id="intro" class="body-section-content">
 			<h2><noscript>Intro</noscript></h2>
-			<p>Hi there! I'm Zane, and I love to code! I specialize in coding UX and UI for the web. I also like running, playing soccer, and hanging out with friends in my spare time. I absolutely LOVE Google! I plan on working for them, or starting a rival company someday. I love Jesus with all my heart and attend church regularly. Lastly, I am a survivor of COVID-19!</p>
+			<p>Hey There! I'm Zane! I love Jesus, web coding, running and Google. I specialize in UX and UI development and design and work hard to make sure that all of my projects work flawlessly and are fully accessible. I love making games too, so if you have any ideas, tips or tricks, drop me a message below!</p>
 		</div>
 	</div>
 	<div class="body-section">
 		<div id="languages" class="body-section-content">
 			<h2><noscript>Coding Languages</noscript></h2>
-			<ul>
+			<!--<ul>
 				<li>HTML</li>
 				<li>CSS</li>
 				<li>JavaScript</li>
 				<li>jQuery</li>
 				<li>SVG</li>
-			</ul>
+			</ul>-->
+			<div class="wrapper">
+				<div>HTML</div>
+				<div>CSS</div>
+				<div>JavaScript</div>
+				<div>jQuery</div>
+				<div>SVG</div>
+			</div>
 		</div>
 	</div>
 	<div class="devider"></div>
 	<div class="body-section">
 		<div id="socials"  class="body-section-content">
 			<h2><noscript>Socials</noscript></h2>
-			<!--<p>Follow me on <a href="https://codepen.io/zanewesley">CodePen</a> and <a href="https://github.com/zanewesley">GitHub</a>.</p>-->
-			<p>No socials yet...</p>
+			<p>Follow me on <a href="https://codepen.io/zanewesley">CodePen</a> and <a href="https://github.com/zanewesley">GitHub</a>.</p>
 		</div>
 	</div>
 	<div class="body-section grey diagonal">
 		<div id="contact"  class="body-section-content">
-			<h2><noscript>Contact Me</noscript></h2>
+			<h2><noscript>Text Me</noscript></h2>
 			<script type="text/javascript">var submitted=false;</script>
 	     	<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)  {window.location='/about#contact';}"></iframe>
 			<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScBYpKgMvnS19PHhM4M3ZycGi2tlfokvxHtKz_fQf8hbETD_g/formResponse" target="hidden_iframe" onsubmit="submitted=true;" method="POST"><!--target="_self"-->
 				<label for="name">Name</label>
 				<input id="name" name="entry.149048477" type="text" placeholder="Zane Wesley" required>
 
-				<label for="email">Email</label>
-				<input id="email" name="entry.1578033212" type="email" placeholder="you@email.com" required>
+				<label for="email">Phone Number</label>
+				<input id="email" name="entry.1578033212" type="tel" placeholder="731-215-0558" required>
 
 				<label for="msg">Message</label>
 				<textarea id="msg" name="entry.1950191769" required></textarea>
@@ -270,7 +282,7 @@
 			speed: 50,
 			startDelay: 900
 		})
-		.type("Contact Me", {delay: 100});
+		.type("Text Me", {delay: 100});
 
 		typeIntro.go();
 		typeLanguages.go();
