@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Styles -->
+    <style>
+      body {
+        font-family: Comic Sans MS, Sans-serif;
+        background-image: url('images/christmas_snow.gif');
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center center;
+		overflow: hidden;
+      }
+      p {
+        font-weight: bold;
+        font-size: 10rem;
+		color: #ffffff;
+      }
+	  h1 {
+		color: #ffffff;
+	  }
+	  .g {
+		color: green;
+	   }
+	  .r {
+		color: red;
+	   }
+    </style>
+    <!-- jQuery JavaScript Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <title>Christmas Countdown 2019</title>
+  <h1>Christmas Countdown</h1>
+
+<!-- Display the countdown timer in an element -->
+<p id="countdownBox"></p>
+
+<script>
+// Set Christmas date we're counting down to
+var countdownDate = new Date("December 25, 2019 12:00:00").getTime();/* hrs: min: sec */
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countdownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("countdownBox").innerHTML = days + " days " + hours + " hrs "
+  + minutes + " min " + seconds + " sec ";
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("countdownBox").innerHTML = "<span class='g'>M</span><span class='r'>e</span><span class='g'>r</span><span class='r'>r</span><span class='g'>y <span class='r'>C</span><span class='g'>h</span><span class='r'>r</span><span class='g'>i</span><span class='r'>s</span><span class='g'>t</span><span class='r'>m</span><span class='g'>a</span><span class='r'>s</span>";
+    //document.getElementById("countdownBox").classList.add('complete');
+  }
+}, 1000);
+</script>
+</body>
+</html>
