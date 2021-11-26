@@ -17,14 +17,20 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
 	<link rel="mask-icon" href="images/icon.png" color="#F4F4FB">
-	<!-- External -->
+	<!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<!-- Canvas -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
+	<!-- UI -->
 	<script src="ui/type.min.js"></script>
+	<!--<script src='https://raw.github.com/timrwood/moment/master/moment.js'></script>
+	<script src='https://raw.github.com/documentcloud/underscore/master/underscore-min.js'></script>
+	<script src="https://raw.githubusercontent.com/iancanderson/streaker-js/master/streaker.js"></script>-->
 	<!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
@@ -34,7 +40,7 @@
 	  gtag('js', new Date());
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
-	<title>Zane's Apps</title>
+	<title>Zane's Apps | Christmas Update</title>
 
 	<style>
 		* {
@@ -57,6 +63,7 @@
 			height: 100%;
 			width: 100%;
 			color: #fff;
+			background-color: #16151a;
 			display: flex;
 			align-items: center;
 			font-family: 'Rajdhani', sans-serif;
@@ -157,6 +164,35 @@
 			height: auto;
 		}
 
+		#stats {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			background: #16151a;
+			box-shadow: 3px 3px 6px #111;
+		}
+		.stat {
+			/*position: relative;*/
+			width: 80px;
+			height: 80px;
+			background-color: rgba(99, 116, 133, 0.5);
+			border-radius: 50%;
+			color: #fff;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			user-select: none;
+			cursor: pointer;
+			transition: all 0.3s;
+		}
+		.stat:hover {
+			background-color: rgba(99, 116, 133, 0.9);
+			box-shadow: 6px 6px 6px #111;
+		}
+		.stat .material-icons {
+			font-size: 3em;
+		}
+
 		ul, li {
 			width: 100%;
 			font-size: 1.3em;
@@ -165,7 +201,7 @@
 			list-style-type: none;
 			/*padding-left: 1em;*/
 		}
-		li {
+		.main li {
 			cursor: pointer;
 			padding: 10px;
 			text-align: left;
@@ -189,7 +225,7 @@
 			background-color: rgba(99, 116, 133, 0.5);
 			color: #fff;
 		}
-		li .img {
+		.main li .img {
 			width: 50px;
 			height: auto;
 			min-height: 50px;
@@ -200,11 +236,11 @@
 			user-select: none;
 			-webkit-user-select: none;
 		}
-		li .img img {
+		.main li .img img {
 			width: 100%;
 			height: auto;
 		}
-		li:hover {
+		.main li:hover {
 			/*background-color: rgba(63, 61, 86, 0.7);*/
 			/*text-decoration-color: #fff;*/
 			background-color: rgba(195, 207, 219, 0.9);
@@ -237,7 +273,7 @@
 		#hamburger {
 			position: fixed;
 			top: 1em;
-			right: calc(1em + 1px);
+			right: 2em;
 			color: #fff;
 			width: 30px;
 			height: 30px;
@@ -278,7 +314,7 @@
 			right: 0;
 			width: 0;/*30%*/
 			height: 100vh;
-			z-index: 3;
+			z-index: 4;
 			background-color: rgba(45, 62, 80, 0.6);
 			text-align: left;
 			transition: all 0.3s;
@@ -291,6 +327,7 @@
 		}*/
 		#menu h2 {
 			padding: 1em;
+			color: #fff;
 		}
 		#menu a {
 			width: 100%;
@@ -305,14 +342,105 @@
 			background-color: rgba(99, 116, 133, 0.5);
 		}
 
+		.modal {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%) scale(0.9);
+			width: 50%;
+			height: 50%;
+			background-color: rgba(99, 116, 133, 1);
+			/*box-shadow: 6px 6px 6px #111;*/
+			border-radius: 8px;
+			z-index: -3;
+			opacity: 0;
+			transition: all 0.3s;
+			overflow: hidden;
+			color: #fff;
+		}
+		.modal.open {
+			visibility: visible!important;
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1);
+			z-index: 4;
+		}
+		.modal h2 {
+			text-align: center;
+			padding: 1em;
+		}
+		#streak-modal {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+			visibility: hidden;
+		}
+		#history-modal, #leaderboard-modal {
+			overflow-y: auto;
+		}
+		.modal #streak {
+			/*position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);*/
+			font-size: 5em;
+		}
+		.modal iframe {
+			border: none;
+			width: 100%;
+			height: 100%;
+			background-color: transparent;
+		}
+		#overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			z-index: 4;
+			display: none;
+		}
+		#overlay.open {
+			display: block;
+		}
+		.modal ul {
+			list-style-type: none;
+		}
+		.modal li {
+			padding: 0.5em 1em;
+			font-size: 1em;
+			/*display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-around;*/
+			columns: 2;
+			cursor: pointer;
+			transition: all 0.3s;
+		}
+		.modal li:hover {
+			background-color: rgba(59, 83, 108, 0.5);
+		}
+		ul.nohover li:hover {
+			background-color: inherit;
+			cursor: auto;
+		}
+
+		#cookie {
+			position: fixed;
+			bottom: 1em;
+			right: calc(1em + 20px);
+			z-index: 3;
+			cursor: pointer;
+		}
+
 		#shapes .circles{
 		    position: fixed;
 		    top: 0;
 		    left: 0;
-		    width: 100vw;
+		    width: calc(100vw - 1em);
 		    height: 100vh;
 		    overflow: hidden;
-		    z-index: -1;
+		    z-index: 1;
 		}
 		.circles li{
 		    position: absolute;
@@ -323,6 +451,12 @@
 		    background: rgba(42, 58, 74, 0.8);
 		    animation: rotate 25s linear infinite;
 		    bottom: -150px;
+		}
+		.circles.christmas li {
+			background: rgba(55, 193, 110, 0.8);
+		}
+		.circles.christmas li:nth-child(odd) {
+			background: rgba(249, 35, 42, 0.8);
 		}
 
 		.circles li:nth-child(1){
@@ -413,6 +547,7 @@
 		/* width */
 		::-webkit-scrollbar {
 		  width: auto;
+		  background: #16151a;
 		}
 
 		/* Track */
@@ -422,7 +557,7 @@
 
 		/* Handle */
 		::-webkit-scrollbar-thumb {
-		  background: rgba(99, 116, 133, 0.5);;
+		  background: rgba(99, 116, 133, 0.5);
 		  border-radius: 25px;
 		}
 
@@ -495,6 +630,36 @@
 			animation-fill-mode: forwards;
 		}
 
+		#lights {
+			position:fixed;
+			top:0;
+			left:0;
+			width:100%;
+			z-index:4;
+		}
+		#popup {
+			position: fixed;
+			bottom: 1em;
+			right: 9em;
+			background-color: rgb(230, 230, 230);
+			z-index: 3;
+			padding: 0.5em;
+			/*animation: bounceRight 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) cubic-bezier(.8, .5, .2, 1.4) infinite forwards;*/
+			animation: pulse 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite forwards;
+		}
+		#popup a {
+			color: #000;
+			text-decoration: none;
+		}
+		#popup h2 {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cdefs%3E%3CclipPath%3E%3Cpath fill='%2300f' fill-opacity='.514' d='m-7 1024.36h34v34h-34z'/%3E%3C/clipPath%3E%3CclipPath%3E%3Cpath fill='%23000000' fill-opacity='.472' d='m-6 1028.36h32v32h-32z'/%3E%3C/clipPath%3E%3C/defs%3E%3Cpath d='m345.44 248.29l-194.29 194.28c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744l171.91-171.91-171.91-171.9c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.29 194.28c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373' transform='matrix(.03541-.00013.00013.03541 2.98 3.02)' fill='%23000000'/%3E%3C/svg%3E");
+			background-repeat: no-repeat;
+			background-position: right center;
+			padding-right: 1.5em;
+		}
+
+		@keyframes bounceRight {0% {right: 11em;} 50% {right: 9em;} 100% {right: 11em;}}
+		@keyframes pulse {0% {transform: scale(1);} 50% {transform: scale(0.9)} 100% {transform: scale(1);} }
 		@keyframes fadeDown {from {opacity: 0; transform: translateY(-50px);} to {opacity: 1; transform: translateY(50px;);}}
 		@keyframes fade{ from {opacity: 0;} to {opacity: 1;} }
 
@@ -521,6 +686,23 @@
 			.desktop-only {
 				display: none;
 			}
+			.stat {
+				width: 60px;
+				height: 60px;
+			}
+			.stat .material-icons {
+				font-size: 2em;
+			}
+			.modal {
+				width: 85%;
+			}
+			#cookie {
+				right: 1em;
+			}
+
+			#lights {
+				width: 300%;
+			}
 		}
 	</style>
 </head>
@@ -538,15 +720,32 @@
 		</nav>-->
 	</header>
 
+	<div id="lights">
+		<img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas/top-lights.png" style="width: 100%; user-select: none; -webkit-user-select: none;">
+	</div>
+
 	<div class="main">
 		<!--<div class="section">
 			<h2 style="padding-bottom: 0; font-weight: 500; font-size: 1.2em;">DISCLAIMER: This page is a beta version and may not work as expected. An official release is coming soon.</h2>
 		</div>-->
+		<div id="stats" class="section">
+			<div class="stat" id="streak-btn" title="Streak"><span class="material-icons">bolt</span></div>
+			<div class="stat" id="leaderboard-btn" title="Score Leaderboard"><span class="material-icons">leaderboard</span></div>
+			<div class="stat" id="history-btn" title="App History"><span class="material-icons">timeline</span></div>
+		</div>
 		<div id="new" class="section">
 			<div class="split"><img src="images/bg/new.svg" class="mobile-only"></div>
 			<div class="split left">
 				<h2>New Releases</h2>
 				<ul>
+					<li id="countdowns" data-url="countdowns">
+						<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
+						<div class="name">Countdowns</div>
+					</li>
+					<li id="filler" data-url="https://fillergame.herokuapp.com">
+						<div class="img"><img src="https://fillergame.herokuapp.com/public/favicon.ico"></div>
+						<div class="name">Filler</div>
+					</li>
 					<li id="crossyroad" data-url="crossyroad">
 						<div class="img"><img src="crossyroad/icon.jpeg"></div>
 						<div class="name">Crossy Road</div>
@@ -577,6 +776,10 @@
 			<div class="split right">
 				<h2>Games</h2>
 				<ul>
+					<li id="filler" data-url="https://fillergame.herokuapp.com">
+						<div class="img"><img src="https://fillergame.herokuapp.com/public/favicon.ico"></div>
+						<div class="name">Filler</div>
+					</li>
 					<li id="crossyroad" data-url="crossyroad">
 						<div class="img"><img src="crossyroad/icon.jpeg"></div>
 						<div class="name">Crossy Road</div>
@@ -676,8 +879,12 @@
 			<div class="split right">
 				<h2>Miscellaneous</h2>
 				<ul>
+					<li id="countdowns" data-url="countdowns">
+						<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
+						<div class="name">Countdowns</div>
+					</li>
 					<li id="insperation" data-url="inspiration">
-						<div class="img"><img src="images/inspiration-icon.PNG"></div>
+						<div class="img"><img src="images/inspiration-icon.png"></div>
 						<div class="name">Insperational Quotes Image Generator</div>
 					</li>
 				</ul>
@@ -706,9 +913,10 @@
 			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
 			<p>Copyright &copy; 2021 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page.</p>
 		</footer>
+	</div>
 
 		<div id="shapes">
-			<ul class="circles">
+			<ul class="circles christmas">
                 <li></li>
                 <li></li>
                 <li></li>
@@ -731,12 +939,72 @@
 
 		<div id="menu">
 			<h2>Menu</h2>
+			<a href="#stats">Stats</a>
 			<a href="#new">New Releases</a>
 			<a href="#games">Games</a>
 			<a href="#resources">Resources</a>
 			<a href="#miscellaneous">Miscellaneous</a>
 			<a href="#more">More</a>
 		</div>
+
+		<div id="overlay"></div>
+
+		<div id="streak-modal" class="modal">
+			<h2>Your Streak</h2>
+			<div id="streak">1</div>
+			<div style="font-size: 3em;">&nbsp;</div>
+			<!--<div class="streak-info">
+				<div>Best: <span id="best">1</span></div>
+				<div>Days this Year: <span id="dty">1</span></div>
+			</div>-->
+		</div>
+
+		<div id="leaderboard-modal" class="modal">
+			<!--<iframe scr="leaderboard">Loading...</iframe>-->
+			<h2>Score Leaderboard</h2>
+			<div id="leaderboard">
+				<ul class="nohover">
+					<li>
+						<div>Game</div>
+						<div>Top Score</div>
+					</li>
+					<li>
+						<div>2048</div>
+						<div>78332</div>
+					</li>
+					<li>
+						<div>Cake Ninja Classic</div>
+						<div>2559</div>
+					</li>
+					<li>
+						<div>Crossy Road</div>
+						<div>265</div>
+					</li>
+					<li>
+						<div>Hextris</div>
+						<div>61733</div>
+					</li>
+				</ul>
+				<p style="padding: 1em;">More scores coming soon!</p>
+			</div>
+		</div>
+
+		<div id="history-modal" class="modal">
+			<h2>Your History</h2>
+			<div id="history"></div>
+		</div>
+
+		<!--<div id="cookie">
+			<a href="christmas-countdown-2021"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg" height="60"></a>
+		</div>-->
+
+		<!--<div id="popup">
+			<a href="christmas-countdown-2021"><h2>Countdown with Me!</h2></a>
+		</div>-->
+
+		<!--<div id="cookie">
+			<svg width="40" height="40" viewBox="0 0 71.85 72.23" xmlns="http://www.w3.org/2000/svg"> <path d="m67.6 36.73a6.26 6.26 0 0 1 -3.2-2.8 5.86 5.86 0 0 0 -5.2-3.1h-.3a11 11 0 0 1 -11.4-9.5 6 6 0 0 1 -.1-1.4 9.2 9.2 0 0 1 .4-2.9 8.65 8.65 0 0 0 .2-1.6 5.38 5.38 0 0 0 -1.9-4.3 7.3 7.3 0 0 1 -2.5-5.5 3.91 3.91 0 0 0 -3.5-3.9 36.46 36.46 0 0 0 -15 1.5 33.14 33.14 0 0 0 -22.1 22.7 35.62 35.62 0 0 0 -1.5 10.2 34.07 34.07 0 0 0 4.8 17.6.75.75 0 0 0 .07.12c.11.17 1.22 1.39 2.68 3-.36.47 5.18 6.16 5.65 6.52a34.62 34.62 0 0 0 55.6-21.9 4.38 4.38 0 0 0 -2.7-4.74z" stroke-width="3" style="fill: #16151a; stroke: rgb(230, 230, 230);"></path> <path d="m68 41.13a32.37 32.37 0 0 1 -52 20.5l-2-1.56c-2.5-3.28-5.62-7.15-5.81-7.44a32 32 0 0 1 -4.5-16.5 34.3 34.3 0 0 1 1.4-9.6 30.56 30.56 0 0 1 20.61-21.13 33.51 33.51 0 0 1 14.1-1.4 1.83 1.83 0 0 1 1.6 1.8 9.38 9.38 0 0 0 3.3 7.1 3.36 3.36 0 0 1 1.2 2.6 3.37 3.37 0 0 1 -.1 1 12.66 12.66 0 0 0 -.5 3.4 9.65 9.65 0 0 0 .1 1.7 13 13 0 0 0 10.5 11.2 16.05 16.05 0 0 0 3.1.2 3.84 3.84 0 0 1 3.5 2 10 10 0 0 0 4.1 3.83 2 2 0 0 1 1.4 2z" stroke-width="3" style="fill: #16151a; stroke: rgb(230, 230, 230);"></path> <g style="fill: rgb(150, 163, 178);"> <path d="m26.6 31.43a5.4 5.4 0 1 1 5.4-5.43 5.38 5.38 0 0 1 -5.33 5.43z"></path> <path d="m25.2 53.13a5.4 5.4 0 1 1 5.4-5.4 5.44 5.44 0 0 1 -5.4 5.4z"></path> <path d="m47.9 52.33a5.4 5.4 0 1 1 5.4-5.4 5.32 5.32 0 0 1 -5.24 5.4z"></path> </g> </svg>
+		</div>-->
 
 
 	<!-- PWA page elems-->
@@ -774,10 +1042,13 @@
         <symbol id="close-icon" viewbox="0 0 320 512">
         	<path fill="currentColor" d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z" class=""></path>
         </symbol>
+        <symbol id="bolt-icon" viewbox="0 0 192 192">
+        	<path fill="currentColor" d="m155.109 74.028a4 4 0 0 0 -3.48-2.028h-52.4l8.785-67.123a4.023 4.023 0 0 0 -7.373-2.614l-63.724 111.642a4 4 0 0 0 3.407 6.095h51.617l-6.962 67.224a4.024 4.024 0 0 0 7.411 2.461l62.671-111.63a4 4 0 0 0 .048-4.027z"/>
+        </symbol>
     </svg>
 
 	<script>
-		VANTA.TOPOLOGY({
+		/*VANTA.TOPOLOGY({
 			  el: "#header",
 			  mouseControls: true,
 			  touchControls: true,
@@ -787,6 +1058,18 @@
 			  scale: 1.00,
 			  scaleMobile: 1.00,
 			  color: 0x2a3a4a,
+			  backgroundColor: 0x16151a
+		});*/
+		VANTA.TOPOLOGY({
+			  el: "#header",
+			  mouseControls: true,
+			  touchControls: true,
+			  gyroControls: false,
+			  minHeight: 200.00,
+			  minWidth: 200.00,
+			  scale: 1.00,
+			  scaleMobile: 1.00,
+			  color: 0x37c16e,
 			  backgroundColor: 0x16151a
 		});
 
@@ -831,6 +1114,23 @@
 			});
 		});
 
+		document.querySelectorAll('.stat').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				this.parentNode.scrollIntoView();
+				document.getElementById(this.id.replace('btn', 'modal')).classList.add('open');
+				document.getElementById('overlay').classList.add('open');
+			});
+		});
+
+		document.getElementById('overlay').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelectorAll('.modal').forEach(function(elem) {
+				elem.classList.remove('open');
+			});
+			this.classList.remove('open');
+		});
+
 		window.onload = function() {
 			document.querySelector('header h1').style.color="#fff";
 			/*document.querySelectorAll('.section').forEach(function(elem) {
@@ -840,7 +1140,7 @@
 
 		/**/if (window.matchMedia('(display-mode: standalone)').matches) {/**/
 			//event listener for if the page is a PWA
-			document.querySelectorAll('li').forEach(function(elem) {
+			document.querySelectorAll('.section li').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
 					if(!this.classList.contains('disabled') && !this.classList.contains('newframe')) {
@@ -855,6 +1155,7 @@
 						  'app_name': _this.id
 						});
 						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
+						updateRecentArr(this.id);
 						//Layer iframe ontop
 						document.getElementById('standalone-frame').classList.add('fadeIn');
 						document.getElementById('standalone-nav').classList.add('fadeIn');
@@ -873,13 +1174,14 @@
 						gtag('event', 'app_link_click', {
 						  'app_name': _this.id
 						});
+						updateRecentArr(this.id);
 						open(this.getAttribute('data-url'));
 					}
 				});
 			});
 		/**/} else {
 			//event listener for if it is not a PWA
-			document.querySelectorAll('li').forEach(function(elem) {
+			document.querySelectorAll('.section li').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
 					if(!this.classList.contains('disabled')) {
@@ -893,6 +1195,7 @@
 						gtag('event', 'app_link_click', {
 						  'app_name': _this.id
 						});
+						updateRecentArr(this.id);
 						document.body.scrollTop = 0; // For Safari
 						document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 						setTimeout(function() {
@@ -952,6 +1255,136 @@
 
 		    return "unknown";
 		}
+		var appArr;
+		function updateRecentArr(app) {
+			var appArrQuery = localStorage.getItem('recent_apps');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('recent_apps'))
+			} else {
+				appArr = [];
+			}
+			var appJ = {
+				name: app,
+				date: new Date()
+			};
+			appArr.push(appJ);
+			localStorage.setItem('recent_apps', JSON.stringify(appArr));
+			loadAppHistory(appArr);
+		}
+
+		function loadAppHistory(appHArr) {
+			appHArr = appHArr.reverse();
+			document.getElementById('history').innerHTML="";
+			var ul = document.createElement('ul');
+			document.getElementById('history').appendChild(ul);
+			for(var i = 0; i<appHArr.length; i++) {
+				var li = document.createElement('li');
+				li.setAttribute('data-id', appHArr[i].name);
+				var d = new Date(appHArr[i].date);
+				li.innerHTML = `
+					<div class="name">${document.getElementById(appHArr[i].name).querySelector('.name').innerHTML}</div>
+					<div class="date">${detFormat(d)}</div>
+				`;
+				document.getElementById('history').querySelector('ul').appendChild(li);
+			}
+			console.log('Loading history...');
+			document.querySelectorAll('#history li').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					e.preventDefault();
+					document.getElementById(this.getAttribute('data-id')).click();
+				});
+			});
+		}
+
+		var pre_appArrQuery = localStorage.getItem('recent_apps');
+		if(pre_appArrQuery) {
+			appArr = JSON.parse(localStorage.getItem('recent_apps'))
+		} else {
+			appArr = [];
+		}
+		loadAppHistory(appArr);
+
+		function detFormat(date) {
+			var OneDay = new Date().getTime() + (1 * 24 * 60 * 60 * 1000);
+			var d;
+			/*if (OneDay > date) {
+			    // The yourDate time is less than 1 day from now
+			    d = formatAMPM(date);
+			}
+			else if (OneDay < date) {
+			    // The yourDate time is more than 1 day from now
+			    d = getFormattedDate(date);
+			}*/
+			d = getFormattedDate(date);
+			return d;
+		}
+
+		function getFormattedDate(date) {
+		    let year = date.getFullYear();
+		    let month = (1 + date.getMonth()).toString().padStart(2, '0');
+		    let day = date.getDate().toString().padStart(2, '0');
+		  
+		    return month + '/' + day + '/' + year;
+		}
+
+		function formatAMPM(date) {
+		  var hours = date.getHours();
+		  var minutes = date.getMinutes();
+		  var ampm = hours >= 12 ? 'pm' : 'am';
+		  hours = hours % 12;
+		  hours = hours ? hours : 12; // the hour '0' should be '12'
+		  minutes = minutes < 10 ? '0'+minutes : minutes;
+		  var strTime = hours + ':' + minutes + ' ' + ampm;
+		  return strTime;
+		}
+
+
+		var streakDatesTest = [
+			'10/27/2021',
+			'10/28/2021',
+			'10/29/2021',
+			'10/30/2021'
+		];
+
+		var streakDates;
+		function getStreak() {
+			var streakArrQuery = localStorage.getItem('z_streak');
+			if(streakArrQuery) {
+				streakDates = JSON.parse(localStorage.getItem('z_streak'));//removeDuplicates(JSON.parse(localStorage.getItem('z_streak')));
+			} else {
+				streakDates = [];
+			}
+			streakDates.push(new Date());
+			localStorage.setItem('z_streak', JSON.stringify(streakDates));//JSON.stringify(removeDuplicates(streakDates)));
+			console.log('Loading streak...');
+			document.getElementById('streak').innerHTML=currentStreak(streakDates);
+		}
+
+		//order-safe reduction
+		/*function remove_duplicates_safe(arr) {
+			var seen = {};
+			var ret_arr = [];
+			for (var i = 0; i < arr.length; i++) {
+				if (!(arr[i] in seen)) {
+					ret_arr.push(arr[i]);
+					seen[arr[i]] = true;
+				}
+			}
+			return ret_arr;
+		}*/
+		function removeDuplicates(array) {
+		  return array.filter((a, b) => array.indexOf(new Date(a).setHours(0, 0, 0, 0)) === new Date(b).setHours(0, 0, 0, 0));
+		}
+		
+		//console.log(streaker(streakDates).current());
+		function currentStreak(arr) {
+		  let count = 0;
+		  arr.reverse().forEach((el, i) => {
+		    if ((new Date().setHours(0, 0, 0, 0) - new Date(el).setHours(0, 0, 0, 0)) === i * 86400000) { count++; }
+		  });
+		  return count;
+		}
+		getStreak();
 
 		setTimeout(function() {
 			document.querySelector('.typejs-wrap-cursor').style.display='none';
