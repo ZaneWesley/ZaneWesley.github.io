@@ -3,8 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&family=Zen+Kurenaido&family=Material+Icons&display=swap" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<title>Chrismas Countdown 2021</title>
 
@@ -18,20 +20,26 @@
 		html, body {
 			scroll-behavior: smooth;
 			font-family: 'Zen Kurenaido', sans-serif;
-			width: 100%;
-			height: 100%;
+			width: 100vw;
+			height: 100vh;
+      overflow: hidden;
 		}
 		body {
-			background-color: #ecefef;
+			background: rgb(51,114,147);
+      background: radial-gradient(circle, rgba(51,114,147,1) 0%, rgba(1,51,88,1) 100%);
+      background-image: url("https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas/bg.jpg");
+      background-position: center top;
+      background-size: cover;
+      background-repeat: no-repeat;
 		}
 		canvas {
 			position: fixed;
 			top: 0;
 			left: 0;
-			background-image: url('https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas/bg.jpg');
+			/*background-image: url('https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas/bg.jpg');
 			background-position: center top;
 			background-size: cover;
-			background-repeat: no-repeat;
+			background-repeat: no-repeat;*/
 		}
 		#world {
 			position: fixed;
@@ -87,6 +95,45 @@
       #m-break {
       	display: none;
       }
+      #controls {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        padding: 1em;
+        z-index: 2;
+        display: flex;
+      }
+      #controls span {
+        color: #ffffff;
+        cursor: pointer;
+      }
+      #music-list {
+        position: absolute;
+        bottom: 3em;
+        right: 1em;
+        width: 200px;
+        height: auto;
+        z-index: 2;
+        background-color: #698ba0;
+        color: #042845;
+        text-align: center;
+        display: none;
+      }
+      #music-list.open {
+        display: block;
+      }
+      #music-list li {
+        padding: 0.5em;
+        cursor: pointer;
+      }
+      /*#music-list li:hover {
+        background-color: #3c7493;
+        color: #fff;
+      }*/
+      #music-list ul li.active {
+        background-color: #145074;
+        color: #fff;
+      }
       @media(max-width: 775px) {
         #countdown-box {
           flex-wrap: wrap;
@@ -101,7 +148,10 @@
         #m-break {
         	display: block;
         	flex-basis: 100%;
-			height: 0;
+			    height: 0;
+        }
+        #music-list {
+          bottom: 0.5em;
         }
       }
 	</style>
@@ -132,11 +182,29 @@
 		</div>
 	</div>
 
+  <div id="controls">
+    <span id="play-toggle" class="material-icons">volume_off</span><!-- volume_up-->
+    <span id="queue-toggle" class="material-icons">arrow_circle_up</span>
+  </div>
+
+  <div id="music-list">
+    <ul>
+      <li>christmas-party.mp3</li>
+      <li>christmas-rock.mp3</li>
+      <li class="active">happy-new-year.mp3</li>
+      <li>jingle-bells.mp3</li>
+      <li>snowflake.mp3</li>
+      <li>upbeat-countdown.mp3</li>
+    </ul>
+  </div>
+
 	<canvas id="canvas"></canvas>
 	<div id="world"></div>
 
+  <audio id="audio" controls="false" autoplay type="audio/mp3" src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas-audio/upbeat-countdown.mp3" style="display: none;"></audio>
+
 <script>
-// Set the birthday date we're counting down to
+// Set the date we're counting down to
   var countdownDate = new Date("December 25, 2021 10:00:00").getTime();/* hrs: min: sec */
   //var countdownDate = new Date("November 27, 2020 10:00:00").getTime();
 
@@ -181,6 +249,100 @@ function isMobile() {
     return false;
   }
 }
+</script>
+<script>
+  var audioFiles = ["christmas-party.mp3", "christmas-rock.mp3", "happy-new-year.mp3", "jingle-bells.mp3", "snowflake.mp3", "upbeat-countdown.mp3"];
+  var audio;
+  var playlist;
+  var tracks;
+  var current;
+
+  generateShuffle();
+
+  function generateShuffle() {
+    var shuff = shuffle(audioFiles);
+    init();
+
+    document.querySelector('#music-list ul').innerHTML="";
+
+    for(var i = 0; i < shuff.length; i++) {
+      var li = document.createElement('li');
+      li.innerHTML = shuff[i];
+      document.querySelector('#music-list ul').appendChild(li);
+    }
+
+    document.querySelectorAll('#music-list ul li')[current].classList.add('active');
+  }
+
+  function init(){
+      current = 0;
+      audio = document.getElementById('audio');
+      //audio[0].volume = .40;
+      len = audioFiles.length;
+      
+      run(audioFiles[current], audio);
+      
+      audio.addEventListener('ended',function(e){
+          current++;
+          if(current == len){
+              current = 0;
+          }
+          run(audioFiles[current],audio);
+          //added
+          if(current !==0) {
+            document.querySelectorAll('#music-list ul li')[current-1].classList.remove('active');
+          } else {
+            document.querySelectorAll('#music-list ul li')[audioFiles.length-1].classList.remove('active');
+          }
+          document.querySelectorAll('#music-list ul li')[current].classList.add('active');
+      });
+  }
+
+  function run(link, player){
+          player.src = 'https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas-audio/'+link;
+          audio.load();
+          audio.play();
+  }
+
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
+  document.getElementById('play-toggle').addEventListener('click', function(e) {
+    if(this.innerHTML == 'volume_off') {
+      audio.play();
+      this.innerHTML='volume_up';
+    } else {
+      audio.pause();
+      this.innerHTML='volume_off';
+    }
+  });
+
+  document.getElementById('queue-toggle').addEventListener('click', function(e) {
+    if(this.innerHTML == 'arrow_circle_up') {
+      document.getElementById('music-list').classList.add('open');
+      this.innerHTML='arrow_circle_down';
+    } else {
+      document.getElementById('music-list').classList.remove('open');
+      this.innerHTML='arrow_circle_up';
+    }
+  });
+
 </script>
 <script>
     (function () {
