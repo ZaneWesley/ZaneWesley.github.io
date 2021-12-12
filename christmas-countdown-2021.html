@@ -125,6 +125,7 @@
       #music-list li {
         padding: 0.5em;
         cursor: pointer;
+        text-transform: capitalize;
       }
       /*#music-list li:hover {
         background-color: #3c7493;
@@ -149,9 +150,6 @@
         	display: block;
         	flex-basis: 100%;
 			    height: 0;
-        }
-        #music-list {
-          bottom: 0.5em;
         }
       }
 	</style>
@@ -267,7 +265,7 @@ function isMobile() {
 
     for(var i = 0; i < shuff.length; i++) {
       var li = document.createElement('li');
-      li.innerHTML = shuff[i];
+      li.innerHTML = shuff[i].toString().replace('-', ' ').replace('.mp3', '');
       document.querySelector('#music-list ul').appendChild(li);
     }
 
