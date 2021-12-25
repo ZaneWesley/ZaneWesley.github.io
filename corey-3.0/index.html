@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+	<script src="algebra-0.2.6.min.js"></script>
+	<script src="trigger.js"></script>
+	
+	<title>Corey 3.0</title>
+
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+		* {
+			box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+		}
+		html, body {
+			scroll-behavior: smooth;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			color: #aed0d0;
+			font-family: "Helvetica Neue",Helvetica,Arial, sans-serif;
+			font-family: "Courier Prime", "Courier New", monospace;
+			font-size: 14px;
+    		line-height: 1.42857143;
+		}
+		body {
+			background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 1000, from(#396362), to(#000000));
+		    background: -webkit-radial-gradient(circle, #396362, #000000);
+		    background: -moz-radial-gradient(circle, #396362, #000000);
+		    background: -ms-radial-gradient(circle, #396362, #000000);
+		}
+		#content-wrapper {
+			height: 100%;
+		    width: 100%;
+		    position: absolute;
+		    opacity: 1;
+		    z-index: 2;
+		}
+		#input-wrapper {
+			position: absolute;
+		    width: 96%;
+		    left: 2%;
+		    margin-right: -2%;
+		    bottom: 5px;
+		    margin-top: 20px;
+		    z-index: 1;
+		    color: rgb(202,253,255);
+		    text-shadow: 0 0 5px rgb(202 253 255 / 50%);
+		    background-color: rgba(109, 171, 170,0.8);
+		    padding: 10px;
+		    border-radius: 10px;
+		}
+		#send-icon {
+			z-index: 1;
+		    right: 5px;
+		    top: 5px;
+		    cursor: pointer;
+		    /*background-image: url(images/mic-filled.png);*/
+		    width: 20px;
+		    height: 20px;
+		    /*background-size: 20px 20px;*/
+		    float: left;
+		    font-size: 1.5em;
+		}
+		.wrapper {
+			position: absolute;
+		    top: 0;
+		    bottom: 0;
+		    right: 10px;
+		    left: 60px;
+		}
+		.wrapper input:placeholder-shown {
+		    text-shadow: none;
+		    color: rgb(202,253,255);
+		}
+		.wrapper input, .wrapper input:focus {
+		    width: 100%;
+		    height: 100%;
+		    padding: 10px 0;
+		    background: transparent;
+		    color: rgb(202,253,255);
+		    outline: none;
+		    border: none;
+		    text-shadow: 0 0 5px rgb(202 253 255 / 50%);
+		}
+		input[type="text"], select:focus, textarea {
+		    font-size: 16px;
+		}
+		::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+		 color: rgb(202,253,255);
+		  opacity: 1; /* Firefox */
+		}
+
+		:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		  color: rgb(202,253,255);
+		}
+
+		::-ms-input-placeholder { /* Microsoft Edge */
+		  color: rgb(202,253,255);
+		}
+		#message-container {
+			position: absolute;
+		    bottom: 50px;
+		    width: 96%;
+		    left: 2%;
+		    margin-right: -2%;
+		    top: 60px;
+		    z-index: 1;
+		    text-align: center;
+		    color: black;
+		    text-shadow: 0 0 5px rgb(0 0 0 / 20%);
+		    -webkit-mask-image: -webkit-gradient(linear, left top, left 80%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
+		}
+		#message-wrapper {
+			overflow: auto;
+		    position: absolute;
+		    bottom: 0;
+		    max-height: 100%;
+		    width: 100%;
+		    padding-top: 100%;
+		    padding-bottom: 20px;
+		    -webkit-mask-image: -webkit-gradient(linear, left 95%, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+		}
+		.message-user {
+			text-align: right;
+    		margin: 10px 0 10px 80px;
+		}
+		.contents {
+			display: inline-block;
+		    color: rgb(202,253,255);
+		    text-shadow: 0 0 5px rgb(202 253 255 / 50%);
+		    background-color: rgba(57, 99, 98, 0.8);
+		    padding: 8px 10px;
+		    border-radius: 10px;
+		    opacity: 0.8;
+		}
+		.message-bot {
+			/*font-weight: bold;*/
+			font-weight: 400;
+		    text-align: left;
+		    margin-right: 80px;
+		    margin-left: 0;
+		}
+		.message-bot .contents {
+			opacity: 1;
+    		min-width: 70px;
+		}
+		#message-wrapper {
+		    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+		    scrollbar-width: none;  /* Firefox */
+		}
+		#message-wrapper::-webkit-scrollbar { 
+		    display: none;  /* Safari and Chrome */
+		}
+		a {
+			color: rgba(255,255,255, 0.7);
+		}
+
+		@media (min-width: 768px) {
+			#input-wrapper {
+			    width: 500px;
+			    left: 50%;
+			    bottom: 100px;
+			    margin-left: -250px;
+			    padding: 20px;
+			}
+			.wrapper input, .wrapper input:focus {
+			    padding: 20px 0;
+			}
+			#message-container {
+				top: 0;
+			    bottom: 200px;
+			    left: 50%;
+			    width: 600px;
+			    margin-left: -300px;
+			    -webkit-mask-image: -webkit-gradient(linear, left 20%, left 70%, from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
+			}
+			#message-wrapper {
+				padding-bottom: 40px;
+			}
+			.message-user {
+				margin: 20px 0 20px 100px;
+			}
+			.contents {
+			    padding: 15px 20px;
+			}
+			.message-bot {
+				margin-right: 100px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="content-wrapper">
+		<div id="input-wrapper">
+			<div id="send-icon">
+				<i class="fas fa-arrow-circle-up"></i>
+			</div>
+			<div class="wrapper">
+				<input id="input" autofocus="autofocus" autocomplete="off" type="text" placeholder="Type message...">
+			</div>
+		</div>
+		<div id="message-container">
+			<div id="message-wrapper">
+				<!--<div class="message-user">
+					<div class="contents">
+						<span class="message">Hello</span>
+						<div class="spacing"></div>
+					</div>
+				</div>
+
+				<div class="message-bot">
+					<div class="contents">
+						<span class="message">Hello, Zane</span>
+						<div class="spacing"></div>
+					</div>
+				</div>-->
+			</div>
+		</div>
+	</div>
+
+	<script src="main.js"></script>
+
+</body>
+</html>
