@@ -11,6 +11,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+document.getElementById('help-btn').addEventListener('click', function(e) {
+  sendResults('',
+    `It looks like you need help!
+    <br>
+    Here\'s a list of things I can do:
+    <ul>
+      <li>I can keep you company</li>
+      <li>I can have a conversation</li>
+      <li>I can tell jokes</li>
+      <li>I can do math</li>
+      <li>I can solve equations</li>
+      <li>I can flip a coin</li>
+      <li>I can be encouraging</li>
+    </ul>
+    `, false);
+})
+
 function initPersonalize() {
   sendResults('', 'Hello! I\'d like to get to know you!', false);
   sendResults('', 'What\'s your name?', false);
@@ -102,7 +119,7 @@ function initKeypress() {
     if (e.keyCode == 13 && input != "" && input != null) {
       inputField.value = "";
       displayUserInput(input);
-      if(String( input ).replace(/,/g, '').match( /[()\\*+-/><=]/ )) {
+      if(String( input ).replace(/,/g, '').replace('//', '').replace(/\./g, '').match( /[()\\*+-/><=]/ )) {
         input = input.trim();
         var eqVar = input.replace(/[0-9]|[()\\*+-/><=^]/g, '').split('')[0];
         console.log(eqVar);
@@ -176,6 +193,13 @@ function output(input) {
     .replace(/gonna/g, 'going to')
     .replace(/whatcha/g, 'what are you')
     .replace(/i said/g, '')
+    .replace(/dude/g, '')
+    .replace(/bro/g, '')
+    .replace(/bud/g, '')
+    .replace(/buddy/g, '')
+    .replace(/idk/g, 'i do not know')
+    .replace(/ lol/g, '')
+    .replace(/lol /g, '')
     .trim();
 
   if (text.match(/(corona|covid|virus)/gi)) {
@@ -192,7 +216,14 @@ function output(input) {
     product = gratitude[Math.floor(Math.random() * gratitude.length)];
   } else if (text.match(/(my name)/gi)) {
     product = nameIntro[Math.floor(Math.random() * nameIntro.length)] + ' ' + userData.name; 
-  } else if (compare(prompts, replies, text)) { 
+  } else if (text.match(/(ass|arse|asshole|arsehole|bastard|bitch|cock|damn|dick|cunt|pussy|fuck|piss|shit|shite|up yours)/gi)) {
+    product = profanityReaction[Math.floor(Math.random() * profanityReaction.length)];
+  } else if (text.match(/(my birthday)/gi)) {
+    product = 'Your birthday is on ' + userData.birthday; 
+  } else if (text.replace('open', '').trim().match(/(https|http|www)/gi)) {
+    //product = accomplished[Math.floor(Math.random() * accomplished.length)];
+    product = "Sorry, I can\'t open links yet."
+  } else if (compare(prompts, replies, text)) {
     // Search for exact match in `prompts`
     product = compare(prompts, replies, text);
   } else {
@@ -253,7 +284,24 @@ function calculate(input, eqVar) {
 
 function displayUserInput(input) {
   //Remove extra spaces
-  let text = input.toString().trim();
+  let text = input.toString()
+  .replace(/ass/g, 'a**')
+  .replace(/arse/g, 'a*se')
+  .replace(/asshole/g, 'a**hole')
+  .replace(/arsehole/g, 'a**ehole')
+  .replace(/bastard/g, 'ba***rd')
+  .replace(/bitch/g, 'bi*ch')
+  .replace(/cock/g, 'c*ck')
+  .replace(/damn/g, 'd*mn')
+  .replace(/dick/g, 'd*ck')
+  .replace(/cunt/g, 'c*nt')
+  .replace(/pussy/g, 'pu*sy')
+  .replace(/fuck/g, 'f*ck')
+  .replace(/piss/g, 'p*ss')
+  .replace(/shit/g, 'sh*t')
+  .replace(/shite/g, 'sh*te')
+  .replace(/up yours/g, 'up yours')
+  .trim();
   var container = document.getElementById('message-wrapper');
   var message = document.createElement('div');
   message.classList.add('message-user');
