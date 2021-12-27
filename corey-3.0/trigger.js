@@ -1,5 +1,5 @@
 var prompts = [
-      	["hi","hey","hello", "yo", "chatbot", "computer", "howdy", "hey bro", "hi bro", "what is up", "what up", "hi broski", "hey broski"], /*1*/
+      	["hi","hey","hello", "yo", "chatbot", "computer", "howdy", "hey what is up", "hi what is up", "what is up", "what up", "hi broski", "hey broski"], /*1*/
       	["how are you", "how is life", "how are things", "how you doing", "how you doin", "how you doing bro", "how you doin bro", "how ya doing bro", "how ya doin bro"],/*2*/
       	["what are you doing", "what is going on", "what have you been doing", "what you doing"],/*3*/
       	["how old are you", "what is your age", "what is your age", "whens your birthday", "when is your birthday"],/*4*/
@@ -31,7 +31,7 @@ var prompts = [
         ["are you siri", "you are like siri", "you are siri", "why do you act like siri", "are you alexa", "you are like alexa", "you are alexa", "why do you act like like alexa"],/*30*/
         ["ah", "ok", "okay", "gotcha", "got it", "i understand", "oh ok", "cool", "that is cool", "me too", "yep"],/*31*/
         ["are you listening", "are you listening to me", "you listening", "you listening to me"],/*32*/
-        ["you are bad", "youre bad", "your bad", "i do not like you", "i dont like you", "you do not answer my questions", "you do not answer my question", "you did not answer my question", "you function badly", "you are terrible", "you are terrible at answering my questions", "you are terrible at answering my question",  "you are awful", "you are awful at answering my questions", "you are awful at answering my question", "you are mean", "you are ugly", "you are fat", "you are mistake", "you are worth nothing", "you are no fun", "you do not do right", "you are weird", "weirdo", "that was bad", "that was bad joke"],/*33*/
+        ["you are bad", "your bad", "i do not like you", "you do not answer my questions", "you do not answer my question", "you did not answer my question", "you function badly", "you are terrible", "you are terrible at answering my questions", "you are terrible at answering my question",  "you are awful", "you are awful at answering my questions", "you are awful at answering my question", "you suck", "you are mean", "you are ugly", "you are fat", "you are mistake", "you are worth nothing", "you are no fun", "you do not do right", "you are weird", "weirdo", "that was bad", "that was bad joke", "you have got bad jokes", "you have bad jokes", "your jokes suck"],/*33*/
         ["knock knock", "tell me knock knock joke"],/*34*/
         ["tell me joke", "tell me funny joke", "say joke", "say funny joke"],/*35*/
         ["why do you talk so much", "you talk too much"],/*36*/
@@ -51,7 +51,8 @@ var prompts = [
         ["heads or tails", "flip coin", "coin flip"],/*50*/
         ["merry christmas", "happy holidays", "merry christmas eve", "happy christmas eve", "we wish you a merry christmas"],/*51*/
         ["happy new year", "its new year", "happy new years eve", "happy new years day", "its new years day"],/*52*/
-        ["happy birthday", "its your birthday", "have good birthday"]/*53*/
+        ["happy birthday", "its your birthday", "have good birthday"],/*53*/
+        ["solve an equation", "solve equation", "can you solve an equation", "can you solve equation", "can you solve equations", "can you do math", "can you add", "can you subtract", "can you multiply", "can you devide"]/*54*/
       ];
       var replies = [
       	["Hi.","Hey.","Hello."], /*1*/
@@ -88,7 +89,7 @@ var prompts = [
         ["Yes. I am listening.", "Of couse I\'m listening.", "I always listen when you ralk to me."],/*32*/
         ["That\'s not nice.", "I won\'t respond to that.", "People can be mean too, you know.", "I do the best I can.", "Don\'t talk to me like that.", "I don\'t like that very much.", "That was mean.", "You hurt my feelings."],/*33*/
         ["No"],/*34*/
-        ["Why is six afraid of seven? Because seven ate nine!", "I was addicted to the hokey pokey, but then I turned myself around.", "Two fish are in a tank. One says, \"How do you drive this thing?\"", "Before you criticize someone, walk a mile in their shoes. That way, when you do criticize them, you’re a mile away and you have their shoes.", "Two pickles fell out of a jar onto the floor. One said, \"Dill with it.\"", "How does a cucumber become a pickle? It goes through a jarring experience.", "Singing in the shower is fun until you get soap in your mouth. Then it\'s a soap opera.", "What did the ocean say to the beach? Nothing, it just waved.", "hat do you call a poor Santa Claus? St. Nickel-less.", "Why can\'t eggs tell jokes? They\'d crack each other up.", "I have a joke about chemistry, but I don't think it will get a reaction.", "What is a computer’s favorite snack? Computer chips.", "What do you call a droid that takes the long way around? R2 detour.", "Why did the cookie go to the hospital? Because he felt crummy.", "What did the limestone say to the geologist? \"Don\'t take me for granite.\""],/*35*/
+        ["Why is six afraid of seven? Because seven ate nine!", "I was addicted to the hokey pokey, but then I turned myself around.", "Two fish are in a tank. One says, \"How do you drive this thing?\"", "Before you criticize someone, walk a mile in their shoes. That way, when you do criticize them, you’re a mile away and you have their shoes.", "Two pickles fell out of a jar onto the floor. One said, \"Dill with it.\"", "How does a cucumber become a pickle? It goes through a jarring experience.", "Singing in the shower is fun until you get soap in your mouth. Then it\'s a soap opera.", "What did the ocean say to the beach? Nothing, it just waved.", "What do you call a poor Santa Claus? St. Nickel-less.", "Why can\'t eggs tell jokes? They\'d crack each other up.", "I have a joke about chemistry, but I don't think it will get a reaction.", "What is a computer’s favorite snack? Computer chips.", "What do you call a droid that takes the long way around? R2 detour.", "Why did the cookie go to the hospital? Because he felt crummy.", "What did the limestone say to the geologist? \"Don\'t take me for granite.\""],/*35*/
         ["Would you like me to talk less?", "You have to talk to me to know what to say. If I talk too much, that means you do as well."],/*36*/
         ["I can tell jokes!", "I can encourage you!", "You can ask me for a joke!", "We can have a conversation!", "I can\'t do anything, silly, I\'m a computer. I can talk to you though! Ask me a question!", "I can be sarcastic.", "I can do math!", "I can solve equations!", "I can twiddle my thumbs! Oh wait, I don\'t have thumbs lol."],/*37*/
         ["That\'s what I guessed.", "How nice!", "Sometimes I wish I was that."],/*38*/
@@ -106,10 +107,14 @@ var prompts = [
         ["Heads.", "Tails.", "It\'s heads.", "It\'s tails."],/*50*/
         ["Happy Hollidays!", "Merry Christmas!"],/*51*/
         ["Happy New Year!", "Happy New Year! Embrace the opportunity to start some new habbits!", "I don\'t know about you, but I\'ve got a long list of resolutions. Happy New Year!"],/*52*/
-        ["It\'s not my birthday, silly!", "Thank you! Oh wait, It\'s not my birthday.", "My birthday is actually on April 17, 2020. But I will stash your lovely birthday wish in my memory until then."]/*53*/
+        ["It\'s not my birthday, silly!", "Thank you! Oh wait, It\'s not my birthday.", "My birthday is actually on April 17, 2020. But I will stash your lovely birthday wish in my memory until then."],/*53*/
+        ["Yes! Go ahead and send me one!"]/*54*/
       ];
       var greeting = ["Hello", "Greetings", "Hey", "Hi", "Hey there", "What\'s up"];
       var coronavirus = ["Please stay home.", "Please wear a mask.", "Fortunately, I don't have COVID.", "These are uncertain times, but stay strong!"];
       var timePhrases = ["The tiime is", "The current time is", "Right now it\'s", "It\'s"];
       var gratitude = ["My pleasure!", "No problem!", "You\'re welcome!", "You are welcome.", "It\' my pleasure!"];
+      var nameIntro = ["Your name is", "I was told", "You are", "I believe it is"];
+      var profanityReaction = ["I don\'t like that.", "I won\'t respond to that.", "I don\'t approve of profanity."];
+      var accomplished = ["On it.", "Done.", "I did it."];
       var alternative = ["I don\'t think I understand.", "Try saying that a different way.", "I don\'t quite understand", "I\'m having trouble understanding.", "I\'m having trouble understanding you."];
