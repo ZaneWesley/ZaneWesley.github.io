@@ -160,6 +160,17 @@
 		a {
 			color: rgba(255,255,255, 0.7);
 		}
+		#help-btn {
+			font-size: 1.5em;
+			position: absolute;
+			right: 1em;
+			top: 1em;
+			cursor: pointer;
+			z-index: 3;
+		}
+		ul {
+			margin-left: 20px;
+		}
 
 		@media (min-width: 768px) {
 			#input-wrapper {
@@ -202,7 +213,7 @@
 				<i class="fas fa-arrow-circle-up"></i>
 			</div>
 			<div class="wrapper">
-				<input id="input" autofocus="autofocus" autocomplete="on" type="text" placeholder="Type message...">
+				<input id="input" autofocus="autofocus" autocomplete="on" type="text" placeholder="Type message . . .">
 			</div>
 		</div>
 		<div id="message-container">
@@ -222,6 +233,10 @@
 				</div>-->
 			</div>
 		</div>
+	</div>
+
+	<div id="help-btn">
+		<i class="fas fa-question-circle"></i>
 	</div>
 
 	<script src="main.js"></script>
