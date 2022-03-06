@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
@@ -7,37 +7,33 @@
 	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
 	<!-- General -->
 	<link rel="manifest" href="manifest.json">
-	<meta name="theme-color" content="#F4F4FB">
+	<meta name="theme-color" content="#232527">
 	<meta name="application-name" content="Zane's Apps">
   	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
+	<link rel="canonical" href="https://www.zanewesley.github.io">
 	<!-- Apple -->
 	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
-	<meta name="apple-mobile-web-app-status-bar-style" content="#F4F4FB">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#232527">
     <meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
-	<link rel="mask-icon" href="images/icon.png" color="#F4F4FB">
+	<link rel="mask-icon" href="images/icon.png" color="#232527">
 	<!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	<!-- Canvas -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>
-	<!-- UI -->
-	<script src="ui/type.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
+
 	<!-- Analytics -->
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script> <!-- Global site tag (gtag.js) -->
 	<script>
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
-	<title>Zane's Apps</title>
+
+	<title>Zane's Apps | BETA</title>
 
 	<style>
 		* {
@@ -49,1220 +45,446 @@
 		html, body {
 			scroll-behavior: smooth;
 			/*background-color: #2d3e50;*/
-			background-color: #16151a;
+			background-color: #232527;
 			font-family: 'Roboto', sans-serif;
 			width: 100%;
 			height: 100%;
+			color: #fff;
 		}
 
-		header {
-			position: relative;
-			height: 100%;
-			width: 100%;
-			color: #fff;
-			display: flex;
-			align-items: center;
-			font-family: 'Rajdhani', sans-serif;
-			overflow: hidden;
-			z-index: 4;
-		}
-		header h1 {
-			font-size: 72px;
-			font-weight: 400;
-			margin-left: 50px;
-			color: transparent;
-			/*animation: fadeDown 2s ease-out;
-			animation-delay: 1s;
-			animation-fill-mode: forwards;
-			opacity: 0;*/
-		}
-		header.sticky {
-			position: fixed;
-			top: 0;
-			left: 0;
-			height: 50px;
-			width: 100%;
-			animation: fadeDown 0.3s ease-out;
-		}
-		header.sticky h1 {
-			margin-left: 12px;
-			font-size: 1.5em;
-			width: 200px;
-		}
-		header.sticky .main {
-			padding-top: 60px;
-		}
-		header nav {
-			display: flex;
-			align-items: center;
-			justify-content: flex-end;
-			width: 100%;
-			display: none;
-		}
-		header nav .icon {
-			text-decoration: none;
-			color: #fff;
-			position: relative;
-			width: 40px;
-			height: 40px;
-		}
-		header.sticky nav {
-			display: block;
-		}
-
-		.main {
-			color: #fff;
-			/*background-color: #2d3e50;*/
-			/*background-color: #16151a;*/
-			background-color: transparent;
-			overflow: hidden;
-			position: relative;
-			z-index: 2;
-		}
-		.main h2 {
-			padding-bottom: 20px;
-			font-size: 2em;
-			font-family: 'Rajdhani', sans-serif;
-		}
-		.slice {
-			background-color: rgba(195, 207, 219, 0.7);
-			color: #16151a;
-			padding: 20px;
-		}
-		.section {
-			padding: 20px;
-			transition: all 0.4s ease;
-		}
-		.section.offscreen {
-			opacity: 0;
-			transform: translate3d(0,100px,0) scale(.6);
-		}
-		.split {
-			position: relative;
-		    width: 50%;
-		    min-height: 100%;
-		    height: auto;
-		}
-		.split.left, .split.right {
-			display: flex;
-		    align-items: center;
-		    justify-content: center;
-		    flex-direction: column;
-		}
-		.split.left {
-			float: left;
-		}
-		.split.right {
-			float: right;
-		}
-		.section .split img {
-			width: 80%;
-			height: auto;
-		}
-
-		#stats {
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-			background: #16151a;
-			box-shadow: 3px 3px 6px #111;
-		}
-		.stat {
-			/*position: relative;*/
-			width: 80px;
-			height: 80px;
-			background-color: rgba(99, 116, 133, 0.5);
-			border-radius: 50%;
-			color: #fff;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			user-select: none;
-			cursor: pointer;
-			transition: all 0.3s;
-		}
-		.stat:hover {
-			background-color: rgba(99, 116, 133, 0.9);
-			box-shadow: 6px 6px 6px #111;
-		}
-		.stat .material-icons {
-			font-size: 3em;
-		}
-
-		ul, li {
-			width: 100%;
-			font-size: 1.3em;
-		}
-		ul {
-			list-style-type: none;
-			/*padding-left: 1em;*/
-		}
-		.main li {
-			cursor: pointer;
-			padding: 10px;
-			text-align: left;
-			font-size: 1em;
-			transition: all 0.3s;
-			/*border-bottom: 3px solid transparent;*/
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-			/*border: 1px solid #ccc;*/
-			border-radius: 8px;
-			margin-bottom: 10px;
-			user-select: none;
-			-webkit-user-select: none;
-		}
-		.slice li {
-			background-color: rgba(195, 207, 219, 0.5);
-			color: #16151a;
-		}
-		.section li {
-			background-color: rgba(99, 116, 133, 0.5);
-			color: #fff;
-		}
-		.main li .img {
-			width: 50px;
-			height: auto;
-			min-height: 50px;
-			margin-right: 10px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			user-select: none;
-			-webkit-user-select: none;
-		}
-		.main li .img img {
-			width: 100%;
-			height: auto;
-		}
-		.main li:hover {
-			/*background-color: rgba(63, 61, 86, 0.7);*/
-			/*text-decoration-color: #fff;*/
-			background-color: rgba(195, 207, 219, 0.9);
-		}
-		.section li:hover {
-			background-color: rgba(99, 116, 133, 0.9);
-			transform: scale(0.9);
-		}
-		footer {
-			padding: 16px;
-		    font-weight: 500;
-		    font-size: 12px;
-		    color: #fff;
-		}
-		footer a {
-			color: #fff;
-		}
-		/*#new, #games, #resources, #miscellaneous, #more {
-			background-size: contain;
-    		background-position: center center;
-    		background-repeat: no-repeat;
-    		background-attachment: fixed;
-		}
-		#new {
-			background-image: url('images/bg/new.svg');
-		}
-		#games {
-			background-image: url('images/bg/games.svg');
-		}*/
-		#hamburger {
-			position: fixed;
-			top: 1em;
-			right: 2em;
-			color: #fff;
-			width: 30px;
-			height: 30px;
-			overflow: hidden;
-			cursor: pointer;
-			z-index: 5;
-		}
-		#hamburger svg {
-			width: 100%;
-			height: 100%;
-		}
-		#hamburger .line{
-		  width: 30px;
-		  height: 4px;
-		  background-color: #fff;
-		  display: block;
-		  margin: 5px auto;
-		  -webkit-transition: all 0.3s ease-in-out;
-		  -o-transition: all 0.3s ease-in-out;
-		  transition: all 0.3s ease-in-out;
-		  border-radius: 25px;
-		}
-		#hamburger.open .line:nth-child(1){
-		  -webkit-transform: translateY(10px);
-		  -ms-transform: translateY(10px);
-		  -o-transform: translateY(10px);
-		  transform: translateY(10px);
-		}
-		#hamburger.open .line:nth-child(3){
-		  -webkit-transform: translateY(-10px);
-		  -ms-transform: translateY(-10px);
-		  -o-transform: translateY(-10px);
-		  transform: translateY(-10px);
-		}
-		#menu {
-			position: fixed;
-			top: 0;
-			right: 0;
-			width: 0;/*30%*/
+		.page {
+			position: absolute;
+			width: 100vw;
 			height: 100vh;
-			z-index: 4;
-			background-color: rgba(45, 62, 80, 0.6);
-			text-align: left;
-			transition: all 0.3s;
+			padding: 0.5em;
+			display: none;
+			background-color: #232527;
 		}
-		#menu.open {
-			width: 30%;
+		.page.active {
+			display: inherit;
+			animation: fadeIn 0.5s;
 		}
-		/*#menu h2 {
+		.page h1 {
 			text-align: center;
-		}*/
-		#menu h2 {
-			padding: 1em;
-			color: #fff;
+			padding: 0.5em;
 		}
-		#menu a {
-			width: 100%;
-			display: block;
-			color: #fff;
-			text-decoration: none;
-			/*border-bottom: 1px solid rgba(99, 116, 133, 0.5);*/
-			padding: 1em 1em 1em 2em;
-		}
-		#menu a:hover {
-			/*border-bottom: 1px solid rgba(99, 116, 133, 0.9);*/
-			background-color: rgba(99, 116, 133, 0.5);
-		}
-
-		.modal {
-			position: fixed;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%) scale(0.9);
-			width: 50%;
-			height: 50%;
-			background-color: rgba(99, 116, 133, 1);
-			/*box-shadow: 6px 6px 6px #111;*/
-			border-radius: 8px;
-			z-index: -3;
-			opacity: 0;
-			transition: all 0.3s;
-			overflow: hidden;
-			color: #fff;
-		}
-		.modal.open {
-			visibility: visible!important;
-			opacity: 1;
-			transform: translate(-50%, -50%) scale(1);
-			z-index: 4;
-		}
-		.modal h2 {
-			text-align: center;
-			padding: 1em;
-		}
-		#streak-modal {
+		.page .tabs {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-around;
 			align-items: center;
-			visibility: hidden;
+			height: 90vh;
 		}
-		#history-modal {
-			overflow-y: auto;
+		.page .tabs .tab-icon {
+			font-size: 4em;
+			color: dodgerblue;
+			cursor: pointer;
 		}
-		.modal #streak {
-			/*position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);*/
-			font-size: 5em;
+		.page .tabs .tab-icon:hover {
+			text-shadow: 6px 6px 6px #000;
 		}
-		.modal iframe {
-			border: none;
-			width: 100%;
-			height: 100%;
+		.page select {
+			appearance: none;
 			background-color: transparent;
-		}
-		#overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			z-index: 3;
-			display: none;
-		}
-		#overlay.open {
-			display: block;
-		}
-		.modal ul {
-			list-style-type: none;
-		}
-		.modal li {
-			padding: 0.5em 1em;
-			font-size: 1em;
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-around;
-			cursor: pointer;
-			transition: all 0.3s;
-		}
-		.modal li:hover {
-			background-color: rgba(59, 83, 108, 0.5);
-		}
-
-		#shapes .circles{
-		    position: fixed;
-		    top: 0;
-		    left: 0;
-		    width: calc(100vw - 1em);
-		    height: 100vh;
-		    overflow: hidden;
-		    z-index: 1;
-		}
-		.circles li{
-		    position: absolute;
-		    display: block;
-		    list-style: none;
-		    width: 20px;
-		    height: 20px;
-		    background: rgba(42, 58, 74, 0.8);
-		    animation: rotate 25s linear infinite;
-		    bottom: -150px;
-		}
-
-		.circles li:nth-child(1){
-		    left: 25%;
-		    width: 80px;
-		    height: 80px;
-		    animation-delay: 0s;
-		}
-
-
-		.circles li:nth-child(2){
-		    left: 10%;
-		    width: 20px;
-		    height: 20px;
-		    animation-delay: 2s;
-		    animation-duration: 12s;
-		}
-
-		.circles li:nth-child(3){
-		    left: 70%;
-		    width: 20px;
-		    height: 20px;
-		    animation-delay: 4s;
-		}
-
-		.circles li:nth-child(4){
-		    left: 40%;
-		    width: 60px;
-		    height: 60px;
-		    animation-delay: 0s;
-		    animation-duration: 18s;
-		}
-
-		.circles li:nth-child(5){
-		    left: 65%;
-		    width: 20px;
-		    height: 20px;
-		    animation-delay: 0s;
-		}
-
-		.circles li:nth-child(6){
-		    left: 75%;
-		    width: 110px;
-		    height: 110px;
-		    animation-delay: 3s;
-		}
-
-		.circles li:nth-child(7){
-		    left: 35%;
-		    width: 150px;
-		    height: 150px;
-		    animation-delay: 7s;
-		}
-
-		.circles li:nth-child(8){
-		    left: 50%;
-		    width: 25px;
-		    height: 25px;
-		    animation-delay: 15s;
-		    animation-duration: 45s;
-		}
-
-		.circles li:nth-child(9){
-		    left: 20%;
-		    width: 15px;
-		    height: 15px;
-		    animation-delay: 2s;
-		    animation-duration: 35s;
-		}
-
-		.circles li:nth-child(10){
-		    left: 85%;
-		    width: 150px;
-		    height: 150px;
-		    animation-delay: 0s;
-		    animation-duration: 11s;
-		}
-
-		@keyframes rotate { 0%{ transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; } 100%{ transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; } }
-
-		.mobile-only {
-			display: none;
-		}
-		.desktop-only {
-			display: block;
-		}
-
-		/* width */
-		::-webkit-scrollbar {
-		  width: auto;
-		  background: #16151a;
-		}
-
-		/* Track */
-		::-webkit-scrollbar-track {
-		  background: #16151a;
-		}
-
-		/* Handle */
-		::-webkit-scrollbar-thumb {
-		  background: rgba(99, 116, 133, 0.5);
-		  border-radius: 25px;
-		}
-
-		/* Handle on hover */
-		::-webkit-scrollbar-thumb:hover {
-		  background: rgba(99, 116, 133, 0.9);
-		}
-
-		html.standalone-open, body.standalone-open {
-			overflow: hidden;
-		}
-		body.standalone-open #hamburger {
-			display: none;
-		}
-		#standalone-frame {
-			position: fixed;
-			overflow-x: hidden;
-			overflow-y: auto;
-			left: 0;
-			top: 50px;
+			border: 1px solid #fff;
+			border-radius: 0.25em;
+			padding: 0.25em 0.5em;
+			margin: 0;
 			width: 100%;
-			height: calc(100% - 50px);
-			max-width: 100%;
-			max-height: calc(100% - 50px);
-			border: none;
-			z-index: 3;
-		}
-		.standalone-ui {
-			display: none;
-		}
-		#standalone-nav {
-			position: fixed;
-			z-index: 3;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 50px;
+			font-family: inherit;
+			font-size: 1.25em;
+			cursor: inherit;
+			line-height: 1.1;
+			outline: none;
 			color: #fff;
-			font-size: 1.5em;
-			background-color: #2d3e50;
-			padding: 12px;
-			/*display: flex;*/
-			flex-direction: row;
-			justify-content: space-between;
+			/*display: grid;
+			grid-template-areas: "select";
 			align-items: center;
-			overflow: hidden;
-			transition: all 0.3s;
+			position: relative;*/
 		}
-		#standalone-home {
+		/*select::after {
+			content: "";
+			justify-self: end;
+			width: 0.8em;
+			height: 0.5em;
+			background-color: #fff;
+			clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+		}*/
+		.page select:focus {
+			color: #232527;
+		}
+		.page .close, .page .back {
+			padding: 1em;
+			font-size: 1.5em;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
 			cursor: pointer;
 		}
-		#standalone-nav .fas:hover {
-			color: #ccc;
-		}
-		#standalone-bg {
-			position: fixed;
+		.page .back {
+			position: absolute;
 			top: 0;
 			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #fff;
-			z-index: 2;
 		}
-		#standalone-nav.fadeIn {
-			display: flex;
+		#startup {
+			overflow: hidden;
+			padding-top: 3em;
+
 		}
-		.fadeIn {
-			display: block;
-			animation: fadeIn 1s ease-in;
+		#startup.init h1 {
+			animation: centerAndUp 4s;
 			animation-fill-mode: forwards;
+			width: 100%;
+		}
+		#startup:not(.init) h1 {
+			position: absolute;
+			font-size: 2.5em;
+			top: 0;
+			left: 50%;
+			transform: translate(-50%, 0);
+			width: 100%;
+		}
+		@keyframes centerAndUp {
+			0% {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 4em;
+				opacity: 0;
+			}
+			50% {
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 4em;
+				opacity: 1;
+			}
+			70% {
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 4em;
+			}
+			100% {
+				position: absolute;
+				font-size: 2.5em;
+				top: 0;
+				left: 50%;
+				transform: translate(-50%, 0);
+			}
+		}
+		#startup.init .tab-icon {
+			animation: fadeIn 1s, scale 1s;
+			animation-fill-mode: forwards;
+			opacity: 0;
+		}
+		#startup .tab-icon:nth-child(1) { animation-delay: 3.8s; }
+		#startup .tab-icon:nth-child(2) { animation-delay: 4.3s; }
+		#startup .tab-icon:nth-child(3) { animation-delay: 4.8s; }
+		#startup .tab-icon:nth-child(4) { animation-delay: 5.2s; }
+		@keyframes fadeIn {
+			from {opacity: 0;}
+			to {opacity: 1;}
+		}
+		@keyframes fadeOut {
+			from {opacity: 1;}
+			to {opacity: 0;}
+		}
+		@keyframes scale {
+			from {transform: scale(0.8);}
+			to {transform: scale(1);}
 		}
 
-		@keyframes fadeDown {from {opacity: 0; transform: translateY(-50px);} to {opacity: 1; transform: translateY(50px;);}}
-		@keyframes fade{ from {opacity: 0;} to {opacity: 1;} }
+		.grid-wrapper {
+			display: flex;
+			flex-wrap: wrap;
+			padding: 0 4px;
+		}
+		.grid-wrapper .grid-item {
+			flex: 16%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			max-width: 16%;
+			padding: 0 8px;
+			cursor: pointer;
+			transition: all 0.3s;
+		}
+		.grid-wrapper .grid-item .thumbnail {
+			border-radius: 8px;
+			display: flex;
+			justify-content: space-around;
+		}
+		.grid-wrapper .grid-item .thumbnail img {
+			margin-top: 8px;
+			width: 100%;
+			height: auto;
+			/*padding: 10px;*/
+		}
+		.grid-wrapper .grid-item .details {
+			margin-bottom: 4px;
+    		padding: 0.5em 0;
+    		font-weight: 500;
+    		font-size: 16px;
+    		line-height: 1.4em;
+		}
+
+		#details .page h2, #details .page h3 {
+			padding: 0 1em;
+		}
+		#details #img-wrapper {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+		}
+		#details #img-wrapper #img {
+			width: auto;
+			height: 25vh;
+		}
+		#details .gamebar {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			padding: 1em;
+			font-size: 20px;
+		    line-height: 100%;
+		}
+		#details .gamebar .gamebar-left {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			width: 60%;
+		}
+		#details .gamebar .gamebar-left i {
+			margin-left: 4%;
+		}
+		#details .gamebar #play-btn {
+			width: 25%;
+			max-width: 60%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #00b06f;
+			border-radius: 8px;
+			padding: 12px;
+			cursor: pointer;
+		}
+		#details #description {
+			padding: 1em;
+		}
+		#details #description ul {
+			margin-left: 1em;
+		}
+		#details #description ul li {
+			display: list-item;
+		}
+		a {
+			color: #fff;
+		}
+		.beta-notice {
+			position: absolute;
+			background-color: rgba(42, 58, 74, 0.8);
+			width: 100%;
+			bottom: 0;
+			padding: 1em;
+		}
 
 		@media (max-width: 480px) {
-			header h1 {
-				font-size: 62px;
-				text-align: center;
+			.grid-wrapper .grid-item {
+				flex: 33%;
+				max-width: 33%;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
-			.split {
-				width: 100%;
+			#details .gamebar .gamebar-left {
+				width: 35%;
 			}
-			.split.left, .split.right {
-				float: none;
-			}
-			#menu {
-				background-color: rgba(45, 62, 80, 0.9);
-			}
-			#menu.open {
-				width: 100%;
-			}
-			.mobile-only {
-				display: block;
-			}
-			.desktop-only {
-				display: none;
-			}
-			.stat {
-				width: 60px;
-				height: 60px;
-			}
-			.stat .material-icons {
-				font-size: 2em;
-			}
-			.modal {
-				width: 85%;
+			#details .gamebar #play-btn {
+				width: 60%;
 			}
 		}
 	</style>
 </head>
 <body>
-	
-	<header id="header">
-		<h1 class="typejs" data-type-period="2000" data-type-loop="false" data-type-cursor="true" data-type-delay="2000" data-type-text='["Zane&#39;s Apps"]'>Zane's Apps</h1>
-		<!--<nav>
-			<a href="new"><svg class="icon"><use xlink:href="#new-icon"></use></svg></a>
-			<a href="#games"><svg class="icon"><use xlink:href="#games-icon"></use></svg></a>
-			<a href="#resources"><svg class="icon"><use xlink:href="#resources-icon"></use></svg></a>
-			<a href="#miscellaneous"><svg class="icon"><use xlink:href="#miscellaneous-icon"></use></svg></a>
-			<a href="#more"><svg class="icon"><use xlink:href="#more-icon"></use></svg></a>
-			<a href="#header" onclick="document.getElementById('header').classList.remove('sticky')"><svg class="icon"><use xlink:href="#expand-icon"></use></svg></a>
-		</nav>-->
-	</header>
-
-	<div class="main">
-		<!--<div class="section">
-			<h2 style="padding-bottom: 0; font-weight: 500; font-size: 1.2em;">DISCLAIMER: This page is a beta version and may not work as expected. An official release is coming soon.</h2>
-		</div>-->
-		<div id="stats" class="section">
-			<div class="stat" id="streak-btn" title="Streak"><span class="material-icons">bolt</span></div>
-			<div class="stat" id="leaderboard-btn" title="Score Leaderboard"><span class="material-icons">leaderboard</span></div>
-			<div class="stat" id="history-btn" title="App History"><span class="material-icons">timeline</span></div>
+	<div id="startup" class="page init active">
+		<h1>Zane's Apps</h1>
+		<div class="tabs">
+			<div class="tab-icon" id="games-tab"><i class="fa-thin fa-gamepad-modern"></i></div>
+			<div class="tab-icon" id="resources-tab"><i class="fa-thin fa-pen-ruler"></i></div>
+			<div class="tab-icon" id="miscellaneous-tab"><i class="fa-thin fa-shapes"></i></div>
+			<div class="tab-icon" id="more-tab"><i class="fa-thin fa-ellipsis-stroke"></i></div>
 		</div>
-		<div class="section">
-			<h2 style="padding-bottom: 0; font-weight: 500; font-size: 1.2em;">DISCLAIMER: This page is a beta version and may not work as expected. An official release is coming soon.</h2>
-		</div>
-		<div id="new" class="section">
-			<div class="split"><img src="images/bg/new.svg" class="mobile-only"></div>
-			<div class="split left">
-				<h2>New Releases</h2>
-				<ul>
-					<li id="crossyroad" data-url="crossyroad">
-						<div class="img"><img src="crossyroad/icon.jpeg"></div>
-						<div class="name">Crossy Road</div>
-					</li>
-					<li id="whiteboard" data-url="whiteboard">
-						<div class="img"><img src="images/whiteboard-icon.jpg"></div>
-						<div class="name">Whiteboard</div>
-					</li>
-					<li id="notes" data-url="notes">
-						<div class="img"><img src="notes/icon.png"></div>
-						<div class="name">Notes</div>
-					</li>
-					<li id="chess" data-url="chess">
-						<div class="img"><img src="chess/img/chess.png"></div>
-						<div class="name">Chess</div>
-					</li>
-					<li id="cakeninja" data-url="cakeninja">
-						<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
-						<div class="name">Cake Ninja</div>
-					</li>
-				</ul>
-			</div>
-			<div class="split right"><img src="images/bg/new.svg" class="desktop-only"></div>
-		</div>
-
-		<div id="games" class="section">
-			<div class="split left"><img src="images/bg/games.svg"></div>
-			<div class="split right">
-				<h2>Games</h2>
-				<ul>
-					<li id="crossyroad" data-url="crossyroad">
-						<div class="img"><img src="crossyroad/icon.jpeg"></div>
-						<div class="name">Crossy Road</div>
-					</li>
-					<li id="chess" data-url="chess">
-						<div class="img"><img src="chess/img/chess.png"></div>
-						<div class="name">Chess</div>
-					</li>
-					<li id="cakeninja" data-url="cakeninja">
-						<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
-						<div class="name">Cake Ninja</div>
-					</li>
-					<li id="hextris" data-url="hextris">
-						<div class="img"><img src="hextris/favicon.ico"></div>
-						<div class="name">Hextris</div>
-					</li>
-					<li id="stack" data-url="stack">
-						<div class="img"><img src="images/stack-icon.PNG"></div>
-						<div class="name">Stack</div>
-					</li>
-					<li id="chromedino" data-url="chromedino">
-						<div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
-						<div class="name">Chrome Dino Runner</div>
-					</li>
-					<li id="colorsplosion" data-url="colorsplosion">
-						<div class="img"><img src="colorsplosion/icon.PNG"></div>
-						<div class="name">Colorsplosion</div>
-					</li>
-					<li id="numberguessing" data-url="numberguessing">
-						<div class="img"><img src="images/numberguessing-icon.png"></div>
-						<div class="name">Guess that Number</div>
-					</li>
-					<li id="2048" data-url="2048">
-						<div class="img"><img src="2048/icon.png"></div>
-						<div class="name">2048</div>
-					</li>
-					<li id="tic-tac-toe" data-url="tic-tac-toe">
-						<div class="img"><img src="images/tic-tac-toe-icon.png"></div>
-						<div class="name">Tic Tac Toe</div>
-					</li>
-					<li id="colorswirl" data-url="colorswirl/colorswirl">
-						<div class="img"><img src="colorswirl/icon.jpg"></div>
-						<div class="name">Colorswirl</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-		<div id="resources" class="section">
-			<div class="split"><img src="images/bg/resources.svg" class="mobile-only"></div>
-			<div class="split left">
-				<h2>Resources</h2>
-				<ul>
-					<li id="notes" data-url="notes">
-						<div class="img"><img src="notes/icon.png"></div>
-						<div class="name">Notes</div>
-					</li>
-					<li id="vividly" data-url="vividly">
-						<div class="img"><img src="vividly/icon.png"></div>
-						<div class="name">Vividly</div>
-					</li>
-					<li id="connect" data-url="connect" class="newframe">
-						<div class="img"><img src="connect/splash.svg"></div>
-						<div class="name">Connect</div>
-					</li>
-					<li id="assistant" data-url="assistant">
-						<div class="img"><img src="assistant/icon.svg"></div>
-						<div class="name">Corey 2.0</div>
-					</li>
-					<li id="calculator" data-url="calculator">
-						<div class="img"><img src="images/calculator-icon.png"></div>
-						<div class="name">Calculator</div>
-					</li>
-					<li id="countdownstudio" data-url="countdownstudio">
-						<div class="img"><img src="images/countdownstudio-icon.svg"></div>
-						<div class="name">Countdown Studio</div>
-					</li>
-					<li id="mmc" data-url="mmc">
-						<div class="img"><img src="images/mmc-icon.png"></div>
-						<div class="name">Molar Mass Calculator</div>
-					</li>
-					<li id="webchat" data-url="webchat/new">
-						<div class="img"><img src="webchat/logo.ico"></div>
-						<div class="name">WebChat</div>
-					</li>
-					<li id="whiteboard" data-url="whiteboard">
-						<div class="img"><img src="images/whiteboard-icon.jpg"></div>
-						<div class="name">Whiteboard</div>
-					</li>
-				</ul>
-			</div>
-			<div class="split right"><img src="images/bg/resources.svg" class="desktop-only"></div>
-		</div>
-
-		<div id="miscellaneous" class="section">
-			<div class="split left"><img src="images/bg/miscellaneous.svg"></div>
-			<div class="split right">
-				<h2>Miscellaneous</h2>
-				<ul>
-					<li id="insperation" data-url="inspiration">
-						<div class="img"><img src="images/inspiration-icon.PNG"></div>
-						<div class="name">Insperational Quotes Image Generator</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-		<div id="more" class="section">
-			<div class="split"><img src="images/bg/more.svg" class="mobile-only"></div>
-			<div class="split left">
-				<h2>More</h2>
-				<ul>
-					<li id="about" data-url="about">
-						<div class="img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
-						<div class="name">About</div>
-					</li>
-					<li id="archive" data-url="archive">
-						<div class="img"><img src="images/home-icon.svg"></div>
-						<div class="name">App Archive</div>
-					</li>
-				</ul>
-			</div>
-			<div class="split right"><img src="images/bg/more.svg" class="desktop-only"></div>
-		</div>
-
-		<footer>
-			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
-			<p>Copyright &copy; 2021 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page.</p>
-		</footer>
 	</div>
 
-		<div id="shapes">
-			<ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-		</div>
-
-		<!--<div id="hamburger"><svg class="icon"><use xlink:href="#hamburger-icon"></use></svg></div>-->
-		<div id="hamburger">
-			<span class="line"></span>
-			<span class="line"></span>
-			<span class="line"></span>
-		</div>
-
-		<div id="menu">
-			<h2>Menu</h2>
-			<a href="#new">New Releases</a>
-			<a href="#games">Games</a>
-			<a href="#resources">Resources</a>
-			<a href="#miscellaneous">Miscellaneous</a>
-			<a href="#more">More</a>
-		</div>
-
-		<div id="overlay"></div>
-
-		<div id="streak-modal" class="modal">
-			<h2>Your Streak</h2>
-			<div id="streak">1</div>
-			<div style="font-size: 3em;">&nbsp;</div>
-			<!--<div class="streak-info">
-				<div>Best: <span id="best">1</span></div>
-				<div>Days this Year: <span id="dty">1</span></div>
-			</div>-->
-		</div>
-
-		<div id="leaderboard-modal" class="modal">
-			<!--<iframe scr="leaderboard">Loading...</iframe>-->
-			<h2>Feature Coming Soon!</h2>
-		</div>
-
-		<div id="history-modal" class="modal">
-			<h2>Your History</h2>
-			<div id="history"></div>
-		</div>
-
-
-	<!-- PWA page elems-->
-	<iframe id="standalone-frame" class="standalone-ui"></iframe>
-	<div id="standalone-nav" class="standalone-ui">
-		<span id="standalone-home" class="fas fa-home-alt"></span>
-		<span style="font-size: 16px;">Zane's Apps</span>
-		<span id="standalone-share" class="fas fa-share"></span>
+	<div class="beta-notice">
+		DISCLAIMER: This page is a beta version and may not work as expected. An official release is coming soon.
 	</div>
-	<div id="standalone-bg" class="standalone-ui"></div>
 
-	<!-- SVG Icon Library -->
-    <svg style="display: none;">
-    	<symbol id="new-icon" viewBox="0 0 384 512">
-            <path fill="currentColor" d="M368 224H224V80c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v144H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h144v144c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V288h144c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z" class=""></path>
-        </symbol>
-    	<symbol id="games-icon" viewbox="0 0 640 512">
-            <path fill="currentColor" d="M638.59 368.22l-33.37-211.59c-8.86-50.26-48.4-90.77-100.66-103.13h-.07a803.19 803.19 0 0 0-369 0C83.17 65.86 43.64 106.36 34.78 156.63L1.41 368.22C-8.9 426.73 38.8 480 101.51 480c49.67 0 93.77-30.07 109.48-74.64l7.52-21.36h203l7.49 21.36C444.72 449.93 488.82 480 538.49 480c62.71 0 110.41-53.27 100.1-111.78zM280 236a12 12 0 0 1-12 12h-52v52a12 12 0 0 1-12 12h-24a12 12 0 0 1-12-12v-52h-52a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h52v-52a12 12 0 0 1 12-12h24a12 12 0 0 1 12 12v52h52a12 12 0 0 1 12 12zm152 76a40 40 0 1 1 40-40 40 40 0 0 1-40 40zm64-96a40 40 0 1 1 40-40 40 40 0 0 1-40 40z" class=""></path>
-        </symbol>
-        <symbol id="resources-icon" viewbox="0 0 512 512">
-        	<path fill="currentColor" d="M109.46 244.04l134.58-134.56-44.12-44.12-61.68 61.68a7.919 7.919 0 0 1-11.21 0l-11.21-11.21c-3.1-3.1-3.1-8.12 0-11.21l61.68-61.68-33.64-33.65C131.47-3.1 111.39-3.1 99 9.29L9.29 99c-12.38 12.39-12.39 32.47 0 44.86l100.17 100.18zm388.47-116.8c18.76-18.76 18.75-49.17 0-67.93l-45.25-45.25c-18.76-18.76-49.18-18.76-67.95 0l-46.02 46.01 113.2 113.2 46.02-46.03zM316.08 82.71l-297 296.96L.32 487.11c-2.53 14.49 10.09 27.11 24.59 24.56l107.45-18.84L429.28 195.9 316.08 82.71zm186.63 285.43l-33.64-33.64-61.68 61.68c-3.1 3.1-8.12 3.1-11.21 0l-11.21-11.21c-3.09-3.1-3.09-8.12 0-11.21l61.68-61.68-44.14-44.14L267.93 402.5l100.21 100.2c12.39 12.39 32.47 12.39 44.86 0l89.71-89.7c12.39-12.39 12.39-32.47 0-44.86z" class=""></path>
-        </symbol>
-        <symbol id="miscellaneous-icon" viewbox="0 0 512 512">
-        	<path fill="currentColor" d="M128,256A128,128,0,1,0,256,384,128,128,0,0,0,128,256Zm379-54.86L400.07,18.29a37.26,37.26,0,0,0-64.14,0L229,201.14C214.76,225.52,232.58,256,261.09,256H474.91C503.42,256,521.24,225.52,507,201.14ZM480,288H320a32,32,0,0,0-32,32V480a32,32,0,0,0,32,32H480a32,32,0,0,0,32-32V320A32,32,0,0,0,480,288Z" class=""></path>
-        </symbol>
-        <symbol id="more-icon" viewbox="0 0 512 512">
-        	<path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z" class=""></path>
-        </symbol>
-        <symbol id="expand-icon" viewbox="0 0 448 512">
-        	<path fill="currentColor" d="M6.101 359.293L25.9 379.092c4.686 4.686 12.284 4.686 16.971 0L224 198.393l181.13 180.698c4.686 4.686 12.284 4.686 16.971 0l19.799-19.799c4.686-4.686 4.686-12.284 0-16.971L232.485 132.908c-4.686-4.686-12.284-4.686-16.971 0L6.101 342.322c-4.687 4.687-4.687 12.285 0 16.971z" class=""></path>
-        </symbol>
-        <symbol id="hamburger-icon" viewBox="0 0 448 512">
-        	<path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z" class=""></path>
-        </symbol>
-        <symbol id="close-icon" viewbox="0 0 320 512">
-        	<path fill="currentColor" d="M207.6 256l107.72-107.72c6.23-6.23 6.23-16.34 0-22.58l-25.03-25.03c-6.23-6.23-16.34-6.23-22.58 0L160 208.4 52.28 100.68c-6.23-6.23-16.34-6.23-22.58 0L4.68 125.7c-6.23 6.23-6.23 16.34 0 22.58L112.4 256 4.68 363.72c-6.23 6.23-6.23 16.34 0 22.58l25.03 25.03c6.23 6.23 16.34 6.23 22.58 0L160 303.6l107.72 107.72c6.23 6.23 16.34 6.23 22.58 0l25.03-25.03c6.23-6.23 6.23-16.34 0-22.58L207.6 256z" class=""></path>
-        </symbol>
-        <symbol id="bolt-icon" viewbox="0 0 192 192">
-        	<path fill="currentColor" d="m155.109 74.028a4 4 0 0 0 -3.48-2.028h-52.4l8.785-67.123a4.023 4.023 0 0 0 -7.373-2.614l-63.724 111.642a4 4 0 0 0 3.407 6.095h51.617l-6.962 67.224a4.024 4.024 0 0 0 7.411 2.461l62.671-111.63a4 4 0 0 0 .048-4.027z"/>
-        </symbol>
-    </svg>
+	<div id="games" class="page">
+		<span class="back"><i class="fa-solid fa-arrow-left"></i></span>
+		<h1>Zane's Apps</h1>
+		<select class="page-select" data-value="games">
+			<option value="games">Games</option>
+			<option value="resources">Resources</option>
+			<option value="miscellaneous">Miscellaneous</option>
+			<option value="more">More</option>
+		</select>
+		<h2>Games</h2>
+		<div class="grid-wrapper">
+			<div class="grid-item" data-description="Filler is a simple 2 player game where you compete to have over 50% of the board your color.<br><br>How to Play:<ul><li>Each player is assigned a corner tile at the start of the game (bottom left)</li><li>Players take turns filling their tiles with one of 6 colors in an attempt to capture adjacent tiles of the same color</li><li>You cannot change the color of your tiles into the color of your opponent's tiles</li><li>The game ends when there are no more tiles to occupy</li><li>The player with the most tiles wins</li></ul>" data-url="https://fillergame.herokuapp.com"><div class="thumbnail"><img src="https://fillergame.herokuapp.com/public/icons/board.PNG"></div><div class="details">Filler</div></div>
+            <div class="grid-item" data-description="A remake of the classic Crossy Road game." data-url="crossyroad"><div class="thumbnail"><img src="crossyroad/icon.jpeg"></div><div class="details">Crossy Road</div></div>
+            <div class="grid-item" data-description="Play chess against a computer with varying levels of difficulty!" data-url="chess"><div class="thumbnail"><img src="chess/img/chess.png"></div><div class="details">Chess</div></div>
+            <div class="grid-item" data-description="Inspired by the popular game Fruit Ninja, with my own flare of creativity!" data-url="cakeninja"><div class="thumbnail"><img src="cakeninja/files/assets/32463581/1/caption.png"></div><div class="details">Cake Ninja</div></div>
+            <div class="grid-item" data-description="Inspired by the popular game Tetris, with a surprising tist!<br><br>How to Play:<ul><li>The goal of Hextris is to stop blocks from leaving the inside of the outer gray hexagon</li><li>Press the right and left arrow keys or tap the right and left sides of the screen to rotate the Hexagon. Press the down arrow to speed up the block falling (not supported on mobile)</li><li>Clear blocks and get points by making 3 or more blocks of the same color touch</li><li>Time left before your combo streak disappears is indicated by <span style='color:#f1c40f;'>the</span> <span style='color:#e74c3c'>colored</span> <span style='color:#3498db'>lines</span> <span style='color:#2ecc71'>on</span> the outer hexagon" data-url="hextris"><div class="thumbnail"><img src="hextris/favicon.ico"></div><div class="details">Hextris</div></div>
+            <div class="grid-item" data-description="Simply click/tap the screen to stack the blocks as high as you can!" data-url="stack"><div class="thumbnail"><img src="images/stack-icon.PNG"></div><div class="details">Stack</div></div>
+            <div class="grid-item" data-description="A remake of the classic Chrome Dino Runner game." data-url="chromedino"><div class="thumbnail"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div><div class="details">Chrome Dino Runner</div></div>
+            <div class="grid-item" data-description="An assortment of color-creating interaction and fun!" data-url="colorsplosion"><div class="thumbnail"><img src="colorsplosion/icon.PNG"></div><div class="details">Colorsplosion</div></div>
+            <div class="grid-item" data-description="Guess that number!" data-url="numberguessing"><div class="thumbnail"><img src="images/numberguessing-icon.png"></div><div class="details">Guess that Number</div></div>
+            <div class="grid-item" data-description="A remake of the classic 2048 game with a new theme and dark mode support!" data-url="2048"><div class="thumbnail"><img src="2048/icon.png"></div><div class="details">2048</div></div>
+            <div class="grid-item" data-description="Play Tic-Tac-Toe againt a computer!" data-url="tic-tac-toe"><div class="thumbnail"><img src="images/tic-tac-toe-icon.png"></div><div class="details">Tic Tac Toe</div></div>
+            <div class="grid-item" data-description="Swirl colors around and make beautiful designs in this relaxing app!" data-url="colorswirl/colorswirl"><div class="thumbnail"><img src="colorswirl/icon.jpg"></div><div class="details">Colorswirl</div></div>
+		</div>
+	</div>
+
+	<div id="resources" class="page">
+		<span class="back"><i class="fa-solid fa-arrow-left"></i></span>
+		<h1>Zane's Apps</h1>
+		<select class="page-select" data-value="resources">
+			<option value="games">Games</option>
+			<option value="resources" selected>Resources</option>
+			<option value="miscellaneous">Miscellaneous</option>
+			<option value="more">More</option>
+		</select>
+		<h2>Resources</h2>
+		<div class="grid-wrapper">
+			<div class="grid-item" data-description="A handy-dandy notes app that syncs across devices!" data-url="notes"><div class="thumbnail"><img src="notes/icon.png"></div><div class="details">Notes</div></div>
+			<div class="grid-item" data-description="A new video chatting app ran through the web!" data-url="vividly"><div class="thumbnail"><img src="vividly/icon.png"></div><div class="details">Vividly</div></div>
+			<div class="grid-item" data-description="A messaging app ran through the web!" data-url="connect"><div class="thumbnail"><img src="connect/splash.svg"></div><div class="details">Connect</div></div>
+			<div class="grid-item" data-description="A new verion of Corey, your virtual assistant!" data-url="assistant"><div class="thumbnail"><img src="assistant/icon.svg"></div><div class="details">Corey 2.0</div></div>
+			<div class="grid-item" data-description="It is what is sounds like. A calulator. Design inspired by ios Calculator." data-url="calculator"><div class="thumbnail"><img src="images/calculator-icon.png"></div><div class="details">Calculator</div></div>
+			<div class="grid-item" data-description="Design a countdown!" data-url="countdownstudio"><div class="thumbnail"><img src="images/countdownstudio-icon.svg"></div><div class="details">Countdown Studio</div></div>
+			<div class="grid-item" data-description="A molar mass calculator for chemistry! This will save you a lot of time on homework 😉." data-url="mmc"><div class="thumbnail"><img src="images/mmc-icon.png"></div><div class="details">Molar Mass Calculator</div></div>
+			<div class="grid-item" data-description="A video chatting app ran through the web!" data-url="webchat/new"><div class="thumbnail"><img src="webchat/logo.ico"></div><div class="details">WebChat</div></div>
+			<div class="grid-item" data-description="An online whiteboard! Built for a techer during COVID for quaratine classes." data-url="whiteboard"><div class="thumbnail"><img src="images/whiteboard-icon.jpg"></div><div class="details">Whiteboard</div></div>
+		</div>
+	</div>
+
+	<div id="miscellaneous" class="page">
+		<span class="back"><i class="fa-solid fa-arrow-left"></i></span>
+		<h1>Zane's Apps</h1>
+		<select class="page-select" data-value="miscellaneous">
+			<option value="games">Games</option>
+			<option value="resources">Resources</option>
+			<option value="miscellaneous" selected>Miscellaneous</option>
+			<option value="more">More</option>
+		</select>
+		<h2>Miscellaneous</h2>
+		<div class="grid-wrapper">
+			<div class="grid-item" data-description="My gallery of countdowns" data-url="countdowns"><div class="thumbnail"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="details">Countdowns</div></div>
+			<div class="grid-item" data-description="An inspirational quotes image generator!" data-url="inspiration"><div class="thumbnail"><img src="images/inspiration-icon.png"></div><div class="details">Insperational Quotes Image Generator</div></div>
+		</div>
+	</div>
+
+	<div id="more" class="page">
+		<span class="back"><i class="fa-solid fa-arrow-left"></i></span>
+		<h1>Zane's Apps</h1>
+		<select class="page-select" data-value="more">
+			<option value="games">Games</option>
+			<option value="resources">Resources</option>
+			<option value="miscellaneous">Miscellaneous</option>
+			<option value="more" selected>More</option>
+		</select>
+		<h2>More</h2>
+		<div class="grid-wrapper">
+			<div class="grid-item" data-description="About me page." data-url="about"><div class="thumbnail"><img src="images/about-icon.png" style="filter: invert(1)"></div><div class="details">About Me</div></div>
+			<div class="grid-item" data-description="My app archive!" data-url="archive"><div class="thumbnail"><img src="images/home-icon.svg"></div><div class="details">Archive</div></div>
+		</div>
+		<h2>New Releases</h2>
+		<div class="grid-wrapper">
+			<div class="grid-item" data-description="My gallery of countdowns" data-url="countdowns"><div class="thumbnail"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="details">Countdowns</div></div>
+			<div class="grid-item" data-description="Filler is a simple 2 player game where you compete to have over 50% of the board your color.<br><br>How to Play:<ul><li>Each player is assigned a corner tile at the start of the game (bottom left)</li><li>Players take turns filling their tiles with one of 6 colors in an attempt to capture adjacent tiles of the same color</li><li>You cannot change the color of your tiles into the color of your opponent's tiles</li><li>The game ends when there are no more tiles to occupy</li><li>The player with the most tiles wins</li></ul>" data-url="https://fillergame.herokuapp.com"><div class="thumbnail"><img src="https://fillergame.herokuapp.com/public/icons/board.PNG"></div><div class="details">Filler</div></div>
+            <div class="grid-item" data-description="A remake of the classic Crossy Road game." data-url="crossyroad"><div class="thumbnail"><img src="crossyroad/icon.jpeg"></div><div class="details">Crossy Road</div></div>
+            <div class="grid-item" data-description="An online whiteboard! Built for a techer during COVID for quaratine classes." data-url="whiteboard"><div class="thumbnail"><img src="images/whiteboard-icon.jpg"></div><div class="details">Whiteboard</div></div>
+            <div class="grid-item" data-description="A handy-dandy notes app that syncs across devices!" data-url="notes"><div class="thumbnail"><img src="notes/icon.png"></div><div class="details">Notes</div></div>
+            <div class="grid-item" data-description="Play chess against a computer with varying levels of difficulty!" data-url="chess"><div class="thumbnail"><img src="chess/img/chess.png"></div><div class="details">Chess</div></div>
+            <div class="grid-item" data-description="Inspired by the popular game Fruit Ninja, with my own flare of creativity!" data-url="cakeninja"><div class="thumbnail"><img src="cakeninja/files/assets/32463581/1/caption.png"></div><div class="details">Cake Ninja</div></div>
+		</div>
+		<h2>Legal Policies</h2>
+		<div><p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
+		<p>Copyright © 2022 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page.</p></div>
+
+	</div>
+
+	<div id="details" class="page">
+		<span class="close"><i class="fa-solid fa-xmark"></i></span>
+		<h2 id="title">Game title</h2>
+		<div id="img-wrapper">
+			<img id="img" src="https://zanewesley.github.io/images/icon.png" alt="Description image">
+		</div>
+		<div class="gamebar">
+			<div class="gamebar-left">
+				<i class="fa-light fa-star"></i>
+				<i class="fa-solid fa-share-from-square"></i>
+			</div>
+			<div id="play-btn"><i class="fa-solid fa-play"></i></div>
+		</div>
+		<h3>Description</h3>
+		<p id="description">
+			Description.
+		</p>
+	</div>
 
 	<script>
-		VANTA.TOPOLOGY({
-			  el: "#header",
-			  mouseControls: true,
-			  touchControls: true,
-			  gyroControls: false,
-			  minHeight: 200.00,
-			  minWidth: 200.00,
-			  scale: 1.00,
-			  scaleMobile: 1.00,
-			  color: 0x2a3a4a,
-			  backgroundColor: 0x16151a
-		});
-
-		function isScrolledIntoView(el) {
-		    var rect = el.getBoundingClientRect(), top = rect.top, height = rect.height, 
-		    el = el.parentNode;
-		  do {
-		    rect = el.getBoundingClientRect();
-		    if (top <= rect.bottom === false) return false;
-		    // Check if the element is out of view due to a container scrolling
-		    if ((top + height) <= rect.top) return false
-		    el = el.parentNode;
-		  } while (el != document.body);
-		  // Check its within the document viewport
-		  return top <= document.documentElement.clientHeight;
-		}
-
-		var header = document.getElementById('header');
-
-		document.querySelectorAll('.page-btn').forEach(function(elem) {
-			//document.getElementById(elem.id.replace('-link', '')).style.top='200vh';
+		document.querySelectorAll('.tab-icon').forEach(function(elem) {
 			elem.addEventListener('click', function(e) {
-				document.getElementById(elem.id.replace('-link', '')).classList.add('active');
-				document.getElementById('main').classList.add('hidden');
+				closePages();
+				document.getElementById(elem.id.replace('-tab', '')).classList.add('active');
+				document.getElementById('startup').classList.remove('init');
 			});
 		});
 
-		document.getElementById('hamburger').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.getElementById('menu').classList.toggle('open');
-			document.getElementById('hamburger').classList.toggle('open');
-			/*if(document.getElementById('menu').classList.contains('open')) {
-				document.getElementById('hamburger').querySelector('svg use').setAttribute('xlink:href', '#close-icon');
-			} else {
-				document.getElementById('hamburger').querySelector('svg use').setAttribute('xlink:href', '#hamburger-icon');
-			}*/
-		});
-		document.querySelectorAll('#menu a').forEach(function(elem) {
-			elem.addEventListener('click', function() {
-				document.getElementById('menu').classList.toggle('open');
-				document.getElementById('hamburger').classList.toggle('open');
-			});
-		});
-
-		document.querySelectorAll('.stat').forEach(function(elem) {
+		document.querySelectorAll('.back').forEach(function(elem) {
 			elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				this.parentNode.scrollIntoView();
-				document.getElementById(this.id.replace('btn', 'modal')).classList.add('open');
-				document.getElementById('overlay').classList.add('open');
+				closePages();
+				elem.parentNode.classList.remove('active');
+				document.getElementById('startup').classList.add('active')
 			});
 		});
 
-		document.getElementById('overlay').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.querySelectorAll('.modal').forEach(function(elem) {
-				elem.classList.remove('open');
+		document.querySelectorAll('.close').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				this.parentNode.classList.remove('active');
 			});
-			this.classList.remove('open');
 		});
 
-		window.onload = function() {
-			document.querySelector('header h1').style.color="#fff";
-			/*document.querySelectorAll('.section').forEach(function(elem) {
-				elem.classList.add('offscreen');
-			});*/
-		}
-
-		/**/if (window.matchMedia('(display-mode: standalone)').matches) {/**/
-			//event listener for if the page is a PWA
-			document.querySelectorAll('li').forEach(function(elem) {
-				elem.addEventListener('click', function(e) {
-					e.preventDefault();
-					if(!this.classList.contains('disabled') && !this.classList.contains('newframe')) {
-						var _this = this;
-						//Analytics
-						/*dataLayer.push({
-							'event': 'app_link_click',
-							'app_name': _this.id
-
-						});*/
-						gtag('event', 'app_link_click', {
-						  'app_name': _this.id
-						});
-						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
-						updateRecentArr(this.id);
-						//Layer iframe ontop
-						document.getElementById('standalone-frame').classList.add('fadeIn');
-						document.getElementById('standalone-nav').classList.add('fadeIn');
-						window.scrollTo(0,0);
-						document.body.classList.add('standalone-open');
-						document.getElementsByTagName('html')[0].classList.add('standalone-open');
-						document.getElementById('standalone-bg').style.display="block";
-					} else if(this.classList.contains('newframe')) {
-						var _this = this;
-						//Analytics
-						/*dataLayer.push({
-							'event': 'app_link_click',
-							'app_name': _this.id
-
-						});*/
-						gtag('event', 'app_link_click', {
-						  'app_name': _this.id
-						});
-						updateRecentArr(this.id);
-						open(this.getAttribute('data-url'));
-					}
-				});
+		document.querySelectorAll('.page-select').forEach(function(elem) {
+			elem.addEventListener('change', function(e) {
+				closePages();
+				document.getElementById(this.value).classList.add('active');
+				this.value = this.getAttribute('data-value');
 			});
-		/**/} else {
-			//event listener for if it is not a PWA
-			document.querySelectorAll('li').forEach(function(elem) {
-				elem.addEventListener('click', function(e) {
-					e.preventDefault();
-					if(!this.classList.contains('disabled')) {
-						var _this = this;
-						//Analytics
-						/*dataLayer.push({
-							'event': 'app_link_click',
-							'app_name': _this.id
-
-						});*/
-						gtag('event', 'app_link_click', {
-						  'app_name': _this.id
-						});
-						updateRecentArr(this.id);
-						document.body.scrollTop = 0; // For Safari
-						document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-						setTimeout(function() {
-							window.location=_this.getAttribute('data-url');
-						}, 100);
-					}
-				});
-			});
-		}/**/
-
-		document.getElementById('standalone-home').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.getElementById('standalone-frame').src=null;
-			//Layer iframe ontop
-			document.getElementById('standalone-frame').classList.remove('fadeIn');
-			document.getElementById('standalone-nav').classList.remove('fadeIn');
-			window.scrollTo(0,0);
-			document.body.classList.remove('standalone-open');
-			document.getElementsByTagName('html')[0].classList.remove('standalone-open');
-			document.getElementById('standalone-bg').style.display="none";
 		});
 
-		document.getElementById('standalone-share').addEventListener('click', function(e) {
-			e.preventDefault();
-			/*if (navigator.share) {
-			  navigator.share({
-			    title: document.title,
-			    text: "Check out Zane\'s apps!",
-			    url: window.location.href
-			  })
-			  .then(() => console.log('Successful share'))
-			  .catch(error => console.log('Error sharing:', error));
-			}*/
-			var a = document.createElement('a');
-			var osLink = getMobileOperatingSystem() == 'iOS' ? 'sms:&body=Check out Zane\'s Apps! https://zanewesley.github.io' : 'sms:?body=Check out Zane\'s Apps! https://zanewesley.github.io';
-			a.href = osLink;
-			document.body.appendChild(a);
-			a.click();
+		document.querySelectorAll('.grid-item').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				document.getElementById('title').innerHTML=this.querySelector('.details').innerHTML;
+				document.getElementById('img').src=this.querySelector('img').src;
+				document.getElementById('description').innerHTML=this.getAttribute('data-description');
+				document.getElementById('play-btn').setAttribute('data-url', this.getAttribute('data-url'));
+				document.getElementById('details').classList.add('active');
+			});
 		});
 
-		function getMobileOperatingSystem() {
-		    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+		document.getElementById('play-btn').addEventListener('click', function(e) {
+			window.open(this.getAttribute('data-url'));
+		});
 
-		    // Windows Phone must come first because its UA also contains "Android"
-		    if (/windows phone/i.test(userAgent)) {
-		        return "Windows Phone";
-		    }
-
-		    if (/android/i.test(userAgent)) {
-		        return "Android";
-		    }
-
-		    // iOS detection from: http://stackoverflow.com/a/9039885/177710
-		    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-		        return "iOS";
-		    }
-
-		    return "unknown";
-		}
-		var appArr;
-		function updateRecentArr(app) {
-			var appArrQuery = localStorage.getItem('recent_apps');
-			if(appArrQuery) {
-				appArr = JSON.parse(localStorage.getItem('recent_apps'))
-			} else {
-				appArr = [];
-			}
-			var appJ = {
-				name: app,
-				date: new Date()
-			};
-			appArr.push(appJ);
-			localStorage.setItem('recent_apps', JSON.stringify(appArr));
-			loadAppHistory(appArr);
-		}
-
-		function loadAppHistory(appHArr) {
-			appHArr = appHArr.reverse();
-			document.getElementById('history').innerHTML="";
-			var ul = document.createElement('ul');
-			document.getElementById('history').appendChild(ul);
-			for(var i = 0; i<appHArr.length; i++) {
-				var li = document.createElement('li');
-				li.setAttribute('data-id', appHArr[i].name);
-				var d = new Date(appHArr[i].date);
-				li.innerHTML = `
-					<div class="name">${document.getElementById(appHArr[i].name).querySelector('.name').innerHTML}</div>
-					<div class="date">${detFormat(d)}</div>
-				`;
-				document.getElementById('history').querySelector('ul').appendChild(li);
-			}
-			console.log('Loading history...');
-			document.querySelectorAll('#history li').forEach(function(elem) {
-				elem.addEventListener('click', function(e) {
-					e.preventDefault();
-					document.getElementById(this.getAttribute('data-id')).click();
-				});
+		function closePages() {
+			document.querySelectorAll('#startup, #games, #resources, #miscellaneous, #more').forEach(function(elem) {
+				elem.classList.remove('active');
 			});
 		}
-
-		var pre_appArrQuery = localStorage.getItem('recent_apps');
-		if(pre_appArrQuery) {
-			appArr = JSON.parse(localStorage.getItem('recent_apps'))
-		} else {
-			appArr = [];
-		}
-		loadAppHistory(appArr);
-
-		function detFormat(date) {
-			var OneDay = new Date().getTime() + (1 * 24 * 60 * 60 * 1000);
-			var d;
-			if (OneDay > date) {
-			    // The yourDate time is less than 1 days from now
-			    d = formatAMPM(date);
-			}
-			else if (OneDay < date) {
-			    // The yourDate time is more than 1 days from now
-			    d = getFormattedDate(date);
-			}
-			return d;
-		}
-
-		function getFormattedDate(date) {
-		    let year = date.getFullYear();
-		    let month = (1 + date.getMonth()).toString().padStart(2, '0');
-		    let day = date.getDate().toString().padStart(2, '0');
-		  
-		    return month + '/' + day + '/' + year;
-		}
-
-		function formatAMPM(date) {
-		  var hours = date.getHours();
-		  var minutes = date.getMinutes();
-		  var ampm = hours >= 12 ? 'pm' : 'am';
-		  hours = hours % 12;
-		  hours = hours ? hours : 12; // the hour '0' should be '12'
-		  minutes = minutes < 10 ? '0'+minutes : minutes;
-		  var strTime = hours + ':' + minutes + ' ' + ampm;
-		  return strTime;
-		}
-
-
-		/*function tourPage(arr) {
-			var overlay = document.createElement('div');
-			overlay.style='position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: rgba(0,0,0,0.7); z-index: 9;';
-			var box = document.createElement('div');
-			var i = 0;
-			box.style='position: absolute; left:50%;top: 50%; transform: translate(-50%, -50%); z-index: 10; background: #fff; color: #111;';
-			arr[i].elem.scrollIntoView();
-			arr[i].elem.style.zIndex=10;
-			box.innerHTML=arr[i].text;
-			document.body.appendChild(overlay);
-			document.body.appendChild(box);
-		}
-		tourPage([
-			{
-				elem: document.querySelector('#stats'),
-				text: 'Test'
-			}
-		]);*/
-
-		/*var highlights = [
-			{
-				elem: document.querySelector('#stats'),
-				title: 'Your Stats',
-				content: ''
-			},
-			{
-				elem: document.querySelector('#new'),
-				title: 'What\'s New',
-				content: 'See all of Zane\'s new apps here'
-			}
-		];
-		var highlightNum = 0;
-
-		function highlightElement(elem, title, content) {
-			var modal = document.getElementById('highlightModal');
-			modal.querySelector('.title').innerHTML=title;
-			modal.querySelector('.content').innerHTML=`
-				${content}
-				<button onclick='nextHighlight()'>Next</button>`;
-			elem.scrollIntoView();
-		}
-
-		function nextHighlight() {
-			var i = highlights[highlightNum];
-			highlightElement(i.elem, i.title, i.content);
-			i++;
-		}*/
-
-		setTimeout(function() {
-			document.querySelector('.typejs-wrap-cursor').style.display='none';
-		}, 6000);
-
 	</script>
 </body>
 </html>
