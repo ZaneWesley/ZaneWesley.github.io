@@ -27,11 +27,45 @@
 			width: 100%;
 			height: 100%;
 			color: #fff;
+			background: rgb(38, 153, 255);
 			background:radial-gradient(ellipse at 100% 0%, rgba(38, 153, 255, 1) 20%, rgba(6, 13, 18, 1) 87%);
+		}
+		.loader {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: rgb(38, 153, 255);
+			background:radial-gradient(ellipse at 100% 0%, rgba(38, 153, 255, 1) 20%, rgba(6, 13, 18, 1) 87%);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 3;
+		}
+		.loader svg {
+			width: 25vh;
+			height: 25vh;
 		}
 	</style>
 </head>
 <body>
+	<div class="loader">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="25 25 50 50">
+			<circle cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke="#ffffff" stroke-linecap="round" stroke-dashoffset="0" stroke-dasharray="100, 200">
+		    	<animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="2.5s" repeatCount="indefinite"/>
+		    	<animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite"/>
+		    	<animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s" repeatCount="indefinite"/>
+			</circle>
+		</svg>
+	</div>
+
+	<script>
+		setTimeout(function() {
+			document.querySelector('.loader').remove();
+		}, 2000);
+	</script>
+
 	<script type="text/javascript" src="https://form.jotform.com/jsform/220830555471049"></script>
 </body>
 </html>
