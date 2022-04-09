@@ -184,6 +184,12 @@
 			font-weight: 500;
 			font-size: 1.25rem;
 		}
+		#search {
+			display: none;
+		}
+		#search.open {
+			display: initial;
+		}
 		footer {
 			padding: 16px;
 			font-weight: 500;
@@ -192,6 +198,18 @@
 		}
 		a {
 			color: #fff;
+		}
+		input[type="text"] {
+			width: 85%;
+			align-items: flex-start;
+			padding: 0.25em;
+			outline: none;
+			border: none;
+			border-radius: 0.25rem;
+			color: #0f172a;
+			font-size: 1.25rem;
+			font-family: Inconsolata, sans-serif;
+			letter-spacing: 1px;
 		}
 		.nav-icon-5{
 		  width: 35px;
@@ -398,6 +416,7 @@
 			<a href="#resources"><i class="fa-thin fa-pen-ruler"></i></a>
 			<a href="#miscellaneous"><i class="fa-thin fa-shapes"></i></a>
 			<a href="#more"><i class="fa-thin fa-ellipsis-stroke"></i></a>
+			<input id="search" type="text" list="app-names">
 			<a href="#search"><i class="fa-thin fa-magnifying-glass"></i></a>
 			<!--<div class="menu-icon nav-icon-5">
 				<span></span>
@@ -405,6 +424,7 @@
 				<span></span>
 			</div>-->
 		</nav>
+		<datalist id="app-names"><!--<option value="Filler"></option>--></datalist>
 		<div class="content">
 			<div id="new" class="section"> <!--data-aos="zoom-in-up" data-aos-duration="1500"-->
 				<div class="h-title">
@@ -662,6 +682,41 @@
 		*/
 		document.querySelector('a[href="#search"]').addEventListener('click', function(e) {
 			e.preventDefault();
+			document.getElementById('search').classList.toggle('open');
+			toggleActiveNav(document.getElementById('search').classList.contains('open'));
+			if(document.getElementById('search').classList.contains('open')) document.getElementById('search').focus();
+			findString(document.getElementById('search').value);
+		});
+
+		function findString(str) {
+			window.find(str, false);
+		}
+
+		function toggleActiveNav(bool) {
+			if(bool) {
+				document.querySelectorAll('nav a').forEach(function(elem) {
+					if(elem.getAttribute('href') !== "#search") {
+						elem.style.display="none";
+					}
+				});
+			} else {
+				document.querySelectorAll('nav a').forEach(function(elem) {
+					if(elem.getAttribute('href') !== "#search") {
+						elem.style.display="initial";
+					}
+				});
+			}
+		}
+
+		document.querySelectorAll('#games .grid-item, #resources .grid-item, #miscellaneous .grid-item, #more .grid-item').forEach(function(elem) {
+			var opt = document.createElement('option');
+			opt.value=elem.querySelector('.grid-title-wrapper h5').innerHTML;
+			document.querySelector('#app-names').appendChild(opt);
+		});
+
+		document.getElementById('search').addEventListener('keyup', function(e) {
+			e.preventDefault;
+			if(e.which == 13) findString(document.getElementById('search').value);
 		});
 		
 	</script>
