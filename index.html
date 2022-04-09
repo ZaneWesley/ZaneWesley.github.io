@@ -150,8 +150,6 @@
 			box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06);
 			transition: 0.3s ease-in-out all;
 			cursor: pointer;
-			user-select: none;
-			-webkit-user-select: none;
 		}
 		.grid-item:hover {
 			transform: scale(0.9);
@@ -165,6 +163,8 @@
 			object-fit: cover;
 			text-align: center;
 			overflow: hidden;
+			user-select: none;
+			-webkit-user-select: none;
 		}
 		.grid-item .grid-img-wrapper img {
 			/*width: 100%;*/
@@ -332,10 +332,12 @@
 		/* WebKit/Blink Browsers */
 		::selection {
 		  background: #232527;
+		  color: #fff;
 		}
 		/* Gecko Browsers */
 		::-moz-selection {
 		  background: #232527;
+		  color: #fff;
 		}
 
 		html.standalone-open, body.standalone-open {
