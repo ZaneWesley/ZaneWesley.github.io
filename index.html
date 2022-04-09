@@ -150,6 +150,8 @@
 			box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06);
 			transition: 0.3s ease-in-out all;
 			cursor: pointer;
+			user-select: none;
+			-webkit-user-select: none;
 		}
 		.grid-item:hover {
 			transform: scale(0.9);
@@ -326,6 +328,14 @@
 		/* Handle on hover */
 		::-webkit-scrollbar-thumb:hover {
 		  background: rgba(255, 255, 255, 0.9);
+		}
+		/* WebKit/Blink Browsers */
+		::selection {
+		  background: #232527;
+		}
+		/* Gecko Browsers */
+		::-moz-selection {
+		  background: #232527;
 		}
 
 		html.standalone-open, body.standalone-open {
