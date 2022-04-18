@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<meta name="description" content="Zane Wesley's app archives">
+	<!-- General -->
+	<link rel="manifest" href="manifest.json">
+	<meta name="theme-color" content="#232527">
+	<meta name="application-name" content="Zane's Apps Archives">
+	<link rel="shortcut icon" href="images/icon.png">
+	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
+	<link rel="canonical" href="https://www.zanewesley.github.io">
+	<!-- Apple -->
+	<meta name="apple-mobile-web-app-title" content="Zane's Apps Archive">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#232527">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
+	<link rel="mask-icon" href="images/icon.png" color="#232527">
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
+	<!-- UI -->
+	<script src="ui/type.min.js"></script>
+	<!-- Scrolling -->
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<!-- Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-YEEGMG5QT7');
+	</script>
+
+	<title>Archives | Zane's Apps</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			/*overflow-x: hidden;*/
+		}
+		html, body {
+			scroll-behavior: smooth;
+			/*background-color: #2d3e50;*/
+			background-color: #232527;
+			font-family: 'Roboto', sans-serif;
+			width: 100%;
+			height: 100%;
+			color: #fff;
+		}
+		.content {
+			/*background:radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0) 0%, rgba(35, 37, 39, 1) 72%);*/
+			background:radial-gradient(ellipse at 100% 0%, rgba(38, 153, 255, 1) 20%, rgba(6, 13, 18, 1) 87%);
+			/*background-color: #050B11;*/
+			/*background: linear-gradient(180deg, rgba(5, 11, 17, 1) 20%, rgba(30, 144, 255, 1) 94%);*/
+			/*background:linear-gradient(180deg, rgba(5, 11, 17, 1) 9%, rgba(30, 144, 255, 1) 50%, rgba(5, 11, 17, 1) 89%);*/
+		}
+		header {
+			position: relative;
+			width: 100%;
+			background-color: #232527;
+			background-image: url('images/header-bg-v2.svg');
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			font-weight: 400;
+			transition: all 0.3s;
+		}
+		.header-content {
+			position: relative;
+    		padding: 110px 10px 75px 10px;
+    		text-align: center;
+    		line-height: 1.1;
+    		font-size: 3rem;
+    		max-width: 100%;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		}
+		nav {
+			position: sticky;
+			position: -webkit-sticky;
+			top: 0;
+			padding: 0.5em;
+			color: #1e90ff;
+			background-color: #232527;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			font-size: 2em;
+			z-index: 2;
+		}
+		nav a {
+			color: #1e90ff;
+			text-decoration: none;
+		}
+		nav i {
+			cursor: pointer;
+			transition: all 0.3s;
+		}
+		nav a:hover {
+			text-shadow: 6px 6px 6px #000;
+			transform: scale(1.1);
+		}
+		.main {
+			height: auto;
+		}
+		.content {
+			/*background:radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0) 0%, rgba(35, 37, 39, 1) 72%);*/
+			background:radial-gradient(ellipse at 100% 0%, rgba(38, 153, 255, 1) 20%, rgba(6, 13, 18, 1) 87%);
+			/*background-color: #050B11;*/
+			/*background: linear-gradient(180deg, rgba(5, 11, 17, 1) 20%, rgba(30, 144, 255, 1) 94%);*/
+			/*background:linear-gradient(180deg, rgba(5, 11, 17, 1) 9%, rgba(30, 144, 255, 1) 50%, rgba(5, 11, 17, 1) 89%);*/
+		}
+		h1, h2, h5 {
+			font-family: Inconsolata, sans-serif;
+			letter-spacing: 1px;
+		}
+		.h-title {
+			text-align: center;
+			margin-bottom: 3rem;
+			padding-top: 5rem;
+		}
+		.h-title h2 {
+			font-size: 2.441rem;
+		}
+		.h-title hr {
+			border: 3px solid #fff;
+			border-radius: 20px;
+			width: 10em;
+			margin: 2em auto auto auto;
+		}
+		.grid {
+			width: 90vw;
+			max-width: 1120px;
+			margin: 0px auto 2rem;
+			display: grid;
+			grid-gap: 3rem 2rem;
+			grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+			overflow: hidden;
+		}
+		.grid-item {
+			border-radius: 0.25rem;
+			background: #fff;
+			box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06);
+			transition: 0.3s ease-in-out all;
+			cursor: pointer;
+		}
+		.grid-item:hover {
+			transform: scale(0.9);
+		}
+		.grid-item .grid-img-wrapper {
+			width: 100%;
+			display: block;
+			border-top-left-radius: var(--borderRadius);
+			border-top-right-radius: var(--borderRadius);
+			height: 15rem;
+			object-fit: cover;
+			text-align: center;
+			overflow: hidden;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+		.grid-item .grid-img-wrapper img {
+			/*width: 100%;*/
+			height: 100%;
+			max-height: 100%;
+			object-fit: cover;
+		}
+		.grid-item .grid-title-wrapper {
+			text-align: center;
+			padding: 1rem 1.25rem;
+			background: #fff;
+			border-bottom-left-radius: 0.25rem;
+			border-bottom-right-radius: 0.25rem;
+		}
+		.grid-item .grid-title-wrapper h5 {
+			margin: 0 0 1.38rem;
+			margin-bottom: 0px;
+			color: #0f172a;
+			font-weight: 500;
+			font-size: 1.25rem;
+		}
+		/* width */
+		::-webkit-scrollbar {
+		  width: auto;
+		  /*background: #1e90ff;*/
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+		  /*background: #1e90ff;*/
+		  background: linear-gradient(to bottom, #1e90ff, #232527);
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+		  background: rgba(255, 255, 255, 0.5);
+		  border-radius: 25px;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+		  background: rgba(255, 255, 255, 0.9);
+		}
+		footer {
+			padding: 16px;
+			font-weight: 500;
+			font-size: 12px;
+			color: #fff;
+		}
+		a {
+			color: #fff;
+		}
+		@media (max-width: 480px) {
+			header h1 {
+				font-size: 62px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="header-content">
+			<h1 class="typejs" data-type-period="2000" data-type-loop="false" data-type-cursor="true" data-type-delay="1500" data-type-text='["App Archive"]'>App Archive</h1>
+		</div>
+	</header>
+	<div class="main">
+		<nav>
+			<a href="/"><i class="fa-thin fa-house"></i></a>
+			<a href="#index"><i class="fa-thin fa-file"></i></a>
+			<a href="#countdowns"><i class="fa-thin fa-timer"></i></a>
+			<a href="#apps"><i class="fa-thin fa-box-archive"></i></a>
+		</nav>
+		<div class="content">
+			<div id="index" class="section"> <!--data-aos="zoom-in-up" data-aos-duration="1500"-->
+				<div class="h-title">
+					<h2>Page Archive</h2>
+					<hr>
+				</div>
+				<div class="grid">
+					<div class="grid-item" style="background-color: #81D9FF;" data-url="archive-v2"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>Archive v2.2.0</h5></div></div>
+					<div class="grid-item" style="background-color: #2C3E51;" data-url="about-v2"><div class="grid-img-wrapper"><img src="images/icon.png"></div><div class="grid-title-wrapper"><h5>About v2.1.0</h5></div></div>
+					<div class="grid-item" style="background-color: #2C3E51;" data-url="index-v7"><div class="grid-img-wrapper"><img src="images/icon.png"></div><div class="grid-title-wrapper"><h5>Homepage v7.9.4</h5></div></div>
+					<div class="grid-item" style="background-color: #023153;" data-url="about-v1"><div class="grid-img-wrapper"><img src="images/icon-v1.png"></div><div class="grid-title-wrapper"><h5>About v1.0.0</h5></div></div>
+					<div class="grid-item" style="background-color: #023153;" data-url="index-v6"><div class="grid-img-wrapper"><img src="images/icon-v1.png"></div><div class="grid-title-wrapper"><h5>Homepage v6.8.2</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" data-url="index-v5"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>Homepage v5.4.0</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" data-url="index-v4"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>Homepage v4.2.2</h5></div></div>
+					<div class="grid-item" style="background-color: #81D9FF;" data-url="archive-v1"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>Archive v1.0.0</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" data-url="404-v1"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>404 Page v1.0.0</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" data-url="index-v3"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>Homepage v3.2.6</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" data-url="index-v2"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>Homepage v2.6.1</h5></div></div>
+				</div>
+			</div>
+
+			<div id="countdowns" class="section"> <!--data-aos="zoom-in-up" data-aos-duration="1500"-->
+				<div class="h-title">
+					<h2>Countdown Archive</h2>
+					<hr>
+				</div>
+				<div class="grid">
+					<div class="grid-item" style="background-color: rgba(0, 191, 166, 0.1);" data-url="school-countdown-2021"><div class="grid-img-wrapper"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="grid-title-wrapper"><h5>School Countdown 2021</h5></div></div>
+					<div class="grid-item" style="background-color: rgba(0, 191, 166, 0.1);" data-url="christmas-countdown-2021"><div class="grid-img-wrapper"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="grid-title-wrapper"><h5>Christmas Countdown 2021</h5></div></div>
+					<div class="grid-item" style="background-color: rgba(0, 191, 166, 0.1);" data-url="valentines-countdown-2021"><div class="grid-img-wrapper"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="grid-title-wrapper"><h5>Valentine's Day Countdown 2021</h5></div></div>
+					<div class="grid-item" style="background-color: rgba(0, 191, 166, 0.1);" data-url="new-years-countdown-2021"><div class="grid-img-wrapper"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="grid-title-wrapper"><h5>New Year's Countdown 2021</h5></div></div>
+					<div class="grid-item" style="background-color: rgba(0, 191, 166, 0.1);" data-url="christmas-countdown-2020"><div class="grid-img-wrapper"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="grid-title-wrapper"><h5>Christmas Countdown 2020</h5></div></div>
+					<div class="grid-item" style="background-color: rgba(0, 191, 166, 0.1);" data-url="christmas-countdown-2019"><div class="grid-img-wrapper"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="grid-title-wrapper"><h5>Christmas Countdown 2019</h5></div></div>
+				</div>
+			</div>
+
+			<div id="apps" class="section"> <!--data-aos="zoom-in-up" data-aos-duration="1500"-->
+				<div class="h-title">
+					<h2>Apps Archive</h2>
+					<hr>
+				</div>
+				<div class="grid">
+					<div class="grid-item" style="background-color: #000000" data-url="digitaltimer"><div class="grid-img-wrapper"><img src="images/digitaltimer-icon.png" style="width: 100%; height: auto; margin-top: 10%;"></div><div class="grid-title-wrapper"><h5>Digital Timer</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff" data-url="app"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>My App</h5></div></div>
+					<div class="grid-item" style="background-color: #D8DDE0" data-url="todo"><div class="grid-img-wrapper"><img src="todo/favicon.png"></div><div class="grid-title-wrapper"><h5>To Do List App</h5></div></div>
+					<div class="grid-item" style="background-color: #2AB1E0" data-url="chat"><div class="grid-img-wrapper"><img src="images/chatlogo.ico"></div><div class="grid-title-wrapper"><h5>Chat Rooms</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff" data-url="qrbuilder"><div class="grid-img-wrapper"><img src="images/qr-icon.png"></div><div class="grid-title-wrapper"><h5>QR Code Builder</h5></div></div>
+					<div class="grid-item" style="background-color: #A6A6A6" data-url="todo-v1"><div class="grid-img-wrapper"><img src="images/checkbox_checked.png"></div><div class="grid-title-wrapper"><h5>To Do List App v1.3.0</h5></div></div>
+				</div>
+			</div>
+
+			<footer>
+				<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
+				<p>Copyright &copy; 2021 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page.</p>
+			</footer>
+		</div>
+	</div>
+
+	<script>
+		//Adding animation
+		document.querySelectorAll('.grid-item').forEach(function(elem) {
+			elem.setAttribute('data-aos', 'zoom-in-up');
+			elem.setAttribute('data-aos-duration', '1000');
+		});
+		document.querySelectorAll('.section h2, .section hr').forEach(function(elem) {
+			elem.setAttribute('data-aos', 'fade-up');
+		});
+		AOS.init();
+
+		document.querySelectorAll('.grid-item').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				window.open(elem.getAttribute('data-url'));
+				gtag('event', 'app_link_click', {
+					 'app_name': _this.id
+				});
+			});
+		});
+	</script>
+</body>
