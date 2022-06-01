@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
+	<title>Infobar</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+		}
+		html, body {
+			scroll-behavior: smooth;
+			background-color: transparent;
+			font-family: 'Roboto', sans-serif;
+			width: 100%;
+			height: auto;
+			font-size: 20px;
+			color: #ccd6f6;
+		}
+		.bar {
+			background-color: rgba(35, 53, 84, 0.7);
+			width: 100%;
+			border-radius: 8px;
+			padding: 1em;
+		}
+		.bar h1 {
+			font-size: 1.1em;
+			text-align: center;
+			padding-bottom: 0.5em;
+		}
+		.bar p {
+			padding: 0.5em 0;
+		}
+		.bar input {
+			background-color: #0a192f;
+			color: #ccd6f6;
+			padding: 0.5em;
+			outline: none;
+			border: none;
+			font-size: 20px;
+			width: 100%;
+		}
+		.bar label {
+			color: #64d1ff;
+		}
+		button {
+			color: #64d1ff;
+		    background-color: transparent;
+		    border: 1px solid #64d1ff;
+		    border-radius: 4px;
+		    padding: 0.5rem 1rem;
+		    font-size: 14px;
+		    line-height: 1;
+		    text-decoration: none;
+		    cursor: pointer;
+		    transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+		    margin-top: 50px;
+		    float: right;
+		}
+		.hidden {
+			display: none;
+		}
+		.blue {
+			color: #64d1ff;
+		}
+		a {
+			color: #ccd6f6;
+		}
+		a:hover {
+			color: #fff;
+		}
+		#close {
+			position: absolute;
+			right: 0.5em;
+			top: 0.5em;
+			color: #ccd6f6;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="bar">
+		<div id="close"><i class="fa-solid fa-xmark"></i></div>
+		<section id="1">
+			<h1>Hey, there!</h1>
+			<p>It looks like you're new!</p>
+			<label for="name">What's your name?</label>
+			<input type="text" id="name" placeholder="Name">
+			<br>
+			<button id="save">Save</button>
+		</section>
+		<section id="2" class="hidden">
+			<h1>Hi, <span id="name-insert"></span>!</h1>
+			<p class="blue">Your Z-Streak: <span id="streak-insert"></span></p>
+			<p>Pick up with <a class="blue" id="lastApp"></a></p>
+			<p><a href="settings">Your Settings</a></p>
+		</section>
+	</div>
+
+	<script>
+		/* MAIN FUNCTIONS */
+		var appDataString = localStorage.getItem('z_userData');
+		var appData = appDataString ? JSON.parse(appDataString) : {};
+
+		if(appData.name) {
+			document.getElementById('1').classList.add('hidden');
+			document.getElementById('2').classList.remove('hidden');
+			document.getElementById('name-insert').innerHTML=appData.name;
+			loadData();
+		}
+
+		document.getElementById('save').addEventListener('click', function(e) {
+			e.preventDefault();
+			var val = document.getElementById('name').value;
+			if(val != "" && val != null && val != " ") {
+				appData.name = val;
+				document.getElementById('name-insert').innerHTML=val;
+				document.getElementById('1').classList.add('hidden');
+				document.getElementById('2').classList.remove('hidden');
+				syncData();
+				loadData();
+			}
+		});
+
+		document.getElementById('close').addEventListener('click', function(e) {
+			parent.document.getElementById('infobar').remove();
+		});
+
+		document.querySelectorAll('a[href=settings]').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				window.open(this.href);
+				loadData();
+			});
+		});
+
+		document.querySelector('#lastApp').addEventListener('click', function(e) {
+			e.preventDefault();
+			parent.document.querySelector(`[data-url='${appArr.reverse()[0].url}'`).click();
+		});
+
+		/* HELPER FUNCTIONS */
+		function syncData() {
+			var appDataStr = JSON.stringify(appData);
+			localStorage.setItem('z_userData', appDataStr);
+		}
+		function syncStreak() {
+			var streakData = localStorage.getItem('z_streak');
+			document.getElementById('streak-insert').innerHTML='0';
+		}
+		function loadData() {
+			//reloadStats();
+			syncStreak();
+			loadAppHistory();
+			parent.document.getElementById('infobar').classList.add('bottom');
+		}
+		var appArr;
+		function loadAppHistory() {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'));
+				var appHArr = appArr.reverse();
+				var lastApp = appHArr[0];
+				document.getElementById('lastApp').setAttribute('href', lastApp.url);
+				document.getElementById('lastApp').innerHTML = lastApp.name;
+			} else {
+				appArr = [];
+				document.getElementById('lastApp').setAttribute('href', '#');
+				document.getElementById('lastApp').innerHTML = 'something new';
+			}
+		}
+	</script>
+</body>
+</html>
