@@ -444,6 +444,21 @@
 			animation-fill-mode: forwards;
 		}
 
+		#infobar {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			color: #ccd6f6;
+			height: 37%;
+			width: 25%;
+		}
+		#infobar.bottom {
+			height: 29%;
+		}
+
 		@media (max-width: 480px) {
 			header, main {
 				padding: 0 25px;
@@ -465,6 +480,13 @@
 			}
 			section .inner {
 				display: block;
+			}
+			#infobar {
+				width: 100%;
+				background-color: rgba(10, 25, 47, 0.5);
+			}
+			#infobar.bottom {
+				height: 25%;
 			}
 		}
 	</style>
@@ -662,6 +684,7 @@
 		<footer>
 			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
 			<p>Copyright &copy; 2022 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page.</p>
+			<p>We apprecaite your feedback! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
 		</footer>
 
 		<aside class="menu monospace">
@@ -675,6 +698,9 @@
 			</ol>
 		</aside>
 	</div>
+
+	<!-- Infobar -->
+	<iframe id="infobar" src="infobar.html"></iframe>
 
 	<!-- PWA Elements -->
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
@@ -742,9 +768,10 @@
 			elem.addEventListener('click', function(e) {
 				e.preventDefault();
 				/**/if(!isPWA()) {
+					updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'));
 					window.open(elem.getAttribute('data-url'));
 					gtag('event', 'app_link_click', {
-						 'app_name': _this.id
+						 'app_name': this.querySelector('.name').innerHTML
 					});
 				} else {
 					var _this = this;
@@ -755,8 +782,9 @@
 
 					});*/
 					gtag('event', 'app_link_click', {
-						 'pwa_app_name': _this.id
+						 'pwa_app_name': _this.querySelector('.name').innerHTML
 					});
+					updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'));
 					document.getElementById('standalone-frame').src=this.getAttribute('data-url');
 					//updateRecentArr(this.id);
 					//Layer iframe ontop
@@ -826,6 +854,39 @@
 			}
 
 			return "unknown";
+		}
+
+		/* IFRAME MANAGEMENT */
+		/*function addIframeClose() {
+			var iframe = document.getElementById('infobar');
+			var elem = iframe.contentDocument.getElementById('close') || iframe.contentWindow.document.getElementById('close');
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				document.getElementById('infobar').remove();
+			});
+		}
+
+		addIframeClose();*/
+
+		/* HISTORY MANAGEMENT */
+		var appArr;
+		function updateRecentArr(app, appUrl) {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'))
+			} else {
+				appArr = [];
+			}
+			var appJ = {
+				name: app,
+				url: appUrl,
+				date: new Date()
+			};
+			appArr.push(appJ);
+			localStorage.setItem('z_history', JSON.stringify(appArr));
+			console.log(appJ);
+			//loadAppHistory(appArr);
+			document.getElementById('infobar').src = document.getElementById('infobar').src;
 		}
 	</script>
 
