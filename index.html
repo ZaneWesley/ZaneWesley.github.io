@@ -444,6 +444,21 @@
 			animation-fill-mode: forwards;
 		}
 
+		#infobar {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			color: #ccd6f6;
+			height: 37%;
+			width: 25%;
+		}
+		#infobar.bottom {
+			height: 29%;
+		}
+
 		@media (max-width: 480px) {
 			header, main {
 				padding: 0 25px;
@@ -465,6 +480,13 @@
 			}
 			section .inner {
 				display: block;
+			}
+			#infobar {
+				width: 100%;
+				background-color: rgba(10, 25, 47, 0.5);
+			}
+			#infobar.bottom {
+				height: 25%;
 			}
 		}
 	</style>
@@ -652,6 +674,10 @@
 								<div class="img"><img src="images/home-icon.svg"></div>
 								<div class="name">App Archive</div>
 							</li>
+							<li id="beta" data-url="beta">
+								<div class="img"><img src="images/beta-icon.png"></div>
+								<div class="name">BETA Page</div>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -662,6 +688,7 @@
 		<footer>
 			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
 			<p>Copyright &copy; 2022 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page.</p>
+			<p>We apprecaite your feedback! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
 		</footer>
 
 		<aside class="menu monospace">
@@ -675,6 +702,9 @@
 			</ol>
 		</aside>
 	</div>
+
+	<!-- Infobar -->
+	<!--<iframe id="infobar" src="infobar.html"></iframe>-->
 
 	<!-- PWA Elements -->
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
@@ -738,37 +768,46 @@
 		});
 
 		/* Link Handlers */
-		document.querySelectorAll('.list li').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				/**/if(!isPWA()) {
-					window.open(elem.getAttribute('data-url'));
-					gtag('event', 'app_link_click', {
-						 'app_name': _this.id
-					});
-				} else {
-					var _this = this;
-					//Analytics
-					/*dataLayer.push({
-						'event': 'app_link_click',
-						'app_name': _this.id
-
-					});*/
-					gtag('event', 'app_link_click', {
-						 'pwa_app_name': _this.id
-					});
-					document.getElementById('standalone-frame').src=this.getAttribute('data-url');
-					//updateRecentArr(this.id);
-					//Layer iframe ontop
-					document.getElementById('standalone-frame').classList.add('fadeIn');
-					document.getElementById('standalone-nav').classList.add('fadeIn');
-					window.scrollTo(0,0);
-					document.body.classList.add('standalone-open');
-					document.getElementsByTagName('html')[0].classList.add('standalone-open');
-					document.getElementById('standalone-bg').style.display="block";
-				}/**/
+		function setHandlers() {
+			//clear event listeners
+			document.querySelectorAll('.list li').forEach(function(elem) {
+				elem.replaceWith(elem.cloneNode(true));
 			});
-		});
+			//set event listeners
+			document.querySelectorAll('.list li').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					e.preventDefault();
+					/**/if(!isPWA()) {
+						updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
+						window.open(elem.getAttribute('data-url'));
+						gtag('event', 'app_link_click', {
+							 'app_name': this.querySelector('.name').innerHTML
+						});
+					} else {
+						var _this = this;
+						//Analytics
+						/*dataLayer.push({
+							'event': 'app_link_click',
+							'app_name': _this.id
+
+						});*/
+						gtag('event', 'app_link_click', {
+							 'pwa_app_name': _this.querySelector('.name').innerHTML
+						});
+						updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
+						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
+						//updateRecentArr(this.id);
+						//Layer iframe ontop
+						document.getElementById('standalone-frame').classList.add('fadeIn');
+						document.getElementById('standalone-nav').classList.add('fadeIn');
+						window.scrollTo(0,0);
+						document.body.classList.add('standalone-open');
+						document.getElementsByTagName('html')[0].classList.add('standalone-open');
+						document.getElementById('standalone-bg').style.display="block";
+					}/**/
+				});
+			});
+		}
 
 		function isPWA() {
 			if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
@@ -827,6 +866,69 @@
 
 			return "unknown";
 		}
+
+		/* IFRAME MANAGEMENT */
+		/*function addIframeClose() {
+			var iframe = document.getElementById('infobar');
+			var elem = iframe.contentDocument.getElementById('close') || iframe.contentWindow.document.getElementById('close');
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				document.getElementById('infobar').remove();
+			});
+		}
+
+		addIframeClose();*/
+
+		/* HISTORY MANAGEMENT */
+		var appArr;
+		function updateRecentArr(app, appUrl, iconUrl) {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'))
+			} else {
+				appArr = [];
+			}
+			var appJ = {
+				name: app,
+				url: appUrl,
+				icon: iconUrl,
+				date: new Date()
+			};
+			appArr.push(appJ);
+			localStorage.setItem('z_history', JSON.stringify(appArr));
+			console.log(appJ);
+			loadAppHistory();
+			//document.getElementById('infobar').src = document.getElementById('infobar').src;
+		}
+		function loadAppHistory() {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'));
+				var appRArr = appArr.reverse();
+				var appHArr = appRArr.filter(by('name'), new Set);
+				document.querySelector('#foryou ul').innerHTML=`
+					<li data-url='${appHArr[0].url}'><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>
+					<li data-url='${appHArr[1].url}'><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>
+					<li data-url='${appHArr[2].url}'><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>
+				`;
+			} else {
+				/*document.querySelector('#foryou ul').innerHTML=`
+					//
+				`;*/
+			}
+			setHandlers();
+		}
+
+		const by = property => function (object) { 
+		  const value = object[property]; 
+		  return !(this.has(value) || !this.add(value));
+		};
+
+		//usage const myFitleredArr = myArr.filter(by('name'), new Set);
+
+
+		loadAppHistory();
+		setHandlers();
 	</script>
 
 </body>
