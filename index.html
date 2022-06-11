@@ -906,11 +906,13 @@
 				appArr = JSON.parse(localStorage.getItem('z_history'));
 				var appRArr = appArr.reverse();
 				var appHArr = appRArr.filter(by('name'), new Set);
-				document.querySelector('#foryou ul').innerHTML=`
-					<li data-url='${appHArr[0].url}'><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>
-					<li data-url='${appHArr[1].url}'><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>
-					<li data-url='${appHArr[2].url}'><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>
-				`;
+				document.querySelector('#foryou ul').innerHTML = '';
+				document.querySelector('#foryou ul').innerHTML+=`
+					<li data-url='${appHArr[0].url}'><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>`;
+				if(appHArr[1]){ document.querySelector('#foryou ul').innerHTML+=`
+					<li data-url='${appHArr[1].url}'><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>`;}
+				if(appHArr[2]){ document.querySelector('#foryou ul').innerHTML+=`
+					<li data-url='${appHArr[2].url}'><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>`;}
 			} else {
 				/*document.querySelector('#foryou ul').innerHTML=`
 					//
