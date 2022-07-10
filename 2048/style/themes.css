@@ -1,0 +1,202 @@
+/*
+  * Blues Mode
+*/
+html.blues, body.blues {
+  background-color: #c9e7fe;
+}
+.blues .game-container {
+  background-color: #0165b4;
+}
+.blues .tile.tile-2 .tile-inner {
+  background: #E1F5FE;
+}
+.blues .tile.tile-4 .tile-inner {
+  background: #B3E5FC;
+}
+.blues .tile.tile-8 .tile-inner {
+  color: #f9f6f2;
+  background: #81D4FA;
+}
+.blues .tile.tile-16 .tile-inner {
+  color: #fff;
+  background: #4FC3F7;
+}
+.blues .tile.tile-32 .tile-inner {
+  color: #fff;
+  background: #29B6F6;
+}
+.blues .tile.tile-64 .tile-inner {
+  color: #f9f6f2;
+  background: #03A9F4;
+}
+.blues .tile.tile-128 .tile-inner {
+  color: #f9f6f2;
+  background: #039BE5;
+  box-shadow: 0 0 30px 10px rgba(3, 155, 229, 0.2381),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+}
+.blues .tile.tile-256 .tile-inner {
+  color: #f9f6f2;
+  background: #0288D1;
+  box-shadow: 0 0 30px 10px rgba(2, 136, 209, 0.31746),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+}
+.blues .tile.tile-512 .tile-inner {
+  color: #f9f6f2;
+  background: #0277BD;
+  box-shadow: 0 0 30px 10px rgba(2, 119, 189, 0.39683),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+}
+.blues .tile.tile-1024 .tile-inner {
+  color: #f9f6f2;
+  background: #01579B;
+  box-shadow: 0 0 30px 10px rgba(1, 87, 155, 0.47619),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+}
+.blues .tile.tile-2048 .tile-inner {
+  color: #f9f6f2;
+  background: #014982;
+  box-shadow: 0 0 30px 10px rgba(1, 73, 130, 0.55556),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+}
+.blues .tile.tile-super .tile-inner {
+  color: #f9f6f2;
+  background: #013b68;
+}
+
+
+
+
+/*
+  * Rainbow Mode
+*/
+.rainbow .game-container {
+  background-color: #000000;
+}
+.rainbow .tile.tile-2 .tile-inner {
+  background: #FF0000;
+  color: #f9f6f2;
+}
+.rainbow .tile.tile-4 .tile-inner {
+  background: #FF8000;
+  color: #f9f6f2;
+}
+.rainbow .tile.tile-8 .tile-inner {
+  color: #000000;
+  background: #FFFF00;
+}
+.rainbow .tile.tile-16 .tile-inner {
+  color: #fff;
+  background: #80FF00;
+}
+.rainbow .tile.tile-32 .tile-inner {
+  color: #fff;
+  background: #00FF00;
+}
+.rainbow .tile.tile-64 .tile-inner {
+  color: #f9f6f2;
+  background: #00FF80;
+}
+.rainbow .tile.tile-128 .tile-inner {
+  color: #f9f6f2;
+  background: #00FFFF;
+  box-shadow: 0 0 30px 10px rgba(0, 255, 255, 0.2381),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+}
+.rainbow .tile.tile-256 .tile-inner {
+  color: #f9f6f2;
+  background: #0080FF;
+  box-shadow: 0 0 30px 10px rgba(0, 128, 255, 0.31746),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+}
+.rainbow .tile.tile-512 .tile-inner {
+  color: #f9f6f2;
+  background: #0000FF;
+  box-shadow: 0 0 30px 10px rgba(0, 0, 255, 0.39683),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+}
+.rainbow .tile.tile-1024 .tile-inner {
+  color: #f9f6f2;
+  background: #8000FF;
+  box-shadow: 0 0 30px 10px rgba(128, 0, 255, 0.47619),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+}
+.rainbow .tile.tile-2048 .tile-inner {
+  color: #f9f6f2;
+  background: #FF00FF;
+  box-shadow: 0 0 30px 10px rgba(255, 0, 255, 0.55556),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+}
+.rainbow .tile.tile-super .tile-inner {
+  color: #f9f6f2;
+  background: #FF0080;
+}
+
+
+
+
+/*
+  * Pastel
+*/
+html.pastel, body.pastel {
+  background-color: #ffd3ad;
+}
+.pastel .game-container {
+  background-color: #6499b6;
+}
+.pastel .tile.tile-2 .tile-inner {
+  background: #FEAEB1;
+}
+.pastel .tile.tile-4 .tile-inner {
+  background: #FFB796;
+}
+.pastel .tile.tile-8 .tile-inner {
+  color: #303030;
+  background: #FFC593;
+}
+.pastel .tile.tile-16 .tile-inner {
+  color: #303030;
+  background: #FBD49B;
+}
+.pastel .tile.tile-32 .tile-inner {
+  color: #fff;
+  background: #F6E396;
+}
+.pastel .tile.tile-64 .tile-inner {
+  color: #f9f6f2;
+  background: #CAE692;
+}
+.pastel .tile.tile-128 .tile-inner {
+  color: #f9f6f2;
+  background: #AEDB96;
+  box-shadow: 0 0 30px 10px rgba(174, 219, 150, 0.2381),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+}
+.pastel .tile.tile-256 .tile-inner {
+  color: #f9f6f2;
+  background: #96DC7A;
+  box-shadow: 0 0 30px 10px rgba(150, 220, 122, 0.31746),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+}
+.pastel .tile.tile-512 .tile-inner {
+  color: #f9f6f2;
+  background: #8CDCDB;
+  box-shadow: 0 0 30px 10px rgba(140, 220, 219, 0.39683),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+}
+.pastel .tile.tile-1024 .tile-inner {
+  color: #f9f6f2;
+  background: #87B0C6;
+  box-shadow: 0 0 30px 10px rgba(135, 176, 198, 0.47619),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+}
+.pastel .tile.tile-2048 .tile-inner {
+  color: #f9f6f2;
+  background: #C3A4C3;
+  box-shadow: 0 0 30px 10px rgba(195, 164, 195, 0.55556),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+}
+.pastel .tile.tile-super .tile-inner {
+  color: #f9f6f2;
+  background: #A785A6;
+}
