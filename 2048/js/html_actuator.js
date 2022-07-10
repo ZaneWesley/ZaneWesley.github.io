@@ -2,6 +2,7 @@ function HTMLActuator() {
   this.tileContainer    = document.querySelector(".tile-container");
   this.scoreContainer   = document.querySelector(".score-container");
   this.bestContainer    = document.querySelector(".best-container");
+  this.coinsContainer    = document.querySelector(".coin-container");
   this.messageContainer = document.querySelector(".game-message");
 
   this.score = 0;
@@ -30,6 +31,13 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       } else if (metadata.won) {
         self.message(true); // You win!
       }
+      var StoreManaverContructor = new StoreManager();
+      var prevCoins = StoreManaverContructor.getCoins();
+      var coinValue = Number(prevCoins)+Math.floor(metadata.score*0.01);
+      StoreManaverContructor.setCoins(coinValue);
+      self.updateCoins(coinValue);
+      document.querySelector('.coin-award-popup .coin-amount').textContent = Math.floor(metadata.score*0.01);
+      document.querySelector('.coin-award-popup').style.display="block";
     }
 
   });
@@ -124,12 +132,17 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
   this.bestContainer.textContent = bestScore;
 };
 
+HTMLActuator.prototype.updateCoins = function (coinValue) {
+  this.coinsContainer.textContent = coinValue;
+};
+
 HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
   var message = won ? "You win!" : "Game over!";
 
   this.messageContainer.classList.add(type);
   this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+  if (ga) ga("send", "event", "game", "end", type, this.score); // send results to analytics
 };
 
 HTMLActuator.prototype.clearMessage = function () {
