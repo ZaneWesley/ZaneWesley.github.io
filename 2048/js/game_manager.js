@@ -9,6 +9,20 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  // ai
+  this.inputManager.on("run", this.run.bind(this));
+
+  //ai
+  /*this.inputManager.on('run', function() {
+    if (this.running) {
+      this.running = false;
+      this.actuator.setRunButton('Auto-run');
+    } else {
+      this.running = true;
+      this.run()
+      this.actuator.setRunButton('Stop');
+    }
+  }.bind(this));*/
 
   this.setup();
 }
@@ -17,6 +31,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 GameManager.prototype.restart = function () {
   this.storageManager.clearGameState();
   this.actuator.continueGame(); // Clear the game won/lost message
+  if (ga) ga("send", "event", "game", "restart");// send game restart to analytics
   this.setup();
 };
 
@@ -56,6 +71,7 @@ GameManager.prototype.setup = function () {
 
   // Update the actuator
   this.actuate();
+  this.ai = new AI(this.grid);
 };
 
 // Set up the initial tiles to start the game with
@@ -270,3 +286,16 @@ GameManager.prototype.tileMatchesAvailable = function () {
 GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
+
+// ai moves continuously until game is over
+GameManager.prototype.run = function() {
+  var best = this.ai.getBest();
+  this.move(best.move);
+  var timeout = animationDelay;
+  if (this.running && !this.over && !this.won) {
+    var self = this;
+    setTimeout(function(){
+      self.run();
+    }, timeout);
+  }
+}
