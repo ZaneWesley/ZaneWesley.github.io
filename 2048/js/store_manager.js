@@ -21,6 +21,7 @@ window.tempCoinStorage = {
 function StoreManager() {
 	this.coinValueKey = "2048Coins";
 	this.themesKey = "2048Themes";
+	this.currentThemeKey = "2048Theme";
 
 	var LocalStorageManagerContructor = new LocalStorageManager();
 	var supported = LocalStorageManagerContructor.localStorageSupported();
@@ -38,11 +39,19 @@ StoreManager.prototype.setCoins = function (val) {
 
 //Theme setters/getters
 StoreManager.prototype.getThemes = function() {
-	return this.storage.getItem(this.themesKey) || 0;
+	return JSON.parse(this.storage.getItem(this.themesKey)) || [];
 }
 
 StoreManager.prototype.setThemes = function (val) {
-  this.storage.setItem(this.themesKey, val);
+  this.storage.setItem(this.themesKey, JSON.stringify(val));
+};
+
+StoreManager.prototype.getCurrentTheme = function() {
+	return this.storage.getItem(this.currentThemeKey) || "default";
+}
+
+StoreManager.prototype.setCurrentTheme = function (val) {
+  this.storage.setItem(this.currentThemeKey, val);
 };
 
 //Set score on page load
