@@ -238,11 +238,14 @@
     <h2>Free</h2>
     <div class="grid">
       <div class="grid-item" id="default"><div class="grid-thumb"><img src="images/default-theme.PNG" alt="default theme icon"></div><div class="grid-name">Default</div></div>
+      <div class="grid-item" id="blues"><div class="grid-thumb"><img src="images/blues-theme.PNG" alt="blues theme icon"></div><div class="grid-name">Blues</div></div>
+      <div class="grid-item" id="rainbow"><div class="grid-thumb"><img src="images/rainbow-theme.PNG" alt="rainbow theme icon"></div><div class="grid-name">Rainbow</div></div>
     </div>
 
     <h2>300</h2>
     <div class="grid">
       <div class="grid-item" id="dark"><div class="grid-thumb"><img src="images/dark-theme.PNG" alt="dark theme icon"></div><div class="grid-name">Dark</div></div>
+      <div class="grid-item" id="pastel"><div class="grid-thumb"><img src="images/pastel-theme.PNG" alt="pastel theme icon"></div><div class="grid-name">Pastel</div></div>
     </div>
 
     <h2>Account Settings</h2>
@@ -297,14 +300,24 @@
         icon: 'images/default-theme.PNG'
       },
       {
+        name: 'blues',
+        cost: 0,
+        icon: 'images/blues-theme.PNG'
+      },
+      {
+        name: 'rainbow',
+        cost: 0,
+        icon: 'images/rainbow-theme.PNG'
+      },
+      {
         name: 'dark',
         cost: 300,
         icon: 'images/dark-theme.PNG'
       },
       {
-        name: 'space',
-        cost: 400,
-        icon: 'images/space-theme.PNG'
+        name: 'pastel',
+        cost: 300,
+        icon: 'images/pastel-theme.PNG'
       }
     ];
 
@@ -335,13 +348,14 @@
         document.querySelector('.enable').innerText='Enable';
         document.querySelector('.enable').addEventListener('click', function() {
           storeManagerConstructor.setCurrentTheme(themeInfo.name);
-          this.onclick=null;
+          document.querySelector('.details').style.display="none";
+          removeEventListener();
         });
       } else {
         document.querySelector('.enable').innerText=themeInfo.cost;
         document.querySelector('.enable').addEventListener('click', function() {
           purchaseTheme(themeInfo.name, themeInfo.cost);
-          this.onclick=null;
+          removeEventListener();
         });
       }
       document.querySelector('.details').style.display="block";
@@ -358,6 +372,12 @@
       } else {
         alert('You do not have enough coins! Play some more 2048 to earn more!');
       }
+    }
+
+    function removeEventListener() {
+      var old_element = document.querySelector('.enable');
+      var new_element = old_element.cloneNode(true);
+      old_element.parentNode.replaceChild(new_element, old_element);
     }
   </script>
 </body>
