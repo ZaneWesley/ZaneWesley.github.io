@@ -200,3 +200,74 @@ html.pastel, body.pastel {
   color: #f9f6f2;
   background: #A785A6;
 }
+
+
+
+
+/*
+  * Beach
+*/
+html.beach, body.beach {
+  background-color: #F6E9BC;/*#c9e7fe;*/
+}
+.beach .game-container {
+  background-color: #002E9D;
+}
+.beach .tile.tile-2 .tile-inner {
+  color: #f9f6f2;
+  background: #FB5C59;
+}
+.beach .tile.tile-4 .tile-inner {
+  color: #f9f6f2;
+  background: #FB8C57;
+}
+.beach .tile.tile-8 .tile-inner {
+  color: #f9f6f2;
+  background: #FBAF59;
+}
+.beach .tile.tile-16 .tile-inner {
+  color: #303030;
+  background: #FDCB74;
+}
+.beach .tile.tile-32 .tile-inner {
+  color: #303030;
+  background: #FCE273;
+}
+.beach .tile.tile-64 .tile-inner {
+  color: #303030;
+  background: #FAF5E1;
+}
+.beach .tile.tile-128 .tile-inner {
+  color: #303030;
+  background: #F6E9BC;
+  box-shadow: 0 0 30px 10px rgba(3, 155, 229, 0.2381),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+}
+.beach .tile.tile-256 .tile-inner {
+  color: #f9f6f2;
+  background: #8ADAD7;
+  box-shadow: 0 0 30px 10px rgba(2, 136, 209, 0.31746),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+}
+.beach .tile.tile-512 .tile-inner {
+  color: #f9f6f2;
+  background: #71CEC3;
+  box-shadow: 0 0 30px 10px rgba(2, 119, 189, 0.39683),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+}
+.beach .tile.tile-1024 .tile-inner {
+  color: #f9f6f2;
+  background: #4FC1C1;
+  box-shadow: 0 0 30px 10px rgba(1, 87, 155, 0.47619),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+}
+.beach .tile.tile-2048 .tile-inner {
+  color: #f9f6f2;
+  background: #4FB3C2;
+  box-shadow: 0 0 30px 10px rgba(1, 73, 130, 0.55556),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+}
+.beach .tile.tile-super .tile-inner {
+  color: #f9f6f2;
+  background: #41A6B2;
+}
