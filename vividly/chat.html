@@ -557,13 +557,17 @@
           // create a room
           const room = new rtc.Room(signaling, options);
           // create data channel
-          /*const dataChannel = new rtc.DataChannel(channel);
-          dataChannel.connect();
-          dataChannel.send({text: 'Test'});
+          try {
+          	const dataChannel = new rtc.DataChannel(channel);
+	          dataChannel.connect();
+	          dataChannel.send({text: 'Test'});
 
-          dataChannel.on('message', function(data) {
-          	console.log(data);
-          });*/
+	          dataChannel.on('message', function(data) {
+	          	console.log(data);
+	          });
+          } catch(err) {
+          	console.log(err);
+          }
 
           try {
             // create a local stream from the users camera
@@ -590,9 +594,13 @@
             $('#remoteUsers').append(view);
             const ve = new rtc.MediaDomElement(view[0], peer);
             autoplay();
-            bottomNavToggle();
             $(view).wrap('<div class="vid-wrap">');
             //wrap(view, document.createElement('div'));
+            view.parentNode.addEventListener('click', function(e) {
+            	e.preventDefault();
+	       		document.querySelector('.call-bottom').classList.toggle('open');
+	       		clearTimeout(actionbarTimeout);
+            });
 
             // remove the tag after peer left
             peer.on('left', function() {
@@ -624,19 +632,13 @@
             trigger.remove();
         }
 
-        function bottomNavToggle() {
-        	document.querySelectorAll('.vid-wrap, .bg-target').forEach(function(elem) {
-        		elem.onclick=null;
-        	});
-        	document.querySelectorAll('.vid-wrap, .bg-target').forEach(function(elem) {
-	        	elem.addEventListener('click', function(e) {
-	        		e.preventDefault();
-	        		document.querySelector('.call-bottom').classList.toggle('open');
-	        		clearTimeout(actionbarTimeout);
-	        	});
-	        });
-        }
-        bottomNavToggle();
+        document.querySelectorAll('.vid-wrap, .bg-target').forEach(function(elem) {
+	       	elem.addEventListener('click', function(e) {
+	       		e.preventDefault();
+	       		document.querySelector('.call-bottom').classList.toggle('open');
+	       		clearTimeout(actionbarTimeout);
+	      	});
+	    });
 
         /*document.getElementById('remoteUsers').addEventListener("wheel", (e) => {
 		    e.preventDefault();
