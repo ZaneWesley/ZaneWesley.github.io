@@ -587,7 +587,7 @@
             view.playsinline=true;
             document.getElementById('remoteUsers').append(view);*/
             const view = $('<video class="mirror" autoplay playsinline>');
-            $('remoteUsers').append(view);
+            $('#remoteUsers').append(view);
             const ve = new rtc.MediaDomElement(view[0], peer);
             autoplay();
             $(view).wrap('<div class="vid-wrap">');
