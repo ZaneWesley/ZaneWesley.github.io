@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
 	<!-- Scripts -->
 	<script src="https://cdn.jsdelivr.net/npm/rtc-lib@0.5.4/dist/bundle/rtc.dep.min.js"></script>
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.min.js"></script>
 
 	<title>Active Call | Vividly</title>
@@ -449,7 +449,9 @@
         */
         var query = window.location.search;
         var urlParams = new URLSearchParams(query);
-        var roomKey, name, roomInfo, stream;
+        var roomKey, name;
+        var roomInfo;
+        var stream;
 
         if (urlParams.get('username') !== "" && urlParams.get('username') !== null && urlParams.get('id') !== "" && urlParams.get('id') !== null) {
             var roomId = urlParams.get('id');
@@ -571,7 +573,7 @@
             stream = await room.local.addStream({ video: true, audio: true });
 
             // display that stream
-            const ve = new rtc.MediaDomElement(document.querySelectorAll('video')[0], stream);
+            const ve = new rtc.MediaDomElement($('video')[0], stream);
             autoplay();
           } catch(err) {
                 alert("Unable to get call stream", err.message);
@@ -585,7 +587,7 @@
             view.classList.add('mirror');
             view.autoplay=true;
             view.playsinline=true;
-            document.getElementById('remoteUsers').append(view)
+            document.getElementById('remoteUsers').append(view);
             const ve = new rtc.MediaDomElement(view[0], peer);
             wrap(view, document.createElement('div'));
             autoplay();
