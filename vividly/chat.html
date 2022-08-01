@@ -557,7 +557,7 @@
           // create a room
           const room = new rtc.Room(signaling, options);
           // create data channel
-          try {
+          /*try {
           	const dataChannel = new rtc.DataChannel(channel);
 	          dataChannel.connect();
 	          dataChannel.send({text: 'Test'});
@@ -567,7 +567,7 @@
 	          });
           } catch(err) {
           	console.log(err);
-          }
+          }*/
 
           try {
             // create a local stream from the users camera
