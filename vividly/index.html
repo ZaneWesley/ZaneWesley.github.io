@@ -1,121 +1,116 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
-    <title>Vividly</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="icon/png" href="icon.png">
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html, body {
-        font-family: 'Roboto', arial, sans-serif;
-      }
-      header {
-        color: #fff;
-        background-color: #9f00ff;
-        padding: 1em;
-        font-size: 1.3em;
-        text-align: center;
-        height: 50%;
-        width: 100%;
-        align-items: center;
-        vertical-align: middle;
-      }
-      header h1 {
-        margin: 16px;
-      }
-      .content {
-        font-size: 1.2em;
-      }
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<!-- General -->
+	<meta name="theme-color" content="#BF56FF">
+	<meta name="application-name" content="Vividly">
+	<link rel="shortcut icon" href="icon.png">
+	<link rel="icon" type="image/png" sizes="500x500" href="icon.png">
+	<!-- Apple -->
+	<meta name="apple-mobile-web-app-title" content="Vividly">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#BF56FF">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" sizes="500x500" href="icon.png">
+	<link rel="mask-icon" href="icon.png" color="#BF56FF">
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Sansita+Swashed&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
 
-      .content h1 {
-        padding: 1em;
-      }
+	<title>Vividly</title>
 
-      .content p {
-        padding: 0.5em;
-      }
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			/*overflow-x: hidden;*/
+			transition: all 1s ease-in-out;
+		}
+		html, body {
+			scroll-behavior: smooth;
+			background-color: #BF56FF;
+			font-family: 'Open Sans', sans-serif;
+			width: 100%;
+			height: auto;
+			font-size: 20px;
+			color: #fff;
+		}
+		button, a {
+			background-color: #fff;
+		    border-color: #fff;
+		    border-radius: 2.5rem;
+		    border-style: solid;
+		    border-width: 1px;
+		    color: #BF56FF;
+		    /*font-size: 1.25rem;*/
+		    font-size: 1em;
+		    padding: calc(1rem - 2px) calc(3.5rem - 3px);
+		    cursor: pointer;
+		    box-shadow: 9px 10px 27px 1px rgba(181, 59, 255,0.75);
+			-webkit-box-shadow: 9px 10px 27px 1px rgba(181, 59, 255,0.75);
+			-moz-box-shadow: 9px 10px 27px 1px rgba(181, 59, 255,0.75);
+			text-decoration: none;
+			transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+		}
+		button:hover, a:hover {
+			background-color: #4974A5;
+			border-color: #4974A5;
+			color: #fff;
+		}
+		h1, .btn-wrapper {
+			opacity: 0;
+			animation: fadeIn 1s ease-in-out;
+			animation-fill-mode: forwards;
+		}
+		h1 {
+			width: 100%;
+			text-align: center;
+			font-size: 4em;
+			font-family: 'Sansita Swashed', cursive;
+			animation-delay: 0.3s;
+		}
+		.btn-wrapper {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 50%;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			animation-delay: 1s;
+		}
+		@keyframes fadeIn {
+			from {opacity: 0;}
+			to {opacity: 1;}
+		}
+		@media (max-width: 480px) {
+			.btn-wrapper {
+				flex-direction: column;
+				height: 25%;
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>Vividly</h1>
+	<div class="btn-wrapper">
+		<a href="new">New Meeting</a>
+		<a href="join">Join Meeting</a>
+	</div>
 
-      /* Split the screen in half */
-      .split {
-        height: 100%;
-        width: 50%;
-        position: absolute;
-        z-index: 1;
-        overflow-x: hidden;
-        padding-top: 20px;
-        padding: 2em;
-      }
-
-      /* Control the left side */
-      .left {
-        left: 0;
-      }
-
-      /* Control the right side */
-      .right {
-        right: 0;
-      }
-
-      img {
-        overflow: hidden;
-        user-select: none;
-      }
-
-      .button-wrapper {
-        padding-top: 2em;
-      }
-
-      .button-wrapper a {
-        text-decoration: none;
-        color: #fff;
-        padding: 0.7em;
-        background: #9f00ff;
-        border-radius: 8px;
-      }
-
-      .button-wrapper a:hover {
-        box-shadow: 6px 6px 6px #ccc;
-      }
-
-      @media(max-width: 775px) {
-        .split, .left, .right {
-          width: 100%;
-          display: block;
-          position: static;
-        }
-        .content img {
-          width: 100%;
-        }
-      }
-
-    </style>
-  </head>
-  <body>
-    <header><h1>Vividly</h1></header>
-
-
-    <div class="content">
-      <div class="split left">
-        <div>
-          <h1>Experience the Magic</h1>
-          <p>Vividly is a fast, secure video chatting software designed for the web. It's free for everyone, no strings attached.</p>
-          <p>Using Vividly is simple. Just set up a meeting and share the join link. It's that easy.</p>
-        </div>
-        <div class="button-wrapper">
-          <a href="new">Get Started</a>
-        </div>
-      </div>
-      <div class="split right">
-        <img src="home-bg.svg" alt="video chat" draggable="false">
-      </div>
-    </div>
-  </body>
+	<script>
+		function shortenURL(url) {
+			fetch(`https://is.gd/create.php?format=simple&url=${url}`)
+			 .then((response) => response.json())
+			 .then((data) => console.log(data));
+		}
+	</script>
+</body>
 </html>
