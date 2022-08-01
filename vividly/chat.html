@@ -507,6 +507,7 @@
 
             document.querySelector('.mic-toggle').addEventListener('click', function(e) {
         		e.preventDefault();
+        		stream.toggleMute(type='audio');
         		document.querySelector('.mic-toggle i').classList.toggle('fa-microphone');
         		document.querySelector('.mic-toggle i').classList.toggle('fa-microphone-slash');
         		var hasAudio = document.querySelector('.mic-toggle i').classList.contains('fa-microphone') ? 'on' : 'off';
@@ -515,6 +516,7 @@
 
         	document.querySelector('.cam-toggle').addEventListener('click', function(e) {
         		e.preventDefault();
+        		stream.toggleMute(type='video');
         		document.querySelector('.cam-toggle i').classList.toggle('fa-video');
         		document.querySelector('.cam-toggle i').classList.toggle('fa-video-slash');
         		var hasVideo = document.querySelector('.cam-toggle i').classList.contains('fa-video') ? 'on' : 'off';
@@ -554,13 +556,13 @@
           // create a room
           const room = new rtc.Room(signaling, options);
           // create data channel
-          const dataChannel = new rtc.DataChannel(channel);
+          /*const dataChannel = new rtc.DataChannel(channel);
           dataChannel.connect();
           dataChannel.send({text: 'Test'});
 
           dataChannel.on('message', function(data) {
           	console.log(data);
-          });
+          });*/
 
           try {
             // create a local stream from the users camera
@@ -582,11 +584,8 @@
             view.classList.add('mirror');
             view.autoplay=true;
             view.playsinline=true;
-            var wrap = document.createElement('div');
-            wrap.classList.add('.vid-wrapper');
-            view.parentNode.insertBefore(wrap, el);
-            wrap.appendChild(view);
-            document.getElementById('remoteUsers').append(wrap);
+            document.getElementById('remoteUsers').append(view)
+            wrap(view, document.createElement('div'));
             const ve = new rtc.MediaDomElement(view[0], peer);
             autoplay();
 
@@ -666,6 +665,11 @@
         /*
 			* Helper Functions
         */
+        function wrap(el, wrapper) {
+		    el.parentNode.insertBefore(wrapper, el);
+		    wrapper.appendChild(el);
+		}
+
         function createShareLink() {
             var baseUrl = location.hostname + "/vividly/join";
             var shareUrl = baseUrl + "?id=" + roomKey;
