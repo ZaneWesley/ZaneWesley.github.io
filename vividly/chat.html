@@ -596,7 +596,7 @@
             autoplay();
             $(view).wrap('<div class="vid-wrap">');
             //wrap(view, document.createElement('div'));
-            view.parentNode.addEventListener('click', function(e) {
+            $(view).parent().click(function(e) {
             	e.preventDefault();
 	       		document.querySelector('.call-bottom').classList.toggle('open');
 	       		clearTimeout(actionbarTimeout);
