@@ -586,7 +586,7 @@
             view.playsinline=true;
             document.getElementById('remoteUsers').append(view)
             wrap(view, document.createElement('div'));
-            const ve = new rtc.MediaDomElement(view[0], peer);
+            const ve = new rtc.MediaDomElement(document.querySelectorAll('video')[0], peer);
             autoplay();
 
             // remove the tag after peer left
