@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Adapted from https://github.com/adeyinkaezra123/PacMan -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta name="author" content="Zane Wesley">
+    <!-- General -->
+    <meta name="theme-color" content="#000000">
+    <meta name="application-name" content="Pac Man">
+    <link rel="shortcut icon" href="icon/favicon.png">
+    <link rel="icon" type="image/png" href="icon/favicon.png">
+    <!-- Apple -->
+    <meta name="apple-mobile-web-app-title" content="Pac Man">
+    <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon-precomposed" href="icon/ios_icon.png">
+    <link rel="apple-touch-icon" sizes="500x500" href="icon/ios_icon.png">
+    <link rel="mask-icon" href="images/icon.png" color="#000000">
+
+    <title>Pac Man</title>
+
+    <style>
+        body {
+            margin:0;
+            background: #000;
+        }
+        @font-face {
+            font-family: 'ArcadeR';
+            src: url('font/ARCADE_R.TTF');
+            /*
+            src: url('font/PressStart2P.ttf');
+            */
+        }
+        #canvas-warning {
+            color: #FF0;
+            font-size: 1.5em;
+        }
+    </style>
+
+<script src="pacman.js"></script>
+
+</head>
+
+<body>
+
+</div>
+
+    <div style='font-family: ArcadeR'> </div>
+    <canvas id='canvas'><div id="canvas-warning">Your browser does not support HTML Canvas.  Please update your Browser</div></canvas>
+    <canvas id='atlas' style="display:none"></canvas>
+
+</body>
+
+</html>
