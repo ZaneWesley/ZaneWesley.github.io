@@ -24,6 +24,8 @@
         body {
             margin:0;
             background: #000;
+            overscroll-behavior: contain;
+            overflow: hidden;
         }
         @font-face {
             font-family: 'ArcadeR';
@@ -47,7 +49,7 @@
 </div>
 
     <div style='font-family: ArcadeR'> </div>
-    <canvas id='canvas'><div id="canvas-warning">Your browser does not support HTML Canvas.  Please update your Browser</div></canvas>
+    <canvas id='canvas'><div id="canvas-warning">Your browser does not support HTML Canvas. Please update your Browser</div></canvas>
     <canvas id='atlas' style="display:none"></canvas>
 
 </body>
