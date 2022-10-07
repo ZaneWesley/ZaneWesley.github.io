@@ -9,6 +9,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Exo&family=Dancing+Script&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
 
 	<title>Christmas Countdown 2022</title>
 
@@ -131,6 +132,12 @@
       	left: 0.5em;
       	font-size: 2em;
       }
+      #play-toggle {
+      	position: fixed;
+      	top: 0.5em;
+      	right: 0.5em;
+      	cursor: pointer;
+      }
       @media(max-width: 775px) {
         #countdown-box {
           flex-wrap: wrap;
@@ -188,6 +195,10 @@
       <div id="s-lbl" class="cdi-lbl">SECONDS</div>
 		</div>
 	</div>
+
+	<div id="play-toggle"><i class="fa-solid fa-volume-slash"></i></div>
+
+	<audio id="audio" controls="false" type="audio/mp3" src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas-audio/upbeat-countdown.mp3" style="display: none;"></audio>
 
 	<script>
 		/*
@@ -654,6 +665,91 @@
 
 		      });
 		    })();
+
+		/*
+			Audio
+		*/
+		var audioFiles = ["christmas-party.mp3", "christmas-rock.mp3", "happy-new-year.mp3", "jingle-bells.mp3", "snowflake.mp3", "upbeat-countdown.mp3"];
+		  var audio;
+		  var playlist;
+		  var tracks;
+		  var current;
+
+		  generateShuffle();
+
+		  function generateShuffle() {
+		    var shuff = shuffle(audioFiles);
+		    initAudio();
+
+		    /*document.querySelector('#music-list ul').innerHTML="";
+
+		    for(var i = 0; i < shuff.length; i++) {
+		      var li = document.createElement('li');
+		      li.innerHTML = shuff[i].toString().replace('-', ' ').replace('.mp3', '');
+		      document.querySelector('#music-list ul').appendChild(li);
+		    }
+
+		    document.querySelectorAll('#music-list ul li')[current].classList.add('active');*/
+		  }
+
+		  function initAudio(){
+		      current = 0;
+		      audio = document.getElementById('audio');
+		      //audio[0].volume = .40;
+		      var len = audioFiles.length;
+		      
+		      run(audioFiles[current], audio);
+		      
+		      audio.addEventListener('ended',function(e){
+		          current++;
+		          if(current == len){
+		              current = 0;
+		          }
+		          run(audioFiles[current],audio);
+		          //added
+		          if(current !==0) {
+		            //document.querySelectorAll('#music-list ul li')[current-1].classList.remove('active');
+		          } else {
+		            //document.querySelectorAll('#music-list ul li')[audioFiles.length-1].classList.remove('active');
+		          }
+		          //document.querySelectorAll('#music-list ul li')[current].classList.add('active');
+		      });
+		  }
+
+		  function run(link, player){
+		          player.src = 'https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas-audio/'+link;
+		          audio.load();
+		          audio.play();
+		  }
+
+		  function shuffle(array) {
+		    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+		    // While there remain elements to shuffle...
+		    while (0 !== currentIndex) {
+
+		      // Pick a remaining element...
+		      randomIndex = Math.floor(Math.random() * currentIndex);
+		      currentIndex -= 1;
+
+		      // And swap it with the current element.
+		      temporaryValue = array[currentIndex];
+		      array[currentIndex] = array[randomIndex];
+		      array[randomIndex] = temporaryValue;
+		    }
+
+		    return array;
+		  }
+
+		  document.getElementById('play-toggle').addEventListener('click', function(e) {
+		    if(this.innerHTML == '<i class="fa-solid fa-volume-slash"></i>') {
+		      audio.play();
+		      this.innerHTML='<i class="fa-solid fa-volume"></i>';
+		    } else {
+		      audio.pause();
+		      this.innerHTML='<i class="fa-solid fa-volume-slash"></i>';
+		    }
+		  });
 	</script>
 </body>
 </html>
