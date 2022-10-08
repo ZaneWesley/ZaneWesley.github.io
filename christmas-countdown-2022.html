@@ -138,6 +138,54 @@
       	right: 0.5em;
       	cursor: pointer;
       }
+      .audio-plug {
+      	background-color: #ffffff;
+      	color: #0C385E;
+      	border-radius: 8px;
+      	border: 1px solid #ccc;
+      	z-index: 4;
+      	position: fixed;
+      	top: 2em;
+      	right: 0.5em;
+      	padding: 0.5em;
+      	width: 25%;
+      	opacity: 0;
+      	animation: fadeIn 1s;
+      	animation-delay: 5s;
+      	animation-fill-mode: forwards;
+      }
+      .audio-plug .b {
+      	text-align: center;
+      	font-weight: 600;
+      	font-size: 1.3em;
+      }
+      .audio-plug i {
+      	position: absolute;
+      	top: 0.5em;
+      	right: 0.5em;
+      	font-size: 1.3em;
+      }
+      .audio-plug .btn {
+      	padding: 8px 20px;
+      	background-color: #0C385E;
+      	cursor: pointer;
+      	color: #fff;
+      	float: right;
+      	width: 50%;
+      	text-align: center;
+      	border-radius: 8px;
+      	margin-top: 10px;
+      }
+      @keyframes fadeIn {
+      	from {
+      		transform: translateY(1em);
+      		opacity: 0;
+      	}
+      	to {
+      		transform: translateY(0);
+      		opacity: 1;
+      	}
+      }
       @media(max-width: 775px) {
         #countdown-box {
           flex-wrap: wrap;
@@ -158,6 +206,9 @@
         	left: 0;
         	width: 100%;
         	text-align: center;
+        }
+        .audio-plug {
+        	width: 50%;
         }
       }
 	</style>
@@ -198,6 +249,13 @@
 
 	<div id="play-toggle"><i class="fa-solid fa-volume-slash"></i></div>
 
+	<div class="audio-plug">
+		<i class="fa-solid fa-angle-up"></i>
+		<p class="b">New Feature!</p>
+		<p class="p">Listen to some upbeat Christmas tunes while you count down!</p>
+		<div class="btn" onclick="this.parentNode.style.display='none'">Got It!</div>
+	</div>
+
 	<audio id="audio" controls="false" type="audio/mp3" src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/main/christmas-audio/upbeat-countdown.mp3" style="display: none;"></audio>
 
 	<script>
@@ -212,7 +270,8 @@
 			Countdown
 		*/
 		// Set the date we're counting down to
-		var countdownDate = new Date("December 25, 2022 10:00:00").getTime();/* hrs: min: sec */
+		//var countdownDate = new Date("December 25, 2022 00:00:00").getTime();/* hrs: min: sec */
+		var countdownDate = new Date("October 8, 2022 00:00:00").getTime();/* hrs: min: sec */
 
 		// Update the count down every 1 second
 		var x = setInterval(function() {
@@ -239,7 +298,7 @@
 		  if (distance < 0) {
 		    clearInterval(x);
 		    document.getElementById("countdown-box").innerHTML = "<span class='cdi'>Merry Christmas!!</span>";
-		    $('.title').text("");
+		    document.querySelector('.title').innerText="";
 		  }
 		}, 1000);
 		function addZero(i) {
