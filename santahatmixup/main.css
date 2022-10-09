@@ -1,0 +1,726 @@
+@charset "UTF-8";
+/*@font-face {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 400;
+    src: url(css/fonts/montserrat-v15-latin-regular.woff2) format("woff2"), url(css/fonts/montserrat-v15-latin-regular.woff) format("woff")
+}
+
+@font-face {
+    font-family: "Montserrat";
+    font-style: italic;
+    font-weight: 400;
+    src: url(css/fonts/montserrat-v15-latin-italic.woff2) format("woff2"), url(css/fonts/montserrat-v15-latin-italic.woff) format("woff")
+}
+
+@font-face {
+    font-family: "Montserrat";
+    font-style: italic;
+    font-weight: 300;
+    src: url(css/fonts/montserrat-v15-latin-300italic.woff2) format("woff2"), url(css/fonts/montserrat-v15-latin-300italic.woff) format("woff")
+}
+
+@font-face {
+    font-family: "Odibee Sans";
+    font-style: normal;
+    font-weight: 400;
+    src: url(css/fonts/odibee-sans-v4-latin-regular.woff2) format("woff2"), url(css/fonts/odibee-sans-v4-latin-regular.woff) format("woff")
+}
+
+@font-face {
+    font-family: "icomoon";
+    src: url(css/fonts/icomoon.eot?7ehtvk);
+    src: url(css/fonts/icomoon.eot?7ehtvk#iefix) format("embedded-opentype"), url(css/fonts/icomoon.ttf?7ehtvk) format("truetype"), url(css/fonts/icomoon.woff?7ehtvk) format("woff"), url(css/fonts/icomoon.svg?7ehtvk#icomoon) format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block
+}*/
+html,
+body {
+    width: 100%;
+    height: 100%
+}
+
+body {
+    font-family: sans-serif;
+    width: 100%;
+    margin: 0;
+    padding: 0
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%
+}
+
+.rs-container {
+    width: 100%;
+    height: 100%
+}
+
+.extras-content {
+    display: none
+}
+
+.helppanel-content {
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    font-family: "Montserrat Alternates"
+}
+
+.help-section {
+    padding: 8px
+}
+
+.help-section img {
+    display: block;
+    margin: 0 auto
+}
+
+.help-section h3 {
+    font-size: 24px;
+    margin: 8px
+}
+
+.helppanel-content .help-section {
+    text-align: center
+}
+
+.rs-game-overlay {
+    background: rgba(15, 15, 15, .8);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0
+}
+
+.rs-game-panel {
+    background-color: #bcd3f1;
+    overflow: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border-radius: 16px;
+    transform: translate(-50%, -50%)
+}
+
+.rs-game-panel .rs-closebtn {
+    display: block;
+    position: absolute;
+    font-size: 38px;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    background: #111;
+    right: 0;
+    color: #fff;
+    z-index: 9999
+}
+
+.rs-image-panel {
+    background-color: #0000
+}
+
+.rs-image-panel img {
+    border-radius: 12px;
+    cursor: pointer
+}
+
+.rs-game-optionpanel {
+    border-radius: 8px
+}
+
+.rs-game-optionpanel .rs-optionitem {
+    cursor: pointer;
+    text-align: center;
+    padding: 8px;
+    font-size: 22px;
+    transition: .25s all ease-out;
+    text-transform: uppercase
+}
+
+.rs-game-optionpanel .rs-optionitem:hover {
+    background: #eee
+}
+
+.rs-trophy-panel {
+    background: #1d1d1de3;
+    max-width: 500px;
+    max-height: 600px;
+    border-radius: 18px;
+    border: 2px solid #333
+}
+
+.rs-trophy-panel .meta-container {
+    width: 100%;
+    top: 40px;
+    position: absolute;
+    text-align: center
+}
+
+.rs-trophy-panel .meta-container span {
+    display: block;
+    color: #fff;
+    font-size: 20px;
+    margin: 8px;
+    letter-spacing: 2px;
+    user-select: none
+}
+
+.rs-trophy-panel img {
+    display: block;
+    text-align: center;
+    max-width: 250px;
+    margin: 8px auto;
+    user-select: none
+}
+
+.rs-trophy-panel .level-label {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    color: #111;
+    font-size: 32px;
+    bottom: 26px;
+    user-select: none
+}
+
+.rs-trophy-panel .trophy-container {
+    width: 100%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.trophy-level-title {
+    user-select: none;
+    font-family: "Montserrat Alternates", serif;
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    color: #fff;
+    letter-spacing: 6px;
+    margin: 4px;
+    border-radius: 50px;
+    padding: 6px;
+    width: 100%;
+    text-align: center
+}
+
+.trophy-button-container {
+    width: 200px;
+    display: flex;
+    z-index: 9999;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 4px;
+    align-content: center;
+    justify-content: space-evenly;
+    bottom: 18px
+}
+
+.trophy-button-container .rs-sh3d-mainbutton {
+    transform: scale(1.15)
+}
+
+.rs-sh3d-helppanel {
+    max-width: 500px;
+    max-height: 160px;
+    border-radius: 8px;
+    border: 2px solid #333
+}
+
+.rs-sh3d-helppanel .rs-helpcontainer {
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+}
+
+.rs-sh3d-helppanel .helppanel-content {
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    font-family: "Montserrat Alternates"
+}
+
+.rs-sh3d-helppanel .help-section {
+    padding: 18px;
+    text-align: center
+}
+
+.rs-sh3d-helppanel .help-section img {
+    display: block;
+    margin: 0 auto
+}
+
+.rs-sh3d-helppanel .help-section h3 {
+    font-family: "Verdana";
+    font-size: 24px;
+    margin: 8px
+}
+
+.rs-sh3d-cpanel {
+    max-width: 500px;
+    max-height: 500px;
+    font-family: "Montserrat Alternates";
+    text-align: center;
+    border-radius: 8px
+}
+
+.rs-sh3d-cpanel p {
+    font-size: 24px
+}
+
+.rs-sh3d-cpanel h3 {
+    font-family: Verdana
+}
+
+
+/*[class^=icon-],
+[class*=" icon-"] {
+    font-family: "icomoon" !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.icon-lock:before {
+    content: "\e900"
+}
+
+.icon-timer:before {
+    content: "\a905";
+    color: #fff
+}
+
+.icon-hint:before {
+    content: "\a906"
+}
+
+.icon-mode:before {
+    content: "\a907"
+}
+
+.icon-setting:before {
+    content: "\a908"
+}
+
+.icon-home:before {
+    content: "\a909"
+}
+
+.icon-info:before {
+    content: "\a90a"
+}
+
+.icon-quill:before {
+    content: "\e907"
+}
+
+.icon-stack:before {
+    content: "\e92e"
+}
+
+.icon-undo:before {
+    content: "\e984"
+}
+
+.icon-screen-full:before {
+    content: "\e98b"
+}
+
+.icon-screen-normal:before {
+    content: "\e98c"
+}
+
+.icon-eye:before {
+    content: "\e9ce"
+}
+
+.icon-playtime:before {
+    content: "\ea1c"
+}
+
+.icon-pausetime:before {
+    content: "\ea1d"
+}
+
+.icon-sound-on:before {
+    content: "\ea27"
+}
+
+.icon-sound-off:before {
+    content: "\ea2a"
+}
+
+.icon-shuffle:before {
+    content: "\ea30"
+}
+
+.icon-nextlevel:before {
+    content: "\ea34"
+}*/
+
+body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior-y: contain;
+    -webkit-text-size-adjust: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: none;
+    cursor: url(css/cursor.png), auto;
+    transform-style: preserve-3d;
+    perspective: 1000px
+}
+
+.rs-sh3d {
+    display: none;
+    width: 100%;
+    max-width: 100%;
+    height: 100% !important;
+    margin: 0 auto;
+    box-sizing: border-box !important;
+    background: #101D33;
+    background-image: radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 4px), radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 3px), radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 4px), radial-gradient(rgba(255, 255, 255, .4), rgba(255, 255, 255, .1) 2px, transparent 3px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+    perspective: 1000px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+
+.rs-sh3d-timeout {
+    font-weight: bold
+}
+
+@media screen and (max-width: 574px) {
+    .rs-sh3d-movebtn .movebtn-value {
+        display: none !important
+    }
+    .rs-hscreen-header .app-info {
+        display: none !important
+    }
+    .rs-hscreen-header .app-progress {
+        width: 200px
+    }
+}
+
+@media screen and (min-width: 575px) {
+    .rs-hscreen-header .app-title {
+        font-size: 32px;
+        margin-bottom: 6px
+    }
+    .rs-hscreen-header .appt-info {
+        font-size: 12px
+    }
+    .rs-hscreen-header .app-progress {
+        width: 200px
+    }
+    .trophy-level-title {
+        font-size: 20px
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .rs-hscreen-header .app-title {
+        font-size: 40px;
+        margin-bottom: 8px
+    }
+    .rs-hscreen-header .appt-info {
+        font-size: 16px
+    }
+    .rs-hscreen-header .app-progress {
+        width: 250px
+    }
+    .trophy-level-title {
+        font-size: 20px
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .rs-hscreen-header .app-title {
+        font-size: 60px;
+        margin-bottom: 14px
+    }
+    .rs-hscreen-header .appt-info {
+        font-size: 20px
+    }
+    .rs-hscreen-header .app-progress {
+        width: 300px
+    }
+    .trophy-level-title {
+        font-size: 26px
+    }
+}
+
+.rs-hscreen-header {
+    position: relative
+}
+
+.rs-hscreen-header .app-logo {
+    width: 100px;
+    margin: 32px auto 0;
+    display: block;
+    animation: 1s infinite alternate logo-animation;
+    user-select: none
+}
+
+.rs-hscreen-header .app-title {
+    font-family: "Odibee Sans", serif;
+    text-align: center;
+    color: #bb4154;
+    letter-spacing: 6px;
+    position: relative;
+    user-select: none
+}
+
+.rs-hscreen-header .app-info {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    color: #fff;
+    display: block;
+    text-align: center;
+    user-select: none;
+    letter-spacing: 1px
+}
+
+.rs-hscreen-header .app-progress {
+    height: 10px;
+    margin: 24px auto 0;
+    display: block;
+    background: #555;
+    border-radius: 10px
+}
+
+.rs-hscreen-header .app-progress-inner {
+    background: #BB4154;
+    height: 100%;
+    border-radius: 10px;
+    transition: all .35s ease-out
+}
+
+@keyframes logo-animation {
+    0% {
+        transform: scale(1)
+    }
+    to {
+        transform: scale(1.2)
+    }
+}
+
+.rs-hscreenmenu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.rs-hscreenmenu .menu-list {
+    width: 250px;
+    margin: 0 auto;
+    text-align: center
+}
+
+.rs-hscreenmenu .menu-item {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    padding: 12px;
+    margin: 22px;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    transition: all .2s ease-out
+}
+
+.rs-hscreenmenu .menu-item:hover {
+    color: #111;
+    background: #BB4154
+}
+
+.rs-sh3d-gamebuttonbar {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    max-width: 240px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around
+}
+
+.rs-sh3d-mainbutton {
+    display: block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 12px !important;
+    font-size: 18px;
+    border: 2px solid white;
+    background: #BCD3F1;
+    color: #1a1a1a;
+    transition: all .1s ease-out
+}
+
+.rs-sh3d-mainbutton:hover {
+    background: #111 !important;
+    color: #eee
+}
+
+.rs-sh3d-mainbutton-extra {
+    background: #00d8c3 !important
+}
+
+.rs-sh3d-mainbutton-extra:hover {
+    background: #111 !important;
+    color: #eee
+}
+
+.rs-sh3d-gamewonbar {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.rs-sh3d-gamewonbar img {
+    display: block;
+    cursor: pointer;
+    margin: 0 24px;
+    transition: .25s all ease-out
+}
+
+.rs-sh3d-gamewonbar img:hover {
+    transform: scale(1.15)
+}
+
+.rs-sh3d-gameheader {
+    font-family: Montserrat Alternates, sans-serif;
+    max-width: 400px;
+    width: 100%;
+    height: 75px;
+    top: 4px;
+    left: 50%;
+    transform: translate(-50%);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-around
+}
+
+.rs-sh3d-gameheader .rs-sh3d-levelbtn {
+    background: #009245;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer
+}
+
+.rs-sh3d-gameheader .rs-sh3d-levelbtn span {
+    user-select: none;
+    display: inline-block;
+    padding: 6px 2px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-levelbtn .levelbtn-label {
+    font-size: 16px;
+    padding: 6px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-levelbtn .icon-undo {
+    font-size: 14px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-timebtn {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer
+}
+
+.rs-sh3d-gameheader .rs-sh3d-timebtn span {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 6px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-timebtn .icon-timer {
+    background: #333
+}
+
+.rs-sh3d-gameheader .rs-sh3d-timebtn .icon-pausetime {
+    font-size: 12px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-timebtn .icon-playtime {
+    font-size: 12px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-timebtn .timebtn-value {
+    font-size: 14px;
+    background: #BB4154;
+    color: #111;
+    border-radius: 4px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-movebtn {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer
+}
+
+.rs-sh3d-gameheader .rs-sh3d-movebtn span {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 6px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-movebtn .icon-cross {
+    background: #333;
+    font-size: 16px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-movebtn .icon-ring {
+    background: #333;
+    font-size: 18px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-movebtn .icon-undo {
+    font-size: 12px
+}
+
+.rs-sh3d-gameheader .rs-sh3d-movebtn .movebtn-value {
+    font-size: 14px;
+    background: #BB4154;
+    color: #111;
+    border-radius: 4px
+}
