@@ -5,7 +5,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
 	<meta name="author" content="Zane Wesley">
 	<!-- General -->
-	<link rel="manifest" href="manifest.json">
 	<meta name="theme-color" content="#0a192f">
 	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
@@ -21,7 +20,7 @@
 	<!-- UI -->
 	<script src="https://unpkg.com/typeit@8.5.4/dist/index.umd.js"></script>
 
-	<title>Leaderboard</title>
+	<title>Leaderboard | Zane's Apps</title>
 
 	<style>
 		* {
@@ -121,8 +120,17 @@
 			flex-grow: 1;
 		}
 		.board .score {
-			padding: 1rem;
 			white-space: nowrap;
+		}
+		.board .score-wrapper {
+			display: flex;
+			flex-direction: column;
+			padding: 1rem;
+			justify-content: center;
+			align-items: center;
+		}
+		.board .username {
+			font-size: 0.5em;
 		}
 		a {
 			color: #0a192f;
@@ -144,37 +152,69 @@
 </head>
 <body>
 	<header>
-		<h1 class="monospace">Your Leaderboard</h1>
+		<h1 class="monospace">Leaderboard</h1>
 	</header>
 
 	<div class="board">
 		<ul>
-			<li id="solitaire"><img src="solitaire/assets/icon.jpg"><div class="name">Solitaire</div><div class="score">0</div></li>
-			<li id="crossyroad"><img src="crossyroad/icon.jpeg"><div class="name">Crossy Road</div><div class="score">0</div></li>
-			<li id="cakeninja"><img src="cakeninja/files/assets/32463581/1/caption.png"><div class="name">Cake Ninja</div><div class="score">0</div></li>
-			<li id="hextris"><img src="hextris/favicon.ico"><div class="name">Hextris</div><div class="score">0</div></li>
-			<li id="2048"><img src="2048/icon.png"><div class="name">2048</div><div class="score">0</div></li>
-			<li id="tictactoe"><img src="images/tic-tac-toe-icon.png"><div class="name">Tic-Tac-Toe</div><div class="score">0</div></li>
+			<li id="solitaire"><img src="solitaire/assets/icon.jpg"><div class="name">Solitaire</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="crossyroad"><img src="crossyroad/icon.jpeg"><div class="name">Crossy Road</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="cakeninja"><img src="cakeninja/files/assets/32463581/1/caption.png"><div class="name">Cake Ninja</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="hextris"><img src="hextris/favicon.ico"><div class="name">Hextris</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="score-2048"><img src="2048/icon.png"><div class="name">2048</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
 		</ul>
-		<a href="/">Back</a>
+		<a href="/">Home</a>
 	</div>
 
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+	     https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
 	<script>
-		function getScores() {
-			var tictactoe = getItem('tic-tac-toe-data') || 0;
+		// Your web app's Firebase configuration
+		const firebaseConfig = {
+			apiKey: "AIzaSyBlwqgFRZO3nW4HOzxv6eV0USjA4vGWNhM",
+		    authDomain: "leaderboard-e6efb.firebaseapp.com",
+		    projectId: "leaderboard-e6efb",
+		    storageBucket: "leaderboard-e6efb.appspot.com",
+		    messagingSenderId: "254973774391",
+		    appId: "1:254973774391:web:452f3b5e86e3d320574db2"
+		};
+
+		// Initialize Firebase
+		const app = firebase.initializeApp(firebaseConfig);
+	</script>
+	<script src="leaderboard-handler.js"></script>
+
+	<script>
+		function setScores() {
+			/*var tictactoe = getItem('tic-tac-toe-data') || 0;
 			var best2048 = getItem('bestScore') || 0;
 			var hextris = JSON.parse(getItem('highscores')) || 0;
 			var cakeninja = getItem('cakeninja') || 0;
 			var crossyroad = JSON.parse(getItem('lockr_crossyroad_hs')) || 0;
-			var solitaire = JSON.parse(getItem('gamedata_dailysolitare_1_0_0')) || 0;
+			var solitaire = JSON.parse(getItem('gamedata_dailysolitare_1_0_0')) || 0;*/
+			/*var tictactoe = getHighScores('tictactoe', 1),
+				best2048 = getHighScores('2048', 1),
+				hextris = getHighScores('hextris', 1),
+				cakeninja = getHighScores('cakeninja', 1),
+				crossyroad = getHighScores('crossyroad', 1),
+				solitaire = getHighScores('solitaire', 1);
 
 			document.getElementById('tictactoe').querySelector('.score').innerHTML=tictactoe;
 			document.getElementById('2048').querySelector('.score').innerHTML=best2048;
-			document.getElementById('hextris').querySelector('.score').innerHTML=hextris.score;
+			document.getElementById('hextris').querySelector('.score').innerHTML=hextris;
 			document.getElementById('cakeninja').querySelector('.score').innerHTML=cakeninja;
-			document.getElementById('crossyroad').querySelector('.score').innerHTML=crossyroad.data;
-			document.getElementById('solitaire').querySelector('.score').innerHTML=solitaire.stats.best_score;
-			console.log(hextris);
+			document.getElementById('crossyroad').querySelector('.score').innerHTML=crossyroad;
+			document.getElementById('solitaire').querySelector('.score').innerHTML=solitaire;*/
+			__getHighScores__('tictactoe', 1);
+			__getHighScores__('2048', 1);
+			__getHighScores__('hextris', 1);
+			__getHighScores__('cakeninja', 1);
+			__getHighScores__('crossyroad', 1);
+			__getHighScores__('solitaire', 1);
 		}
 
 		function getItem(item) {
@@ -188,7 +228,7 @@
 			lifeLike: true,
 		}).go();
 
-		getScores();
+		setScores();
 	</script>
 </body>
 </html>
