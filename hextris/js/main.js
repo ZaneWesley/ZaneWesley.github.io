@@ -343,6 +343,7 @@ function checkGameOver() {
 			}
 			writeHighScores();
 			gameOverDisplay();
+			__saveScoreToDatabase__('hextris', score);
 			return true;
 		}
 	}
