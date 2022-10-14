@@ -644,6 +644,7 @@ function animate(timestamp) {
           document.getElementById('high').innerHTML=score;
           HIGH_SCORE = score;
         }
+        __saveScoreToDatabase__('crossyroad', score);
         lanes.forEach(lane => scene.remove( lane.mesh ));
         initaliseValues();
       }
