@@ -112,6 +112,24 @@
     </div>
   </div>
 
+  <!-- Leaderboard Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
+  <script src="/leaderboard-handler.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlwqgFRZO3nW4HOzxv6eV0USjA4vGWNhM",
+        authDomain: "leaderboard-e6efb.firebaseapp.com",
+        projectId: "leaderboard-e6efb",
+        storageBucket: "leaderboard-e6efb.appspot.com",
+        messagingSenderId: "254973774391",
+        appId: "1:254973774391:web:452f3b5e86e3d320574db2"
+    };
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+  </script>
+  <!-- Game Scripts -->
   <script src="js/bind_polyfill.js"></script>
   <script src="js/classlist_polyfill.js"></script>
   <script src="js/animframe_polyfill.js"></script>
@@ -124,6 +142,7 @@
   <script src="js/store_manager.js"></script>
   <script src="js/game_manager.js"></script>
   <script src="js/application.js"></script>
+
   <script>
     if(isMobile()) {
       document.getElementById('moveTrigger').innerText="fingers";
