@@ -38,6 +38,7 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
       self.updateCoins(coinValue);
       document.querySelector('.coin-award-popup .coin-amount').textContent = Math.floor(metadata.score*0.01);
       document.querySelector('.coin-award-popup').style.display="block";
+      __saveScoreToDatabase__('2048', metadata.score);
     }
 
   });
