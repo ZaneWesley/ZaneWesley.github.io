@@ -157,11 +157,13 @@
 
 	<div class="board">
 		<ul>
-			<li id="solitaire"><img src="solitaire/assets/icon.jpg"><div class="name">Solitaire</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
-			<li id="crossyroad"><img src="crossyroad/icon.jpeg"><div class="name">Crossy Road</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
-			<li id="cakeninja"><img src="cakeninja/files/assets/32463581/1/caption.png"><div class="name">Cake Ninja</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
-			<li id="hextris"><img src="hextris/favicon.ico"><div class="name">Hextris</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<!--<li id="solitaire"><img src="solitaire/assets/icon.jpg"><div class="name">Solitaire</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>-->
 			<li id="score-2048"><img src="2048/icon.png"><div class="name">2048</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="cakeninja"><img src="cakeninja/files/assets/32463581/1/caption.png"><div class="name">Cake Ninja</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="crossyroad"><img src="crossyroad/icon.jpeg"><div class="name">Crossy Road</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="flappybird"><img src="flappybird/icon.jpg"><div class="name">Flappy Bird</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="hextris"><img src="hextris/favicon.ico"><div class="name">Hextris</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="stack"><img src="images/stack-icon.PNG"><div class="name">Stack</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
 		</ul>
 		<a href="/">Home</a>
 	</div>
@@ -209,12 +211,12 @@
 			document.getElementById('cakeninja').querySelector('.score').innerHTML=cakeninja;
 			document.getElementById('crossyroad').querySelector('.score').innerHTML=crossyroad;
 			document.getElementById('solitaire').querySelector('.score').innerHTML=solitaire;*/
-			__getHighScores__('tictactoe', 1);
 			__getHighScores__('2048', 1);
 			__getHighScores__('hextris', 1);
 			__getHighScores__('cakeninja', 1);
 			__getHighScores__('crossyroad', 1);
-			__getHighScores__('solitaire', 1);
+			__getHighScores__('flappybird', 1);
+			__getHighScores__('stack', 1);
 		}
 
 		function getItem(item) {
