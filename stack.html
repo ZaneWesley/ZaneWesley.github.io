@@ -33,8 +33,8 @@
 		  transition: transform 0.5s ease;
 		  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
 		  color: #333344;
-		  -webkit-transform: translatey(-200px) scale(1);
-		          transform: translatey(-200px) scale(1);
+		  -webkit-transform: translateY(-200px) scale(1);
+		          transform: translateY(-200px) scale(1);
 		}
 		#container #game {
 		  position: absolute;
@@ -160,6 +160,24 @@
 			<div></div>
 		</div>
 	</div>
+	<!-- Leaderboard Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
+    <script src="/leaderboard-handler.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBlwqgFRZO3nW4HOzxv6eV0USjA4vGWNhM",
+            authDomain: "leaderboard-e6efb.firebaseapp.com",
+            projectId: "leaderboard-e6efb",
+            storageBucket: "leaderboard-e6efb.appspot.com",
+            messagingSenderId: "254973774391",
+            appId: "1:254973774391:web:452f3b5e86e3d320574db2"
+        };
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+    </script>
+    <!-- Game Scripts-->
 	<!--<script src='https://codepen.io/ste-vg/pen/zBVakw.js'></script>-->
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>
@@ -511,6 +529,7 @@
 		    };
 		    Game.prototype.endGame = function () {
 		        this.updateState(this.STATES.ENDED);
+		        __saveScoreToDatabase__('stack', document.getElementById("score").innerHTML);
 		    };
 		    Game.prototype.tick = function () {
 		        var _this = this;
