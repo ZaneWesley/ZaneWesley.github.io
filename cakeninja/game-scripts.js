@@ -664,6 +664,7 @@ Game.prototype.gameover = function() {
             this.bestScoreA = this.bestScore;
         else
             this.bestScoreC = this.bestScore;
+            __saveScoreToDatabase__('cakeninja', this.currScore);
 
         this.app.fire("game:newbestscore", this.bestScore);
     }
