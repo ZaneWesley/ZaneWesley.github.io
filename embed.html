@@ -132,6 +132,10 @@
 		.standalone-title, #standalone-nav .username-wrapper {
 			color: #ccd6f6;
 		}
+		.standalone-title:hover {
+			color: #fff;
+			cursor: pointer;
+		}
 		.standalone-icons {
 			color: #64d1ff;
 		}
@@ -293,6 +297,10 @@
 			//this.parentNode.classList.remove('open');
 		});
 
+		document.querySelector('.standalone-title').addEventListener('click', function(e) {
+			window.location = '/';
+		});
+
 		function setUsername() {
 			if(document.getElementById('username').value != "" && document.getElementById('username').value != null) {
 				document.querySelectorAll('h2, p, input, button').forEach(function(elem) {
@@ -309,6 +317,10 @@
 			} else {
 				document.querySelector('.popup p').innerHTML="Please enter a valid username.";
 			}
+		}
+
+		function displayUsername(user) {
+			document.getElementById('usernameBox').innerHTML=user;
 		}
 	</script>
 </body>
