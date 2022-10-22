@@ -19,6 +19,15 @@
 	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 	<!-- UI -->
 	<script src="https://unpkg.com/typeit@8.5.4/dist/index.umd.js"></script>
+	<!-- Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-YEEGMG5QT7');
+	</script>
 
 	<title>Leaderboard | Zane's Apps</title>
 
@@ -165,7 +174,7 @@
 			<li id="hextris"><img src="hextris/favicon.ico"><div class="name">Hextris</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
 			<li id="stack"><img src="images/stack-icon.PNG"><div class="name">Stack</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
 		</ul>
-		<a href="/">Home</a>
+		<a href="/">Return Home</a>
 	</div>
 
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -211,10 +220,12 @@
 			document.getElementById('cakeninja').querySelector('.score').innerHTML=cakeninja;
 			document.getElementById('crossyroad').querySelector('.score').innerHTML=crossyroad;
 			document.getElementById('solitaire').querySelector('.score').innerHTML=solitaire;*/
+			__getHighScores__('tictactoe', 1);
 			__getHighScores__('2048', 1);
 			__getHighScores__('hextris', 1);
 			__getHighScores__('cakeninja', 1);
 			__getHighScores__('crossyroad', 1);
+			__getHighScores__('solitaire', 1);
 			__getHighScores__('flappybird', 1);
 			__getHighScores__('stack', 1);
 		}
