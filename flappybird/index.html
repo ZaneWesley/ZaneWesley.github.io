@@ -21,25 +21,34 @@
     <title>Flappy Bird</title>
     <script src="playcanvas-stable.min.js"></script>
     <script src="settings.js"></script>
+    <!-- Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YEEGMG5QT7');
+    </script>
 </head>
 <body>
     <!-- Leaderboard Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
-  <script src="/leaderboard-handler.js"></script>
-  <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyBlwqgFRZO3nW4HOzxv6eV0USjA4vGWNhM",
-        authDomain: "leaderboard-e6efb.firebaseapp.com",
-        projectId: "leaderboard-e6efb",
-        storageBucket: "leaderboard-e6efb.appspot.com",
-        messagingSenderId: "254973774391",
-        appId: "1:254973774391:web:452f3b5e86e3d320574db2"
-    };
-    // Initialize Firebase
-    const thisapp = firebase.initializeApp(firebaseConfig);
-  </script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
+    <script src="/leaderboard-handler.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBlwqgFRZO3nW4HOzxv6eV0USjA4vGWNhM",
+            authDomain: "leaderboard-e6efb.firebaseapp.com",
+            projectId: "leaderboard-e6efb",
+            storageBucket: "leaderboard-e6efb.appspot.com",
+            messagingSenderId: "254973774391",
+            appId: "1:254973774391:web:452f3b5e86e3d320574db2"
+        };
+        // Initialize Firebase
+        const thisapp = firebase.initializeApp(firebaseConfig);
+    </script>
     <!-- Game Scripts-->
     <script src="start.js"></script>
     <script src="loading.js"></script>
