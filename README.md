@@ -6,4 +6,4 @@ This site hosts a collection of my coding projects! You can see them all live at
 
 Enjoy!
 
-Have feedback or questions? Feel free to <a href="https://zanewesley.github.io/about#contact">contact me</a>!
+Have feedback or questions? Feel free to <a href="https://zanewesley.github.io/feedback">contact me</a>!
