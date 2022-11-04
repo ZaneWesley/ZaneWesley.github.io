@@ -43,7 +43,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>Zane's Apps | Spring Update</title>
+	<title>Zane's Apps | Christmas Update</title>
 
 	<style>
 		* {
@@ -203,6 +203,12 @@
 		    align-items: flex-start;
 		    min-height: 80vh;
 		    padding: 0px;
+		    /*animation: growAnim 3s;*/
+		    animation-fill-mode: forwards;
+		}
+		@keyframes growAnim {
+			from {min-height: 10vh}
+			to {min-height: 80vh}
 		}
 		main section.first .intro h1 {
 			margin: 0px 0px 30px 4px;
@@ -328,6 +334,7 @@
 			overflow: hidden;
 			position: relative;
 			width: 100%;
+			padding: 1em;
 		}
 		.newgrid-inner .new-list li {
 			background-color: rgba(35, 53, 84, 0.7);
@@ -341,6 +348,9 @@
 			display: flex;
 			flex-direction: column;
 		}
+		.newgrid-inner .new-list li:hover {
+			transform: scale(0.9);
+		}
 		.newgrid-inner .new-list li .img {
 			border-radius: 12px;
    			width: 100%;
@@ -353,6 +363,13 @@
 		}
 		.newgrid-inner .new-list li .name {
 			padding: 0.25em 1em;
+		}
+
+		.inner .list li.new, .newgrid-inner .new-list li.new {
+			/*box-shadow: 0 0 8px 8px #48abe0;*/
+			/*box-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #0ba9ca, 0 0 30px #0ba9ca,
+    			0 0 40px #0ba9ca, 0 0 50px #0ba9ca;*/
+    		box-shadow: 0px 0px 20px 0px rgba(100,209,255,0.9); /* x y blur range color*/
 		}
 
 		footer {
@@ -411,7 +428,7 @@
 		    text-align: right;
 		}
 
-		html.standalone-open, body.standalone-open {
+		html.standalone-open, body.standalone-open, .standalone-open .content {
 			overflow: hidden;
 		}
 		body.standalone-open #hamburger {
@@ -493,6 +510,69 @@
 			height: 29%;
 		}
 
+		.popup {
+			position: fixed;
+			/*top: 50%;*/
+			bottom: 1em;
+			left: 50%;
+			/*transform: translate(-50%, -50%);*/
+			transform: translateX(-50%);
+			width: 50%;
+			padding: 1em;
+			height: auto;
+			/*min-height: 50%;*/
+			padding-bottom: 3em;
+			background-color: #64d1ff;
+			background: linear-gradient(169deg, rgba(100,209,255,1) 9%, rgba(10,25,47,1) 100%);
+			color: #0a192f;
+			border-radius: 20px;
+			display: none;
+			z-index: 3;
+		}
+		.popup.open {
+			display: block;
+		}
+		.popup h2 {
+			text-align: center;
+		}
+		.popup input {
+			padding: 15px 30px;
+		    border-radius: 8px;
+		    border: none;
+		    color: #0a192f;
+		    background-color: #fff;
+		    margin: 20px 0;
+		    outline: none;
+		}
+		.popup button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: #ccd6f6;
+			background-color: #0a192f;
+			outline: none;
+			cursor: pointer;
+		}
+		.popup button#nothanks {
+			position: absolute;
+			bottom: 1em;
+			right: 1em;
+		}
+		.popup #save-loader {
+			display: none;
+		}
+		#usernameBox {
+			position: fixed;
+			right: 0;
+			top: 5em;
+			background-color: rgba(35, 53, 84, 0.7);
+			padding: 0.5em 1em;
+			animation: fadeIn 3s linear;
+		}
+		#usernameBox .head {
+			font-size: 0.5em;
+		}
+
 		@media (max-width: 480px) {
 			header, main {
 				padding: 0 25px;
@@ -525,10 +605,84 @@
 			.newgrid-inner .new-list li {
 				width: calc(50% - 19px);
 			}
+			.popup {
+				width: 90%;
+			}
+			.popup input {
+				width: 100%;
+			}
 		}
+
+
+		/*
+			CHRISTMAS STYLES
+		*/
+		html,body.christmas {
+			background-color: #0a2f2d;
+		}
+		.christmas header, .christmas #standalone-nav {
+			background-color: #0F8A5F;
+		}
+		/* Track */
+		.christmas::-webkit-scrollbar-track {
+		  background: #0a2f2d;
+		}
+		/* Handle */
+		.christmas::-webkit-scrollbar-thumb {
+		  background: #ccd6f6;
+		  border-radius: 10px;
+		  border: 3px solid #0a2f2d;
+		}
+		/* WebKit/Blink Browsers */
+		.christmas::selection {
+		  background: #0F8A5F;
+		  color: #fff;
+		}
+		/* Gecko Browsers */
+		.christmas::-moz-selection {
+		  background: #0F8A5F;
+		  color: #fff;
+		}
+		.christmas header nav .logo {
+			color: #ccd6f6;
+		}
+		.christmas main section.first .title h2 {
+			color: #b3000c;
+		}
+		.christmas section .inner li, .christmas .newgrid-inner .new-list li, .christmas #usernameBox {
+			background-color: rgba(179, 0, 12, 0.7);
+		}
+		/*.christmas .inner .list li.new, .christmas .newgrid-inner .new-list li.new {
+    		box-shadow: 0px 0px 20px 0px rgba(15, 138, 95, 0.9);
+		}*/
+		.christmas .menu {
+			background-color: #0a2f2d;
+		}
+		#snow-canvas {
+			display: none;
+		}
+		.christmas .content {
+			z-index: 2;
+			position: absolute;
+			width: 100%;
+		}
+		.christmas #snow-canvas {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 1;
+			display: block;
+		}
+		/*.christmas .popup {
+			color: #fff;
+			background-color: #0F8A5F;
+			background: linear-gradient(169deg, #0F8A5F 9%, #0a2f2d 100%);
+		}*/
 	</style>
 </head>
-<body>
+<body class="christmas">
 	<div class="content">
 		<header class="monospace">
 			<nav>
@@ -548,7 +702,7 @@
 
 		<main>
 			<section class="first">
-				<div class="intro"><h1 class="monospace">Hi, welcome to</h1></div>
+				<div class="intro"><h1 class="monospace">The Christmas Update</h1></div>
 				<div class="title"><h2>Zane's Apps</h2></div>
 				<div class="info"><p></p></div>
 			</section>
@@ -558,6 +712,18 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
+							<li data-id="leaderboard" data-url="leaderboard" class="new">
+								<div class="img"><img src="images/leaderboard-icon.png"></div>
+								<div class="name">Leaderboard</div>
+							</li>
+							<li data-id="christmas-countdown-2022" data-url="christmas-countdown-2022" class="new">
+								<div class="img"><img src="images/christmas-countdown-2022-icon.png"></div>
+								<div class="name">Christmas Countdown 2022</div>
+							</li>
+							<li data-id="santahatmixup" data-url="santahatmixup" class="new">
+								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
+								<div class="name">Santa Hat Mixup</div>
+							</li>
 							<li data-id="pacman" data-url="pacman">
 								<div class="img"><img src="pacman/icon/ios_icon.png"></div>
 								<div class="name">Pac Man</div>
@@ -566,7 +732,7 @@
 								<div class="img"><img src="flappybird/icon.jpg"></div>
 								<div class="name">Flappy Bird</div>
 							</li>
-							<li data-id="vividly" data-url="vividly">
+							<!--<li data-id="vividly" data-url="vividly">
 								<div class="img"><img src="vividly/icon.png"></div>
 								<div class="name">Vividly</div>
 							</li>
@@ -577,7 +743,7 @@
 							<li data-id="2048" data-url="2048">
 								<div class="img"><img src="2048/icon.png"></div>
 								<div class="name">2048</div>
-							</li>
+							</li>-->
 						</ul>
 					</div>
 				</div>
@@ -589,14 +755,18 @@
 					<div class="img"></div>
 					<div class="list">
 						<ul>
-							<li data-id="solitaire" data-url="solitaire">
+							<!--<li data-id="solitaire" data-url="solitaire">
 								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
 								<div class="name">Solitaire</div>
+							</li>-->
+							<li data-id="santahatmixup" data-url="santahatmixup">
+								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
+								<div class="name">Santa Hat Mixup</div>
 							</li>
-							<li data-id="cakeninja" data-url="cakeninja">
+							<!--<li data-id="cakeninja" data-url="cakeninja">
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
 								<div class="name">Cake Ninja</div>
-							</li>
+							</li>-->
 							<li data-id="2048" data-url="2048">
 								<div class="img"><img src="2048/icon.png"></div>
 								<div class="name">2048</div>
@@ -612,6 +782,14 @@
 					<div class="img"><img src="images/bg/games.svg"></div>
 					<div class="list">
 						<ul>
+							<li data-id="leaderboard" data-url="leaderboard" class="new">
+								<div class="img"><img src="images/leaderboard-icon.png"></div>
+								<div class="name">Leaderboard</div>
+							</li>
+							<li data-id="santahatmixup" data-url="santahatmixup" class="new">
+								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
+								<div class="name">Santa Hat Mixup</div>
+							</li>
 							<li id="pacman" data-url="pacman">
 								<div class="img"><img src="pacman/icon/ios_icon.png"></div>
 								<div class="name">Pac Man</div>
@@ -789,6 +967,20 @@
 	<!-- Infobar -->
 	<!--<iframe id="infobar" src="infobar.html"></iframe>-->
 
+	<div class="popup">
+		<h2>Want to Get Recognized?</h2>
+		<p>Enter a username below to associate with your scores on the leaderboard!</p>
+		<input type="text" id="username" placeholder="Username" class="monospace">
+		<button id="nothanks">No Thanks</button>
+		<button id="saveuser">Save Username</button>
+		<img id="save-loader" src="images/game-loader.svg" alt="Saving username loader">
+	</div>
+
+	<div id="usernameBox">
+		<div class="head">Username:</div>
+		<div class="user"></div>
+	</div>
+
 	<!-- PWA Elements -->
 	<iframe id="standalone-frame" class="standalone-ui"></iframe>
 	<div id="standalone-nav" class="standalone-ui monospace">
@@ -798,8 +990,12 @@
 	</div>
 	<div id="standalone-bg" class="standalone-ui"></div>
 
+	<canvas id="snow-canvas"></canvas>
+
 	<script>
-		/* Menu Functions */
+		/*
+			* Menu Functions *
+		*/
 		document.querySelector('.menu-btn').addEventListener('click', function(e) {
 			document.querySelector('.menu').classList.add('open');
 		});
@@ -812,7 +1008,9 @@
 			});
 		});
 
-		/* UI & Animations */
+		/*
+			* UI & Animations *
+		*/
 		//Title
 		new TypeIt(".title h2", {
 			speed: 75,
@@ -850,7 +1048,9 @@
 			}).go();
 		});
 
-		/* Link Handlers */
+		/*
+			* Link Handlers *
+		*/
 		function setHandlers() {
 			//clear event listeners
 			document.querySelectorAll('.list li, .new-list li').forEach(function(elem) {
@@ -864,7 +1064,8 @@
 					e.preventDefault();
 					/**/if(!isPWA()) {
 						updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
-						window.open(elem.getAttribute('data-url'));
+						//window.open(elem.getAttribute('data-url'));
+						window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
 						gtag('event', 'app_link_click', {
 							 'app_name': this.querySelector('.name').innerHTML
 						});
@@ -902,6 +1103,10 @@
 			}
 		}
 
+		/*
+			* PWA Handlers *
+		*/
+
 		document.getElementById('standalone-home').addEventListener('click', function(e) {
 			e.preventDefault();
 			document.getElementById('standalone-frame').src=null;
@@ -916,22 +1121,25 @@
 
 		document.getElementById('standalone-share').addEventListener('click', function(e) {
 			//e.preventDefault();
+			var shareURL = document.getElementById('standalone-frame').src || 'https://zanewesley.github.io';
+			var frameTitle = document.getElementById('standalone-frame').contentDocument.title || "this game";
 			//if (navigator.share) {
 			try {
-				var shareURL = document.getElementById('standalone-frame').src || '/';
 				console.log(shareURL);
-			  navigator.share({
-				title: document.title,
-				text: "Check out Zane\'s apps!",
-				url: shareURL
-			  })
+				var shareData = {
+					title: frameTitle,
+					text: `Check out ${frameTitle} from Zane\'s Apps`,//"Check out Zane\'s apps!"
+					url: shareURL
+				}
+			  navigator.share(shareData)
 			  .then(() => console.log('Successful share'))
 			  .catch(error => console.log('Error sharing:', error));
 			} 
 			//else {
 			catch(err) {
 				var a = document.createElement('a');
-				var osLink = getMobileOperatingSystem() == 'iOS' ? 'sms:&body=Check out Zane\'s Apps! https://zanewesley.github.io' : 'sms:?body=Check out Zane\'s Apps! https://zanewesley.github.io';
+				//var osLink = getMobileOperatingSystem() == 'iOS' ? 'sms:&body=Check out Zane\'s Apps! https://zanewesley.github.io' : 'sms:?body=Check out Zane\'s Apps! https://zanewesley.github.io';
+				var osLink = getMobileOperatingSystem() == 'iOS' ? `sms:&body=Check out ${frameTitle} from Zane\'s Apps! ${shareURL}` : `sms:?body=Check out ${frameTitle} from Zane\'s Apps! ${shareURL}`;
 				a.href = osLink;
 				document.body.appendChild(a);
 				a.click();
@@ -959,7 +1167,9 @@
 			return "unknown";
 		}
 
-		/* IFRAME MANAGEMENT */
+		/*
+			* IFRAME MANAGEMENT *
+		*/
 		/*function addIframeClose() {
 			var iframe = document.getElementById('infobar');
 			var elem = iframe.contentDocument.getElementById('close') || iframe.contentWindow.document.getElementById('close');
@@ -971,7 +1181,9 @@
 
 		addIframeClose();*/
 
-		/* HISTORY MANAGEMENT */
+		/*
+			* HISTORY MANAGEMENT *
+		*/
 		var appArr;
 		function updateRecentArr(app, appUrl, iconUrl) {
 			var appArrQuery = localStorage.getItem('z_history');
@@ -1020,9 +1232,168 @@
 
 		//usage const myFitleredArr = myArr.filter(by('name'), new Set);
 
+		/*
+			* LEADERBOARD USERNAME MANAGEMENT *
+		*/
+		var leaderboardName = localStorage.getItem('z_leaderboard_username');
+		if(!leaderboardName) {
+			leaderboardName = 'Guest-'+makeId(5);
+			displayUsername(leaderboardName);
+			setTimeout(function() {
+				document.querySelector('.popup').classList.add('open');
+			}, 5000);
+		} else {
+			displayUsername(leaderboardName);
+		}
+		document.getElementById('nothanks').addEventListener('click', function(e) {
+			e.preventDefault();
+			this.parentNode.classList.remove('open');
+		});
+
+		document.getElementById('saveuser').addEventListener('click', function(e) {
+			e.preventDefault();
+			setUsername();
+			//this.parentNode.classList.remove('open');
+		});
+
+		function setUsername() {
+			if(document.getElementById('username').value != "" && document.getElementById('username').value != null) {
+				document.querySelectorAll('h2, p, input, button').forEach(function(elem) {
+					elem.style.display="none";
+				});
+				document.getElementById('save-loader').style.display="block";
+				localStorage.setItem('z_leaderboard_username', String(document.getElementById('username').value));
+				setTimeout(function() {
+					document.querySelector('.popup').classList.remove('open');
+					displayUsername(String(document.getElementById('username').value));
+					leaderboardName = String(document.getElementById('username').value);
+				}, 3000);
+			} else {
+				document.querySelector('.popup p').innerHTML="Please enter a valid username.";
+			}
+		}
+
+		function makeId(length) {
+	        var result = '';
+	        var characters = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789';
+	        var charactersLength = characters.length;
+	        for ( var i = 0; i < length; i++ ) {
+	        	result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	        }
+	        return result;
+		}
+
+		function displayUsername(username) {
+			document.querySelector('#usernameBox .user').innerHTML = username;
+		}
+
 
 		loadAppHistory();
 		setHandlers();
+	</script>
+	<script>
+		/********************
+          Canvas Snow Animation
+        ********************/
+		const canvas = document.querySelector('#snow-canvas');
+		const ctx = canvas.getContext('2d');
+
+		let width, height, lastNow;
+		let snowflakes;
+		const maxSnowflakes = 100;
+
+		function init() {
+		  snowflakes = [];
+		  resize();
+		  render(lastNow = performance.now());
+		}
+
+		function render(now) {
+		  requestAnimationFrame(render);
+
+		  const elapsed = now - lastNow;
+		  lastNow = now;
+
+		  ctx.clearRect(0, 0, width, height);
+		  if (snowflakes.length < maxSnowflakes)
+		  snowflakes.push(new Snowflake());
+
+		  ctx.fillStyle = ctx.strokeStyle = '#fff';
+
+		  snowflakes.forEach(snowflake => snowflake.update(elapsed, now));
+		}
+
+		function pause() {
+		  cancelAnimationFrame(render);
+		}
+		function resume() {
+		  lastNow = performance.now();
+		  requestAnimationFrame(render);
+		}
+
+
+		class Snowflake {
+		  constructor() {
+		    this.spawn();
+		  }
+
+		  spawn(anyY = false) {
+		    this.x = rand(0, width);
+		    this.y = anyY === true ?
+		    rand(-50, height + 50) :
+		    rand(-50, -10);
+		    this.xVel = rand(-.05, .05);
+		    this.yVel = rand(.02, .1);
+		    this.angle = rand(0, Math.PI * 2);
+		    this.angleVel = rand(-.001, .001);
+		    this.size = rand(7, 12);
+		    this.sizeOsc = rand(.01, .5);
+		  }
+
+		  update(elapsed, now) {
+		    const xForce = rand(-.001, .001);
+
+		    if (Math.abs(this.xVel + xForce) < .075) {
+		      this.xVel += xForce;
+		    }
+
+		    this.x += this.xVel * elapsed;
+		    this.y += this.yVel * elapsed;
+		    this.angle += this.xVel * 0.05 * elapsed; //this.angleVel * elapsed
+
+		    if (
+		    this.y - this.size > height ||
+		    this.x + this.size < 0 ||
+		    this.x - this.size > width)
+		    {
+		      this.spawn();
+		    }
+
+		    this.render();
+		  }
+
+		  render() {
+		    ctx.save();
+		    const { x, y, angle, size } = this;
+		    ctx.beginPath();
+		    ctx.arc(x, y, size * 0.2, 0, Math.PI * 2, false);
+		    ctx.fill();
+		    ctx.restore();
+		  }}
+
+
+		// Utils
+		const rand = (min, max) => min + Math.random() * (max - min);
+
+		function resize() {
+		  width = canvas.width = window.innerWidth;
+		  height = canvas.height = window.innerHeight;
+		}
+
+		window.addEventListener('resize', resize);
+		window.addEventListener('blur', pause);
+		window.addEventListener('focus', resume);
+		init();
 	</script>
 
 </body>
