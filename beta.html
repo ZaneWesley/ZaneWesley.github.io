@@ -43,7 +43,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>BETA | Zane's Apps | Christmas Update</title>
+	<title>Zane's Apps | Christmas Update</title>
 
 	<style>
 		* {
@@ -428,7 +428,7 @@
 		    text-align: right;
 		}
 
-		html.standalone-open, body.standalone-open {
+		html.standalone-open, body.standalone-open, .standalone-open .content {
 			overflow: hidden;
 		}
 		body.standalone-open #hamburger {
@@ -568,6 +568,7 @@
 			background-color: rgba(35, 53, 84, 0.7);
 			padding: 0.5em 1em;
 			animation: fadeIn 3s linear;
+			cursor: pointer;
 		}
 		#usernameBox .head {
 			font-size: 0.5em;
@@ -612,77 +613,9 @@
 				width: 100%;
 			}
 		}
-
-
-		/*
-			CHRISTMAS STYLES
-		*/
-		html,body.christmas {
-			background-color: #0a2f2d;
-		}
-		.christmas header {
-			background-color: #0F8A5F;
-		}
-		/* Track */
-		.christmas::-webkit-scrollbar-track {
-		  background: #0a2f2d;
-		}
-		/* Handle */
-		.christmas::-webkit-scrollbar-thumb {
-		  background: #ccd6f6;
-		  border-radius: 10px;
-		  border: 3px solid #0a2f2d;
-		}
-		/* WebKit/Blink Browsers */
-		.christmas::selection {
-		  background: #0F8A5F;
-		  color: #fff;
-		}
-		/* Gecko Browsers */
-		.christmas::-moz-selection {
-		  background: #0F8A5F;
-		  color: #fff;
-		}
-		.christmas header nav .logo {
-			color: #ccd6f6;
-		}
-		.christmas main section.first .title h2 {
-			color: #b3000c;
-		}
-		.christmas section .inner li, .christmas .newgrid-inner .new-list li, .christmas #usernameBox {
-			background-color: rgba(179, 0, 12, 0.7);
-		}
-		/*.christmas .inner .list li.new, .christmas .newgrid-inner .new-list li.new {
-    		box-shadow: 0px 0px 20px 0px rgba(15, 138, 95, 0.9);
-		}*/
-		.christmas .menu {
-			background-color: #0a2f2d;
-		}
-		#snow-canvas {
-			display: none;
-		}
-		.christmas .content {
-			z-index: 2;
-			position: absolute;
-			width: 100%;
-		}
-		.christmas #snow-canvas {
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: 1;
-			display: block;
-		}
-		/*.christmas .popup {
-			color: #fff;
-			background-color: #0F8A5F;
-			background: linear-gradient(169deg, #0F8A5F 9%, #0a2f2d 100%);
-		}*/
 	</style>
 </head>
-<body class="christmas">
+<body>
 	<div class="content">
 		<header class="monospace">
 			<nav>
@@ -702,7 +635,7 @@
 
 		<main>
 			<section class="first">
-				<div class="intro"><h1 class="monospace">The Christmas Update</h1></div>
+				<div class="intro"><h1 class="monospace">Hi, welcome to</h1></div>
 				<div class="title"><h2>Zane's Apps</h2></div>
 				<div class="info"><p></p></div>
 			</section>
@@ -717,7 +650,7 @@
 								<div class="name">Leaderboard</div>
 							</li>
 							<li data-id="christmas-countdown-2022" data-url="christmas-countdown-2022" class="new">
-								<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/ZaneWesley.github.io/master/images/christmas-countdown-2022-icon.png"></div><!--images/christmas-countdown-2022-icon.png -->
+								<div class="img"><img src="images/christmas-countdown-2022-icon.png"></div><!-- https://raw.githubusercontent.com/ZaneWesley/ZaneWesley.github.io/master/images/christmas-countdown-2022-icon.png-->
 								<div class="name">Christmas Countdown 2022</div>
 							</li>
 							<li data-id="santahatmixup" data-url="santahatmixup" class="new">
@@ -782,6 +715,10 @@
 					<div class="img"><img src="images/bg/games.svg"></div>
 					<div class="list">
 						<ul>
+							<li data-id="leaderboard" data-url="leaderboard" class="new">
+								<div class="img"><img src="images/leaderboard-icon.png"></div>
+								<div class="name">Leaderboard</div>
+							</li>
 							<li data-id="santahatmixup" data-url="santahatmixup" class="new">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
@@ -986,8 +923,6 @@
 	</div>
 	<div id="standalone-bg" class="standalone-ui"></div>
 
-	<canvas id="snow-canvas"></canvas>
-
 	<script>
 		/*
 			* Menu Functions *
@@ -1002,6 +937,9 @@
 			elem.addEventListener('click', function(e) {
 				this.parentNode.parentNode.classList.remove('open');
 			});
+		});
+		document.getElementById('usernameBox').addEventListener('click', function(e) {
+			window.open('/embed?data-url=leaderboard');
 		});
 
 		/*
@@ -1286,110 +1224,6 @@
 
 		loadAppHistory();
 		setHandlers();
-	</script>
-	<script>
-		/********************
-          Canvas Snow Animation
-        ********************/
-		const canvas = document.querySelector('#snow-canvas');
-		const ctx = canvas.getContext('2d');
-
-		let width, height, lastNow;
-		let snowflakes;
-		const maxSnowflakes = 100;
-
-		function init() {
-		  snowflakes = [];
-		  resize();
-		  render(lastNow = performance.now());
-		}
-
-		function render(now) {
-		  requestAnimationFrame(render);
-
-		  const elapsed = now - lastNow;
-		  lastNow = now;
-
-		  ctx.clearRect(0, 0, width, height);
-		  if (snowflakes.length < maxSnowflakes)
-		  snowflakes.push(new Snowflake());
-
-		  ctx.fillStyle = ctx.strokeStyle = '#fff';
-
-		  snowflakes.forEach(snowflake => snowflake.update(elapsed, now));
-		}
-
-		function pause() {
-		  cancelAnimationFrame(render);
-		}
-		function resume() {
-		  lastNow = performance.now();
-		  requestAnimationFrame(render);
-		}
-
-
-		class Snowflake {
-		  constructor() {
-		    this.spawn();
-		  }
-
-		  spawn(anyY = false) {
-		    this.x = rand(0, width);
-		    this.y = anyY === true ?
-		    rand(-50, height + 50) :
-		    rand(-50, -10);
-		    this.xVel = rand(-.05, .05);
-		    this.yVel = rand(.02, .1);
-		    this.angle = rand(0, Math.PI * 2);
-		    this.angleVel = rand(-.001, .001);
-		    this.size = rand(7, 12);
-		    this.sizeOsc = rand(.01, .5);
-		  }
-
-		  update(elapsed, now) {
-		    const xForce = rand(-.001, .001);
-
-		    if (Math.abs(this.xVel + xForce) < .075) {
-		      this.xVel += xForce;
-		    }
-
-		    this.x += this.xVel * elapsed;
-		    this.y += this.yVel * elapsed;
-		    this.angle += this.xVel * 0.05 * elapsed; //this.angleVel * elapsed
-
-		    if (
-		    this.y - this.size > height ||
-		    this.x + this.size < 0 ||
-		    this.x - this.size > width)
-		    {
-		      this.spawn();
-		    }
-
-		    this.render();
-		  }
-
-		  render() {
-		    ctx.save();
-		    const { x, y, angle, size } = this;
-		    ctx.beginPath();
-		    ctx.arc(x, y, size * 0.2, 0, Math.PI * 2, false);
-		    ctx.fill();
-		    ctx.restore();
-		  }}
-
-
-		// Utils
-		const rand = (min, max) => min + Math.random() * (max - min);
-
-		function resize() {
-		  width = canvas.width = window.innerWidth;
-		  height = canvas.height = window.innerHeight;
-		}
-
-		window.addEventListener('resize', resize);
-		window.addEventListener('blur', pause);
-		window.addEventListener('focus', resume);
-		init();
 	</script>
 
 </body>
