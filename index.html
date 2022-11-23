@@ -1007,6 +1007,13 @@
 				this.parentNode.parentNode.classList.remove('open');
 			});
 		});
+		document.querySelectorAll('footer a').forEach(function(elem){
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				var linkURL = e.target.href;
+				window.open(`/embed?data-url=${linkURL}`);
+			})
+		});
 
 		/*
 			* UI & Animations *
