@@ -130,6 +130,7 @@
 		}
 		.board .score {
 			white-space: nowrap;
+			align-self: flex-end;
 		}
 		.board .score-wrapper {
 			display: flex;
@@ -140,6 +141,10 @@
 		}
 		.board .username {
 			font-size: 0.5em;
+			max-width: 40vw;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
 		}
 		a {
 			color: #0a192f;
@@ -154,6 +159,9 @@
 		@media (max-width: 480px) {
 			.board {
 				width: 95%;
+			}
+			.board .username {
+				max-width: 35vw;
 			}
 		}
 
