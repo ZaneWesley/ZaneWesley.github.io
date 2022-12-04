@@ -1,0 +1,26 @@
+console.log("LOADING GAME...");
+
+ASSET_PREFIX = "";
+SCRIPT_PREFIX = "";
+SCENE_PATH = "794453.json";
+CONTEXT_OPTIONS = {
+    'antialias': true,
+    'alpha': false,
+    'preserveDrawingBuffer': false,
+    'preferWebGl2': true
+};
+SCRIPTS = [22820023, 22467235, 22469603, 22470323, 22470334, 22470339, 22471499, 22512277, 22513941, 22514730, 22627410, 22661020, 23210333, 23236014, 23454148, 23454550, 23461972, 23493154, 23493168, 23592165, 23622296, 23646131, 23655530, 23870095, 23870145, 23909662, 24029469, 24029600, 24042328, 24042334, 24042383, 24051490, 24052045, 24056180, 24138976, 24184304, 24191613, 24281849, 24282715, 24282716, 24303961, 24306986, 24315027, 24343587, 24347262, 24352426, 24361822, 24362911, 24367678, 24388386, 24391787, 24406018, 24414935, 24415653];
+CONFIG_FILENAME = "config.json";
+INPUT_SETTINGS = {
+    useKeyboard: true,
+    useMouse: true,
+    useGamepads: false,
+    useTouch: true
+};
+pc.script.legacy = false;
+PRELOAD_MODULES = [{
+    'moduleName': 'Ammo',
+    'glueUrl': 'files/assets/23823817/1/ammo.wasm.js',
+    'wasmUrl': 'files/assets/23823815/1/ammo.wasm.wasm',
+    'fallbackUrl': 'files/assets/23823816/1/ammo.js'
+}, ];
