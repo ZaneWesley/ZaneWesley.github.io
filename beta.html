@@ -264,25 +264,25 @@
 		}
 		section .inner {
 			display: grid;
-		    grid-template-columns: 3fr 2fr;
+		    grid-template-columns: 3fr 3fr;
 		    gap: 50px;
 		    grid-auto-flow: dense;
 		}
-		section.reverse .inner {
+		/*section.reverse .inner {
 			grid-template-columns: 2fr 3fr;
-		}
-		section .inner .list {
+		}*/
+		section .inner .list1 {
 			grid-column: 1;
 		}
-		section .inner .img {
+		section .inner .list2 {
 			grid-column: 2;
 		}
-		section.reverse .inner .list {
+		/*section.reverse .inner .list {
 			grid-column: 2;
 		}
 		section.reverse .inner .img {
 			grid-column: 1;
-		}
+		}*/
 		section .inner ul {
 			list-style-type: none;
 			width: 100%;
@@ -365,7 +365,7 @@
 			padding: 0.25em 1em;
 		}
 
-		.inner .list li.new, .newgrid-inner .new-list li.new {
+		.inner .list1 li.new, .inner .list2 li.new, .newgrid-inner .new-list li.new {
 			/*box-shadow: 0 0 8px 8px #48abe0;*/
 			/*box-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #0ba9ca, 0 0 30px #0ba9ca,
     			0 0 40px #0ba9ca, 0 0 50px #0ba9ca;*/
@@ -573,6 +573,12 @@
 		#usernameBox .head {
 			font-size: 0.5em;
 		}
+		#usernameBox .user {
+			max-width: 15ch;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+		}
 
 		@media (max-width: 480px) {
 			header, main {
@@ -594,7 +600,12 @@
 				width: 100%;
 			}
 			section .inner {
-				display: block;
+				/*display: block;*/
+				grid-template-columns: 1fr;
+				grid-gap: 0;
+			}
+			section .inner .list1, section .inner .list2 {
+				grid-column: 1;
 			}
 			#infobar {
 				width: 100%;
@@ -635,7 +646,7 @@
 
 		<main>
 			<section class="first">
-				<div class="intro"><h1 class="monospace">Hi, welcome to</h1></div>
+				<div class="intro"><h1 class="monospace"><!--Hi, welcome to-->Happy New Year!</h1></div>
 				<div class="title"><h2>Zane's Apps</h2></div>
 				<div class="info"><p></p></div>
 			</section>
@@ -645,15 +656,23 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
+							<li data-id="towertakedown" data-url="towertakedown" class="new">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
+							</li>
+							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
+								<div class="img"><img src="guessthatnumber/icon.png"></div>
+								<div class="name">Guess That Number 2</div>
+							</li>
 							<li data-id="leaderboard" data-url="leaderboard" class="new">
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
-							<li data-id="christmas-countdown-2022" data-url="christmas-countdown-2022" class="new">
+							<li data-id="christmas-countdown-2022" data-url="christmas-countdown-2022">
 								<div class="img"><img src="images/christmas-countdown-2022-icon.png"></div><!-- https://raw.githubusercontent.com/ZaneWesley/ZaneWesley.github.io/master/images/christmas-countdown-2022-icon.png-->
 								<div class="name">Christmas Countdown 2022</div>
 							</li>
-							<li data-id="santahatmixup" data-url="santahatmixup" class="new">
+							<li data-id="santahatmixup" data-url="santahatmixup">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
 							</li>
@@ -685,16 +704,16 @@
 			<section id="foryou">
 				<h2><span class="before">01.</span>For You</h2>
 				<div class="inner">
-					<div class="img"></div>
-					<div class="list">
+					<div class="list2"></div>
+					<div class="list1">
 						<ul>
 							<!--<li data-id="solitaire" data-url="solitaire">
 								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
 								<div class="name">Solitaire</div>
 							</li>-->
-							<li data-id="santahatmixup" data-url="santahatmixup">
-								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
-								<div class="name">Santa Hat Mixup</div>
+							<li data-id="towertakedown" data-url="towertakedown">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
 							</li>
 							<!--<li data-id="cakeninja" data-url="cakeninja">
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
@@ -709,17 +728,24 @@
 				</div>
 			</section>
 
-			<section id="games" class="reverse">
-				<h2><span class="before">02.</span>Games</h2>
+			<section id="games">
+				<h2><span class="before">02.</span>Games</h2><!--<img src="images/bg/games.svg">-->
 				<div class="inner">
-					<div class="img"><img src="images/bg/games.svg"></div>
-					<div class="list">
+					<div class="list1">
 						<ul>
+							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
+								<div class="img"><img src="guessthatnumber/icon.png"></div>
+								<div class="name">Guess That Number 2</div>
+							</li>
+							<li data-id="towertakedown" data-url="towertakedown" class="new">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
+							</li>
 							<li data-id="leaderboard" data-url="leaderboard" class="new">
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
-							<li data-id="santahatmixup" data-url="santahatmixup" class="new">
+							<li data-id="santahatmixup" data-url="santahatmixup">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
 							</li>
@@ -747,6 +773,10 @@
 								<div class="img"><img src="chess/img/chess.png"></div>
 								<div class="name">Chess</div>
 							</li>
+						</ul>
+					</div>
+					<div class="list2">
+						<ul>
 							<li id="cakeninja" data-url="cakeninja">
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
 								<div class="name">Cake Ninja</div>
@@ -789,10 +819,9 @@
 			</section>
 
 			<section id="resources">
-				<h2><span class="before">03.</span>Resources</h2>
+				<h2><span class="before">03.</span>Resources</h2><!--<img src="images/bg/resources.svg">-->
 				<div class="inner">
-					<div class="img"><img src="images/bg/resources.svg"></div>
-					<div class="list">
+					<div class="list1">
 						<ul>
 							<li id="notes" data-url="notes">
 								<div class="img"><img src="notes/icon.png"></div>
@@ -814,6 +843,10 @@
 								<div class="img"><img src="images/calculator-icon.png"></div>
 								<div class="name">Calculator</div>
 							</li>
+						</ul>
+					</div>
+					<div class="list2">
+						<ul>
 							<li id="countdownstudio" data-url="countdownstudio">
 								<div class="img"><img src="images/countdownstudio-icon.svg"></div>
 								<div class="name">Countdown Studio</div>
@@ -835,11 +868,11 @@
 				</div>
 			</section>
 
-			<section id="miscellaneous" class="reverse">
-				<h2><span class="before">04.</span>Miscellaneous</h2>
+			<section id="miscellaneous">
+				<h2><span class="before">04.</span>Miscellaneous</h2><!--<img src="images/bg/miscellaneous.svg">-->
 				<div class="inner">
-					<div class="img"><img src="images/bg/miscellaneous.svg"></div>
-					<div class="list">
+					<div class="list2"></div>
+					<div class="list1">
 						<ul>
 							<li id="countdowns" data-url="countdowns">
 								<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
@@ -855,10 +888,10 @@
 			</section>
 
 			<section id="more">
-				<h2><span class="before">05.</span>More</h2>
+				<h2><span class="before">05.</span>More</h2><!--<img src="images/bg/more.svg">-->
 				<div class="inner">
-					<div class="img"><img src="images/bg/more.svg"></div>
-					<div class="list">
+					<div class="list2"></div>
+					<div class="list1">
 						<ul>
 							<li id="about" data-url="about">
 								<div class="img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
@@ -940,6 +973,13 @@
 		});
 		document.getElementById('usernameBox').addEventListener('click', function(e) {
 			window.open('/embed?data-url=leaderboard');
+		});
+		document.querySelectorAll('footer a').forEach(function(elem){
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				var linkURL = e.target.href;
+				window.open(`/embed?data-url=${linkURL}`);
+			})
 		});
 
 		/*
