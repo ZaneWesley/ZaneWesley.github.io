@@ -43,7 +43,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>Zane's Apps | Christmas Update</title>
+	<title>BETA | Zane's Apps | Christmas Update</title>
 
 	<style>
 		* {
@@ -283,6 +283,9 @@
 		section.reverse .inner .img {
 			grid-column: 1;
 		}*/
+		section .inner h3 {
+			padding: 1em 0;
+		}
 		section .inner ul {
 			list-style-type: none;
 			width: 100%;
@@ -656,15 +659,19 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
-							<li data-id="towertakedown" data-url="towertakedown" class="new">
-								<div class="img"><img src="towertakedown/icon.jpg"></div>
-								<div class="name">Tower Takedown</div>
-							</li>
 							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
 								<div class="img"><img src="guessthatnumber/icon.png"></div>
 								<div class="name">Guess That Number 2</div>
 							</li>
-							<li data-id="leaderboard" data-url="leaderboard" class="new">
+							<li data-id="towertakedown" data-url="towertakedown" class="new">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
+							</li>
+							<li id="corey-3.0" data-url="corey-3.0" class="new">
+								<div class="img"><img src="corey-3.0/icon.png"></div>
+								<div class="name">Corey 3.0</div>
+							</li>
+							<li data-id="leaderboard" data-url="leaderboard">
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
@@ -732,19 +739,8 @@
 				<h2><span class="before">02.</span>Games</h2><!--<img src="images/bg/games.svg">-->
 				<div class="inner">
 					<div class="list1">
+						<h3>Cardio</h3>
 						<ul>
-							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
-								<div class="img"><img src="guessthatnumber/icon.png"></div>
-								<div class="name">Guess That Number 2</div>
-							</li>
-							<li data-id="towertakedown" data-url="towertakedown" class="new">
-								<div class="img"><img src="towertakedown/icon.jpg"></div>
-								<div class="name">Tower Takedown</div>
-							</li>
-							<li data-id="leaderboard" data-url="leaderboard" class="new">
-								<div class="img"><img src="images/leaderboard-icon.png"></div>
-								<div class="name">Leaderboard</div>
-							</li>
 							<li data-id="santahatmixup" data-url="santahatmixup">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
@@ -757,26 +753,10 @@
 								<div class="img"><img src="flappybird/icon.jpg"></div>
 								<div class="name">Flappy Bird</div>
 							</li>
-							<li id="solitaire" data-url="solitaire">
-								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
-								<div class="name">Solitaire</div>
-							</li>
-							<li id="filler" data-url="https://fillergame.herokuapp.com">
-								<div class="img"><img src="https://fillergame.herokuapp.com/public/favicon.ico"></div>
-								<div class="name">Filler</div>
-							</li>
 							<li id="crossyroad" data-url="crossyroad">
 								<div class="img"><img src="crossyroad/icon.jpeg"></div>
 								<div class="name">Crossy Road</div>
 							</li>
-							<li id="chess" data-url="chess">
-								<div class="img"><img src="chess/img/chess.png"></div>
-								<div class="name">Chess</div>
-							</li>
-						</ul>
-					</div>
-					<div class="list2">
-						<ul>
 							<li id="cakeninja" data-url="cakeninja">
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
 								<div class="name">Cake Ninja</div>
@@ -792,6 +772,31 @@
 							<li id="chromedino" data-url="chromedino">
 								<div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
 								<div class="name">Chrome Dino Runner</div>
+							</li>
+						</ul>
+					</div>
+					<div class="list2">
+						<h3>Leisure</h3>
+						<ul>
+							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
+								<div class="img"><img src="guessthatnumber/icon.png"></div>
+								<div class="name">Guess That Number 2</div>
+							</li>
+							<li data-id="towertakedown" data-url="towertakedown" class="new">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
+							</li>
+							<li id="solitaire" data-url="solitaire">
+								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
+								<div class="name">Solitaire</div>
+							</li>
+							<li id="filler" data-url="https://fillergame.herokuapp.com">
+								<div class="img"><img src="https://fillergame.herokuapp.com/public/favicon.ico"></div>
+								<div class="name">Filler</div>
+							</li>
+							<li id="chess" data-url="chess">
+								<div class="img"><img src="chess/img/chess.png"></div>
+								<div class="name">Chess</div>
 							</li>
 							<li id="colorsplosion" data-url="colorsplosion">
 								<div class="img"><img src="colorsplosion/icon.PNG"></div>
@@ -822,18 +827,15 @@
 				<h2><span class="before">03.</span>Resources</h2><!--<img src="images/bg/resources.svg">-->
 				<div class="inner">
 					<div class="list1">
+						<h3>Desk Assistant</h3>
 						<ul>
+							<li id="corey-3.0" data-url="corey-3.0" class="new">
+								<div class="img"><img src="corey-3.0/icon.png"></div>
+								<div class="name">Corey 3.0</div>
+							</li>
 							<li id="notes" data-url="notes">
 								<div class="img"><img src="notes/icon.png"></div>
 								<div class="name">Notes</div>
-							</li>
-							<li id="vividly" data-url="vividly">
-								<div class="img"><img src="vividly/icon.png"></div>
-								<div class="name">Vividly</div>
-							</li>
-							<li id="connect" data-url="connect" class="newframe">
-								<div class="img"><img src="connect/splash.svg"></div>
-								<div class="name">Connect</div>
 							</li>
 							<li id="assistant" data-url="assistant">
 								<div class="img"><img src="assistant/icon.svg"></div>
@@ -843,10 +845,6 @@
 								<div class="img"><img src="images/calculator-icon.png"></div>
 								<div class="name">Calculator</div>
 							</li>
-						</ul>
-					</div>
-					<div class="list2">
-						<ul>
 							<li id="countdownstudio" data-url="countdownstudio">
 								<div class="img"><img src="images/countdownstudio-icon.svg"></div>
 								<div class="name">Countdown Studio</div>
@@ -855,13 +853,26 @@
 								<div class="img"><img src="images/mmc-icon.png"></div>
 								<div class="name">Molar Mass Calculator</div>
 							</li>
-							<li id="webchat" data-url="webchat/new">
-								<div class="img"><img src="webchat/logo.ico"></div>
-								<div class="name">WebChat</div>
-							</li>
 							<li id="whiteboard" data-url="whiteboard">
 								<div class="img"><img src="images/whiteboard-icon.jpg"></div>
 								<div class="name">Whiteboard</div>
+							</li>
+						</ul>
+					</div>
+					<div class="list2">
+						<h3>Communication</h3>
+						<ul>
+							<li id="vividly" data-url="vividly">
+								<div class="img"><img src="vividly/icon.png"></div>
+								<div class="name">Vividly</div>
+							</li>
+							<li id="connect" data-url="connect" class="newframe">
+								<div class="img"><img src="connect/splash.svg"></div>
+								<div class="name">Connect</div>
+							</li>
+							<li id="webchat" data-url="webchat/new">
+								<div class="img"><img src="webchat/logo.ico"></div>
+								<div class="name">WebChat</div>
 							</li>
 						</ul>
 					</div>
@@ -1027,16 +1038,16 @@
 		*/
 		function setHandlers() {
 			//clear event listeners
-			document.querySelectorAll('.list li, .new-list li').forEach(function(elem) {
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li').forEach(function(elem) {
 				elem.replaceWith(elem.cloneNode(true));
 			});
 			//set event listeners
-			document.querySelectorAll('.list li, .new-list li').forEach(function(elem) {
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li').forEach(function(elem) {
 				elem.classList.add('listLink');
 				//add event listener
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
-					/**/if(!isPWA()) {
+					/*if(!isPWA()) {
 						updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
 						//window.open(elem.getAttribute('data-url'));
 						window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
@@ -1046,11 +1057,6 @@
 					} else {
 						var _this = this;
 						//Analytics
-						/*dataLayer.push({
-							'event': 'app_link_click',
-							'app_name': _this.id
-
-						});*/
 						gtag('event', 'app_link_click', {
 							 'pwa_app_name': _this.querySelector('.name').innerHTML
 						});
@@ -1064,7 +1070,12 @@
 						document.body.classList.add('standalone-open');
 						document.getElementsByTagName('html')[0].classList.add('standalone-open');
 						document.getElementById('standalone-bg').style.display="block";
-					}/**/
+					}*/
+					updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
+					window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
+					gtag('event', 'app_link_click', {
+						 'app_name': this.querySelector('.name').innerHTML
+					});
 				});
 			});
 		}
