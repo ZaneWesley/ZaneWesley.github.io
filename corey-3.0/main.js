@@ -25,8 +25,10 @@ document.getElementById('help-btn').addEventListener('click', function(e) {
       <li>I can flip a coin</li>
       <li>I can be encouraging</li>
     </ul>
+    <br>
+    To delete your account and profile information, enter the request "delete my account"
     `, false);
-})
+});
 
 function initPersonalize() {
   sendResults('', 'Hello! I\'d like to get to know you!', false);
@@ -41,8 +43,8 @@ function setupName(e) {
   if((e.keyCode == 13 || e.type == 'click') && input.value != "" && input.value != null) {
     displayUserInput(input.value);
     var trimInput = input.value.toLowerCase()
-      .replace(/[^\w\s]/gi, "")
-      .replace(/[\d]/gi, "")
+      //.replace(/[^\w\s]/gi, "")
+      //.replace(/[\d]/gi, "")
       .replace(/,/g, '')
       .trim()
       .replace('im', '')
@@ -54,7 +56,7 @@ function setupName(e) {
     document.getElementById("send-icon").removeEventListener('click', setupName);
     // Step 2: Birthday
     sendResults('', `I\'m Corey. Nice to meet you, ${userData.name}.`, false);
-    sendResults('', `When is your Birthday?`, false);
+    sendResults('', `When is your birthday?`, false);
     input.addEventListener('keydown', setupBirthday);
     document.getElementById("send-icon").addEventListener('click', setupBirthday);
   }
@@ -65,8 +67,8 @@ function setupBirthday(e) {
   if((e.keyCode == 13 || e.type == 'click') && input.value != "" && input.value != null) {
     displayUserInput(input.value);
     var trimInput = input.value.toLowerCase()
-      .replace(/[^\w\s]/gi, "")
-      .replace(/[\d]/gi, "")
+      //.replace(/[^\w\s]/gi, "")
+      //.replace(/[\d]/gi, "")
       //.replace(/,/g, '')
       .trim()
       .replace('its on', '')
@@ -90,8 +92,8 @@ function setupColor(e) {
   if((e.keyCode == 13 || e.type == 'click') && input.value != "" && input.value != null) {
     displayUserInput(input.value);
     var trimInput = input.value.toLowerCase()
-      .replace(/[^\w\s]/gi, "")
-      .replace(/[\d]/gi, "")
+      //.replace(/[^\w\s]/gi, "")
+      //.replace(/[\d]/gi, "")
       //.replace(/,/g, '')
       .trim()
       .replace('my favorite color is', '')
@@ -205,24 +207,41 @@ function output(input) {
   if (text.match(/(corona|covid|virus)/gi)) {
     // If no match, check if message contains `coronavirus`
     product = coronavirus[Math.floor(Math.random() * coronavirus.length)];
-  } else if (text.replace('time', 'date').match(/(date)/gi)) {
+  } else if (text.match(/(date|what time is it|whats the time)/gi)) {
     // If no match, check if message contains `time`
-    var dNow = new Date();
-    product = timePhrases[Math.floor(Math.random() * timePhrases.length)] + " " + dNow.getHours + ":" + dNow.getMinutes() + ":" + dNow.getSeconds() + ".";
+    //var dNow = new Date();
+    product = new Date();
+    //product = timePhrases[Math.floor(Math.random() * timePhrases.length)] + " " + dNow.getHours + ":" + dNow.getMinutes() + ":" + dNow.getSeconds() + ".";
   } else if(text.match(/(weather|temp)/gi)) {
-    product = 'I don\t have access to that information. For now, go to <a href="https://weather.com/weather/today">weather.com</a>.';
+    product = 'I don\t have access to that information. For now, go to <a target="_blank"href="https://weather.com/weather/today">weather.com</a>.';
     //https://www.weather.com/wx/today/?lat=35.64&lon=-88.84&locale=en_US&temp=f
   } else if (text.match(/(thank)/gi)) {
     product = gratitude[Math.floor(Math.random() * gratitude.length)];
   } else if (text.match(/(my name)/gi)) {
     product = nameIntro[Math.floor(Math.random() * nameIntro.length)] + ' ' + userData.name; 
+  } else if (text.match(/(my age|age am i|old am i)/gi)) {
+    product = "You are "+userData.birthday;
   } else if (text.match(/(ass|arse|asshole|arsehole|bastard|bitch|cock|damn|dick|cunt|pussy|fuck|piss|shit|shite|up yours)/gi)) {
     product = profanityReaction[Math.floor(Math.random() * profanityReaction.length)];
   } else if (text.match(/(my birthday)/gi)) {
-    product = 'Your birthday is on ' + userData.birthday; 
+    product = 'Your birthday is on ' + userData.birthday;
+  } else if (text.match(/(start a timer|set a timer)/gi)) {
+    product = 'I can\'t do that yet, but there\'s an app for that!';
+  } else if (text.match(/(delete my account|delete my profile)/gi)) {
+    localStorage.removeItem('corey-3.0-data');
+    product = 'Your profile information and associated data has been deleted.';
+  } else if (/\p{Extended_Pictographic}/u.test(text)) {
+    product = 'I can\'t recognize emojis yet, but I still think they\'re cool!';
+  } else if (text.match(/(define|definition)/gi)) {
+    //product = 'I don\'t have dictionary access yet. For now, use <a href="https://www.merriam-webster.com">www.merriam-webster.com</a>.';
+    var definitions = fetchDefinition(text);
+    product = formatDefinitions(definitions);
+    console.log(definitions);
   } else if (text.replace('open', '').trim().match(/(https|http|www)/gi)) {
     //product = accomplished[Math.floor(Math.random() * accomplished.length)];
     product = "Sorry, I can\'t open links yet."
+    //product = "Opening "+text.replace('open', '')+'...<br><br>**DISCLAIMER: Corey and all its affiliates are not held responsible for the content in the opened link.**';
+    //window.open(text.replace('open', ''));
   } else if (compare(prompts, replies, text)) {
     // Search for exact match in `prompts`
     product = compare(prompts, replies, text);
@@ -372,4 +391,46 @@ function scrollToBottom() {
 function saveData() {
   var personalData = JSON.stringify(userData);
   localStorage.setItem('corey-3.0-data', personalData);
+}
+
+function fetchDefinition(text) {
+  //https://github.com/meetDeveloper/freeDictionaryAPI
+  var filteredText = text.replace("define the word").replace('define', "").replace("what is the definition of").replace("definition of" , "").replace("definition", "").replace("what is the", "").replace("what is");
+  var dictionaryURL = "https://api.dictionaryapi.dev/api/v2/entries/en/"+filteredText;
+  var defFetch = [], defData = [], defArray = [];
+  var returnedDef = "Sorry, there is no definition available at the moment.";
+  window.fetch(dictionaryURL)
+  .then(data=>{
+    return data.json();
+  })
+  .then(response=>{
+    console.log(response);
+    /*defFetch = response;
+    console.log(defFetch);
+    for(var i = 0; i<defFetch.length; i++) {
+      defData.push({defArr:defFetch[i].meanings[0], pos: defFetch[i].partOfSpeech});
+    }
+    console.log(defData);
+    for(var i = 0; i<defData.length; i++) {
+      defArray.push(defData[i].defArr.definitions);
+    }
+    console.log(defArray);*/
+    /*defFetch =  response;
+    for(var i = 0; i<defFetch.length; i++) {
+      defData.push(defFetch[i].meanings);
+    }
+    for(var i = 0; i<defData.length; i++) {
+      defArray.push({pos: defData.partOfSpeech, defs: defData.definitions})
+    }
+    return defArray;*/
+  })
+  .catch(error=>{
+    console.log(error);
+  });
+  return returnedDef;
+}
+
+function formatDefinitions(defs) {
+  console.log(defs);
+  return defs;
 }
