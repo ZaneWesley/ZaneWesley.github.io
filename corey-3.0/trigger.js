@@ -23,7 +23,7 @@ var prompts = [
         ["what came first the chicken or the egg", "who came first the chicken or the egg", "did the chicken or the egg come first"],/*22*/
         ["what came first the egg or the chicken", "who came first the egg or the chicken", "did the egg or the chicken come first"],/*23*/
         ["naapta"],/*24 - blank input default*/
-        ["haha", "you are funny", "funny", "hillarious", "you are hillarious", "hee hee", "hee-hee", "ha ha", "ha-ha", "that is funny", "that is hillarious"],/*25*/
+        ["haha", "you are funny", "funny", "hillarious", "you are hillarious", "hee hee", "hee-hee", "heehee", "ha ha", "ha-ha", "that is funny", "that is hillarious", "haha", "hahaha", "lol", "lolll"],/*25*/
         ["orow"],/*26 - search message*/
         ["why did the chicken cross the road"],/*27*/
         ["oops", "you are wrong", "thats wrong"],/*28*/
@@ -37,7 +37,7 @@ var prompts = [
         ["why do you talk so much", "you talk too much"],/*36*/
         ["what can you do", "what do you do", "what can i ask", "what can i ask you", "what can i ask you to do"],/*37*/
         ["a human", "human", "a boy", "boy", "a girl", "girl", "a man", "man", "a woman", "woman", "a friend", "friend"],/*38*/
-        ["what is your favorite color", "your favorite color", "my favorite color", "what is my favorite color"],/*39*/
+        ["what is your favorite color", "your favorite color"],/*39*/
         ["thank you bye", "thank you bye", "thank you bye now", "thanks bye", "thanks bye bye", "thanks bye now", "ok bye", "ok bye bye"],/*40*/
         ["good morning", "have good morning", "its morning time", "morning time"],/*41*/
         ["good night", "goodnight", "have good night", "its night time", "its night time", "night time", "nighttime"],/*42*/
@@ -52,7 +52,8 @@ var prompts = [
         ["merry christmas", "happy holidays", "merry christmas eve", "happy christmas eve", "we wish you a merry christmas"],/*51*/
         ["happy new year", "its new year", "happy new years eve", "happy new years day", "its new years day"],/*52*/
         ["happy birthday", "its your birthday", "have good birthday"],/*53*/
-        ["solve an equation", "solve equation", "can you solve an equation", "can you solve equation", "can you solve equations", "can you do math", "can you add", "can you subtract", "can you multiply", "can you devide"]/*54*/
+        ["solve an equation", "solve equation", "can you solve an equation", "can you solve equation", "can you solve equations", "can you do math", "can you add", "can you subtract", "can you multiply", "can you devide"],/*54*/
+        ["encourage me", "be encouraging", "i need encouragement", "i need encouraging", "say something encouraging"]/*55*/
       ];
       var replies = [
       	["Hi.","Hey.","Hello."], /*1*/
@@ -108,11 +109,12 @@ var prompts = [
         ["Happy Hollidays!", "Merry Christmas!"],/*51*/
         ["Happy New Year!", "Happy New Year! Embrace the opportunity to start some new habbits!", "I don\'t know about you, but I\'ve got a long list of resolutions. Happy New Year!"],/*52*/
         ["It\'s not my birthday, silly!", "Thank you! Oh wait, It\'s not my birthday.", "My birthday is actually on April 17, 2020. But I will stash your lovely birthday wish in my memory until then."],/*53*/
-        ["Yes! Go ahead and send me one!"]/*54*/
+        ["Yes! Go ahead and send me one!"],/*54*/
+        ["Just one small positive thought in the morning can change your whole day.", "It is never too late to be what you might have been!", "People who mind don\'t matter and people who matter don\'t mind. - Dr. Seuss", "Everything will be ok!", "Everything that happens has a purpose. Don\'t give up!", "Do not let what you cannot do interfere with what you can do. - John Wooden"]/*55*/
       ];
       var greeting = ["Hello", "Greetings", "Hey", "Hi", "Hey there", "What\'s up"];
       var coronavirus = ["Please stay home.", "Please wear a mask.", "Fortunately, I don't have COVID.", "These are uncertain times, but stay strong!"];
-      var timePhrases = ["The tiime is", "The current time is", "Right now it\'s", "It\'s"];
+      var timePhrases = ["The tiime is", "The current time is", "Right now, it\'s", "It\'s"];
       var gratitude = ["My pleasure!", "No problem!", "You\'re welcome!", "You are welcome.", "It\' my pleasure!"];
       var nameIntro = ["Your name is", "I was told", "You are", "I believe it is"];
       var profanityReaction = ["I don\'t like that.", "I won\'t respond to that.", "I don\'t approve of profanity."];
