@@ -264,24 +264,27 @@
 		}
 		section .inner {
 			display: grid;
-		    grid-template-columns: 3fr 2fr;
+		    grid-template-columns: 3fr 3fr;
 		    gap: 50px;
 		    grid-auto-flow: dense;
 		}
-		section.reverse .inner {
+		/*section.reverse .inner {
 			grid-template-columns: 2fr 3fr;
-		}
-		section .inner .list {
+		}*/
+		section .inner .list1 {
 			grid-column: 1;
 		}
-		section .inner .img {
+		section .inner .list2 {
 			grid-column: 2;
 		}
-		section.reverse .inner .list {
+		/*section.reverse .inner .list {
 			grid-column: 2;
 		}
 		section.reverse .inner .img {
 			grid-column: 1;
+		}*/
+		section .inner h3 {
+			padding: 1em 0;
 		}
 		section .inner ul {
 			list-style-type: none;
@@ -365,7 +368,7 @@
 			padding: 0.25em 1em;
 		}
 
-		.inner .list li.new, .newgrid-inner .new-list li.new {
+		.inner .list1 li.new, .inner .list2 li.new, .newgrid-inner .new-list li.new {
 			/*box-shadow: 0 0 8px 8px #48abe0;*/
 			/*box-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #0ba9ca, 0 0 30px #0ba9ca,
     			0 0 40px #0ba9ca, 0 0 50px #0ba9ca;*/
@@ -568,6 +571,7 @@
 			background-color: rgba(35, 53, 84, 0.7);
 			padding: 0.5em 1em;
 			animation: fadeIn 3s linear;
+			cursor: pointer;
 		}
 		#usernameBox .head {
 			font-size: 0.5em;
@@ -599,7 +603,12 @@
 				width: 100%;
 			}
 			section .inner {
-				display: block;
+				/*display: block;*/
+				grid-template-columns: 1fr;
+				grid-gap: 0;
+			}
+			section .inner .list1, section .inner .list2 {
+				grid-column: 1;
 			}
 			#infobar {
 				width: 100%;
@@ -618,77 +627,9 @@
 				width: 100%;
 			}
 		}
-
-
-		/*
-			CHRISTMAS STYLES
-		*/
-		html,body.christmas {
-			background-color: #0a2f2d;
-		}
-		.christmas header, .christmas #standalone-nav {
-			background-color: #0F8A5F;
-		}
-		/* Track */
-		.christmas::-webkit-scrollbar-track {
-		  background: #0a2f2d;
-		}
-		/* Handle */
-		.christmas::-webkit-scrollbar-thumb {
-		  background: #ccd6f6;
-		  border-radius: 10px;
-		  border: 3px solid #0a2f2d;
-		}
-		/* WebKit/Blink Browsers */
-		.christmas::selection {
-		  background: #0F8A5F;
-		  color: #fff;
-		}
-		/* Gecko Browsers */
-		.christmas::-moz-selection {
-		  background: #0F8A5F;
-		  color: #fff;
-		}
-		.christmas header nav .logo {
-			color: #ccd6f6;
-		}
-		.christmas main section.first .title h2 {
-			color: #b3000c;
-		}
-		.christmas section .inner li, .christmas .newgrid-inner .new-list li, .christmas #usernameBox {
-			background-color: rgba(179, 0, 12, 0.7);
-		}
-		/*.christmas .inner .list li.new, .christmas .newgrid-inner .new-list li.new {
-    		box-shadow: 0px 0px 20px 0px rgba(15, 138, 95, 0.9);
-		}*/
-		.christmas .menu {
-			background-color: #0a2f2d;
-		}
-		#snow-canvas {
-			display: none;
-		}
-		.christmas .content {
-			z-index: 2;
-			position: absolute;
-			width: 100%;
-		}
-		.christmas #snow-canvas {
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: 1;
-			display: block;
-		}
-		/*.christmas .popup {
-			color: #fff;
-			background-color: #0F8A5F;
-			background: linear-gradient(169deg, #0F8A5F 9%, #0a2f2d 100%);
-		}*/
 	</style>
 </head>
-<body class="christmas">
+<body>
 	<div class="content">
 		<header class="monospace">
 			<nav>
@@ -708,7 +649,7 @@
 
 		<main>
 			<section class="first">
-				<div class="intro"><h1 class="monospace">The Christmas Update</h1></div>
+				<div class="intro"><h1 class="monospace"><!--Hi, welcome to-->Happy New Year!</h1></div>
 				<div class="title"><h2>Zane's Apps</h2></div>
 				<div class="info"><p></p></div>
 			</section>
@@ -718,15 +659,27 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
-							<li data-id="leaderboard" data-url="leaderboard" class="new">
+							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
+								<div class="img"><img src="guessthatnumber/icon.png"></div>
+								<div class="name">Guess That Number 2</div>
+							</li>
+							<li data-id="towertakedown" data-url="towertakedown" class="new">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
+							</li>
+							<li data-id="corey-3.0" data-url="corey-3.0" class="new">
+								<div class="img"><img src="corey-3.0/icon.png"></div>
+								<div class="name">Corey 3.0</div>
+							</li>
+							<li data-id="leaderboard" data-url="leaderboard">
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
-							<li data-id="christmas-countdown-2022" data-url="christmas-countdown-2022" class="new">
-								<div class="img"><img src="images/christmas-countdown-2022-icon.png"></div>
+							<li data-id="christmas-countdown-2022" data-url="christmas-countdown-2022">
+								<div class="img"><img src="images/christmas-countdown-2022-icon.png"></div><!-- https://raw.githubusercontent.com/ZaneWesley/ZaneWesley.github.io/master/images/christmas-countdown-2022-icon.png-->
 								<div class="name">Christmas Countdown 2022</div>
 							</li>
-							<li data-id="santahatmixup" data-url="santahatmixup" class="new">
+							<li data-id="santahatmixup" data-url="santahatmixup">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
 							</li>
@@ -758,16 +711,16 @@
 			<section id="foryou">
 				<h2><span class="before">01.</span>For You</h2>
 				<div class="inner">
-					<div class="img"></div>
-					<div class="list">
+					<div class="list2"></div>
+					<div class="list1">
 						<ul>
 							<!--<li data-id="solitaire" data-url="solitaire">
 								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
 								<div class="name">Solitaire</div>
 							</li>-->
-							<li data-id="santahatmixup" data-url="santahatmixup">
-								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
-								<div class="name">Santa Hat Mixup</div>
+							<li data-id="towertakedown" data-url="towertakedown">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
 							</li>
 							<!--<li data-id="cakeninja" data-url="cakeninja">
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
@@ -782,17 +735,13 @@
 				</div>
 			</section>
 
-			<section id="games" class="reverse">
-				<h2><span class="before">02.</span>Games</h2>
+			<section id="games">
+				<h2><span class="before">02.</span>Games</h2><!--<img src="images/bg/games.svg">-->
 				<div class="inner">
-					<div class="img"><img src="images/bg/games.svg"></div>
-					<div class="list">
+					<div class="list1">
+						<h3>Cardio</h3>
 						<ul>
-							<li data-id="leaderboard" data-url="leaderboard" class="new">
-								<div class="img"><img src="images/leaderboard-icon.png"></div>
-								<div class="name">Leaderboard</div>
-							</li>
-							<li data-id="santahatmixup" data-url="santahatmixup" class="new">
+							<li data-id="santahatmixup" data-url="santahatmixup">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
 							</li>
@@ -804,21 +753,9 @@
 								<div class="img"><img src="flappybird/icon.jpg"></div>
 								<div class="name">Flappy Bird</div>
 							</li>
-							<li id="solitaire" data-url="solitaire">
-								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
-								<div class="name">Solitaire</div>
-							</li>
-							<li id="filler" data-url="https://fillergame.herokuapp.com">
-								<div class="img"><img src="https://fillergame.herokuapp.com/public/favicon.ico"></div>
-								<div class="name">Filler</div>
-							</li>
 							<li id="crossyroad" data-url="crossyroad">
 								<div class="img"><img src="crossyroad/icon.jpeg"></div>
 								<div class="name">Crossy Road</div>
-							</li>
-							<li id="chess" data-url="chess">
-								<div class="img"><img src="chess/img/chess.png"></div>
-								<div class="name">Chess</div>
 							</li>
 							<li id="cakeninja" data-url="cakeninja">
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
@@ -835,6 +772,27 @@
 							<li id="chromedino" data-url="chromedino">
 								<div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
 								<div class="name">Chrome Dino Runner</div>
+							</li>
+						</ul>
+					</div>
+					<div class="list2">
+						<h3>Leisure</h3>
+						<ul>
+							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
+								<div class="img"><img src="guessthatnumber/icon.png"></div>
+								<div class="name">Guess That Number 2</div>
+							</li>
+							<li data-id="towertakedown" data-url="towertakedown" class="new">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
+							</li>
+							<li id="solitaire" data-url="solitaire">
+								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
+								<div class="name">Solitaire</div>
+							</li>
+							<li id="chess" data-url="chess">
+								<div class="img"><img src="chess/img/chess.png"></div>
+								<div class="name">Chess</div>
 							</li>
 							<li id="colorsplosion" data-url="colorsplosion">
 								<div class="img"><img src="colorsplosion/icon.PNG"></div>
@@ -862,22 +820,18 @@
 			</section>
 
 			<section id="resources">
-				<h2><span class="before">03.</span>Resources</h2>
+				<h2><span class="before">03.</span>Resources</h2><!--<img src="images/bg/resources.svg">-->
 				<div class="inner">
-					<div class="img"><img src="images/bg/resources.svg"></div>
-					<div class="list">
+					<div class="list1">
+						<h3>Desk Assistant</h3>
 						<ul>
+							<li id="corey-3.0" data-url="corey-3.0" class="new">
+								<div class="img"><img src="corey-3.0/icon.png"></div>
+								<div class="name">Corey 3.0</div>
+							</li>
 							<li id="notes" data-url="notes">
 								<div class="img"><img src="notes/icon.png"></div>
 								<div class="name">Notes</div>
-							</li>
-							<li id="vividly" data-url="vividly">
-								<div class="img"><img src="vividly/icon.png"></div>
-								<div class="name">Vividly</div>
-							</li>
-							<li id="connect" data-url="connect" class="newframe">
-								<div class="img"><img src="connect/splash.svg"></div>
-								<div class="name">Connect</div>
 							</li>
 							<li id="assistant" data-url="assistant">
 								<div class="img"><img src="assistant/icon.svg"></div>
@@ -895,24 +849,37 @@
 								<div class="img"><img src="images/mmc-icon.png"></div>
 								<div class="name">Molar Mass Calculator</div>
 							</li>
-							<li id="webchat" data-url="webchat/new">
-								<div class="img"><img src="webchat/logo.ico"></div>
-								<div class="name">WebChat</div>
-							</li>
 							<li id="whiteboard" data-url="whiteboard">
 								<div class="img"><img src="images/whiteboard-icon.jpg"></div>
 								<div class="name">Whiteboard</div>
 							</li>
 						</ul>
 					</div>
+					<div class="list2">
+						<h3>Communication</h3>
+						<ul>
+							<li id="vividly" data-url="vividly">
+								<div class="img"><img src="vividly/icon.png"></div>
+								<div class="name">Vividly</div>
+							</li>
+							<li id="connect" data-url="connect" class="newframe">
+								<div class="img"><img src="connect/splash.svg"></div>
+								<div class="name">Connect</div>
+							</li>
+							<li id="webchat" data-url="webchat/new">
+								<div class="img"><img src="webchat/logo.ico"></div>
+								<div class="name">WebChat</div>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</section>
 
-			<section id="miscellaneous" class="reverse">
-				<h2><span class="before">04.</span>Miscellaneous</h2>
+			<section id="miscellaneous">
+				<h2><span class="before">04.</span>Miscellaneous</h2><!--<img src="images/bg/miscellaneous.svg">-->
 				<div class="inner">
-					<div class="img"><img src="images/bg/miscellaneous.svg"></div>
-					<div class="list">
+					<div class="list2"></div>
+					<div class="list1">
 						<ul>
 							<li id="countdowns" data-url="countdowns">
 								<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
@@ -928,10 +895,10 @@
 			</section>
 
 			<section id="more">
-				<h2><span class="before">05.</span>More</h2>
+				<h2><span class="before">05.</span>More</h2><!--<img src="images/bg/more.svg">-->
 				<div class="inner">
-					<div class="img"><img src="images/bg/more.svg"></div>
-					<div class="list">
+					<div class="list2"></div>
+					<div class="list1">
 						<ul>
 							<li id="about" data-url="about">
 								<div class="img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
@@ -954,7 +921,7 @@
 
 		<footer>
 			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
-			<p>Copyright &copy; 2022 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
+			<p>Copyright &copy; 2023 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
 			<p>We apprecaite your feedback! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
 		</footer>
 
@@ -988,15 +955,13 @@
 	</div>
 
 	<!-- PWA Elements -->
-	<iframe id="standalone-frame" class="standalone-ui"></iframe>
+	<!--<iframe id="standalone-frame" class="standalone-ui"></iframe>
 	<div id="standalone-nav" class="standalone-ui monospace">
 		<span id="standalone-home" class="fa-regular fa-house" style="color: #64d1ff"></span>
 		<span style="font-size: 16px; color: #ccd6f6;">Zane's Apps</span>
 		<span id="standalone-share" class="fa-regular fa-share" style="color: #64d1ff;"></span>
 	</div>
-	<div id="standalone-bg" class="standalone-ui"></div>
-
-	<canvas id="snow-canvas"></canvas>
+	<div id="standalone-bg" class="standalone-ui"></div>-->
 
 	<script>
 		/*
@@ -1012,6 +977,9 @@
 			elem.addEventListener('click', function(e) {
 				this.parentNode.parentNode.classList.remove('open');
 			});
+		});
+		document.getElementById('usernameBox').addEventListener('click', function(e) {
+			window.open('/embed?data-url=leaderboard');
 		});
 		document.querySelectorAll('footer a').forEach(function(elem){
 			elem.addEventListener('click', function(e) {
@@ -1034,12 +1002,6 @@
 			deleteSpeed: 75
 		})
 		.pause(3000)
-		.delete(11)
-		.pause(500)
-		.type("Merry Christmas!", {delay: 6000})
-		.delete(16)
-		.pause(500)
-		.type("Zane's Apps", {delay: 3000})
 		.delete(4)
 		.pause(500)
 		.type("Games", {delay: 3000})
@@ -1072,16 +1034,16 @@
 		*/
 		function setHandlers() {
 			//clear event listeners
-			document.querySelectorAll('.list li, .new-list li').forEach(function(elem) {
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li').forEach(function(elem) {
 				elem.replaceWith(elem.cloneNode(true));
 			});
 			//set event listeners
-			document.querySelectorAll('.list li, .new-list li').forEach(function(elem) {
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li').forEach(function(elem) {
 				elem.classList.add('listLink');
 				//add event listener
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
-					/**/if(!isPWA()) {
+					/*if(!isPWA()) {
 						updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
 						//window.open(elem.getAttribute('data-url'));
 						window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
@@ -1091,11 +1053,6 @@
 					} else {
 						var _this = this;
 						//Analytics
-						/*dataLayer.push({
-							'event': 'app_link_click',
-							'app_name': _this.id
-
-						});*/
 						gtag('event', 'app_link_click', {
 							 'pwa_app_name': _this.querySelector('.name').innerHTML
 						});
@@ -1109,7 +1066,18 @@
 						document.body.classList.add('standalone-open');
 						document.getElementsByTagName('html')[0].classList.add('standalone-open');
 						document.getElementById('standalone-bg').style.display="block";
-					}/**/
+					}*/
+					updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
+					window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
+					gtag('event', 'app_link_click', {
+						 'app_name': this.querySelector('.name').innerHTML
+					});
+				});
+			});
+			document.querySelectorAll('a').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					e.preventDefault();
+					window.open(`/embed?data-url=${this.href}`);
 				});
 			});
 		}
@@ -1126,7 +1094,7 @@
 			* PWA Handlers *
 		*/
 
-		document.getElementById('standalone-home').addEventListener('click', function(e) {
+		/*document.getElementById('standalone-home').addEventListener('click', function(e) {
 			e.preventDefault();
 			document.getElementById('standalone-frame').src=null;
 			//Layer iframe ontop
@@ -1136,9 +1104,9 @@
 			document.body.classList.remove('standalone-open');
 			document.getElementsByTagName('html')[0].classList.remove('standalone-open');
 			document.getElementById('standalone-bg').style.display="none";
-		});
+		});*/
 
-		document.getElementById('standalone-share').addEventListener('click', function(e) {
+		/*document.getElementById('standalone-share').addEventListener('click', function(e) {
 			//e.preventDefault();
 			var shareURL = document.getElementById('standalone-frame').src || 'https://zanewesley.github.io';
 			var frameTitle = document.getElementById('standalone-frame').contentDocument.title || "this game";
@@ -1184,7 +1152,7 @@
 			}
 
 			return "unknown";
-		}
+		}*/
 
 		/*
 			* IFRAME MANAGEMENT *
@@ -1309,110 +1277,6 @@
 
 		loadAppHistory();
 		setHandlers();
-	</script>
-	<script>
-		/********************
-          Canvas Snow Animation
-        ********************/
-		const canvas = document.querySelector('#snow-canvas');
-		const ctx = canvas.getContext('2d');
-
-		let width, height, lastNow;
-		let snowflakes;
-		const maxSnowflakes = 100;
-
-		function init() {
-		  snowflakes = [];
-		  resize();
-		  render(lastNow = performance.now());
-		}
-
-		function render(now) {
-		  requestAnimationFrame(render);
-
-		  const elapsed = now - lastNow;
-		  lastNow = now;
-
-		  ctx.clearRect(0, 0, width, height);
-		  if (snowflakes.length < maxSnowflakes)
-		  snowflakes.push(new Snowflake());
-
-		  ctx.fillStyle = ctx.strokeStyle = '#fff';
-
-		  snowflakes.forEach(snowflake => snowflake.update(elapsed, now));
-		}
-
-		function pause() {
-		  cancelAnimationFrame(render);
-		}
-		function resume() {
-		  lastNow = performance.now();
-		  requestAnimationFrame(render);
-		}
-
-
-		class Snowflake {
-		  constructor() {
-		    this.spawn();
-		  }
-
-		  spawn(anyY = false) {
-		    this.x = rand(0, width);
-		    this.y = anyY === true ?
-		    rand(-50, height + 50) :
-		    rand(-50, -10);
-		    this.xVel = rand(-.05, .05);
-		    this.yVel = rand(.02, .1);
-		    this.angle = rand(0, Math.PI * 2);
-		    this.angleVel = rand(-.001, .001);
-		    this.size = rand(7, 12);
-		    this.sizeOsc = rand(.01, .5);
-		  }
-
-		  update(elapsed, now) {
-		    const xForce = rand(-.001, .001);
-
-		    if (Math.abs(this.xVel + xForce) < .075) {
-		      this.xVel += xForce;
-		    }
-
-		    this.x += this.xVel * elapsed;
-		    this.y += this.yVel * elapsed;
-		    this.angle += this.xVel * 0.05 * elapsed; //this.angleVel * elapsed
-
-		    if (
-		    this.y - this.size > height ||
-		    this.x + this.size < 0 ||
-		    this.x - this.size > width)
-		    {
-		      this.spawn();
-		    }
-
-		    this.render();
-		  }
-
-		  render() {
-		    ctx.save();
-		    const { x, y, angle, size } = this;
-		    ctx.beginPath();
-		    ctx.arc(x, y, size * 0.2, 0, Math.PI * 2, false);
-		    ctx.fill();
-		    ctx.restore();
-		  }}
-
-
-		// Utils
-		const rand = (min, max) => min + Math.random() * (max - min);
-
-		function resize() {
-		  width = canvas.width = window.innerWidth;
-		  height = canvas.height = window.innerHeight;
-		}
-
-		window.addEventListener('resize', resize);
-		window.addEventListener('blur', pause);
-		window.addEventListener('focus', resume);
-		init();
 	</script>
 
 </body>
