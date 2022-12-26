@@ -23,7 +23,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.1/css/all.css" crossorigin="anonymous"/>
 	<!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
@@ -119,17 +119,23 @@
 			align-items: center;
 			overflow: hidden;
 			transition: all 0.3s;
+			box-shadow: 0 10px 30px -10px rgb(2 12 27 / 70%);
 		}
-		.icon {
-			cursor: pointer;
+		.bottom-nav #standalone-frame {
+			top: 0;
 		}
-		#standalone-nav .icon:hover {
-			color: #ccc;
+		.bottom-nav #standalone-nav {
+			top: auto;
+			bottom: 0;
 		}
-		#standalone-nav .username-wrapper {
+		/*.bottom-nav .username-wrapper {
+			top: auto;
+			bottom: 50px;
+		}*/
+		/*#standalone-nav .username-wrapper {
 			font-size: 0.5em;
-		}
-		.standalone-title, #standalone-nav .username-wrapper {
+		}*/
+		.standalone-title, .username-wrapper {
 			color: #ccd6f6;
 			max-width: 50%;
 			text-overflow: ellipsis;
@@ -140,9 +146,253 @@
 			color: #fff;
 			cursor: pointer;
 		}
-		.standalone-icons {
+		.standalone-title .title-text {
+			display: block;
+		}
+		.standalone-title .title-icon {
+			display: none;
+		}
+		.icons-wrapper i {
+			color: #ccd6f6;
+			cursor: pointer;
+		}
+		.icons-wrapper i:hover {
 			color: #64d1ff;
 		}
+		/* - popup box with by icon click styles - .username-wrapper {
+			position: fixed;
+		    right: 0;
+		    top: 50px;
+		    z-index: 3;
+		    background-color: rgba(35, 53, 84, 0.7);
+		    padding: 0.5em 1em;
+		    animation: fadeIn 3s linear;
+		    display: none;
+		}
+		.username-wrapper.open {
+			display: block;
+		}*/
+		/* centered on nav style */
+		.username-wrapper {
+			padding: 12px;
+		}
+		.username-wrapper .inner {
+		    background-color: rgba(35, 53, 84, 0.7);
+		    padding: 5px 14px;
+		    border-radius: 16px;
+		    font-size: 16px;
+		}
+		.username-wrapper i {
+			padding-right: 6px;
+		}
+
+
+		#settingsScreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #0a192f;
+			z-index: 9;
+			padding: 1em;
+			display: none;
+		}
+		#settingsScreen.open {
+			display: block;
+		}
+		#settingsScreen h2 {
+			text-align: center;
+			padding: 1em;
+		}
+		#settingsScreen #settingsCloseBtn {
+			position: fixed;
+			right: 12px;
+			top: 0;
+			color: #64d1ff;
+			font-size: 2em;
+			cursor: pointer;
+		}
+		#settingsScreen .settings-wrapper {
+			width: 50%;
+			max-width: 680px;
+    		margin: 0 auto;
+    		/*background-color: rgba(35, 53, 84, 0.7);*/
+		}
+		/*#settingsScreen .settings-wrapper .settings-row:nth-child(odd) {
+			background-color: rgba(255,255,255,.06);
+		}*/
+		#settingsScreen .settings-wrapper .settings-row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 1em 0;
+		}
+		#settingsScreen .settings-wrapper .settings-row label {
+			cursor: pointer;
+		}
+		#settingsScreen .settings-wrapper .settings-row label:hover {
+			color: #64d1ff;
+		}
+		#settingsScreen .settings-wrapper .settings-row button {
+			color: #0a192f;
+		    text-decoration: none;
+		    padding: 0.3em;
+		    background-color: #64d1ff;
+		    font-size: 24px;
+		    outline: none;
+		    border: none;
+		    cursor: pointer;
+		}
+		#settingsScreen .settings-wrapper #shareBtn {
+			/*color: #0a192f;*/
+			color: #ffffff;
+			padding: 1em;
+			/*background-color: #ffffff;*/
+			background-color: transparent;
+			font-size: 24px;
+			font-weight: bold;
+			outline: none;
+			border: 6px solid #64d1ff;
+			border-radius: 25px;
+			cursor: pointer;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 200px;
+			height: 200px;
+			margin: 1em auto;
+		}
+		#settingsScreen .settings-wrapper #shareBtn img {
+			width: 100%;
+			height: 100%;
+		}
+		#settingsScreen .settings-share-wrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#settingsScreen .settings-share-wrapper img {
+			width: 200px;
+		}
+		/*toggle switch*/
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch {
+			display: inline-block;
+			cursor: pointer;
+			-webkit-tap-highlight-color: transparent;
+		}
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch i {
+		  position: relative;
+		  display: inline-block;
+		  margin-right: .5rem;
+		  width: 46px;
+		  height: 26px;
+		  /*background-color: #e6e6e6; - ios gray*/
+		  background-color: rgba(35, 53, 84, 0.7);
+		  border-radius: 23px;
+		  vertical-align: text-bottom;
+		  transition: all 0.3s linear;
+		}
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch i::before {
+		  content: "";
+		  position: absolute;
+		  left: 0;
+		  width: 42px;
+		  height: 22px;
+		  /*background-color: #fff;*/
+		  background-color: rgba(255,255,255,.06);
+		  border-radius: 11px;
+		  transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+		  transition: all 0.25s linear;
+		}
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch i::after {
+		  content: "";
+		  position: absolute;
+		  left: 0;
+		  width: 22px;
+		  height: 22px;
+		  background-color: #fff;
+		  border-radius: 11px;
+		  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+		  transform: translate3d(2px, 2px, 0);
+		  transition: all 0.2s ease-in-out;
+		}
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch:active i::after {
+		  width: 28px;
+		  transform: translate3d(2px, 2px, 0);
+		}
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch:active input:checked + i::after { transform: translate3d(16px, 2px, 0); }
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch input { display: none; }
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch input:checked + i { /*background-color: #4BD763; - ios green*/ background-color: #64d1ff;}
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch input:checked + i::before { transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0); }
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch input:checked + i::after { transform: translate3d(22px, 2px, 0); }
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch.disabled i::before {
+			cursor: not-allowed;
+		}
+		#settingsScreen .settings-wrapper .settings-row .toggle-switch.disabled i::after {
+			background-color: transparent;
+			cursor: not-allowed;
+		}
+		/*end toggle switch*/
+
+		.share-popup {
+			position: absolute;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background-color: rgba(0,0,0,.49);
+		    /*display: flex;*/
+		    display: none;
+		    flex-direction: row;
+		    justify-content: center;
+		    align-items: center;
+		    z-index: 9;
+		}
+		.share-popup .share-popup-inner {
+			background-color: #1C2C49;
+		    color: #fff;
+		    padding: 24px;
+		    border-radius: 4px;
+		    max-width: 300px;
+		}
+		.share-popup .share-popup-inner h2 {
+			text-align: center;
+			margin-bottom: 1em;
+		}
+		.share-popup .share-popup-inner p, .share-popup .share-popup-inner .msg-preview {
+			margin-bottom: 1em;
+			font-size: 20px;
+		}
+		.share-popup .share-popup-inner .msg-preview {
+			border: 1px solid #ccd6f6;
+		    border-radius: 8px;
+		    padding: 10px;
+		    overflow-wrap: break-word;
+		}
+		.share-popup .share-popup-inner #copyBtn {
+			color: #0a192f;
+		    text-decoration: none;
+		    padding: 0.3em;
+		    background-color: #64d1ff;
+		    font-size: 24px;
+		    outline: none;
+		    border: none;
+		    cursor: pointer;
+		}
+		.share-popup .share-popup-inner #cancelBtn {
+			color: #ffffff;
+		    text-decoration: none;
+		    padding: 0.3em;
+		    background-color: transparent;
+		    font-size: 24px;
+		    outline: none;
+		    border: none;
+		    cursor: pointer;
+		    float: right;
+		}
+
 		#standalone-bg {
 			position: fixed;
 			top: 0;
@@ -152,18 +402,6 @@
 			background-color: #fff;
 			z-index: 2;
 		}
-		/*#usernameBox {
-			position: fixed;
-			right: 0;
-			top: 0;
-			background-color: rgba(35, 53, 84, 0.7);
-			padding: 0.5em 1em;
-			animation: fadeIn 3s linear;
-			z-index: 3;
-		}
-		#usernameBox .head {
-			font-size: 0.5em;
-		}*/
 		.popup {
 			position: fixed;
 			/*top: 50%;*/
@@ -181,7 +419,7 @@
 			color: #0a192f;
 			border-radius: 20px;
 			display: none;
-			z-index: 3;
+			z-index: 9;
 		}
 		.popup.open {
 			display: block;
@@ -224,59 +462,57 @@
 			height: 100%;
 			z-index: 900;
 			background-color: #0a192f;
+			animation: fadeIn 0.3s ease;
 		}
-		#splash svg {
-		  position: absolute;
-		  top:50%;
-		  left: 50%;
-		  transform: translate(-50%, -50%);
-		  height: 50%;
-		  background: transparent;
+		#splash .svg-wrapper {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			height: 50%;
+			animation: fadeIn 1s;
 		}
-		#splash svg path {
-		  animation-duration: 1s;
-		  animation-name: pulse;
-		  animation-iteration-count: infinite;
-		  color: #64d1ff;/*40c456*/
+		#splash svg, #splash img {
+			width: 50vh;
+			height: 50vh;
+			/*animation: hover 6s linear infinite;*/
 		}
-		#splash svg path.path-7 {
-		  animation-delay: -1s;
+		#splash .loader-bar-wrapper {
+			background-color: rgba(35, 53, 84, 0.7);
+			width: 100%;
 		}
-		#splash svg path.path-6 {
-		  animation-delay: -0.875s;
+		#splash .loader-bar-wrapper .loader-bar {
+			background-color: #64d1ff;
+			width: 0%;
+			height: 30px;
+			/*animation: load 5s ease-in;*/
 		}
-		#splash svg path.path-5 {
-		  animation-delay: -0.75s;
+		@keyframes fadeIn {
+			0% {opacity: 0;}
+			100% {opacity: 1;}
 		}
-		#splash svg path.path-4 {
-		  animation-delay: -0.625s;
+		@keyframes hover {
+			0% {transform: translate(-10px);}
+			30% {transform: translateY(-17px);}
+			60% {transform: translate(10px);}
+			100% {transform: translate(-10px);}
 		}
-		#splash svg path.path-3 {
-		  animation-delay: -0.5s;
-		}
-		#splash svg path.path-2 {
-		  animation-delay: -0.375s;
-		}
-		#splash svg path.path-1 {
-		  animation-delay: -0.25s;
-		}
-		#splash svg path.path-0 {
-		  animation-delay: -0.125s;
-		}
-
-		@keyframes pulse {
-		  0% {
-		    opacity: 0.1;
-		  }
-		  30% {
-		    opacity: 0.8;
-		  }
-		  100% {
-		    opacity: 0.1;
-		  }
+		@keyframes load {
+			0% {width: 0%;}
+			100% {width:99.5%;}
 		}
 
 		@media (max-width: 480px) {
+			.standalone-title .title-text {
+			display: none;
+			}
+			.standalone-title .title-icon {
+				display: block;
+			}
+			#settingsScreen .settings-wrapper {
+				width: 90%;
+				max-width: 90%;
+			}
 			.popup {
 				width: 90%;
 			}
@@ -294,38 +530,44 @@
 			<span id="standalone-home" class="icon fa-regular fa-house"></span>
 			<span id="standalone-share" class="icon fa-regular fa-share"></span>
 		</div>-->
-		<div class="standalone-title">Zane's Apps</div>
-		<div class="username-wrapper">Username: <span id="usernameBox">Guest</span></div>
+		<div class="standalone-title"><span class="title-text">Zane's Apps</span><span class="title-icon"><i class="fa-solid fa-house"></i></span></div>
+		<div class="username-wrapper"><div class="inner"><i class="fa-solid fa-user"></i> <span id="usernameBox">Guest</span></div></div>
+		<div class="icons-wrapper">
+			<i id="leaderboardBtn" class="fa-solid fa-ranking-star"></i>
+			<!--<i id="usernameBtn" class="fa-solid fa-user"></i>-->
+			<i id="settingsBtn" class="fa-solid fa-gear"></i>
+		</div>
 	</div>
 
-	<!--<div id="usernameBox">
-		<div class="head">Username:</div>
-		<div class="user"></div>
-	</div>-->
+	<!--<div class="username-wrapper">Username: <span id="usernameBox">Guest</span></div>-->
+
+	<div id="settingsScreen">
+		<div id="settingsCloseBtn" onclick="this.parentNode.classList.remove('open')"><i class="fa-solid fa-xmark"></i></div>
+		<h2>Settings</h2>
+		<div class="settings-wrapper">
+			<div class="settings-row"><label for="muteToggle">Mute</label><label class="toggle-switch disabled"><input id="muteToggle" type="checkbox" disabled><i></i></label></div>
+			<div class="settings-row"><label for="navbarToggle">Move Bar To Bottom</label><label class="toggle-switch"><input id="navbarToggle" type="checkbox"><i></i></label></div>
+			<div class="settings-row"><label for="changeUsernameBtn">Username</label><button id="changeUsernameBtn">Change</button></div>
+			<div class="settings-row"><label for="feedbackBtn">Report Error or Leave Feedback</label><button id="feedbackBtn">Form</button></div>
+			<button id="shareBtn">
+				<img src="images/icon-v4-transparent-blue.png">
+				Share
+			</button>
+		</div>
+		<!--<h2>Share</h2>
+		<div class="settings-share-wrapper">
+			<img src="images/share-qr.svg">
+		</div>-->
+		
+	</div>
 
 	<div id="standalone-bg" class="standalone-ui"></div>
 
 	<div id="splash">
-		<svg viewBox="0 0 866 866" xmlns="http://www.w3.org/2000/svg">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 164.83 151.5">
-                <path class="path-0" d="M117.24,69.24A8,8,0,0,0,115.67,67c-4.88-4-9.8-7.89-14.86-11.62A4.93,4.93,0,0,0,96.93,55c-5.76,1.89-11.4,4.17-17.18,6a4.36,4.36,0,0,0-3.42,4.12c-1,6.89-2.1,13.76-3,20.66a4,4,0,0,0,1,3.07c5.12,4.36,10.39,8.61,15.68,12.76a3.62,3.62,0,0,0,2.92.75c6.29-2.66,12.52-5.47,18.71-8.36a3.49,3.49,0,0,0,1.68-2.19c1.34-7.25,2.54-14.55,3.9-22.58Z"
-                    fill="#64d1ff" />
-                <path class="path-1" d="M97.55,38.68A43.76,43.76,0,0,1,98,33.44c.41-2.36-.5-3.57-2.57-4.64C91.1,26.59,87,24,82.66,21.82a6.18,6.18,0,0,0-4-.71C73.45,22.55,68.32,24.25,63.22,26c-3.63,1.21-6.08,3.35-5.76,7.69a26.67,26.67,0,0,1-.6,4.92c-1.08,8.06-1.08,8.08,5.86,11.92,3.95,2.19,7.82,5.75,11.94,6.08s8.76-2.41,13.12-3.93c9.33-3.29,9.33-3.3,9.78-14Z"
-                    fill="#64d1ff" />
-                <path class="path-2" d="M66.11,126.56c5.91-.91,11.37-1.7,16.81-2.71a3.3,3.3,0,0,0,1.87-2.17c1-4.06,1.73-8.19,2.84-12.24.54-2-.11-3-1.55-4.15-5-4-9.9-8.12-15-12a6.19,6.19,0,0,0-4.15-1.1c-5.35.66-10.7,1.54-16,2.54A4,4,0,0,0,48.34,97a109.13,109.13,0,0,0-3,12.19,4.47,4.47,0,0,0,1.34,3.6c5.54,4.36,11.23,8.53,16.91,12.69a10.84,10.84,0,0,0,2.57,1.11Z"
-                    fill="#64d1ff" />
-                <path class="path-3" d="M127.42,104.12c4.1-2.1,8-3.93,11.72-6a6,6,0,0,0,2.27-3,58.22,58.22,0,0,0,3.18-29.92c-.26-1.7-8-7.28-9.71-6.85A5,5,0,0,0,133,59.65c-2.81,2.49-5.71,4.88-8.33,7.56a9.46,9.46,0,0,0-2.47,4.4c-1.29,6.49-2.38,13-3.35,19.55a5.73,5.73,0,0,0,.83,3.91c2.31,3.08,5,5.88,7.7,9Z"
-                    fill="#64d1ff" />
-                <path class="path-4" d="M52.58,29.89c-2.15-.36-3.78-.54-5.39-.9-2.83-.64-4.92.1-7,2.32A64.1,64.1,0,0,0,26.09,54.64c-2.64,7.92-2.62,7.84,5.15,10.87,1.76.69,2.73.45,3.93-1C39.79,59,44.54,53.65,49.22,48.2a4.2,4.2,0,0,0,1.13-2c.8-5.32,1.49-10.68,2.24-16.34Z"
-                    fill="#64d1ff" />
-                <path class="path-5" fill="#64d1ff" d="M23,68.13c0,2.51,0,4.7,0,6.87a60.49,60.49,0,0,0,9.75,32.15c1.37,2.13,6.4,3,7,1.2,1.55-5,2.68-10.2,3.82-15.34.13-.58-.58-1.38-.94-2.06-2.51-4.77-5.47-9.38-7.45-14.37C32.94,71,28.22,69.84,23,68.13Z" />
-                <path class="path-6" fill="#64d1ff" d="M83.91,12.86c-.32.36-.66.71-1,1.07.9,1.13,1.57,2.62,2.73,3.33,4.71,2.84,9.56,5.48,14.39,8.1a9.29,9.29,0,0,0,3.13.83c5.45.69,10.89,1.38,16.35,1.94a10.41,10.41,0,0,0,3.07-.71c-11.48-9.9-24.26-14.61-38.71-14.56Z"
-                />
-                <path class="path-7" fill="#64d1ff" d="M66.28,132.51c13.36,3.78,25.62,3.5,38-.9C91.68,129.59,79.36,128,66.28,132.51Z" />
-                <path class="path-8" fill="#64d1ff" d="M127.2,30.66l-1.27.37a18.58,18.58,0,0,0,1,3.08c3,5.52,6.21,10.89,8.89,16.54,1.34,2.83,3.41,3.82,6.49,4.9a60.38,60.38,0,0,0-15.12-24.9Z" />
-                <path class="bb-9" fill="#64d1ff" d="M117.35,125c5.58-2.32,16.9-13.84,18.1-19.2-2.41,1.46-5.18,2.36-6.78,4.23-4.21,5-7.89,10.37-11.32,15Z" />
-            </svg>
-        </svg>
+		<div class="svg-wrapper">
+			<img src="images/icon-v4-transparent-blue.png">
+			<div class="loader-bar-wrapper"><div class="loader-bar"></div></div>
+		</div>
 	</div>
 
 	<div class="popup">
@@ -337,11 +579,24 @@
 		<img id="save-loader" src="images/game-loader.svg" alt="Saving username loader">
 	</div>
 
+	<div class="share-popup">
+		<div class="share-popup-inner">
+			<h2>Share</h2>
+			<p>Text this link to friends so they can play to beat your score! Here's a preview of what you'll send:</p>
+			<div class="msg-preview"></div>
+			<button id="copyBtn">Copy</button>
+			<button id="cancelBtn">Cancel</button>
+		</div>
+	</div>
+
 	<script src="leaderboard-handler.js"></script>
 
 	<script>
 
+		loadBar();
+
 		document.body.onload = function() {
+			document.querySelector('.loader-bar').style.width='100%';
 			setTimeout(function() {
 				document.getElementById('splash').style.display='none';
 			}, 1000);
@@ -357,11 +612,37 @@
 		document.getElementById('usernameBox').innerHTML = leaderboardName;
 
 		function loadIFrame(url) {
+			document.getElementById('splash').style.display='block';
+			loadBar();
 			var iFrame = document.getElementById('standalone-frame');
 			iFrame.src=url;
-			var fdt = iFrame.contentWindow.document.title;
-			if(fdt) document.title = fdt;
-			console.log(fdt);
+			iFrame.onload = function() {
+				document.querySelector('.loader-bar').style.width='100%';
+				var fdt = iFrame.contentWindow.document.title;
+				if(fdt) document.title = `${fdt}`;
+				setTimeout(function() {
+					document.getElementById('splash').style.display='none';
+				}, 1000);
+			};
+		}
+
+		function loadBar() {
+			var i = 0;
+			if (i == 0) {
+			    i = 1;
+			    var elem = document.querySelector(".loader-bar");
+			    var width = 1;
+			    var int = setInterval(moveBar, 10);
+			    function moveBar() {
+			    	if (width >= 95) {
+			    		clearInterval(int);
+			    		i = 0;
+			    	} else {
+			    		width = width+3;
+			    		elem.style.width = width + "%";
+			    	}
+			    }
+			}
 		}
 
 		/*document.getElementById('standalone-frame').addEventListener("DOMAttrModified", function(event) {
@@ -397,13 +678,17 @@
 
 		function setUsername() {
 			if(document.getElementById('username').value != "" && document.getElementById('username').value != null) {
-				document.querySelectorAll('h2, p, input, button').forEach(function(elem) {
+				document.querySelectorAll('.popup h2, .popup p, .popup input, .popup button').forEach(function(elem) {
 					elem.style.display="none";
 				});
 				document.getElementById('save-loader').style.display="block";
 				localStorage.setItem('z_leaderboard_username', String(document.getElementById('username').value));
 				setTimeout(function() {
 					document.querySelector('.popup').classList.remove('open');
+					document.querySelectorAll('.popup h2, .popup p, .popup input, .popup button').forEach(function(elem) {
+					elem.style.display="block";
+				});
+				document.getElementById('save-loader').style.display="none";
 					displayUsername(String(document.getElementById('username').value));
 					leaderboardName = String(document.getElementById('username').value);
 					document.getElementById('usernameBox').innerHTML = leaderboardName;
@@ -416,6 +701,139 @@
 		function displayUsername(user) {
 			document.getElementById('usernameBox').innerHTML=user;
 		}
+
+		document.getElementById('leaderboardBtn').addEventListener('click', function(e) {
+			e.preventDefault();
+			loadIFrame('leaderboard');
+		});
+		/*document.getElementById('usernameBtn').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelector('.username-wrapper').classList.toggle('open');
+		});*/
+		document.getElementById('settingsBtn').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelector('#settingsScreen').classList.toggle('open');
+		});
+		document.getElementById('muteToggle').addEventListener('change', function(e) {
+			e.preventDefault();
+			var iFrame = document.getElementById('standalone-frame');
+			iFrame.muted=this.checked;
+		});
+		document.getElementById('navbarToggle').addEventListener('change', function(e) {
+			e.preventDefault();
+			document.body.classList.toggle('bottom-nav');
+		});
+		document.getElementById('changeUsernameBtn').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelector('.popup').classList.add('open');
+		});
+		document.getElementById('feedbackBtn').addEventListener('click', function(e) {
+			e.preventDefault();
+			loadIFrame('feedback');
+			document.getElementById('settingsScreen').classList.remove('open');
+		});
+		document.getElementById('shareBtn').addEventListener('click', function(e) {
+			e.preventDefault();
+			var shareURL = document.getElementById('standalone-frame').src || 'https://zanewesley.github.io';
+			var frameTitle = document.getElementById('standalone-frame').contentWindow.document.title || "this game";
+			//if (navigator.share) {
+			try {
+				console.log(shareURL);
+				var shareData = {
+					title: frameTitle,
+					text: `Check out ${frameTitle} from Zane\'s Apps`,//"Check out Zane\'s apps!"
+					url: shareURL
+				}
+			  navigator.share(shareData)
+			  .then(() => console.log('Successful share'))
+			  .catch(error => console.log('Error sharing:', error));
+			} 
+			//else {
+			catch(err) {
+				if(getMobileOperatingSystem() != "unknown") {
+					var a = document.createElement('a');
+					var osLink = getMobileOperatingSystem() == 'iOS' ? `sms:&body=Check out ${frameTitle} from Zane\'s Apps! ${shareURL}` : `sms:?body=Check out ${frameTitle} from Zane\'s Apps! ${shareURL}`;
+					a.href = osLink;
+					document.body.appendChild(a);
+					a.click();
+					a.remove();
+				} else {
+					//alert('Share feature is not supported on this device :/');
+					document.querySelector('.msg-preview').innerHTML=`Check out ${frameTitle} from Zane\'s Apps! ${shareURL}`;
+					document.querySelector('.share-popup').style.display='flex';
+				}
+			}
+		});
+
+		function getMobileOperatingSystem() {
+			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+			// Windows Phone must come first because its UA also contains "Android"
+			if (/windows phone/i.test(userAgent)) {
+				return "Windows Phone";
+			}
+
+			if (/android/i.test(userAgent)) {
+				return "Android";
+			}
+
+			// iOS detection from: http://stackoverflow.com/a/9039885/177710
+			if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+				return "iOS";
+			}
+
+			return "unknown";
+		}
+
+		document.getElementById('copyBtn').addEventListener('click', function(e) {
+			e.preventDefault();
+			var text = document.querySelector('.msg-preview').innerHTML;
+			if(navigator.clipboard) {
+				navigator.clipboard.writeText(text).then(() => {
+					console.log('Copied');
+					document.getElementById('copyBtn').innerHTML="Copied!";
+					setTimeout(function() {
+					  	document.getElementById('copyBtn').innerHTML="Copy";	
+					}, 2000);
+				},() => {
+					console.error('Failed to copy');
+					document.getElementById('copyBtn').innerHTML="Oops";
+					setTimeout(function() {
+					 	document.getElementById('copyBtn').innerHTML="Copy";	
+					}, 2000);
+				});
+			} else {
+				try {
+					CopyToClipboard(text);
+					console.log('Copied');
+					document.getElementById('copyBtn').innerHTML="Copied!";
+					setTimeout(function() {
+					  	document.getElementById('copyBtn').innerHTML="Copy";	
+					}, 2000);
+				} catch {
+					console.error('Failed to copy');
+					document.getElementById('copyBtn').innerHTML="Oops";
+					setTimeout(function() {
+					 	document.getElementById('copyBtn').innerHTML="Copy";	
+					}, 2000);
+				}
+				
+			}
+			
+			document.querySelector('.share-popup').style.display='none';
+		});
+		document.getElementById('cancelBtn').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelector('.share-popup').style.display='none';
+		});
+		function CopyToClipboard(value) {
+            var tempInput = document.createElement("input");
+            tempInput.value = value;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
 	</script>
 </body>
 </html>
