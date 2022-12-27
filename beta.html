@@ -224,6 +224,48 @@
     		line-height: 1.1;
     		color: #ccd6f6;
 		}
+		.down-arrow {
+			animation: fadeIn 3s linear;
+		}
+		.down-arrow .arrows {
+			width: 60px;
+			height: 72px;
+			position: absolute;
+			left: 50%;
+			margin-left: -30px;
+			bottom: 20px;
+		}
+		.down-arrow .arrows path {
+			stroke: #2994D1;
+			fill: transparent;
+			stroke-width: 1px;	
+			animation: arrow 2s infinite;
+			-webkit-animation: arrow 2s infinite; 
+		}
+		@keyframes arrow {
+			0% {opacity:0}
+			40% {opacity:1}
+			80% {opacity:0}
+			100% {opacity:0}
+		}
+		@-webkit-keyframes arrow /*Safari and Chrome*/ {
+			0% {opacity:0}
+			40% {opacity:1}
+			80% {opacity:0}
+			100% {opacity:0}
+		}
+		.down-arrow .arrows path.a1 {
+			animation-delay:-1s;
+			-webkit-animation-delay:-1s; /* Safari 和 Chrome */
+		}
+		.down-arrow .arrows path.a2 {
+			animation-delay:-0.5s;
+			-webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+		}
+		.down-arrow .arrows path.a3 {	
+			animation-delay:0s;
+			-webkit-animation-delay:0s; /* Safari 和 Chrome */
+		}
 		section {
 			margin: 0px auto;
     		padding: 100px 0px;
@@ -654,6 +696,8 @@
 				<div class="info"><p></p></div>
 			</section>
 
+			<div class="down-arrow"><svg class="arrows"><path class="a1" d="M0 0 L30 32 L60 0"></path><path class="a2" d="M0 20 L30 52 L60 20"></path><path class="a3" d="M0 40 L30 72 L60 40"></path></svg></div>
+
 			<section id="new">
 				<h2>New or Updated</h2>
 				<div class="newgrid-inner">
@@ -667,7 +711,7 @@
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
-							<li id="corey-3.0" data-url="corey-3.0" class="new">
+							<li data-id="corey-3.0" data-url="corey-3.0" class="new">
 								<div class="img"><img src="corey-3.0/icon.png"></div>
 								<div class="name">Corey 3.0</div>
 							</li>
@@ -675,34 +719,6 @@
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
-							<li data-id="christmas-countdown-2022" data-url="christmas-countdown-2022">
-								<div class="img"><img src="images/christmas-countdown-2022-icon.png"></div><!-- https://raw.githubusercontent.com/ZaneWesley/ZaneWesley.github.io/master/images/christmas-countdown-2022-icon.png-->
-								<div class="name">Christmas Countdown 2022</div>
-							</li>
-							<li data-id="santahatmixup" data-url="santahatmixup">
-								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
-								<div class="name">Santa Hat Mixup</div>
-							</li>
-							<li data-id="pacman" data-url="pacman">
-								<div class="img"><img src="pacman/icon/ios_icon.png"></div>
-								<div class="name">Pac Man</div>
-							</li>
-							<li data-id="flappybird" data-url="flappybird">
-								<div class="img"><img src="flappybird/icon.jpg"></div>
-								<div class="name">Flappy Bird</div>
-							</li>
-							<!--<li data-id="vividly" data-url="vividly">
-								<div class="img"><img src="vividly/icon.png"></div>
-								<div class="name">Vividly</div>
-							</li>
-							<li data-id="solitaire" data-url="solitaire">
-								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
-								<div class="name">Solitaire</div>
-							</li>
-							<li data-id="2048" data-url="2048">
-								<div class="img"><img src="2048/icon.png"></div>
-								<div class="name">2048</div>
-							</li>-->
 						</ul>
 					</div>
 				</div>
@@ -789,10 +805,6 @@
 							<li id="solitaire" data-url="solitaire">
 								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
 								<div class="name">Solitaire</div>
-							</li>
-							<li id="filler" data-url="https://fillergame.herokuapp.com">
-								<div class="img"><img src="https://fillergame.herokuapp.com/public/favicon.ico"></div>
-								<div class="name">Filler</div>
 							</li>
 							<li id="chess" data-url="chess">
 								<div class="img"><img src="chess/img/chess.png"></div>
@@ -925,7 +937,7 @@
 
 		<footer>
 			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
-			<p>Copyright &copy; 2022 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
+			<p>Copyright &copy; 2023 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
 			<p>We apprecaite your feedback! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
 		</footer>
 
@@ -959,13 +971,13 @@
 	</div>
 
 	<!-- PWA Elements -->
-	<iframe id="standalone-frame" class="standalone-ui"></iframe>
+	<!--<iframe id="standalone-frame" class="standalone-ui"></iframe>
 	<div id="standalone-nav" class="standalone-ui monospace">
 		<span id="standalone-home" class="fa-regular fa-house" style="color: #64d1ff"></span>
 		<span style="font-size: 16px; color: #ccd6f6;">Zane's Apps</span>
 		<span id="standalone-share" class="fa-regular fa-share" style="color: #64d1ff;"></span>
 	</div>
-	<div id="standalone-bg" class="standalone-ui"></div>
+	<div id="standalone-bg" class="standalone-ui"></div>-->
 
 	<script>
 		/*
@@ -1078,6 +1090,12 @@
 					});
 				});
 			});
+			document.querySelectorAll('a').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					e.preventDefault();
+					window.open(`/embed?data-url=${this.href}`);
+				});
+			});
 		}
 
 		function isPWA() {
@@ -1092,7 +1110,7 @@
 			* PWA Handlers *
 		*/
 
-		document.getElementById('standalone-home').addEventListener('click', function(e) {
+		/*document.getElementById('standalone-home').addEventListener('click', function(e) {
 			e.preventDefault();
 			document.getElementById('standalone-frame').src=null;
 			//Layer iframe ontop
@@ -1102,9 +1120,9 @@
 			document.body.classList.remove('standalone-open');
 			document.getElementsByTagName('html')[0].classList.remove('standalone-open');
 			document.getElementById('standalone-bg').style.display="none";
-		});
+		});*/
 
-		document.getElementById('standalone-share').addEventListener('click', function(e) {
+		/*document.getElementById('standalone-share').addEventListener('click', function(e) {
 			//e.preventDefault();
 			var shareURL = document.getElementById('standalone-frame').src || 'https://zanewesley.github.io';
 			var frameTitle = document.getElementById('standalone-frame').contentDocument.title || "this game";
@@ -1150,7 +1168,7 @@
 			}
 
 			return "unknown";
-		}
+		}*/
 
 		/*
 			* IFRAME MANAGEMENT *
