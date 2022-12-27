@@ -8,14 +8,15 @@ Want to see what I've been up to? Visit my website to see my projects. [https://
 Have feedback or want to get to know me?  [Contact me!](https://zanewesley.github.io/feedback)
 
 ## What's New
-- 2022 Christmas Update
-- 2022 Christmas Countdown
-- Global Leaderboard for Games
-- Usernames can now be changed
+- Tower Takedown (Tower Crash 3D Remake)
+- Guess That Number 2
+- Corey 3.0 Release
+- 2022 Post-Christmas Update
+- Global Leaderboard for Games w/editable username
 
 ## What I'm Working On
-- Tower Crash 3D Remake
-- Corey 3.0
+- Tower Defence Game
+- Piano Tiles 2/Perfect Piano Remake
 - 3d Web platformer game
 - Group messaging webapp
 
