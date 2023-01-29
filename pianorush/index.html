@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+    <meta name="author" content="Zane Wesley">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="icon" type="icon/png" href="img/icon.png">
+
+    <title>Piano Rush</title>
+
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Seymour+One&display=swap" rel="stylesheet">
+
+    <script src="gamesnacks.js"></script>
+
+    <!-- Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YEEGMG5QT7');
+    </script>
+
+    <script>
+        window.famobi_gameID = "piano-rush"; // the actual GAMEID is added to the final version by Famobi (perfect-piano)
+        window.famobi_gameJS = [
+            "levelNames.js",
+            "lib/js/all.js",
+            "lib/js/MidiConvert.js",
+            "lib/js/phaser.min.js",
+            "game.js",
+            function() {
+                window["game"] = new src.App();
+            }
+        ];
+
+        const _loadSnippet = function() {
+            (function(document, url, fgJS, firstJS) {
+                fgJS = document.createElement('script');
+                firstJS = document.getElementsByTagName('script')[0];
+
+                fgJS.src = url + encodeURIComponent(document.location.href);
+                firstJS.parentNode.insertBefore(fgJS, firstJS);
+            })(document, 'html5games/gameapi/v1.js?e=');
+        }
+    </script>
+
+    <style>
+        #splash-credits {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            font-family: 'Seymour One', sans-serif;
+            animation: fadeOut 1s linear;
+            animation-fill-mode: forwards;
+            animation-delay: 3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            background: #4435AC;
+            background: linear-gradient(to bottom, #8F7B9E, #4435AC);
+            /*background: linear-gradient(to bottom, #9463fb, #6348CD);*/
+        }
+        @keyframes fadeOut {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+        #splash-icon {
+            width: 350px;
+            height: 350px;
+        }
+        .splash-icon-credits img {
+            width: 300px;
+            height: 300px;
+        }
+        
+        @media (max-width: 480px) {
+            #splash-icon {
+                width: 250px;
+                height: 250px;
+            }
+            .splash-icon-credits img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="splash-credits">
+        <img id="splash-icon" src="img/icon.png">
+        <div class="splash-icon-credits">
+            <img src="img/piano-tiles-2-icon.png">
+            <img src="img/perfect-piano-icon.png">
+        </div>
+    </div>
+    <script>
+        setTimeout(function() {
+            document.getElementById('splash-credits').style.display='none';
+        }, 4000);
+    </script>
+</body>
+
+</html>
