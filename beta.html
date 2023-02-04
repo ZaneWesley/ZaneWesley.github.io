@@ -43,7 +43,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>BETA | Zane's Apps | Christmas Update</title>
+	<title>Zane's Apps | Christmas Update</title>
 
 	<style>
 		* {
@@ -107,18 +107,55 @@
 			min-height: 100vh;
 		}
 		header {
-			padding: 0px 40px;
+		    position: sticky;
+		    top: 1em;
+		    right: 0;
+		    left: 0;
+		    padding: 0.5em 1em;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    width: 50%;
+		    margin: 0 auto;
+		    background: rgba(35, 53, 84, 0.7);
+		    border: 0.2rem solid rgba(35, 53, 84, 1);
+		    -webkit-backdrop-filter: blur(104px);
+		    backdrop-filter: blur(104px);
+		    border-radius: 2rem;
+		    z-index: 11;
+		    animation: fadeIn 3s linear;
+		}
+		header .search-bar {
+			width: 100%;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-		    position: sticky;
-		    top: 0px;
-		    z-index: 11;
-		    width: 100%;
-		    height: 100px;
-		    background-color: #0a192f;
-		    box-shadow: 0 10px 30px -10px rgba(2,12,27,0.7);
-		    animation: fadeIn 3s linear;
+		}
+		header .search-bar input {
+			width: 100%;
+			height: 100%;
+			border: none;
+			outline: none;
+			color: #ccd6f6;
+			font-family: 'Roboto', sans-serif;
+			font-size: 20px;
+			background-color: transparent;
+		}
+		header .search-bar .search-icon {
+			cursor: pointer;
+		}
+		.search-result-highlight {
+			box-shadow: 0px 0px 20px 0px rgba(255,255,255,0.9)!important;
+		}
+		header, #usernameBox, .menu-btn, .down-arrow {
+			animation: fadeIn 3s linear;
+		}
+		.menu-btn {
+			color: #64d1ff;
+			position: fixed;
+			top: 1.5em;
+			right: 1em;
+			cursor: pointer;
 		}
 		@keyframes fadeIn {
 			0% {
@@ -133,60 +170,6 @@
 			100% {
 				opacity: 1;
 			}
-		}
-		header nav {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			position: relative;
-			width: 100%;
-			color: #64d1ff;
-			z-index: 12;
-		}
-		header nav .logo {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		header nav .logo img {
-			width: 42px;
-			height: 42px;
-			color: #64d1ff;
-		}
-		header nav .nav {
-			display: flex;
-			align-items: center;
-		}
-		header nav .nav ol {
-			display: flex;
-		    justify-content: space-between;
-		    align-items: center;
-		    list-style: none;
-		}
-		header nav .nav ol li {
-			margin: 0px 5px;
-		    position: relative;
-		    counter-increment: item 1;
-		    font-size: 13px;
-		}
-		header nav .nav ol li a {
-			padding: 10px;
-			text-decoration: none;
-		    color: #ccd6f6;
-		    position: relative;
-		}
-		header nav .nav ol li a:hover {
-			color: #64d1ff;
-		}
-		header nav .nav ol li a:before {
-			content: "0" counter(item) ".";
-		    margin-right: 5px;
-		    color: #64d1ff;
-		    font-size: 12px;
-		    text-align: right;
-		}
-		header nav .menu-btn {
-			display: none;
 		}
 
 		main {
@@ -223,9 +206,6 @@
     		font-weight: 600;
     		line-height: 1.1;
     		color: #ccd6f6;
-		}
-		.down-arrow {
-			animation: fadeIn 3s linear;
 		}
 		.down-arrow .arrows {
 			width: 60px;
@@ -434,18 +414,18 @@
 			flex-direction: column;
 			position: fixed;
 			top: 0;
-			left: 0;
+			left: -110%;
 			width: 100vw;
 			height: 100vh;
-			background-color: #112240;
+			background-color: #36454F;/*#112240*/
 			z-index: 15;
-			display: none;
 		}
 		.menu.open {
-			display: flex;
+			left: 0;
+			transition: all 1s ease;
 		}
 		.menu .close {
-			position: fixed;
+			position: absolute;
 			top: 1.5em;
 			right: 1.5em;
 			color: #ccd6f6;
@@ -471,73 +451,6 @@
 		    color: #64d1ff;
 		    font-size: 20px;
 		    text-align: right;
-		}
-
-		html.standalone-open, body.standalone-open, .standalone-open .content {
-			overflow: hidden;
-		}
-		body.standalone-open #hamburger {
-			display: none;
-		}
-		body.standalone-open header {
-			display: none;
-		}
-		#standalone-frame {
-			position: fixed;
-			overflow-x: hidden;
-			overflow-y: auto;
-			left: 0;
-			top: 50px;
-			width: 100%;
-			height: calc(100% - 50px);
-			max-width: 100%;
-			max-height: calc(100% - 50px);
-			border: none;
-			z-index: 3;
-		}
-		.standalone-ui {
-			display: none;
-		}
-		#standalone-nav {
-			position: fixed;
-			z-index: 3;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 50px;
-			color: #fff;
-			font-size: 1.5em;
-			background-color: #0a192f;
-			padding: 12px;
-			/*display: flex;*/
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-			overflow: hidden;
-			transition: all 0.3s;
-		}
-		#standalone-home {
-			cursor: pointer;
-		}
-		#standalone-nav .fas:hover {
-			color: #ccc;
-		}
-		#standalone-bg {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #fff;
-			z-index: 2;
-		}
-		#standalone-nav.fadeIn {
-			display: flex;
-		}
-		.fadeIn {
-			display: block;
-			animation: fadeIn 1s ease-in;
-			animation-fill-mode: forwards;
 		}
 
 		#infobar {
@@ -608,8 +521,8 @@
 		}
 		#usernameBox {
 			position: fixed;
-			right: 0;
-			top: 5em;
+			left: 0;
+			top: 1em;
 			background-color: rgba(35, 53, 84, 0.7);
 			padding: 0.5em 1em;
 			animation: fadeIn 3s linear;
@@ -625,15 +538,60 @@
 			white-space: nowrap;
 		}
 
+		#splash {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #0a192f;
+			z-index: 20;
+		}
+		#splash svg .mainCircle{
+			stroke-dasharray: 1524;
+			stroke-dashoffset: 1525;
+			animation: loadAnim 1s ease-in-out forwards;
+			animation-delay: 1s;
+		}
+		#splash svg .z {
+			stroke-dasharray: 1444;
+			stroke-dashoffset:1445;
+		}
+		@keyframes loadAnim {
+			100% {stroke-dashoffset: 30;}
+		}
+		@keyframes pulse {
+			/*animation: pulse 2s infinite;*/
+		  0% {
+		    transform: scale(0.9);
+		  }
+		  40% {
+		    transform: scale(1) rotate(5deg);
+		  }
+		  80% {
+		    transform: scale(1) rotate(-5deg);
+		  }
+		  100% {
+		    transform: scale(0.9) rotate(0);
+		  }
+		}
+
 		@media (max-width: 480px) {
-			header, main {
-				padding: 0 25px;
+			header {
+				width: 80%;
+				margin: 0;
+				left: 1em;
 			}
-			header nav .nav {
+			#usernameBox {
 				display: none;
 			}
-			header nav .menu-btn {
-				display: inherit;
+			main {
+				padding: 0 25px;
 			}
 			section.first {
 				padding-bottom: 10vh;
@@ -673,25 +631,31 @@
 </head>
 <body>
 	<div class="content">
-		<header class="monospace">
-			<nav>
-				<div class="logo">Zane's Apps</div>
-				<div class="nav">
-					<ol>
-						<li><a href="#foryou">For You</a></li>
-						<li><a href="#games">Games</a></li>
-						<li><a href="#resources">Resources</a></li>
-						<li><a href="#miscellaneous">Miscellaneous</a></li>
-						<li><a href="#more">More</a></li>
-					</ol>
-				</div>
-				<div class="menu-btn"><i class="fa-regular fa-bars-staggered"></i></div>
-			</nav>
+
+		<header>
+			<div class="search-bar">
+				<input id="search" type="text" autocomplete="off" placeholder="Search Zane's Apps">
+				<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+			</div>
 		</header>
+
+		<div class="menu-btn"><i class="fa-regular fa-bars-staggered"></i></div>
+
+		<aside class="menu monospace">
+			<span class="close"><i class="fa-regular fa-xmark"></i></span>
+			<ol>
+				<li><span class="before">01.</span><a href="#foryou">For You</a></li>
+				<li><span class="before">02.</span><a href="#games">Games</a></li>
+				<li><span class="before">03.</span><a href="#resources">Resources</a></li>
+				<li><span class="before">04.</span><a href="#miscellaneous">Miscellaneous</a></li>
+				<li><span class="before">05.</span><a href="#more">More</a></li>
+				<li><span class="before"><i class="fa-regular fa-share-from-square"></i></span><a href="leaderboard">Leaderboard</a></li>
+			</ol>
+		</aside>
 
 		<main>
 			<section class="first">
-				<div class="intro"><h1 class="monospace"><!--Hi, welcome to-->Happy New Year!</h1></div>
+				<div class="intro"><h1 class="monospace">Hi, welcome to</h1></div>
 				<div class="title"><h2>Zane's Apps</h2></div>
 				<div class="info"><p></p></div>
 			</section>
@@ -794,11 +758,11 @@
 					<div class="list2">
 						<h3>Leisure</h3>
 						<ul>
-							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
+							<li id="guessthatnumber" data-url="guessthatnumber" class="new">
 								<div class="img"><img src="guessthatnumber/icon.png"></div>
 								<div class="name">Guess That Number 2</div>
 							</li>
-							<li data-id="towertakedown" data-url="towertakedown" class="new">
+							<li id="towertakedown" data-url="towertakedown" class="new">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
@@ -940,17 +904,6 @@
 			<p>Copyright &copy; 2023 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
 			<p>We apprecaite your feedback! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
 		</footer>
-
-		<aside class="menu monospace">
-			<span class="close"><i class="fa-regular fa-xmark"></i></span>
-			<ol>
-				<li><span class="before">01.</span><a href="#foryou">For You</a></li>
-				<li><span class="before">02.</span><a href="#games">Games</a></li>
-				<li><span class="before">03.</span><a href="#resources">Resources</a></li>
-				<li><span class="before">04.</span><a href="#miscellaneous">Miscellaneous</a></li>
-				<li><span class="before">05.</span><a href="#more">More</a></li>
-			</ol>
-		</aside>
 	</div>
 
 	<!-- Infobar -->
@@ -970,14 +923,13 @@
 		<div class="user"></div>
 	</div>
 
-	<!-- PWA Elements -->
-	<!--<iframe id="standalone-frame" class="standalone-ui"></iframe>
-	<div id="standalone-nav" class="standalone-ui monospace">
-		<span id="standalone-home" class="fa-regular fa-house" style="color: #64d1ff"></span>
-		<span style="font-size: 16px; color: #ccd6f6;">Zane's Apps</span>
-		<span id="standalone-share" class="fa-regular fa-share" style="color: #64d1ff;"></span>
-	</div>
-	<div id="standalone-bg" class="standalone-ui"></div>-->
+	<!--<div id="splash">	
+		<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<circle class="backCircle" cx="250" cy="250" r="242.5" stroke="#ccd6f6" stroke-width="15"/>
+			<circle class="mainCircle" cx="250" cy="250" r="242.5" stroke="#64D1FF" stroke-width="15"/>
+			<path class="z" d="M211.034 359.339L359.056 136.36L358.846 101.297H139.647V149.378H287.46L139.227 370.887V407H362.626V359.339H211.034Z" fill="#64D1FF"/>
+		</svg>
+	</div>-->
 
 	<script>
 		/*
@@ -1059,30 +1011,6 @@
 				//add event listener
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
-					/*if(!isPWA()) {
-						updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
-						//window.open(elem.getAttribute('data-url'));
-						window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
-						gtag('event', 'app_link_click', {
-							 'app_name': this.querySelector('.name').innerHTML
-						});
-					} else {
-						var _this = this;
-						//Analytics
-						gtag('event', 'app_link_click', {
-							 'pwa_app_name': _this.querySelector('.name').innerHTML
-						});
-						updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
-						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
-						//updateRecentArr(this.id);
-						//Layer iframe ontop
-						document.getElementById('standalone-frame').classList.add('fadeIn');
-						document.getElementById('standalone-nav').classList.add('fadeIn');
-						window.scrollTo(0,0);
-						document.body.classList.add('standalone-open');
-						document.getElementsByTagName('html')[0].classList.add('standalone-open');
-						document.getElementById('standalone-bg').style.display="block";
-					}*/
 					updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
 					window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
 					gtag('event', 'app_link_click', {
@@ -1090,99 +1018,13 @@
 					});
 				});
 			});
-			document.querySelectorAll('a').forEach(function(elem) {
+			document.querySelectorAll('footer a').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
 					window.open(`/embed?data-url=${this.href}`);
 				});
 			});
 		}
-
-		function isPWA() {
-			if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		/*
-			* PWA Handlers *
-		*/
-
-		/*document.getElementById('standalone-home').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.getElementById('standalone-frame').src=null;
-			//Layer iframe ontop
-			document.getElementById('standalone-frame').classList.remove('fadeIn');
-			document.getElementById('standalone-nav').classList.remove('fadeIn');
-			window.scrollTo(0,0);
-			document.body.classList.remove('standalone-open');
-			document.getElementsByTagName('html')[0].classList.remove('standalone-open');
-			document.getElementById('standalone-bg').style.display="none";
-		});*/
-
-		/*document.getElementById('standalone-share').addEventListener('click', function(e) {
-			//e.preventDefault();
-			var shareURL = document.getElementById('standalone-frame').src || 'https://zanewesley.github.io';
-			var frameTitle = document.getElementById('standalone-frame').contentDocument.title || "this game";
-			//if (navigator.share) {
-			try {
-				console.log(shareURL);
-				var shareData = {
-					title: frameTitle,
-					text: `Check out ${frameTitle} from Zane\'s Apps`,//"Check out Zane\'s apps!"
-					url: shareURL
-				}
-			  navigator.share(shareData)
-			  .then(() => console.log('Successful share'))
-			  .catch(error => console.log('Error sharing:', error));
-			} 
-			//else {
-			catch(err) {
-				var a = document.createElement('a');
-				//var osLink = getMobileOperatingSystem() == 'iOS' ? 'sms:&body=Check out Zane\'s Apps! https://zanewesley.github.io' : 'sms:?body=Check out Zane\'s Apps! https://zanewesley.github.io';
-				var osLink = getMobileOperatingSystem() == 'iOS' ? `sms:&body=Check out ${frameTitle} from Zane\'s Apps! ${shareURL}` : `sms:?body=Check out ${frameTitle} from Zane\'s Apps! ${shareURL}`;
-				a.href = osLink;
-				document.body.appendChild(a);
-				a.click();
-				a.remove();
-			}
-		});
-
-		function getMobileOperatingSystem() {
-			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-			// Windows Phone must come first because its UA also contains "Android"
-			if (/windows phone/i.test(userAgent)) {
-				return "Windows Phone";
-			}
-
-			if (/android/i.test(userAgent)) {
-				return "Android";
-			}
-
-			// iOS detection from: http://stackoverflow.com/a/9039885/177710
-			if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-				return "iOS";
-			}
-
-			return "unknown";
-		}*/
-
-		/*
-			* IFRAME MANAGEMENT *
-		*/
-		/*function addIframeClose() {
-			var iframe = document.getElementById('infobar');
-			var elem = iframe.contentDocument.getElementById('close') || iframe.contentWindow.document.getElementById('close');
-			elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				document.getElementById('infobar').remove();
-			});
-		}
-
-		addIframeClose();*/
 
 		/*
 			* HISTORY MANAGEMENT *
@@ -1205,7 +1047,6 @@
 			localStorage.setItem('z_history', JSON.stringify(appArr));
 			console.log(appJ);
 			loadAppHistory();
-			//document.getElementById('infobar').src = document.getElementById('infobar').src;
 		}
 		function loadAppHistory() {
 			var appArrQuery = localStorage.getItem('z_history');
@@ -1221,9 +1062,7 @@
 				if(appHArr[2]){ document.querySelector('#foryou ul').innerHTML+=`
 					<li data-url='${appHArr[2].url}'><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>`;}
 			} else {
-				/*document.querySelector('#foryou ul').innerHTML=`
-					//
-				`;*/
+				//
 			}
 			setHandlers();
 		}
@@ -1288,6 +1127,73 @@
 
 		function displayUsername(username) {
 			document.querySelector('#usernameBox .user').innerHTML = username;
+		}
+
+		/*
+			* SEARCH HANDLER *
+		*/
+		document.getElementById('search').addEventListener('keyup', function(e) {
+			if(e.keyCode == 13 || e.which == 13 || e.key == 'Enter') {
+				searchPage();
+			}
+		});
+		document.querySelector('.search-icon').addEventListener('click', searchPage);
+
+		function searchPage() {
+			var searchStr = document.getElementById('search').value.toLowerCase();
+			document.querySelectorAll('li').forEach(function(elem) {
+				elem.classList.remove('search-result-highlight');
+			});
+			var searchRes = findString(searchStr);
+			console.log(searchRes);
+			document.getElementById(searchRes).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+			document.getElementById(searchRes).classList.add('search-result-highlight');
+		}
+
+		var searchKeys = {
+			//Games
+			'2048': {id: "2048", keywords: ['2048']},
+			'Cake Ninja': {id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja']},
+			'Chess': {id: "chess", keywords: ['chess']},
+			'Chrome Dino Runner': {id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino']},
+			'Colorsplosion': {id: "colorsplosion", keywords: ['colorsplosion']},
+			'Colorswirl': {id: "colorswirl", keywords: ['colorswirl']},
+			'Crossy Road': {id: "crossyroad", keywords: ['crossy road', 'crossyroad']},
+			'Flappy Bird': {id: "flappybird", keywords: ['flappy bird', 'flappybird']},
+			'Guess That Number 1': {id: "numberguessing", keywords: ['guess that number', 'guessthatnumber']},
+			'Guess That Number 2': {id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber']},
+			'Hextris': {id: "hextris", keywords: ['hextris']},
+			'Pac Man': {id: "pacman", keywords: ['pac man', 'pac-man', 'pacman']},
+			'Santa Hat Mixup': {id: "santahatmixup", keywords: ['santa hat mixup', 'santa']},
+			'Solitaire': {id: "solitaire", keywords: ['solitaire']},
+			'Stack': {id: "stack", keywords: ['stack']},
+			'Tic Tac Toe': {id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe']},
+			'Tower Takedown': {id: "towertakedown", keywords: ['tower takedown', 'towertakedown']},
+			//Resources
+			'Calculator': {id: 'calculator', keywords: ['calculator']},
+			'Connect': {id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms']},
+			'Corey 2.0': {id: 'assistant', keywords: ['corey 2.0', 'assistant']},
+			'Corey 3.0': {id: "corey-3.0", keywords: ['corey 3.0', 'corey']},
+			'Countdown Studio': {id: "countdownstudio", keywords: ['countdown studio', 'count down studio']},
+			'Molar Mass Calculator': {id: "mmc", keywords: ['molar mass calculator']},
+			'Notes': {id: "notes", keywords: ['notes']},
+			'Vividly': {id: "vividly", keywords: ['vividly', 'facetime', 'video chat']},
+			'Web Chat': {id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms']},
+			'Whiteboard': {id: "whiteboard", keywords: ['whiteboard']}
+			//Miscellaneous
+		}
+
+		function findString(str) {
+			str = str.toLowerCase();
+			for (let key in searchKeys) {
+			    for (let innerkey in searchKeys[key]) {
+			      if (searchKeys[key][innerkey].includes(str)) {
+			        //return [key, innerkey];
+			        return searchKeys[key].id;
+			      }
+			    }
+		  }
+		  return 'No match';
 		}
 
 
