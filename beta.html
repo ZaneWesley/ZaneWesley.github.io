@@ -43,7 +43,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>Zane's Apps | Christmas Update</title>
+	<title>BETA | Zane's Apps | Christmas Update</title>
 
 	<style>
 		* {
@@ -115,7 +115,8 @@
 		    display: flex;
 		    justify-content: space-between;
 		    align-items: center;
-		    width: 50%;
+		    /*width: 50%;*/
+		    width: 80px;
 		    margin: 0 auto;
 		    background: rgba(35, 53, 84, 0.7);
 		    border: 0.2rem solid rgba(35, 53, 84, 1);
@@ -123,7 +124,8 @@
 		    backdrop-filter: blur(104px);
 		    border-radius: 2rem;
 		    z-index: 11;
-		    animation: fadeIn 3s linear;
+		    animation: fadeIn 3s linear, searchAnim 1s ease 2.5s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
+		    animation-fill-mode: forwards;
 		}
 		header .search-bar {
 			width: 100%;
@@ -147,7 +149,7 @@
 		.search-result-highlight {
 			box-shadow: 0px 0px 20px 0px rgba(255,255,255,0.9)!important;
 		}
-		header, #usernameBox, .menu-btn, .down-arrow {
+		#usernameBox, .menu-btn, .down-arrow {
 			animation: fadeIn 3s linear;
 		}
 		.menu-btn {
@@ -170,6 +172,10 @@
 			100% {
 				opacity: 1;
 			}
+		}
+		@keyframes searchAnim {
+			0% {width: 80px;}
+			100% {width: 50%;}
 		}
 
 		main {
@@ -583,9 +589,14 @@
 
 		@media (max-width: 480px) {
 			header {
-				width: 80%;
+				/*width: 80%;*/
+				width: 80px;
 				margin: 0;
 				left: 1em;
+			}
+			@keyframes searchAnim {
+				0% {width: 80px;}
+				100% {width: 80%;}
 			}
 			#usernameBox {
 				display: none;
@@ -1145,9 +1156,14 @@
 				elem.classList.remove('search-result-highlight');
 			});
 			var searchRes = findString(searchStr);
-			console.log(searchRes);
-			document.getElementById(searchRes).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
-			document.getElementById(searchRes).classList.add('search-result-highlight');
+			if(searchRes != 'No match') {
+				console.log(searchRes);
+				document.getElementById(searchRes).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+				document.getElementById(searchRes).classList.add('search-result-highlight');
+			} else {
+				alert('No Match Found');
+			}
+			
 		}
 
 		var searchKeys = {
@@ -1179,8 +1195,14 @@
 			'Notes': {id: "notes", keywords: ['notes']},
 			'Vividly': {id: "vividly", keywords: ['vividly', 'facetime', 'video chat']},
 			'Web Chat': {id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms']},
-			'Whiteboard': {id: "whiteboard", keywords: ['whiteboard']}
+			'Whiteboard': {id: "whiteboard", keywords: ['whiteboard']},
 			//Miscellaneous
+			'Countdowns': {id: "countdowns", keywords: ['countdowns']},
+			'Insperational Quotes Generator': {id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes']},
+			//More
+			'About': {id: "about", keywords: ['about']},
+			'App Archive': {id: "archive", keywords: ['archive']},
+			'BETA': {id: "beta", keywords: ['beta']}
 		}
 
 		function findString(str) {
