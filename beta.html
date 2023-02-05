@@ -678,21 +678,21 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
-							<li data-id="guessthatnumber" data-url="guessthatnumber" class="new">
+							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="new">
+								<div class="img"><img src="images/tech-log-icon.png"></div>
+								<div class="name">Tech Log</div>
+							</li>
+							<li data-id="guessthatnumber" data-url="guessthatnumber">
 								<div class="img"><img src="guessthatnumber/icon.png"></div>
 								<div class="name">Guess That Number 2</div>
 							</li>
-							<li data-id="towertakedown" data-url="towertakedown" class="new">
+							<li data-id="towertakedown" data-url="towertakedown">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
-							<li data-id="corey-3.0" data-url="corey-3.0" class="new">
+							<li data-id="corey-3.0" data-url="corey-3.0">
 								<div class="img"><img src="corey-3.0/icon.png"></div>
 								<div class="name">Corey 3.0</div>
-							</li>
-							<li data-id="leaderboard" data-url="leaderboard">
-								<div class="img"><img src="images/leaderboard-icon.png"></div>
-								<div class="name">Leaderboard</div>
 							</li>
 						</ul>
 					</div>
@@ -879,6 +879,14 @@
 							<li id="insperation" data-url="inspiration">
 								<div class="img"><img src="images/inspiration-icon.png"></div>
 								<div class="name">Insperational Quotes Image Generator</div>
+							</li>
+							<li id="leaderboard" data-url="leaderboard">
+								<div class="img"><img src="images/leaderboard-icon.png"></div>
+								<div class="name">Leaderboard</div>
+							</li>
+							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="new">
+								<div class="img"><img src="images/tech-log-icon.png"></div>
+								<div class="name">Tech Log</div>
 							</li>
 						</ul>
 					</div>
@@ -1148,6 +1156,12 @@
 				searchPage();
 			}
 		});
+		window.addEventListener('keydown', function(e) {
+			if((e.key == 'c' || e.which == 70) && (e.metaKey || e.ctrlKey)) {
+				e.preventDefault();
+				document.getElementById('search').focus();
+			}
+		});
 		document.querySelector('.search-icon').addEventListener('click', searchPage);
 
 		function searchPage() {
@@ -1199,6 +1213,8 @@
 			//Miscellaneous
 			'Countdowns': {id: "countdowns", keywords: ['countdowns']},
 			'Insperational Quotes Generator': {id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes']},
+			'Leaderboard': {id: "leaderboard", keywords: ['leaderboard']},
+			'Tech Log': {id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new']},
 			//More
 			'About': {id: "about", keywords: ['about']},
 			'App Archive': {id: "archive", keywords: ['archive']},
