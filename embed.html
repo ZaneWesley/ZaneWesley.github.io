@@ -147,7 +147,11 @@
 			cursor: pointer;
 		}
 		.standalone-title .title-text {
-			display: block;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 20px;
+			color: #64d1ff;
 		}
 		.standalone-title .title-icon {
 			display: none;
@@ -184,6 +188,9 @@
 		}
 		.username-wrapper i {
 			padding-right: 6px;
+		}
+		.monospace {
+			font-family: 'Roboto Mono', monospace;
 		}
 
 
@@ -477,6 +484,25 @@
 			height: 50vh;
 			/*animation: hover 6s linear infinite;*/
 		}
+		#splash svg .mainCircle {
+			stroke-dasharray: 1524;
+			stroke-dashoffset: 1525;
+			transition: all 1s;
+		}
+		#splash svg.load .mainCircle {
+			animation: loadAnim 1s ease-in-out forwards;
+			/*animation-delay: 1s;*/
+		}
+		#splash svg.loaded .mainCircle {
+			stroke-dashoffset: 0;
+		}
+		#splash svg .z {
+			stroke-dasharray: 1444;
+			stroke-dashoffset:1445;
+		}
+		@keyframes loadAnim {
+			100% {stroke-dashoffset: 30;}
+		}
 		#splash .loader-bar-wrapper {
 			background-color: rgba(35, 53, 84, 0.7);
 			width: 100%;
@@ -530,7 +556,7 @@
 			<span id="standalone-home" class="icon fa-regular fa-house"></span>
 			<span id="standalone-share" class="icon fa-regular fa-share"></span>
 		</div>-->
-		<div class="standalone-title"><span class="title-text">Zane's Apps</span><span class="title-icon"><i class="fa-solid fa-house"></i></span></div>
+		<div class="standalone-title"><span class="title-text monospace">Zane's Apps</span><span class="title-icon"><i class="fa-solid fa-house"></i></span></div>
 		<div class="username-wrapper"><div class="inner"><i class="fa-solid fa-user"></i> <span id="usernameBox">Guest</span></div></div>
 		<div class="icons-wrapper">
 			<i id="leaderboardBtn" class="fa-solid fa-ranking-star"></i>
@@ -567,7 +593,11 @@
 		<div class="svg-wrapper">
 			<img src="images/icon-v4-transparent-blue.png">
 			<div class="loader-bar-wrapper"><div class="loader-bar"></div></div>
-		</div>
+			<!--<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<circle class="mainCircle" cx="250" cy="250" r="242.5" stroke="#64D1FF" stroke-width="15"/>
+				<path class="z" d="M211.034 359.339L359.056 136.36L358.846 101.297H139.647V149.378H287.46L139.227 370.887V407H362.626V359.339H211.034Z" fill="#64D1FF"/>
+			</svg>
+		</div>-->
 	</div>
 
 	<div class="popup">
@@ -594,9 +624,12 @@
 	<script>
 
 		loadBar();
+		//document.querySelector('.svg-wrapper svg').classList.add('load');
 
 		document.body.onload = function() {
 			document.querySelector('.loader-bar').style.width='100%';
+			//document.querySelector('.svg-wrapper svg').classList.remove('load');
+			//document.querySelector('.svg-wrapper svg').classList.add('loaded');
 			setTimeout(function() {
 				document.getElementById('splash').style.display='none';
 			}, 1000);
@@ -614,10 +647,14 @@
 		function loadIFrame(url) {
 			document.getElementById('splash').style.display='block';
 			loadBar();
+			//document.querySelector('.svg-wrapper svg').classList.remove('loaded');
+			//document.querySelector('.svg-wrapper svg').classList.add('load');
 			var iFrame = document.getElementById('standalone-frame');
 			iFrame.src=url;
 			iFrame.onload = function() {
 				document.querySelector('.loader-bar').style.width='100%';
+				//document.querySelector('.svg-wrapper svg').classList.remove('load');
+				//document.querySelector('.svg-wrapper svg').classList.add('loaded');
 				var fdt = iFrame.contentWindow.document.title;
 				if(fdt) document.title = `${fdt}`;
 				setTimeout(function() {
