@@ -624,6 +624,31 @@
 			overflow: hidden;
 			white-space: nowrap;
 		}
+		
+		#news {
+			position: relative;
+			width: 100%;
+			padding: 1em;
+			background-color: #6A5ACD;
+			color: #ffffff;
+		}
+		#news h2 {
+			text-align: center;
+			display: block;
+			color: #ffffff;
+		}
+		#news h2:after {
+			content: none;
+		}
+		#news button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: #ffffff;
+			background-color: #2C2F33;
+			outline: none;
+			cursor: pointer;
+		}
 
 		@media (max-width: 480px) {
 			header, main {
@@ -722,6 +747,13 @@
 						</ul>
 					</div>
 				</div>
+			</section>
+			
+			<section id="news">
+				<h2>News Flash!</h2>
+				<p>ZaneWesley is Now on Discord! Join to get notified with updates, announcements and give your feedback in the Community channels!</p>
+				<br>
+				<button data-url="https://discord.gg/4XEWxQ9Yvn" onclick="window.open(this.getAttribute('data-url'))">Join Server</button>
 			</section>
 
 			<section id="foryou">
