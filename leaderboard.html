@@ -118,7 +118,10 @@
 		.board ul li:nth-child(odd) {
 			background-color: rgba(255,255,255,.06);
 		}
-		.board img {
+		.board ul li.error {
+			background-color: rgba(179, 0, 12, 0.6);
+		}
+		.board img, .board svg {
 			padding: 0.5em;
 			height: 70px;
 			margin: 0 0.5rem;
@@ -222,9 +225,10 @@
 			<li id="score-2048"><img src="2048/icon.png"><div class="name">2048</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
 			<li id="cakeninja"><img src="cakeninja/files/assets/32463581/1/caption.png"><div class="name">Cake Ninja</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
 			<li id="crossyroad"><img src="crossyroad/icon.jpeg"><div class="name">Crossy Road</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<!--<li id="doodlejump"><img src="doodlejump/favicon.ico"><div class="name">Doodle Jump</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>-->
 			<li id="flappybird"><img src="flappybird/icon.jpg"><div class="name">Flappy Bird</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
 			<li id="hextris"><img src="hextris/favicon.ico"><div class="name">Hextris</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
-			<li id="stack"><img src="images/stack-icon.PNG"><div class="name">Stack</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
+			<li id="stack" class="error"><!--<img src="images/stack-icon.PNG">--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#ffffff" d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg><div class="name">Stack</div><div class="score-wrapper"><div class="score">0</div><div class="username">No Scores</div></div></li>
 		</ul>
 		<a href="/">Return Home</a>
 		<div class="username-form-wrapper">
@@ -286,6 +290,7 @@
 			__getHighScores__('solitaire', 1);
 			__getHighScores__('flappybird', 1);
 			__getHighScores__('stack', 1);
+			__getHighScores__('doodlejump', 1);
 		}
 
 		function getItem(item) {
