@@ -7,8 +7,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta name="description" content="Play Doodle Jump Online" />
-    <meta name="keywords" content="Play Doodle Jump Online" />
+    <meta name="description" content="The Classic Doodle Jump Online" />
+    <meta name="keywords" content="The Classic Doodle Jump Online" />
     <meta name="author" content="Zane Wesley"/>
 
     <meta name="robots" content="all" />
@@ -429,6 +429,16 @@
             /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
         }
     </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-YEEGMG5QT7');
+    </script>
 </head>
 
 <body>
@@ -536,9 +546,29 @@ Highscore
 < </button>
         <button id="right-btn">></button>
     </div>
+
+    <!-- Leaderboard Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-firestore.js"></script>
+    <script defer src="/leaderboard-handler.js"></script>
+    <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlwqgFRZO3nW4HOzxv6eV0USjA4vGWNhM",
+        authDomain: "leaderboard-e6efb.firebaseapp.com",
+        projectId: "leaderboard-e6efb",
+        storageBucket: "leaderboard-e6efb.appspot.com",
+        messagingSenderId: "254973774391",
+        appId: "1:254973774391:web:452f3b5e86e3d320574db2"
+    };
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+  </script>
+
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js" integrity="sha512-JFBBAwh37TdGYMmF7POacSn+VZIMyF7r++1jkkk9tNomuJuK6WIRe1oQQsst9nm/8cq/LAae987H/d0IsYgN8A==" crossorigin="anonymous" referrerpolicy="no-referrer" type="c0c33fdd423d148ea6c53b81-text/javascript"></script>
     <script defer type="c0c33fdd423d148ea6c53b81-text/javascript" src="https://cdn.jsdelivr.net/gh/gracehuynhh/doodlejump/fulltilt.min.js"></script>
-    <script defer type="c0c33fdd423d148ea6c53b81-text/javascript" src="https://cdn.jsdelivr.net/gh/gracehuynhh/doodlejump/doodle.min.js"></script>
+    <!--<script defer type="c0c33fdd423d148ea6c53b81-text/javascript" src="https://cdn.jsdelivr.net/gh/gracehuynhh/doodlejump/doodle.min.js"></script>-->
+    <script defer type="c0c33fdd423d148ea6c53b81-text/javascript" src="cdn-cgi/scripts/doodle.min.js"></script>-->
     <script defer src="https://cdn.jsdelivr.net/gh/gracehuynhh/doodlejump/main.js" type="c0c33fdd423d148ea6c53b81-text/javascript"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.1/dist/lazyload.min.js" type="c0c33fdd423d148ea6c53b81-text/javascript"></script>
     <script defer type="c0c33fdd423d148ea6c53b81-text/javascript" src="https://cdn.jsdelivr.net/gh/gracehuynhh/doodlejump/scripts.js"></script>
