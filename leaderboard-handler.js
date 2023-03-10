@@ -27,7 +27,7 @@ function __saveScoreToDatabase__(game, score) {
 		username: __leaderboardName__,
 		game: game,
 		score: score,
-		timestamp: new Date()
+		timestamp: new Date().getTime()
 	}).then(function() {
 		console.log('Score saved');
 	}).catch(function(error) {
