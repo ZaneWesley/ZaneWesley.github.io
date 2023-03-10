@@ -529,7 +529,7 @@
 		    };
 		    Game.prototype.endGame = function () {
 		        this.updateState(this.STATES.ENDED);
-		        __saveScoreToDatabase__('stack', document.getElementById("score").innerHTML);
+		        __saveScoreToDatabase__('stack', Number(document.getElementById("score").innerHTML));
 		    };
 		    Game.prototype.tick = function () {
 		        var _this = this;
