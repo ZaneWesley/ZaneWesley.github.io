@@ -26,7 +26,8 @@ function __saveScoreToDatabase__(game, score) {
 	return firebase.firestore().collection(game).add({
 		username: __leaderboardName__,
 		game: game,
-		score: score
+		score: score,
+		timestamp: new Date()
 	}).then(function() {
 		console.log('Score saved');
 	}).catch(function(error) {
