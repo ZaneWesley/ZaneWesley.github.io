@@ -27,7 +27,8 @@ function __saveScoreToDatabase__(game, score) {
 		username: __leaderboardName__,
 		game: game,
 		score: score,
-		timestamp: new Date().__shortDate__()
+		//timestamp: new Date().__shortDate__()
+		timestamp: new Date()
 	}).then(function() {
 		console.log('Score saved');
 	}).catch(function(error) {
@@ -53,6 +54,7 @@ function __getHighScores__(game, num) {
             document.querySelector(scoreId).innerHTML = doc.data().score;
             document.querySelector(usernameId).innerHTML = doc.data().username;
             //document.querySelector(timestampId).innerHTML = doc.data().timestamp;
+            console.log(doc.data().game, doc.data().timestamp.toDate());
         });
     })
     .catch((error) => {
