@@ -27,7 +27,7 @@ function __saveScoreToDatabase__(game, score) {
 		username: __leaderboardName__,
 		game: game,
 		score: score,
-		timestamp: new Date().getTime()
+		timestamp: new Date().__shortDate__()
 	}).then(function() {
 		console.log('Score saved');
 	}).catch(function(error) {
@@ -49,12 +49,19 @@ function __getHighScores__(game, num) {
             scoresArr = doc.data().score;
             var scoreId = `#${doc.data().game.replace('2048', 'score-2048')} .score`;
             var usernameId = `#${doc.data().game.replace('2048', 'score-2048')} .username`;
+            //var timestampId = `#${doc.data().game.replace('2048', 'score-2048')} .timestamp`;
             document.querySelector(scoreId).innerHTML = doc.data().score;
             document.querySelector(usernameId).innerHTML = doc.data().username;
+            //document.querySelector(timestampId).innerHTML = doc.data().timestamp;
         });
     })
     .catch((error) => {
         console.log("Error getting scores.", error);
     });
     return scoresArr;
+}
+
+Date.prototype.__shortDate__ = function(div) {
+	if(!div) {div = "/";}
+	return (this.getMonth()+1)+div+this.getDate()+div+this.getFullYear();
 }
