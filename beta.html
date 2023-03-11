@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -9,17 +8,17 @@
 	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
 	<!-- General -->
 	<link rel="manifest" href="manifest.json">
-	<meta name="theme-color" content="#0a192f">
+	<meta name="theme-color" content="#111827">
 	<meta name="application-name" content="Zane's Apps">
 	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
 	<link rel="canonical" href="https://www.zanewesley.github.io">
 	<!-- Apple -->
 	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
-	<meta name="apple-mobile-web-app-status-bar-style" content="#0a192f">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#111827">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
-	<link rel="mask-icon" href="images/icon.png" color="#0a192f">
+	<link rel="mask-icon" href="images/icon.png" color="#111827">
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,14 +55,17 @@
 		}
 		html, body {
 			scroll-behavior: smooth;
-			background-color: #0a192f;
+			background-color: #111827;/*#0a192f*/
 			font-family: 'Roboto', sans-serif;
 			width: 100%;
 			height: auto;
 			font-size: 20px;
 			/*color: #8892b0; -- dark*/
-			color: #ccd6f6;/*-- light*/
+			/*color: #ccd6f6;-- light*/
 			/*color: #64d1ff; -- blue*/
+			color: rgba(255, 255, 255, 0.7);
+			/*color: #44beff; -- new blue*/;
+			/* color scheme: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff)*/
 		}
 
 		/* width */
@@ -73,14 +75,14 @@
 
 		/* Track */
 		::-webkit-scrollbar-track {
-		  background: #0a192f;
+		  background: #111827;/*#0a192f*/
 		}
 
 		/* Handle */
 		::-webkit-scrollbar-thumb {
-		  background: #ccd6f6;
+		  background: rgba(255, 255, 255, 0.7);/*#ccd6f6;*/
 		  border-radius: 10px;
-		  border: 3px solid #0a192f;
+		  border: 3px solid #111827;/*#0a192f*/;
 		}
 
 		/* Handle on hover */
@@ -89,12 +91,12 @@
 		}
 		/* WebKit/Blink Browsers */
 		::selection {
-		  background: #233554;
+		  background: rgba(57, 73, 86, 0.7);/*#233554*/
 		  color: #fff;
 		}
 		/* Gecko Browsers */
 		::-moz-selection {
-		  background: #233554;
+		  background: rgba(57, 73, 86, 0.7);/*#233554*/
 		  color: #fff;
 		}
 
@@ -118,15 +120,52 @@
 		    align-items: center;
 		    /*width: 50%;*/
 		    width: 80px;
+		    height: 52px;
 		    margin: 0 auto;
-		    background: rgba(35, 53, 84, 0.7);
-		    border: 0.2rem solid rgba(35, 53, 84, 1);
+		    background: rgba(57, 73, 86, 0.7);
+		    border: 0.2rem solid rgba(57, 73, 86, 1);
 		    -webkit-backdrop-filter: blur(104px);
 		    backdrop-filter: blur(104px);
 		    border-radius: 2rem;
 		    z-index: 11;
 		    animation: fadeIn 3s linear, searchAnim 1s ease 2.5s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
-		    animation-fill-mode: forwards;
+		    transition: all 0.5s cubic-bezier(0, 0, 0.61, 1.23);
+		}
+		header.menu-open {
+			display: none;
+		}
+		header.island {
+			height: 200px;
+		}
+		header.island ~ main {
+			margin-top: -150px;
+		}
+		header.island .search-bar {
+			display: none;
+		}
+		header.island .island-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			opacity: 1;
+		}
+		header .island-content {
+			display: none;
+			opacity: 0;
+			transition: 0.5s ease;
+    		transition-delay: 0.3s;
+		}
+		header .island-content button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: #2C2F33;
+			background-color: #44beff;
+			outline: none;
+			cursor: pointer;
 		}
 		header .search-bar {
 			width: 100%;
@@ -139,7 +178,7 @@
 			height: 100%;
 			border: none;
 			outline: none;
-			color: #ccd6f6;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 			font-family: 'Roboto', sans-serif;
 			font-size: 20px;
 			background-color: transparent;
@@ -154,7 +193,7 @@
 			animation: fadeIn 3s linear;
 		}
 		.menu-btn {
-			color: #64d1ff;
+			color: #44beff;/*#64d1ff*/
 			position: fixed;
 			top: 1em;
 			right: 1em;
@@ -336,17 +375,40 @@
 		}
 		main section.first .intro h1 {
 			margin: 0px 0px 30px 4px;
-		    color: #64d1ff;
+		    color: #44beff;/*#64d1ff*/
 		    font-size: clamp(14px,5vw,16px);
 		    font-weight: 400;
 		    line-height: 1.1;
 		}
-		main section.first .title h2 {
+		main section.first .title {
+			display: flex;
+		}
+		main section.first .title h2, main section.first .title .cursor {
 			margin: 0px;
     		font-size: clamp(40px, 8vw, 80px);
     		font-weight: 600;
     		line-height: 1.1;
-    		color: #ccd6f6;
+    		color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+    		background-image: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff);
+    		-webkit-text-fill-color: transparent;
+    		-webkit-background-clip: text;
+		}
+		.ti-cursor {
+			display: none!important;
+		}
+		main section.first .title .cursor {
+			animation: cursorBlink 1s infinite;
+			animation-delay: 500ms;
+			color: #44beff;
+			-webkit-text-fill-color: #44beff;
+    		-webkit-background-clip: text;
+			margin-left: -0.125em;
+			margin-right: -0.125em;
+		}
+		@keyframes cursorBlink {
+			0% {opacity: 0;}
+			49% {opacity: 0;}
+			50% {opacity: 1;}
 		}
 		.down-arrow .arrows {
 			width: 60px;
@@ -378,14 +440,17 @@
 		.down-arrow .arrows path.a1 {
 			animation-delay:-1s;
 			-webkit-animation-delay:-1s; /* Safari 和 Chrome */
+			stroke: #fb60d7;
 		}
 		.down-arrow .arrows path.a2 {
 			animation-delay:-0.5s;
 			-webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+			stroke: #7752ff;
 		}
 		.down-arrow .arrows path.a3 {	
 			animation-delay:0s;
 			-webkit-animation-delay:0s; /* Safari 和 Chrome */
+			stroke: #44beff;
 		}
 		section {
 			margin: 0px auto;
@@ -402,7 +467,7 @@
 		    white-space: nowrap;
 		    font-weight: 600;
 		    line-height: 1.1;
-		    color: #ccd6f6;
+		    color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 		}
 		main section h2:not(.first h2) .before {
 			position: relative;
@@ -410,7 +475,7 @@
 		    counter-increment: section 1;
 		    /*content: "0" counter(section) ".";*/
 		    margin-right: 10px;
-		    color: #64d1ff;
+		    color: #44beff;/*#64d1ff*/
 		    font-family: 'Roboto Mono', monospace;
 		    font-size: clamp(16px,3vw,20px);
 		    font-weight: 400;
@@ -454,9 +519,9 @@
 			width: 100%;
 		}
 		section .inner li {
-			background-color: rgba(35, 53, 84, 0.7);
+			background-color: rgba(57, 73, 86, 0.7);
 			width: 100%;
-			color: #ccd6f6;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 			cursor: pointer;
 		    padding: 10px;
 		    text-align: left;
@@ -470,7 +535,7 @@
 		    -webkit-user-select: none;
 		}
 		section .inner li:hover {
-			background-color: rgba(35, 53, 84, 0.9);
+			background-color: rgba(57, 73, 86, 0.9);
 			transform: scale(0.9);
 		}
 		section .inner li .img {
@@ -503,8 +568,8 @@
 			padding: 1em;
 		}
 		.newgrid-inner .new-list li {
-			background-color: rgba(35, 53, 84, 0.7);
-			color: #ccd6f6;
+			background-color: rgba(57, 73, 86, 0.7);
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
     		cursor: pointer;
     		border-radius: 15px;
     		overflow: hidden;
@@ -535,17 +600,18 @@
 			/*box-shadow: 0 0 8px 8px #48abe0;*/
 			/*box-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #0ba9ca, 0 0 30px #0ba9ca,
     			0 0 40px #0ba9ca, 0 0 50px #0ba9ca;*/
-    		box-shadow: 0px 0px 20px 0px rgba(100,209,255,0.9); /* x y blur range color*/
+    		/*box-shadow: 0px 0px 20px 0px rgba(100,209,255,0.9);*/ /* x y blur range color*/
+    		box-shadow: 0px 0px 20px 0px rgba(0, 141, 255, 0.9);
 		}
 
 		footer {
 			padding: 16px;
 			font-weight: 500;
 			font-size: 12px;
-			color: #ccd6f6;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 		}
 		footer a {
-			color: #ccd6f6;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 		}
 
 		.menu {
@@ -569,7 +635,7 @@
 			position: absolute;
 			top: 1.5em;
 			right: 1.5em;
-			color: #ccd6f6;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 			cursor: pointer;
 		}
 		.menu ol {
@@ -582,14 +648,14 @@
 		}
 		.menu ol li a {
 			text-decoration: none;
-		    color: #ccd6f6;
+		    color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 		}
 		.menu ol li a:hover {
-			color: #64d1ff;
+			color: #44beff;/*#64d1ff*/
 		}
 		.menu ol li .before {
 		    margin-right: 5px;
-		    color: #64d1ff;
+		    color: #44beff;/*#64d1ff*/
 		    font-size: 20px;
 		    text-align: right;
 		}
@@ -601,7 +667,7 @@
 			border: none;
 			outline: none;
 			background-color: transparent;
-			color: #ccd6f6;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 			height: 37%;
 			width: 25%;
 		}
@@ -621,9 +687,9 @@
 			height: auto;
 			/*min-height: 50%;*/
 			padding-bottom: 3em;
-			background-color: #64d1ff;
-			background: linear-gradient(169deg, rgba(100,209,255,1) 9%, rgba(10,25,47,1) 100%);
-			color: #0a192f;
+			background-color: #44beff;/*#64d1ff*/
+			background: linear-gradient(90deg,#fb60d7,#7752ff 75%,#5f98fa 90%,#44beff);/*linear-gradient(169deg, rgba(100,209,255,1) 9%, rgba(10,25,47,1) 100%);*/
+			color: #111827;/*#0a192f*/
 			border-radius: 20px;
 			display: none;
 			z-index: 3;
@@ -638,7 +704,7 @@
 			padding: 15px 30px;
 		    border-radius: 8px;
 		    border: none;
-		    color: #0a192f;
+		    color: #111827;/*#0a192f*/
 		    background-color: #fff;
 		    margin: 20px 0;
 		    outline: none;
@@ -647,8 +713,8 @@
 			padding: 15px 30px;
 			border-radius: 8px;
 			border: none;
-			color: #ccd6f6;
-			background-color: #0a192f;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+			background-color: #111827;/*#0a192f*/
 			outline: none;
 			cursor: pointer;
 		}
@@ -664,7 +730,7 @@
 			position: fixed;
 			left: 0;
 			top: 1em;
-			background-color: rgba(35, 53, 84, 0.7);
+			background-color: rgb(57, 73, 86, 0.7);
 			padding: 0.5em 1em;
 			animation: fadeIn 3s linear;
 			cursor: pointer;
@@ -690,7 +756,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background-color: #0a192f;
+			background-color: #111827;/*#0a192f*/
 			z-index: 20;
 		}
 		#splash svg .mainCircle{
@@ -722,10 +788,36 @@
 		  }
 		}
 
+		/* Page Transitions */
+		.transition-layer {
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			right: -110%;
+			background: #fb60d7;
+			transition: all 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+			z-index: 99;
+		}
+		.transition-layer.active {
+			right: 110%;
+		}
+		.transition-layer--2 {
+			background: #44beff;
+			transition-delay: 0.2s;
+		}
+		.transition-layer--3 {
+			background: #111827;
+			transition-delay: 0.3s;
+		}
+		.transition-layer--3.active {
+			right: 0;
+		}
+
 		#contextmenu {
 			background-color: #36454F;
 			box-shadow: 0 0 20px rgba(37, 40, 42, 0.22);
-			color: #ccd6f6;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 			width: 10em;
 			padding: 0;
 			position: fixed;
@@ -743,7 +835,7 @@
 			position: relative;
 			width: 100%;
 			padding: 1em;
-			background-color: #6A5ACD;
+			background-color: #a02fff;/*#6A5ACD*/
 			color: #ffffff;
 		}
 		#news h2 {
@@ -773,7 +865,10 @@
 			}
 			@keyframes searchAnim {
 				0% {width: 80px;}
-				100% {width: 80%;}
+				100% {width: 75%;}
+			}
+			header.island {
+				height: 250px;
 			}
 			#usernameBox {
 				display: none;
@@ -808,6 +903,9 @@
 			.newgrid-inner .new-list li {
 				width: calc(50% - 19px);
 			}
+			.menu {
+				width: 100%;
+			}
 			.popup {
 				width: 90%;
 			}
@@ -824,6 +922,11 @@
 			<div class="search-bar">
 				<input id="search" type="text" autocomplete="off" placeholder="Search Zane's Apps">
 				<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+			</div>
+			<div class="island-content">
+				<h3>Bug Fix!</h3>
+				<p>Stack leaderboard scoring is fixed! New scores should now post to the leaderboard as expected.</p>
+				<button onclick="this.parentNode.parentNode.classList.remove('island')">OK!</button>
 			</div>
 		</header>
 
@@ -851,7 +954,10 @@
 		<main>
 			<section class="first">
 				<div class="intro"><h1 class="monospace">Hi, welcome to</h1></div>
-				<div class="title"><h2>Zane's Apps</h2></div>
+				<div class="title">
+					<h2>Zane's Apps</h2>
+					<span class="cursor">|</span>
+				</div>
 				<div class="info"><p></p></div>
 			</section>
 
@@ -885,9 +991,9 @@
 
 			<section id="news">
 				<h2>News Flash!</h2>
-				<p>ZaneWesley is Now on Discord! Join to get notified with updates, announcements and give your feedback in the Community channels!</p>
+				<p>ZaneWesley is now on Discord! Join the server to get notified with updates, announcements and to give your feedback in the Community channels!</p>
 				<br>
-				<button data-url="https://discord.gg/MsCmSZx3" onclick="window.open(this.getAttribute('data-url'))">Join Server</button>
+				<button data-url="https://discord.gg/4XEWxQ9Yvn" onclick="window.open(this.getAttribute('data-url'))">Join Server</button>
 			</section>
 
 			<section id="foryou">
@@ -896,7 +1002,7 @@
 					<div class="list2"></div>
 					<div class="list1">
 						<ul>
-							<li data-id="discordserver" data-url="https://discord.gg/MsCmSZx3" class="noframe">
+							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="noframe">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
@@ -1071,7 +1177,7 @@
 								<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
 								<div class="name">Countdowns</div>
 							</li>
-							<li id="insperation" data-url="inspiration">
+							<li id="inspiration" data-url="inspiration">
 								<div class="img"><img src="images/inspiration-icon.png"></div>
 								<div class="name">Insperational Quotes Image Generator</div>
 							</li>
@@ -1083,7 +1189,7 @@
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
 							</li>
-							<li id="discordserver" data-url="https://discord.gg/MsCmSZx3" class="new noframe">
+							<li id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
@@ -1149,6 +1255,49 @@
 		</svg>
 	</div>-->
 
+	<!--<div id="island">
+		<h2>Welcome</h2>
+	</div>
+
+	<style>
+		#island {
+			position: fixed;
+		    left: 0;
+		    top: 0;
+		    right: 0;
+		    display: flex;
+		    overflow: hidden;
+		    width: 31%;/*82%*/
+		    height: 52pt;/*78px*/
+		    margin-top: 28px;
+		    margin-right: auto;
+		    margin-left: auto;
+		    padding: 0;
+		    justify-content: center;
+		    align-items: center;
+		    border-radius: 100px;
+		    background-color: #000000;
+		    color: #ffffff;
+		    z-index: 12;
+		    transition: width 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), height 0.5s ease-out;
+		}
+		#island.bar {
+			width: 69%;/*47%, 82%*/
+		}
+		#island.rectangleSmall {
+			width: 92%;
+			height: 160px;
+		}
+		#island.rectangle {
+			width: 92%;
+			height: 450px;
+		}
+	</style>-->
+
+	<div class="transition-layer"></div>
+	<div class="transition-layer transition-layer--2"></div>
+	<div class="transition-layer transition-layer--3"></div>
+
 	<div id="contextmenu">
 		<div class="contextmenu-item context-open">Open</div>
 		<div class="contextmenu-item context-opennew">Open in New Tab</div>
@@ -1166,37 +1315,40 @@
 			document.querySelector('.burger').classList.toggle('not-active');
 			document.querySelector('.burger').classList.toggle('active');
 			document.querySelector('main').classList.toggle('menu-open');
+			document.querySelector('header').classList.toggle('menu-open');
+			document.querySelector('header').classList.remove('island');
 		});
+		function closeMenu() {
+			document.querySelector('.menu').classList.toggle('open');
+			document.querySelector('.burger').classList.toggle('not-active');
+			document.querySelector('.burger').classList.toggle('active');
+			document.querySelector('main').classList.toggle('menu-open');
+			document.querySelector('header').classList.toggle('menu-open');
+		}
 		/*document.querySelector('.close').addEventListener('click', function(e) {
 			this.parentNode.classList.remove('open');
 		});*/
 		document.querySelectorAll('.menu li').forEach(function(elem) {
 			elem.addEventListener('click', function(e) {
-				this.parentNode.parentNode.classList.remove('open');
+				closeMenu();
 			});
 		});
 		document.getElementById('usernameBox').addEventListener('click', function(e) {
+			//triggerPageTransition(function() {window.open('/embed?data-url=leaderboard');});
 			window.open('/embed?data-url=leaderboard');
-		});
-		document.querySelectorAll('footer a').forEach(function(elem){
-			elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				var linkURL = e.target.href;
-				window.open(`/embed?data-url=${linkURL}`);
-			})
 		});
 
 		/*
 			* UI & Animations *
 		*/
 		//Title
-		new TypeIt(".title h2", {
+		var typeInst = new TypeIt(".title h2", {
 			speed: 75,
 			startDelay: 900,
 			waitUntilVisible: true,
 			loop: true,
 			lifeLike: true,
-			deleteSpeed: 75
+			deleteSpeed: 75,
 		})
 		.pause(3000)
 		.delete(4)
@@ -1216,6 +1368,7 @@
 		.type("Apps", {delay: 3000})
 		.pause(3000)
 		.go();
+
 		//Headers
 		document.querySelectorAll('#new h2, #foryou h2, #games h2, #resources h2, #miscellaneous h2, #more h2').forEach(function(elem) {
 			new TypeIt(elem, {
@@ -1225,6 +1378,13 @@
 				lifeLike: true,
 			}).go();
 		});
+
+		//Top Dynamic Island
+		document.body.onload = function() {
+			setTimeout(function() {
+				document.querySelector('header').classList.add('island');
+			}, 5000);
+		}
 
 		/*
 			* Context Menu *
@@ -1333,7 +1493,7 @@
 		*/
 		function setHandlers() {
 			//clear event listeners
-			document.querySelectorAll('.list1 li, .list2 li, .new-list li').forEach(function(elem) {
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li, footer a').forEach(function(elem) {
 				elem.replaceWith(elem.cloneNode(true));
 			});
 			//set event listeners
@@ -1344,8 +1504,10 @@
 					e.preventDefault();
 					updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
 					if(!elem.classList.contains('noframe')) {
+						//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
 						window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
 					} else {
+						//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
 						window.open(elem.getAttribute('data-url'));
 					}
 					gtag('event', 'app_link_click', {
@@ -1356,9 +1518,22 @@
 			document.querySelectorAll('footer a').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
+					//triggerPageTransition(function() {window.open(`/embed?data-url=${this.href}`);});
 					window.open(`/embed?data-url=${this.href}`);
 				});
 			});
+		}
+
+		function triggerPageTransition(callback) {
+			document.querySelectorAll('.transition-layer').forEach(function(elem) {
+				elem.classList.add('active');
+			});
+			setTimeout(function() {
+				callback();
+				document.querySelectorAll('.transition-layer').forEach(function(elem) {
+					elem.classList.remove('active');
+				});
+			}, 1000);
 		}
 
 		/*
@@ -1486,69 +1661,98 @@
 				elem.classList.remove('search-result-highlight');
 			});
 			var searchRes = findString(searchStr);
-			if(searchRes != 'No match') {
-				console.log(searchRes);
-				document.getElementById(searchRes).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
-				document.getElementById(searchRes).classList.add('search-result-highlight');
+			if(searchRes != 'No match' && searchStr != "") {
+				if(document.getElementById(searchRes).nodeName == "LI") {
+					document.getElementById(searchRes).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+					document.getElementById(searchRes).classList.add('search-result-highlight');
+				} else {
+					window.location=`#${searchRes}`;
+				}
+			} else if(searchStr == "") {
+				window.location='#';
 			} else {
 				alert('No Match Found');
 			}
 			
 		}
 
-		var searchKeys = {
-			//Games
-			'2048': {id: "2048", keywords: ['2048']},
-			'Cake Ninja': {id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja']},
-			'Chess': {id: "chess", keywords: ['chess']},
-			'Chrome Dino Runner': {id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino']},
-			'Colorsplosion': {id: "colorsplosion", keywords: ['colorsplosion']},
-			'Colorswirl': {id: "colorswirl", keywords: ['colorswirl']},
-			'Crossy Road': {id: "crossyroad", keywords: ['crossy road', 'crossyroad']},
-			'Flappy Bird': {id: "flappybird", keywords: ['flappy bird', 'flappybird']},
-			'Guess That Number 1': {id: "numberguessing", keywords: ['guess that number', 'guessthatnumber']},
-			'Guess That Number 2': {id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber']},
-			'Hextris': {id: "hextris", keywords: ['hextris']},
-			'Pac Man': {id: "pacman", keywords: ['pac man', 'pac-man', 'pacman']},
-			'Santa Hat Mixup': {id: "santahatmixup", keywords: ['santa hat mixup', 'santa']},
-			'Solitaire': {id: "solitaire", keywords: ['solitaire']},
-			'Stack': {id: "stack", keywords: ['stack']},
-			'Tic Tac Toe': {id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe']},
-			'Tower Takedown': {id: "towertakedown", keywords: ['tower takedown', 'towertakedown']},
-			//Resources
-			'Calculator': {id: 'calculator', keywords: ['calculator']},
-			'Connect': {id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms']},
-			'Corey 2.0': {id: 'assistant', keywords: ['corey 2.0', 'assistant']},
-			'Corey 3.0': {id: "corey-3.0", keywords: ['corey 3.0', 'corey']},
-			'Countdown Studio': {id: "countdownstudio", keywords: ['countdown studio', 'count down studio']},
-			'Molar Mass Calculator': {id: "mmc", keywords: ['molar mass calculator']},
-			'Notes': {id: "notes", keywords: ['notes']},
-			'Vividly': {id: "vividly", keywords: ['vividly', 'facetime', 'video chat']},
-			'Web Chat': {id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms']},
-			'Whiteboard': {id: "whiteboard", keywords: ['whiteboard']},
-			//Miscellaneous
-			'Countdowns': {id: "countdowns", keywords: ['countdowns']},
-			'Insperational Quotes Generator': {id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes']},
-			'Leaderboard': {id: "leaderboard", keywords: ['leaderboard']},
-			'Tech Log': {id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new']},
-			'Discord Server': {id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server']},
-			//More
-			'About': {id: "about", keywords: ['about']},
-			'App Archive': {id: "archive", keywords: ['archive']},
-			'BETA': {id: "beta", keywords: ['beta']}
-		}
+		/*
+			* PAGE DATA HANDLERS *
+		*/
 
-		function findString(str) {
+		var pageData = [
+			//Games
+			{id: "2048", keywords: ['2048'], recommendKeys: ['games leisure 2048 strategy']},
+			{id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja'], recommendKeys: ['games cardio cake fruit ninja tap']},
+			{id: "chess", keywords: ['chess'], recommendKeys: ['games leisure chess strategy']},
+			{id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino'], recommendKeys: ['games cardio chrome dino runner tap']},
+			{id: "colorsplosion", keywords: ['colorsplosion'], recommendKeys: ['games leisure colorsplosion color art']},
+			{id: "colorswirl", keywords: ['colorswirl'], recommendKeys: ['games leisure colorswirl color art']},
+			{id: "crossyroad", keywords: ['crossy road', 'crossyroad'], recommendKeys: ['games cardio crossy road runner tap']},
+			{id: "flappybird", keywords: ['flappy bird', 'flappybird'], recommendKeys: ['games cardio flappy bird tap']},
+			{id: "numberguessing", keywords: ['guess that number', 'guessthatnumber'], recommendKeys: ['games leisure guess that number strategy']},
+			{id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber'], recommendKeys: ['games leisure guess that number 2 strategy']},
+			{id: "hextris", keywords: ['hextris'], recommendKeys: ['games cardio hextris tap strategy']},
+			{id: "pacman", keywords: ['pac man', 'pac-man', 'pacman'], recommendKeys: ['games cardio pacman tap runner']},
+			{id: "santahatmixup", keywords: ['santa hat mixup', 'santa'], recommendKeys: ['games cardio santa hat mixup strategy']},
+			{id: "solitaire", keywords: ['solitaire'], recommendKeys: ['games leisure solitaire strategy']},
+			{id: "stack", keywords: ['stack'], recommendKeys: ['games cardio stack tap']},
+			{id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe'], recommendKeys: ['games leisure tic tac toe strategy']},
+			{id: "towertakedown", keywords: ['tower takedown', 'towertakedown'], recommendKeys: ['games leisure tower takedown strategy tap']},
+			//Resources
+			{id: 'calculator', keywords: ['calculator'], recommendKeys: ['resources desk calculator math']},
+			{id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms'], recommendKeys: ['resources communication connect mmessaging']},
+			{id: 'assistant', keywords: ['corey 2.0', 'assistant'], recommendKeys: ['resources desk assistant corey']},
+			{id: "corey-3.0", keywords: ['corey 3.0', 'corey'], recommendKeys: ['resources desk assistant corey']},
+			{id: "countdownstudio", keywords: ['countdown studio', 'count down studio'], recommendKeys: ['resources desk countdown studio']},
+			{id: "mmc", keywords: ['molar mass calculator'], recommendKeys: ['resources desk molar mass calculator math']},
+			{id: "notes", keywords: ['notes'], recommendKeys: ['resources desk notes office']},
+			{id: "vividly", keywords: ['vividly', 'facetime', 'video chat'], recommendKeys: ['resources communication vividly video chat']},
+			{id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms'], recommendKeys: ['resources communication web chat messaging']},
+			{id: "whiteboard", keywords: ['whiteboard'], recommendKeys: ['resources desk whiteboard office']},
+			//Miscellaneous
+			{id: "countdowns", keywords: ['countdowns'], recommendKeys: ['miscellaneous countdowns countdown']},
+			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous inspiration office']},
+			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['miscellaneous games cardio leisure more leaderboard strategy tap']},
+			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous games resources tech log new updates announcements website apps']},
+			{id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous games resources discord server new updates announcements communication apps']},
+			//More
+			{id: "about", keywords: ['about'], recommendKeys: ['more about zane website communication']},
+			{id: "archive", keywords: ['archive'], recommendKeys: ['more archive website apps']},
+			{id: "beta", keywords: ['beta'], recommendKeys: ['more beta website apps new updates']},
+			//Section ID
+			{id: "games", keywords: ['games']},
+			{id: "resources", keywords: ['resources']},
+			{id: "miscellaneous", keywords: ['miscellaneous']},
+			{id: "more", keywords: ['more']}
+		]
+
+		/*function findString(str) {
 			str = str.toLowerCase();
-			for (let key in searchKeys) {
-			    for (let innerkey in searchKeys[key]) {
-			      if (searchKeys[key][innerkey].includes(str)) {
+			for (let key in pageData) {
+			    for (let innerkey in pageData[key]) {
+			      if (pageData[key][innerkey].includes(str)) {
 			        //return [key, innerkey];
-			        return searchKeys[key].id;
+			        return pageData[key].id;
 			      }
 			    }
 		  }
 		  return 'No match';
+		}*/
+		function findString(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+				for(var i = 0; i<pageData[key].keywords.length; i++) {
+					if (pageData[key].keywords[i].includes(str)) {
+				       return pageData[key].id;
+				    }
+				}
+		  }
+		  return 'No match';
+		}
+
+		function trainRecommend() {
+
 		}
 
 
