@@ -700,7 +700,7 @@
 		.popup h2 {
 			text-align: center;
 		}
-		.popup input {
+		.popup input, .island input {
 			padding: 15px 30px;
 		    border-radius: 8px;
 		    border: none;
@@ -709,7 +709,7 @@
 		    margin: 20px 0;
 		    outline: none;
 		}
-		.popup button {
+		.popup button, .island button {
 			padding: 15px 30px;
 			border-radius: 8px;
 			border: none;
@@ -924,9 +924,9 @@
 				<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
 			</div>
 			<div class="island-content">
-				<h3>Bug Fix!</h3>
-				<p>Stack leaderboard scoring is fixed! New scores should now post to the leaderboard as expected.</p>
-				<button onclick="this.parentNode.parentNode.classList.remove('island')">OK!</button>
+				<h3>New!</h3>
+				<p class="island-inner">The search bar now has commands! search <code>--commands</code> for the list.</p>
+				<button class="island-close" onclick="this.parentNode.parentNode.classList.remove('island')">OK!</button>
 			</div>
 		</header>
 
@@ -1001,6 +1001,7 @@
 				<div class="inner">
 					<div class="list2"></div>
 					<div class="list1">
+						<h3>Continue</h3>
 						<ul>
 							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="noframe">
 								<div class="img"><img src="images/discord-icon.png"></div>
@@ -1335,7 +1336,8 @@
 		});
 		document.getElementById('usernameBox').addEventListener('click', function(e) {
 			//triggerPageTransition(function() {window.open('/embed?data-url=leaderboard');});
-			window.open('/embed?data-url=leaderboard');
+			//window.open('/embed?data-url=leaderboard');
+			openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
 		});
 
 		/*
@@ -1384,6 +1386,15 @@
 			setTimeout(function() {
 				document.querySelector('header').classList.add('island');
 			}, 5000);
+		}
+		function openIsland(title, content, buttonText) {
+			document.querySelector('header .island-content h3').innerHTML = title || "Announcement!";
+			document.querySelector('header .island-content .island-inner').innerHTML = content;
+			document.querySelector('header .island-content .island-close').innerHTML = buttonText || "Got It!";
+			document.querySelector('header').classList.add('island');
+		}
+		function closeIsland() {
+			document.querySelector('header').classList.remove('island');
 		}
 
 		/*
@@ -1610,18 +1621,23 @@
 
 		function setUsername() {
 			if(document.getElementById('username').value != "" && document.getElementById('username').value != null) {
-				document.querySelectorAll('h2, p, input, button').forEach(function(elem) {
+				/*document.querySelectorAll('h2, p, input, button').forEach(function(elem) {
 					elem.style.display="none";
 				});
-				document.getElementById('save-loader').style.display="block";
+				document.getElementById('save-loader').style.display="block";*/
+				document.querySelectorAll('#username, #saveuser').forEach(function(elem) {
+					elem.disabled = true;
+				});
 				localStorage.setItem('z_leaderboard_username', String(document.getElementById('username').value));
+				closeIsland();
 				setTimeout(function() {
-					document.querySelector('.popup').classList.remove('open');
+					//document.querySelector('.popup').classList.remove('open');
 					displayUsername(String(document.getElementById('username').value));
 					leaderboardName = String(document.getElementById('username').value);
-				}, 3000);
+				}, 1000);
 			} else {
-				document.querySelector('.popup p').innerHTML="Please enter a valid username.";
+				//document.querySelector('.popup p').innerHTML="Please enter a valid username.";
+				document.querySelector('.island .island-content h3').innerHTML="Please enter a valid username.";
 			}
 		}
 
@@ -1644,7 +1660,8 @@
 		*/
 		document.getElementById('search').addEventListener('keyup', function(e) {
 			if(e.keyCode == 13 || e.which == 13 || e.key == 'Enter') {
-				searchPage();
+				//searchPage();
+				runSearchCommand();
 			}
 		});
 		window.addEventListener('keydown', function(e) {
@@ -1653,7 +1670,8 @@
 				document.getElementById('search').focus();
 			}
 		});
-		document.querySelector('.search-icon').addEventListener('click', searchPage);
+		//document.querySelector('.search-icon').addEventListener('click', searchPage);
+		document.querySelector('.search-icon').addEventListener('click', runSearchCommand);
 
 		function searchPage() {
 			var searchStr = document.getElementById('search').value.toLowerCase();
@@ -1671,7 +1689,7 @@
 			} else if(searchStr == "") {
 				window.location='#';
 			} else {
-				alert('No Match Found');
+				alert('No App Found');
 			}
 			
 		}
@@ -1739,6 +1757,33 @@
 		  }
 		  return 'No match';
 		}*/
+		function runSearchCommand() {
+			var input = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '');
+			if(input.indexOf('--') >-1) {
+				switch(input.replace('--', '')) {
+					case 'help':
+						openIsland('Help', `<ul><li>Scroll to explore Zane's apps.</li><li>Search for an app in the search bar.</li><li>Click on a link to open the app.</li></ul>`, 'Got It!');
+						break;
+					case 'changelog':
+						openIsland('ChangeLog', `<ul><li>Bug fixes, searbar dynamic island widget.</li><li>2023 Spring Update.</li><li>Discord Server was published.</li></ul>`, 'OK!');
+						break;
+					case 'announcement':
+						openIsland('Bug Fix!', `Stack leaderboard scoring is fixed! New scores should now post to the leaderboard as expected.`, 'OK!');
+						break;
+					case 'commands':
+						openIsland('Commands', `<ul><code><li>--announcement</li><li>--changelog</li><li>--help</li><li>--username</li></code></ul>`, 'Got It!');
+						break;
+					case 'username':
+						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
+						break
+					default:
+						openIsland('No Command Found', `Please try a different command or seach Zane\'s Apps.`, 'OK!');
+						break;
+				}
+			} else {
+				searchPage();
+			}
+		}
 		function findString(str) {
 			str = str.toLowerCase();
 			for (let key in pageData) {
