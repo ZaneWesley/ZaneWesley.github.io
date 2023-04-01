@@ -392,6 +392,7 @@
     		background-image: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff);
     		-webkit-text-fill-color: transparent;
     		-webkit-background-clip: text;
+    		background-clip: text;
 		}
 		.ti-cursor {
 			display: none!important;
@@ -402,6 +403,7 @@
 			color: #44beff;
 			-webkit-text-fill-color: #44beff;
     		-webkit-background-clip: text;
+    		background-clip: text;
 			margin-left: -0.125em;
 			margin-right: -0.125em;
 		}
@@ -533,6 +535,7 @@
 		    border-radius: 8px;
 		    margin-bottom: 10px;
 		    -webkit-user-select: none;
+			user-select: none;
 		}
 		section .inner li:hover {
 			background-color: rgba(57, 73, 86, 0.9);
@@ -925,7 +928,7 @@
 			</div>
 			<div class="island-content">
 				<h3>New!</h3>
-				<p class="island-inner">The search bar now has commands! search <code>--commands</code> for the list.</p>
+				<p class="island-inner">The search bar now has commands! Search <code>>>commands</code> for the list.</p>
 				<button class="island-close" onclick="this.parentNode.parentNode.classList.remove('island')">OK!</button>
 			</div>
 		</header>
@@ -968,21 +971,21 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
-							<li data-id="discordserver" data-url="https://discord.gg/MsCmSZx3" class="li-link new noframe">
+							<li data-id="doodlejump" data-url="doodlejump" class="li-link new">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li data-id="discordserver"data-url="https://discord.gg/MsCmSZx3" class="li-link new noframe">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
-							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link new">
+							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link">
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
 							</li>
 							<li data-id="towertakedown" data-url="towertakedown" class="li-link">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
-							</li>
-							<li data-id="corey-3.0" data-url="corey-3.0" class="li-link">
-								<div class="img"><img src="corey-3.0/icon.png"></div>
-								<div class="name">Corey 3.0</div>
 							</li>
 						</ul>
 					</div>
@@ -1003,14 +1006,14 @@
 					<div class="list1">
 						<h3>Continue</h3>
 						<ul>
-							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="noframe">
+							<li data-id="doodlejump" data-url="doodlejump" class="new">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
-							<!--<li data-id="solitaire" data-url="solitaire">
-								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
-								<div class="name">Solitaire</div>
-							</li>-->
 							<li data-id="towertakedown" data-url="towertakedown">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
@@ -1019,10 +1022,6 @@
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
 								<div class="name">Cake Ninja</div>
 							</li>-->
-							<li data-id="2048" data-url="2048">
-								<div class="img"><img src="2048/icon.png"></div>
-								<div class="name">2048</div>
-							</li>
 						</ul>
 					</div>
 				</div>
@@ -1034,7 +1033,11 @@
 					<div class="list1">
 						<h3>Cardio</h3>
 						<ul>
-							<li data-id="santahatmixup" data-url="santahatmixup">
+							<li id="doodlejump" data-url="doodlejump" class="new">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li id="santahatmixup" data-url="santahatmixup">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
 							</li>
@@ -1071,11 +1074,11 @@
 					<div class="list2">
 						<h3>Leisure</h3>
 						<ul>
-							<li id="guessthatnumber" data-url="guessthatnumber" class="new">
+							<li id="guessthatnumber" data-url="guessthatnumber">
 								<div class="img"><img src="guessthatnumber/icon.png"></div>
 								<div class="name">Guess That Number 2</div>
 							</li>
-							<li id="towertakedown" data-url="towertakedown" class="new">
+							<li id="towertakedown" data-url="towertakedown">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
@@ -1118,7 +1121,7 @@
 					<div class="list1">
 						<h3>Desk Assistant</h3>
 						<ul>
-							<li id="corey-3.0" data-url="corey-3.0" class="new">
+							<li id="corey-3.0" data-url="corey-3.0">
 								<div class="img"><img src="corey-3.0/icon.png"></div>
 								<div class="name">Corey 3.0</div>
 							</li>
@@ -1155,7 +1158,7 @@
 								<div class="img"><img src="vividly/icon.png"></div>
 								<div class="name">Vividly</div>
 							</li>
-							<li id="connect" data-url="connect" class="newframe">
+							<li id="connect" data-url="connect">
 								<div class="img"><img src="connect/splash.svg"></div>
 								<div class="name">Connect</div>
 							</li>
@@ -1182,11 +1185,11 @@
 								<div class="img"><img src="images/inspiration-icon.png"></div>
 								<div class="name">Insperational Quotes Image Generator</div>
 							</li>
-							<li id="leaderboard" data-url="leaderboard">
+							<li id="leaderboard" data-url="leaderboard" class="noframe">
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
-							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="new">
+							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html">
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
 							</li>
@@ -1213,7 +1216,7 @@
 								<div class="img"><img src="images/home-icon.svg"></div>
 								<div class="name">App Archive</div>
 							</li>
-							<li id="beta" data-url="beta">
+							<li id="beta" data-url="beta" class="noframe">
 								<div class="img"><img src="images/beta-icon.png"></div>
 								<div class="name">BETA Page</div>
 							</li>
@@ -1759,23 +1762,23 @@
 		}*/
 		function runSearchCommand() {
 			var input = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '');
-			if(input.indexOf('--') >-1) {
-				switch(input.replace('--', '')) {
+			if(input.indexOf('>>') >-1) {
+				switch(input.replace('>>', '')) {
 					case 'help':
 						openIsland('Help', `<ul><li>Scroll to explore Zane's apps.</li><li>Search for an app in the search bar.</li><li>Click on a link to open the app.</li></ul>`, 'Got It!');
 						break;
 					case 'changelog':
-						openIsland('ChangeLog', `<ul><li>Bug fixes, searbar dynamic island widget.</li><li>2023 Spring Update.</li><li>Discord Server was published.</li></ul>`, 'OK!');
+						openIsland('ChangeLog', `<ul><li>Bug fixes, searchbar dynamic island widget.</li><li>2023 Spring Update.</li><li>Discord Server was published.</li></ul>`, 'OK!');
 						break;
 					case 'announcement':
 						openIsland('Bug Fix!', `Stack leaderboard scoring is fixed! New scores should now post to the leaderboard as expected.`, 'OK!');
 						break;
 					case 'commands':
-						openIsland('Commands', `<ul><code><li>--announcement</li><li>--changelog</li><li>--help</li><li>--username</li></code></ul>`, 'Got It!');
+						openIsland('Commands', `<ul><code><li>>>announcement</li><li>>>changelog</li><li>>>help</li><li>>>username</li></code></ul>`, 'Got It!');
 						break;
 					case 'username':
 						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
-						break
+						break;
 					default:
 						openIsland('No Command Found', `Please try a different command or seach Zane\'s Apps.`, 'OK!');
 						break;
