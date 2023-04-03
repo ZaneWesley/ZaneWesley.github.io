@@ -50,14 +50,17 @@ function __getHighScores__(game, num) {
             scoresArr = doc.data().score;
             var scoreId = `#${doc.data().game.replace('2048', 'score-2048')} .score`;
             var usernameId = `#${doc.data().game.replace('2048', 'score-2048')} .username`;
+            var timestampId = `#${doc.data().game.replace('2048', 'score-2048')} .date-posted`;
             //var timestampId = `#${doc.data().game.replace('2048', 'score-2048')} .timestamp`;
             document.querySelector(scoreId).innerHTML = doc.data().score;
             document.querySelector(usernameId).innerHTML = doc.data().username;
             //document.querySelector(timestampId).innerHTML = doc.data().timestamp;
-            console.log(doc.data().game, doc.data().timestamp.toDate());
+            if(doc.data().timestamp) console.log(doc.data().game, doc.data().timestamp.toDate());
+            if(doc.data().timestamp) document.querySelector(timestampId).innerHTML = doc.data().timestamp.toDate().__shortDate__();
         });
     })
     .catch((error) => {
+    	document.getElementById(game.replace('2048', 'score-2048')).classList.add('error');
         console.log("Error getting scores.", error);
     });
     return scoresArr;
