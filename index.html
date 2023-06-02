@@ -108,6 +108,9 @@
 			display: flex;
 			flex-direction: column;
 			min-height: 100vh;
+			width: 100%;
+			position: absolute;
+			z-index: 1;
 		}
 		header {
 		    position: sticky;
@@ -120,6 +123,7 @@
 		    align-items: center;
 		    /*width: 50%;*/
 		    width: 80px;
+		    height: 52px;
 		    margin: 0 auto;
 		    background: rgba(57, 73, 86, 0.7);
 		    border: 0.2rem solid rgba(57, 73, 86, 1);
@@ -128,10 +132,43 @@
 		    border-radius: 2rem;
 		    z-index: 11;
 		    animation: fadeIn 3s linear, searchAnim 1s ease 2.5s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
-		    animation-fill-mode: forwards;
+		    transition: all 0.5s cubic-bezier(0, 0, 0.61, 1.23);
 		}
 		header.menu-open {
 			display: none;
+		}
+		header.island {
+			height: 200px;
+		}
+		header.island ~ main {
+			margin-top: -150px;
+		}
+		header.island .search-bar {
+			display: none;
+		}
+		header.island .island-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			opacity: 1;
+		}
+		header .island-content {
+			display: none;
+			opacity: 0;
+			transition: 0.5s ease;
+    		transition-delay: 0.3s;
+		}
+		header .island-content button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: #2C2F33;
+			background-color: #44beff;
+			outline: none;
+			cursor: pointer;
 		}
 		header .search-bar {
 			width: 100%;
@@ -358,6 +395,7 @@
     		background-image: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff);
     		-webkit-text-fill-color: transparent;
     		-webkit-background-clip: text;
+    		background-clip: text;
 		}
 		.ti-cursor {
 			display: none!important;
@@ -368,6 +406,7 @@
 			color: #44beff;
 			-webkit-text-fill-color: #44beff;
     		-webkit-background-clip: text;
+    		background-clip: text;
 			margin-left: -0.125em;
 			margin-right: -0.125em;
 		}
@@ -379,7 +418,7 @@
 		.down-arrow .arrows {
 			width: 60px;
 			height: 72px;
-			position: absolute;
+			position: relative;
 			left: 50%;
 			margin-left: -30px;
 			bottom: 20px;
@@ -499,10 +538,18 @@
 		    border-radius: 8px;
 		    margin-bottom: 10px;
 		    -webkit-user-select: none;
+			user-select: none;
 		}
+		/*section .inner li, section .inner li .img, .newgrid-inner .new-list li, .newgrid-inner .new-list li .img img {
+			/*filter: brightness(0.8) hue-rotate(350deg) saturate(3) blur(8px) contrast(0.6);*//*
+			filter: blur(0.2px) brightness(1.1) hue-rotate(5deg) opacity(0.9) saturate(1.3) sepia(0.4) url('#dark-blue-sepia');
+		}
+		section .inner li:hover, .newgrid-inner .new-list li:hover {
+			filter: none;
+		}*/
 		section .inner li:hover {
 			background-color: rgba(57, 73, 86, 0.9);
-			transform: scale(0.9);
+			transform: scale(0.9) rotate(-2deg);
 		}
 		section .inner li .img {
 			width: 50px;
@@ -546,7 +593,7 @@
 			flex-direction: column;
 		}
 		.newgrid-inner .new-list li:hover {
-			transform: scale(0.9);
+			transform: scale(0.9) rotate(-2deg);
 		}
 		.newgrid-inner .new-list li .img {
 			border-radius: 12px;
@@ -666,7 +713,7 @@
 		.popup h2 {
 			text-align: center;
 		}
-		.popup input {
+		.popup input, .island input {
 			padding: 15px 30px;
 		    border-radius: 8px;
 		    border: none;
@@ -675,7 +722,7 @@
 		    margin: 20px 0;
 		    outline: none;
 		}
-		.popup button {
+		.popup button, .island button {
 			padding: 15px 30px;
 			border-radius: 8px;
 			border: none;
@@ -700,6 +747,7 @@
 			padding: 0.5em 1em;
 			animation: fadeIn 3s linear;
 			cursor: pointer;
+			z-index: 11;
 		}
 		#usernameBox .head {
 			font-size: 0.5em;
@@ -709,6 +757,12 @@
 			text-overflow: ellipsis;
 			overflow: hidden;
 			white-space: nowrap;
+		}
+
+		canvas#bg-anim {
+			position: fixed;
+			top: 0;
+			left: 0;
 		}
 
 		#splash {
@@ -769,12 +823,12 @@
 			right: 110%;
 		}
 		.transition-layer--2 {
-			background: #7752ff;
-			transition-delay: 0.3s;
-		}
-		.transition-layer--3 {
 			background: #44beff;
 			transition-delay: 0.2s;
+		}
+		.transition-layer--3 {
+			background: #111827;
+			transition-delay: 0.3s;
 		}
 		.transition-layer--3.active {
 			right: 0;
@@ -833,6 +887,9 @@
 				0% {width: 80px;}
 				100% {width: 75%;}
 			}
+			header.island {
+				height: 250px;
+			}
 			#usernameBox {
 				display: none;
 			}
@@ -886,6 +943,11 @@
 				<input id="search" type="text" autocomplete="off" placeholder="Search Zane's Apps">
 				<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
 			</div>
+			<div class="island-content">
+				<h3>New!</h3>
+				<p class="island-inner">The search bar now has commands! Search <code>>>commands</code> for the list.</p>
+				<button class="island-close" onclick="this.parentNode.parentNode.classList.remove('island')">OK!</button>
+			</div>
 		</header>
 
 		<!--<div class="menu-btn"><i class="fa-regular fa-bars-staggered"></i></div>-->
@@ -926,11 +988,15 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
-							<li data-id="discordserver" data-url="https://discord.gg/MsCmSZx3" class="li-link new noframe">
+							<li data-id="doodlejump" data-url="doodlejump" class="li-link new">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li data-id="discordserver"data-url="https://discord.gg/MsCmSZx3" class="li-link new noframe">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
-							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link new">
+							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link">
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
 							</li>
@@ -938,36 +1004,33 @@
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
-							<li data-id="corey-3.0" data-url="corey-3.0" class="li-link">
-								<div class="img"><img src="corey-3.0/icon.png"></div>
-								<div class="name">Corey 3.0</div>
-							</li>
 						</ul>
 					</div>
 				</div>
 			</section>
 
-			<section id="news">
+			<!--<section id="news">
 				<h2>News Flash!</h2>
 				<p>ZaneWesley is now on Discord! Join the server to get notified with updates, announcements and to give your feedback in the Community channels!</p>
 				<br>
 				<button data-url="https://discord.gg/4XEWxQ9Yvn" onclick="window.open(this.getAttribute('data-url'))">Join Server</button>
-			</section>
+			</section>-->
 
 			<section id="foryou">
 				<h2><span class="before">01.</span>For You</h2>
 				<div class="inner">
 					<div class="list2"></div>
 					<div class="list1">
+						<h3>Continue</h3>
 						<ul>
-							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="noframe">
+							<li data-id="doodlejump" data-url="doodlejump" class="new">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
-							<!--<li data-id="solitaire" data-url="solitaire">
-								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
-								<div class="name">Solitaire</div>
-							</li>-->
 							<li data-id="towertakedown" data-url="towertakedown">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
@@ -976,10 +1039,6 @@
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
 								<div class="name">Cake Ninja</div>
 							</li>-->
-							<li data-id="2048" data-url="2048">
-								<div class="img"><img src="2048/icon.png"></div>
-								<div class="name">2048</div>
-							</li>
 						</ul>
 					</div>
 				</div>
@@ -991,7 +1050,11 @@
 					<div class="list1">
 						<h3>Cardio</h3>
 						<ul>
-							<li data-id="santahatmixup" data-url="santahatmixup">
+							<li id="doodlejump" data-url="doodlejump" class="new">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li id="santahatmixup" data-url="santahatmixup">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
 							</li>
@@ -1028,11 +1091,11 @@
 					<div class="list2">
 						<h3>Leisure</h3>
 						<ul>
-							<li id="guessthatnumber" data-url="guessthatnumber" class="new">
+							<li id="guessthatnumber" data-url="guessthatnumber">
 								<div class="img"><img src="guessthatnumber/icon.png"></div>
 								<div class="name">Guess That Number 2</div>
 							</li>
-							<li id="towertakedown" data-url="towertakedown" class="new">
+							<li id="towertakedown" data-url="towertakedown">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
@@ -1075,7 +1138,7 @@
 					<div class="list1">
 						<h3>Desk Assistant</h3>
 						<ul>
-							<li id="corey-3.0" data-url="corey-3.0" class="new">
+							<li id="corey-3.0" data-url="corey-3.0">
 								<div class="img"><img src="corey-3.0/icon.png"></div>
 								<div class="name">Corey 3.0</div>
 							</li>
@@ -1112,7 +1175,7 @@
 								<div class="img"><img src="vividly/icon.png"></div>
 								<div class="name">Vividly</div>
 							</li>
-							<li id="connect" data-url="connect" class="newframe">
+							<li id="connect" data-url="connect">
 								<div class="img"><img src="connect/splash.svg"></div>
 								<div class="name">Connect</div>
 							</li>
@@ -1139,11 +1202,11 @@
 								<div class="img"><img src="images/inspiration-icon.png"></div>
 								<div class="name">Insperational Quotes Image Generator</div>
 							</li>
-							<li id="leaderboard" class="newframe" data-url="leaderboard">
+							<li id="leaderboard" data-url="leaderboard" class="noframe">
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
-							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="new">
+							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html">
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
 							</li>
@@ -1170,7 +1233,7 @@
 								<div class="img"><img src="images/home-icon.svg"></div>
 								<div class="name">App Archive</div>
 							</li>
-							<li id="beta" class="newframe" data-url="beta">
+							<li id="beta" data-url="beta" class="noframe">
 								<div class="img"><img src="images/beta-icon.png"></div>
 								<div class="name">BETA Page</div>
 							</li>
@@ -1187,6 +1250,8 @@
 			<p>We apprecaite your feedback! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
 		</footer>
 	</div>
+
+	<canvas id="bg-anim"></canvas>
 
 	<!-- Infobar -->
 	<!--<iframe id="infobar" src="infobar.html"></iframe>-->
@@ -1213,6 +1278,46 @@
 		</svg>
 	</div>-->
 
+	<!--<div id="island">
+		<h2>Welcome</h2>
+	</div>
+
+	<style>
+		#island {
+			position: fixed;
+		    left: 0;
+		    top: 0;
+		    right: 0;
+		    display: flex;
+		    overflow: hidden;
+		    width: 31%;/*82%*/
+		    height: 52pt;/*78px*/
+		    margin-top: 28px;
+		    margin-right: auto;
+		    margin-left: auto;
+		    padding: 0;
+		    justify-content: center;
+		    align-items: center;
+		    border-radius: 100px;
+		    background-color: #000000;
+		    color: #ffffff;
+		    z-index: 12;
+		    transition: width 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), height 0.5s ease-out;
+		}
+		#island.bar {
+			width: 69%;/*47%, 82%*/
+		}
+		#island.rectangleSmall {
+			width: 92%;
+			height: 160px;
+		}
+		#island.rectangle {
+			width: 92%;
+			height: 450px;
+		}
+	</style>-->
+
+
 	<div class="transition-layer"></div>
 	<div class="transition-layer transition-layer--2"></div>
 	<div class="transition-layer transition-layer--3"></div>
@@ -1235,6 +1340,7 @@
 			document.querySelector('.burger').classList.toggle('active');
 			document.querySelector('main').classList.toggle('menu-open');
 			document.querySelector('header').classList.toggle('menu-open');
+			document.querySelector('header').classList.remove('island');
 		});
 		function closeMenu() {
 			document.querySelector('.menu').classList.toggle('open');
@@ -1253,7 +1359,8 @@
 		});
 		document.getElementById('usernameBox').addEventListener('click', function(e) {
 			//triggerPageTransition(function() {window.open('/embed?data-url=leaderboard');});
-			window.open('/embed?data-url=leaderboard');
+			//window.open('/embed?data-url=leaderboard');
+			openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
 		});
 
 		/*
@@ -1286,6 +1393,7 @@
 		.type("Apps", {delay: 3000})
 		.pause(3000)
 		.go();
+
 		//Headers
 		document.querySelectorAll('#new h2, #foryou h2, #games h2, #resources h2, #miscellaneous h2, #more h2').forEach(function(elem) {
 			new TypeIt(elem, {
@@ -1295,6 +1403,34 @@
 				lifeLike: true,
 			}).go();
 		});
+
+		//Searchbar Dynamic Island
+		var lastPopup = new Date(localStorage.getItem('z_popup_timestamp'));
+		document.body.onload = function() {
+			setTimeout(function() {
+				if(Math.abs(new Date().getTime() - lastPopup.getTime()) > 604800000) {//604800000 = 1 week
+					document.querySelector('header').classList.add('island');
+					lastPopup = localStorage.setItem('z_popup_timestamp', new Date());
+				}
+			}, 5000);
+		}
+		function openIsland(title, content, buttonText) {
+			document.querySelector('header .island-content h3').innerHTML = title || "Announcement!";
+			document.querySelector('header .island-content .island-inner').innerHTML = content;
+			document.querySelector('header .island-content .island-close').innerHTML = buttonText || "Got It!";
+			document.querySelector('header').classList.add('island');
+		}
+		function closeIsland() {
+			document.querySelector('header').classList.remove('island');
+		}
+
+		//Offline
+		window.addEventListener("offline", function(e) {
+			openIsland('Offline', `Oops! It looks like you\'re offline. Please restore your internet connection to contine.`, 'OK');
+		});
+		if(navigator.onLine == false) {
+			openIsland('Offline', `Oops! It looks like you\'re offline. Please restore your internet connection to contine.`, 'OK');
+		}
 
 		/*
 			* Context Menu *
@@ -1520,18 +1656,23 @@
 
 		function setUsername() {
 			if(document.getElementById('username').value != "" && document.getElementById('username').value != null) {
-				document.querySelectorAll('h2, p, input, button').forEach(function(elem) {
+				/*document.querySelectorAll('h2, p, input, button').forEach(function(elem) {
 					elem.style.display="none";
 				});
-				document.getElementById('save-loader').style.display="block";
+				document.getElementById('save-loader').style.display="block";*/
+				document.querySelectorAll('#username, #saveuser').forEach(function(elem) {
+					elem.disabled = true;
+				});
 				localStorage.setItem('z_leaderboard_username', String(document.getElementById('username').value));
+				closeIsland();
 				setTimeout(function() {
-					document.querySelector('.popup').classList.remove('open');
+					//document.querySelector('.popup').classList.remove('open');
 					displayUsername(String(document.getElementById('username').value));
 					leaderboardName = String(document.getElementById('username').value);
-				}, 3000);
+				}, 1000);
 			} else {
-				document.querySelector('.popup p').innerHTML="Please enter a valid username.";
+				//document.querySelector('.popup p').innerHTML="Please enter a valid username.";
+				document.querySelector('.island .island-content h3').innerHTML="Please enter a valid username.";
 			}
 		}
 
@@ -1554,7 +1695,8 @@
 		*/
 		document.getElementById('search').addEventListener('keyup', function(e) {
 			if(e.keyCode == 13 || e.which == 13 || e.key == 'Enter') {
-				searchPage();
+				//searchPage();
+				runSearchCommand();
 			}
 		});
 		window.addEventListener('keydown', function(e) {
@@ -1563,7 +1705,8 @@
 				document.getElementById('search').focus();
 			}
 		});
-		document.querySelector('.search-icon').addEventListener('click', searchPage);
+		//document.querySelector('.search-icon').addEventListener('click', searchPage);
+		document.querySelector('.search-icon').addEventListener('click', runSearchCommand);
 
 		function searchPage() {
 			var searchStr = document.getElementById('search').value.toLowerCase();
@@ -1571,81 +1714,335 @@
 				elem.classList.remove('search-result-highlight');
 			});
 			var searchRes = findString(searchStr);
-			if(searchRes != 'No match') {
-				console.log(searchRes);
+			if(searchRes != 'No match' && searchStr != "") {
 				if(document.getElementById(searchRes).nodeName == "LI") {
 					document.getElementById(searchRes).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
 					document.getElementById(searchRes).classList.add('search-result-highlight');
 				} else {
 					window.location=`#${searchRes}`;
 				}
+			} else if(searchStr == "") {
+				window.location='#';
 			} else {
-				alert('No Match Found');
+				//alert('No App Found');
+				openIsland('No Result', `No matching app found.`, 'Close');
 			}
 			
 		}
 
-		var searchKeys = {
-			//Games
-			'2048': {id: "2048", keywords: ['2048']},
-			'Cake Ninja': {id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja']},
-			'Chess': {id: "chess", keywords: ['chess']},
-			'Chrome Dino Runner': {id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino']},
-			'Colorsplosion': {id: "colorsplosion", keywords: ['colorsplosion']},
-			'Colorswirl': {id: "colorswirl", keywords: ['colorswirl']},
-			'Crossy Road': {id: "crossyroad", keywords: ['crossy road', 'crossyroad']},
-			'Flappy Bird': {id: "flappybird", keywords: ['flappy bird', 'flappybird']},
-			'Guess That Number 1': {id: "numberguessing", keywords: ['guess that number', 'guessthatnumber']},
-			'Guess That Number 2': {id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber']},
-			'Hextris': {id: "hextris", keywords: ['hextris']},
-			'Pac Man': {id: "pacman", keywords: ['pac man', 'pac-man', 'pacman']},
-			'Santa Hat Mixup': {id: "santahatmixup", keywords: ['santa hat mixup', 'santa']},
-			'Solitaire': {id: "solitaire", keywords: ['solitaire']},
-			'Stack': {id: "stack", keywords: ['stack']},
-			'Tic Tac Toe': {id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe']},
-			'Tower Takedown': {id: "towertakedown", keywords: ['tower takedown', 'towertakedown']},
-			//Resources
-			'Calculator': {id: 'calculator', keywords: ['calculator']},
-			'Connect': {id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms']},
-			'Corey 2.0': {id: 'assistant', keywords: ['corey 2.0', 'assistant']},
-			'Corey 3.0': {id: "corey-3.0", keywords: ['corey 3.0', 'corey']},
-			'Countdown Studio': {id: "countdownstudio", keywords: ['countdown studio', 'count down studio']},
-			'Molar Mass Calculator': {id: "mmc", keywords: ['molar mass calculator']},
-			'Notes': {id: "notes", keywords: ['notes']},
-			'Vividly': {id: "vividly", keywords: ['vividly', 'facetime', 'video chat']},
-			'Web Chat': {id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms']},
-			'Whiteboard': {id: "whiteboard", keywords: ['whiteboard']},
-			//Miscellaneous
-			'Countdowns': {id: "countdowns", keywords: ['countdowns']},
-			'Insperational Quotes Generator': {id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes']},
-			'Leaderboard': {id: "leaderboard", keywords: ['leaderboard']},
-			'Tech Log': {id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new']},
-			'Discord Server': {id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server']},
-			//More
-			'About': {id: "about", keywords: ['about']},
-			'App Archive': {id: "archive", keywords: ['archive']},
-			'BETA': {id: "beta", keywords: ['beta']},
-			//Section ID
-			'Games': {id: "games", keywords: ['games']},
-			'Resources': {id: "resources", keywords: ['resources']},
-			'Miscellaneous': {id: "miscellaneous", keywords: ['miscellaneous']},
-			'More': {id: "more", keywords: ['more']}
-		}
+		/*
+			* PAGE DATA HANDLERS *
+		*/
 
-		function findString(str) {
+		var pageData = [
+			//Games
+			{id: "2048", keywords: ['2048'], recommendKeys: ['games leisure 2048 strategy']},
+			{id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja'], recommendKeys: ['games cardio cake fruit ninja tap']},
+			{id: "chess", keywords: ['chess'], recommendKeys: ['games leisure chess strategy']},
+			{id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino'], recommendKeys: ['games cardio chrome dino runner tap']},
+			{id: "colorsplosion", keywords: ['colorsplosion'], recommendKeys: ['games leisure colorsplosion color art']},
+			{id: "colorswirl", keywords: ['colorswirl'], recommendKeys: ['games leisure colorswirl color art']},
+			{id: "crossyroad", keywords: ['crossy road', 'crossyroad'], recommendKeys: ['games cardio crossy road runner tap']},
+			{id: "flappybird", keywords: ['flappy bird', 'flappybird'], recommendKeys: ['games cardio flappy bird tap']},
+			{id: "numberguessing", keywords: ['guess that number', 'guessthatnumber'], recommendKeys: ['games leisure guess that number strategy']},
+			{id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber'], recommendKeys: ['games leisure guess that number 2 strategy']},
+			{id: "hextris", keywords: ['hextris'], recommendKeys: ['games cardio hextris tap strategy']},
+			{id: "pacman", keywords: ['pac man', 'pac-man', 'pacman'], recommendKeys: ['games cardio pacman tap runner']},
+			{id: "santahatmixup", keywords: ['santa hat mixup', 'santa'], recommendKeys: ['games cardio santa hat mixup strategy']},
+			{id: "solitaire", keywords: ['solitaire'], recommendKeys: ['games leisure solitaire strategy']},
+			{id: "stack", keywords: ['stack'], recommendKeys: ['games cardio stack tap']},
+			{id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe'], recommendKeys: ['games leisure tic tac toe strategy']},
+			{id: "towertakedown", keywords: ['tower takedown', 'towertakedown'], recommendKeys: ['games leisure tower takedown strategy tap']},
+			//Resources
+			{id: 'calculator', keywords: ['calculator'], recommendKeys: ['resources desk calculator math']},
+			{id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms'], recommendKeys: ['resources communication connect mmessaging']},
+			{id: 'assistant', keywords: ['corey 2.0', 'assistant'], recommendKeys: ['resources desk assistant corey']},
+			{id: "corey-3.0", keywords: ['corey 3.0', 'corey'], recommendKeys: ['resources desk assistant corey']},
+			{id: "countdownstudio", keywords: ['countdown studio', 'count down studio'], recommendKeys: ['resources desk countdown studio']},
+			{id: "mmc", keywords: ['molar mass calculator'], recommendKeys: ['resources desk molar mass calculator math']},
+			{id: "notes", keywords: ['notes'], recommendKeys: ['resources desk notes office']},
+			{id: "vividly", keywords: ['vividly', 'facetime', 'video chat'], recommendKeys: ['resources communication vividly video chat']},
+			{id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms'], recommendKeys: ['resources communication web chat messaging']},
+			{id: "whiteboard", keywords: ['whiteboard'], recommendKeys: ['resources desk whiteboard office']},
+			//Miscellaneous
+			{id: "countdowns", keywords: ['countdowns'], recommendKeys: ['miscellaneous countdowns countdown']},
+			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous inspiration office']},
+			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['miscellaneous games cardio leisure more leaderboard strategy tap']},
+			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous games resources tech log new updates announcements website apps']},
+			{id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous games resources discord server new updates announcements communication apps']},
+			//More
+			{id: "about", keywords: ['about'], recommendKeys: ['more about zane website communication']},
+			{id: "archive", keywords: ['archive'], recommendKeys: ['more archive website apps']},
+			{id: "beta", keywords: ['beta'], recommendKeys: ['more beta website apps new updates']},
+			//Section ID
+			{id: "games", keywords: ['games']},
+			{id: "resources", keywords: ['resources']},
+			{id: "miscellaneous", keywords: ['miscellaneous']},
+			{id: "more", keywords: ['more']}
+		]
+
+		/*function findString(str) {
 			str = str.toLowerCase();
-			for (let key in searchKeys) {
-			    for (let innerkey in searchKeys[key]) {
-			      if (searchKeys[key][innerkey].includes(str)) {
+			for (let key in pageData) {
+			    for (let innerkey in pageData[key]) {
+			      if (pageData[key][innerkey].includes(str)) {
 			        //return [key, innerkey];
-			        return searchKeys[key].id;
+			        return pageData[key].id;
 			      }
 			    }
 		  }
 		  return 'No match';
+		}*/
+		function runSearchCommand() {
+			var input = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '');
+			if(input.indexOf('>>') >-1) {
+				switch(input.replace('>>', '')) {
+					case 'help':
+						openIsland('Help', `<ul><li>Scroll to explore Zane's apps.</li><li>Search for an app in the search bar.</li><li>Click on a link to open the app.</li></ul>`, 'Got It!');
+						break;
+					case 'changelog':
+						openIsland('ChangeLog', `<ul><li>Bug fixes, searchbar dynamic island widget.</li><li>2023 Spring Update.</li><li>Discord Server was published.</li></ul>`, 'OK!');
+						break;
+					case 'announcement':
+						openIsland('Bug Fix!', `Stack leaderboard scoring is fixed! New scores should now post to the leaderboard as expected.`, 'OK!');
+						break;
+					case 'commands':
+						openIsland('Commands', `<ul><code><li>>>announcement</li><li>>>changelog</li><li>>>help</li><li>>>username</li></code></ul>`, 'Got It!');
+						break;
+					case 'username':
+						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
+						break;
+					default:
+						openIsland('No Command Found', `Please try a different command or seach Zane\'s Apps.`, 'OK!');
+						break;
+				}
+			} else {
+				searchPage();
+			}
+		}
+		function findString(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+				for(var i = 0; i<pageData[key].keywords.length; i++) {
+					if (pageData[key].keywords[i].includes(str)) {
+				       return pageData[key].id;
+				    }
+				}
+		  }
+		  return 'No match';
 		}
 
+		function trainRecommend() {
 
+		}
+
+		/*
+			* BACKGROUND ANIMATION *
+		*/
+		var canvas = document.querySelector('#bg-anim');
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		var ctx = canvas.getContext('2d');
+		var count = canvas.height;
+		var bubbles = [];
+		var bubbleCount = 5;//20
+		var bubbleSpeed = 0.5;//1
+		var popLines = 6;//6
+		var popDistance = 100;//40
+		var mouseOffset = {
+			x: 0,
+			y: 0
+		}
+		//Loop
+		function animate() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			//draw bubbles
+			ctx.beginPath();
+			for (var i = 0; i < bubbles.length; i++) {
+			// first num = distance between waves
+			// second num = wave height
+			// third num = move the center of the wave away from the edge
+			bubbles[i].position.x = Math.sin(bubbles[i].count/bubbles[i].distanceBetweenWaves) * 50 + bubbles[i].xOff;
+			bubbles[i].position.y = bubbles[i].count;
+			bubbles[i].render();
+			if(bubbles[i].count < 0 - bubbles[i].radius) {
+				bubbles[i].count = canvas.height + bubbles[i].yOff;
+			} else {
+				bubbles[i].count -= bubbleSpeed;
+			}
+			}
+			//On bubble hover
+			for (var i = 0; i < bubbles.length; i++) {
+				if(mouseOffset.x > bubbles[i].position.x - bubbles[i].radius && mouseOffset.x < bubbles[i].position.x + bubbles[i].radius) {
+					if(mouseOffset.y > bubbles[i].position.y - bubbles[i].radius && mouseOffset.y < bubbles[i].position.y + bubbles[i].radius) {
+						for (var a = 0; a < bubbles[i].lines.length; a++) {
+							popDistance = bubbles[i].radius * 0.5;
+							bubbles[i].lines[a].popping = true;
+							bubbles[i].popping = true;
+						}
+					}
+				}
+			}
+			window.requestAnimationFrame(animate);
+		}
+		//Bubble contructor
+		var createBubble = function() {
+			this.position = {x: 0, y: 0};
+			this.radius = 8 + Math.random() * 6;
+			this.xOff = Math.random() * canvas.width - this.radius;
+			this.yOff = Math.random() * canvas.height;
+			this.distanceBetweenWaves = 50 + Math.random() * 40;
+			this.count = canvas.height + this.yOff;
+			this.color = '#8bc9ee';
+			this.lines = [];
+			this.popping = false;
+			this.maxRotation = 85;
+			this.rotation = Math.floor(Math.random() * (this.maxRotation - (this.maxRotation * -1))) + (this.maxRotation * -1);
+			this.rotationDirection = 'forward';
+
+			// Populate Lines
+			for (var i = 0; i < popLines; i++) {
+			var tempLine = new createLine();
+				tempLine.bubble = this;
+				tempLine.index = i;
+
+			this.lines.push(tempLine);
+			}
+
+			this.resetPosition = function() {
+			this.position = {x: 0, y: 0};
+			this.radius = 8 + Math.random() * 6;
+			this.xOff = Math.random() * canvas.width - this.radius;
+			this.yOff = Math.random() * canvas.height;
+			this.distanceBetweenWaves = 50 + Math.random() * 40;
+			this.count = canvas.height + this.yOff;
+			this.popping = false;
+			}
+
+			// Render the circles
+			this.render = function() {
+			if(this.rotationDirection === 'forward') {
+				if(this.rotation < this.maxRotation) {
+				this.rotation++;
+				} else {
+				this.rotationDirection = 'backward';
+				}
+			} else {
+				if(this.rotation > this.maxRotation * -1) {
+				this.rotation--;
+				} else {
+				this.rotationDirection = 'forward';
+				}
+			}
+
+			ctx.save();
+			ctx.translate(this.position.x, this.position.y);
+			ctx.rotate(this.rotation*Math.PI/180);
+
+			if(!this.popping) {
+				ctx.beginPath();
+				ctx.strokeStyle = '#8bc9ee';
+				ctx.lineWidth = 1;
+				ctx.arc(0, 0, this.radius - 3, 0, Math.PI*1.5, true);
+				ctx.stroke();
+
+				ctx.beginPath();
+				ctx.arc(0, 0, this.radius, 0, Math.PI*2, false);
+				ctx.stroke();
+			}
+			
+			ctx.restore();
+
+			// Draw the lines
+			for (var a = 0; a < this.lines.length; a++) {
+				if(this.lines[a].popping) {
+				if(this.lines[a].lineLength < popDistance && !this.lines[a].inversePop) {
+					this.lines[a].popDistance += 0.06;
+				} else {
+					if(this.lines[a].popDistance >= 0) {
+					this.lines[a].inversePop = true;
+					this.lines[a].popDistanceReturn += 1;
+					this.lines[a].popDistance -= 0.03;
+					} else {
+					this.lines[a].resetValues();
+					this.resetPosition();
+					}
+				}
+
+				this.lines[a].updateValues();
+				this.lines[a].render();
+				}
+			}
+			}
+		}
+		//Populate Bubbles
+		for (var i = 0; i < bubbleCount; i++) {
+			var tempBubble = new createBubble();
+
+			bubbles.push(tempBubble);
+		}
+		//Line Contructor
+		function createLine() {
+			this.lineLength = 0;
+			this.popDistance = 0;
+			this.popDistanceReturn = 0;
+			this.inversePop = false; // When the lines reach full length they need to shrink into the end position
+			this.popping = false;
+
+			this.resetValues = function() {
+			this.lineLength = 0;
+			this.popDistance = 0;
+			this.popDistanceReturn = 0;
+			this.inversePop = false;
+			this.popping = false;
+
+			this.updateValues();
+			}
+
+			this.updateValues = function() {
+			this.x = this.bubble.position.x + (this.bubble.radius + this.popDistanceReturn) * Math.cos(2 * Math.PI * this.index / this.bubble.lines.length);
+			this.y = this.bubble.position.y + (this.bubble.radius + this.popDistanceReturn) * Math.sin(2 * Math.PI * this.index / this.bubble.lines.length);
+			this.lineLength = this.bubble.radius * this.popDistance;
+			this.endX = this.lineLength;
+			this.endY = this.lineLength;
+			}
+
+			this.render = function() {
+			this.updateValues();
+
+			ctx.beginPath();
+			ctx.strokeStyle = '#8bc9ee';
+			ctx.lineWidth = 2;
+			ctx.moveTo(this.x, this.y);
+			if(this.x < this.bubble.position.x) {
+				this.endX = this.lineLength * -1;
+			}
+			if(this.y < this.bubble.position.y) {
+				this.endY = this.lineLength * -1;
+			}
+			if(this.y === this.bubble.position.y) {
+				this.endY = 0;
+			}
+			if(this.x === this.bubble.position.x) {
+				this.endX = 0;
+			}
+			ctx.lineTo(this.x + this.endX, this.y + this.endY);
+			ctx.stroke();
+			};
+		}
+		//Resize event
+		canvas.addEventListener('mousemove', mouseMove);
+		function mouseMove(e) {
+			mouseOffset.x = e.offsetX;
+			mouseOffset.y = e.offsetY;
+		}
+		window.addEventListener('resize', function() {
+			canvas.width = document.body.clientWidth;
+			canvas.height = document.body.clientHeight;
+		});
+		setTimeout(function() {window.requestAnimationFrame(animate);}, 3000);
+
+		//Trigger Init Functions
 		loadAppHistory();
 		setHandlers();
 	</script>
