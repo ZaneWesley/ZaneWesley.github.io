@@ -43,7 +43,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>BETA | Zane's Apps | Spring Update</title>
+	<title>Zane's Apps | Spring Update</title>
 
 	<style>
 		* {
@@ -108,6 +108,7 @@
 			display: flex;
 			flex-direction: column;
 			min-height: 100vh;
+			width: 100%;
 			position: absolute;
 			z-index: 1;
 		}
@@ -168,6 +169,15 @@
 			background-color: #44beff;
 			outline: none;
 			cursor: pointer;
+		}
+		header.island .button-wrapper {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			width: 50%;
+		}
+		header.island .button-wrapper .other {
+			background: #44ffc4;
 		}
 		header .search-bar {
 			width: 100%;
@@ -746,6 +756,7 @@
 			padding: 0.5em 1em;
 			animation: fadeIn 3s linear;
 			cursor: pointer;
+			z-index: 11;
 		}
 		#usernameBox .head {
 			font-size: 0.5em;
@@ -888,6 +899,9 @@
 			header.island {
 				height: 250px;
 			}
+			header.island .button-wrapper {
+				width: 100%;
+			}
 			#usernameBox {
 				display: none;
 			}
@@ -942,9 +956,15 @@
 				<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
 			</div>
 			<div class="island-content">
-				<h3>New!</h3>
-				<p class="island-inner">The search bar now has commands! Search <code>>>commands</code> for the list.</p>
-				<button class="island-close" onclick="this.parentNode.parentNode.classList.remove('island')">OK!</button>
+				<h3>Update v9.3.1</h3>
+				<p class="island-inner">
+					- Apps now have descriptions. Click on them to view
+					<br>- The search bar now has commands. Search <code>>>commands</code> for the list.
+				</p>
+				<div class="button-wrapper">
+					<button class="other" style="display: none">OK!</button>
+					<button class="island-close" onclick="closeIsland()">OK!</button>
+				</div>
 			</div>
 		</header>
 
@@ -986,19 +1006,19 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
-							<li data-id="doodlejump" data-url="doodlejump" class="li-link new">
+							<li data-id="doodlejump" data-url="doodlejump" class="li-link new" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
 								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
 								<div class="name">Doodle Jump</div>
 							</li>
-							<li data-id="discordserver"data-url="https://discord.gg/MsCmSZx3" class="li-link new noframe">
+							<li data-id="discordserver"data-url="https://discord.gg/4XEWxQ9Yvn" class="li-link new noframe" data-desc="Join ZaneWesley's Discord server!">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
-							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link">
+							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
 							</li>
-							<li data-id="towertakedown" data-url="towertakedown" class="li-link">
+							<li data-id="towertakedown" data-url="towertakedown" class="li-link" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
@@ -1007,29 +1027,36 @@
 				</div>
 			</section>
 
-			<section id="news">
+			<!--<section id="news">
 				<h2>News Flash!</h2>
 				<p>ZaneWesley is now on Discord! Join the server to get notified with updates, announcements and to give your feedback in the Community channels!</p>
 				<br>
 				<button data-url="https://discord.gg/4XEWxQ9Yvn" onclick="window.open(this.getAttribute('data-url'))">Join Server</button>
-			</section>
+			</section>-->
 
 			<section id="foryou">
 				<h2><span class="before">01.</span>For You</h2>
 				<div class="inner">
-					<div class="list2"></div>
-					<div class="list1">
+					<div id="recommended" class="list1">
+						<h3>Recommended</h3>
+						<ul>
+							<li data-url="#" class="noframe" style="pointer-events: none;">
+								<div class="img"><img src="images/icon.png"></div>
+								<div class="name">Coming Soon!</div></li>
+						</ul>
+					</div>
+					<div id="continue" class="list2">
 						<h3>Continue</h3>
 						<ul>
-							<li data-id="doodlejump" data-url="doodlejump" class="new">
+							<li data-id="doodlejump" data-url="doodlejump" class="new" data-desc="Description not yet supported in this section. Please refer to the link in the associated section.">
 								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
 								<div class="name">Doodle Jump</div>
 							</li>
-							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe">
+							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe" data-desc="Description not yet supported in this section. Please refer to the link in the associated section.">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
-							<li data-id="towertakedown" data-url="towertakedown">
+							<li data-id="towertakedown" data-url="towertakedown" data-desc="Description not yet supported in this section. Please refer to the link in the associated section.">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
@@ -1048,39 +1075,39 @@
 					<div class="list1">
 						<h3>Cardio</h3>
 						<ul>
-							<li id="doodlejump" data-url="doodlejump" class="new">
+							<li id="doodlejump" data-url="doodlejump" class="new" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
 								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
 								<div class="name">Doodle Jump</div>
 							</li>
-							<li id="santahatmixup" data-url="santahatmixup">
+							<li id="santahatmixup" data-url="santahatmixup" data-desc="Follow that Santa! Choose the right hat to level up.">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
 							</li>
-							<li id="pacman" data-url="pacman">
+							<li id="pacman" data-url="pacman" data-desc="A remake of the classic arcade game. Use the arrow keys or swipe to moev around the maze.">
 								<div class="img"><img src="pacman/icon/ios_icon.png"></div>
 								<div class="name">Pac Man</div>
 							</li>
-							<li id="flappybird" data-url="flappybird">
+							<li id="flappybird" data-url="flappybird" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes.">
 								<div class="img"><img src="flappybird/icon.jpg"></div>
 								<div class="name">Flappy Bird</div>
 							</li>
-							<li id="crossyroad" data-url="crossyroad">
+							<li id="crossyroad" data-url="crossyroad" data-desc="A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!">
 								<div class="img"><img src="crossyroad/icon.jpeg"></div>
 								<div class="name">Crossy Road</div>
 							</li>
-							<li id="cakeninja" data-url="cakeninja">
+							<li id="cakeninja" data-url="cakeninja" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!">
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
 								<div class="name">Cake Ninja</div>
 							</li>
-							<li id="hextris" data-url="hextris">
+							<li id="hextris" data-url="hextris" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.">
 								<div class="img"><img src="hextris/favicon.ico"></div>
 								<div class="name">Hextris</div>
 							</li>
-							<li id="stack" data-url="stack">
+							<li id="stack" data-url="stack" data-desc="Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!">
 								<div class="img"><img src="images/stack-icon.PNG"></div>
 								<div class="name">Stack</div>
 							</li>
-							<li id="chromedino" data-url="chromedino">
+							<li id="chromedino" data-url="chromedino" data-desc="A remake of the classic Chrome Dino Runner game. Click/tap to jump.">
 								<div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
 								<div class="name">Chrome Dino Runner</div>
 							</li>
@@ -1089,39 +1116,39 @@
 					<div class="list2">
 						<h3>Leisure</h3>
 						<ul>
-							<li id="guessthatnumber" data-url="guessthatnumber">
+							<li id="guessthatnumber" data-url="guessthatnumber" data-desc="Simple. Guess that number!">
 								<div class="img"><img src="guessthatnumber/icon.png"></div>
 								<div class="name">Guess That Number 2</div>
 							</li>
-							<li id="towertakedown" data-url="towertakedown">
+							<li id="towertakedown" data-url="towertakedown" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
-							<li id="solitaire" data-url="solitaire">
+							<li id="solitaire" data-url="solitaire" data-desc="A remake of the classic card game Solitaire.">
 								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
 								<div class="name">Solitaire</div>
 							</li>
-							<li id="chess" data-url="chess">
+							<li id="chess" data-url="chess" data-desc="Online chess against an AI. Don't get checkmated!">
 								<div class="img"><img src="chess/img/chess.png"></div>
 								<div class="name">Chess</div>
 							</li>
-							<li id="colorsplosion" data-url="colorsplosion">
+							<li id="colorsplosion" data-url="colorsplosion" data-desc="Some random experiments. Enjoy ;)">
 								<div class="img"><img src="colorsplosion/icon.PNG"></div>
 								<div class="name">Colorsplosion</div>
 							</li>
-							<li id="numberguessing" data-url="numberguessing">
+							<li id="numberguessing" data-url="numberguessing" data-desc="Simple. Guess that number!">
 								<div class="img"><img src="images/numberguessing-icon.png"></div>
 								<div class="name">Guess that Number</div>
 							</li>
-							<li id="2048" data-url="2048">
+							<li id="2048" data-url="2048" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">
 								<div class="img"><img src="2048/icon.png"></div>
 								<div class="name">2048</div>
 							</li>
-							<li id="tic-tac-toe" data-url="tic-tac-toe">
+							<li id="tic-tac-toe" data-url="tic-tac-toe" data-desc="Tic-Tac-Toe against an AI. You know what to do.">
 								<div class="img"><img src="images/tic-tac-toe-icon.png"></div>
 								<div class="name">Tic Tac Toe</div>
 							</li>
-							<li id="colorswirl" data-url="colorswirl/colorswirl">
+							<li id="colorswirl" data-url="colorswirl/colorswirl" data-desc="Swirl colors around and make beautiful designs in this relaxing app!">
 								<div class="img"><img src="colorswirl/icon.jpg"></div>
 								<div class="name">Colorswirl</div>
 							</li>
@@ -1136,31 +1163,31 @@
 					<div class="list1">
 						<h3>Desk Assistant</h3>
 						<ul>
-							<li id="corey-3.0" data-url="corey-3.0">
+							<li id="corey-3.0" data-url="corey-3.0" data-desc="The most recent attempt to make something like ChatGPT before it existed.">
 								<div class="img"><img src="corey-3.0/icon.png"></div>
 								<div class="name">Corey 3.0</div>
 							</li>
-							<li id="notes" data-url="notes">
+							<li id="notes" data-url="notes" data-desc="A note taking app. Note takers are world changers!">
 								<div class="img"><img src="notes/icon.png"></div>
 								<div class="name">Notes</div>
 							</li>
-							<li id="assistant" data-url="assistant">
+							<li id="assistant" data-url="assistant" data-desc="An attempt to something like ChatGPT before it existed.">
 								<div class="img"><img src="assistant/icon.svg"></div>
 								<div class="name">Corey 2.0</div>
 							</li>
-							<li id="calculator" data-url="calculator">
+							<li id="calculator" data-url="calculator" data-desc="A calculator inspired by Apple.">
 								<div class="img"><img src="images/calculator-icon.png"></div>
 								<div class="name">Calculator</div>
 							</li>
-							<li id="countdownstudio" data-url="countdownstudio">
+							<li id="countdownstudio" data-url="countdownstudio" data-desc="Make a countdown and watch time pass.">
 								<div class="img"><img src="images/countdownstudio-icon.svg"></div>
 								<div class="name">Countdown Studio</div>
 							</li>
-							<li id="mmc" data-url="mmc">
+							<li id="mmc" data-url="mmc" data-desc="Made for Chemistry homework help. Enjoy ;)">
 								<div class="img"><img src="images/mmc-icon.png"></div>
 								<div class="name">Molar Mass Calculator</div>
 							</li>
-							<li id="whiteboard" data-url="whiteboard">
+							<li id="whiteboard" data-url="whiteboard" data-desc="An online whiteboard. Built for a techer during COVID for quaratine classes.">
 								<div class="img"><img src="images/whiteboard-icon.jpg"></div>
 								<div class="name">Whiteboard</div>
 							</li>
@@ -1169,15 +1196,15 @@
 					<div class="list2">
 						<h3>Communication</h3>
 						<ul>
-							<li id="vividly" data-url="vividly">
+							<li id="vividly" data-url="vividly" data-desc="Bringing FaceTime to the web before Apple did.">
 								<div class="img"><img src="vividly/icon.png"></div>
 								<div class="name">Vividly</div>
 							</li>
-							<li id="connect" data-url="connect">
+							<li id="connect" data-url="connect" data-desc="Online public chat rooms.">
 								<div class="img"><img src="connect/splash.svg"></div>
 								<div class="name">Connect</div>
 							</li>
-							<li id="webchat" data-url="webchat/new">
+							<li id="webchat" data-url="webchat/new" data-desc="A video chatting app ran through the web.">
 								<div class="img"><img src="webchat/logo.ico"></div>
 								<div class="name">WebChat</div>
 							</li>
@@ -1192,23 +1219,23 @@
 					<div class="list2"></div>
 					<div class="list1">
 						<ul>
-							<li id="countdowns" data-url="countdowns">
+							<li id="countdowns" data-url="countdowns" data-desc="A collection of countdowns made for hollidays.">
 								<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
 								<div class="name">Countdowns</div>
 							</li>
-							<li id="inspiration" data-url="inspiration">
+							<li id="inspiration" data-url="inspiration" data-desc="Be inspired by this inspirational quote image generator.">
 								<div class="img"><img src="images/inspiration-icon.png"></div>
 								<div class="name">Insperational Quotes Image Generator</div>
 							</li>
-							<li id="leaderboard" data-url="leaderboard" class="noframe">
+							<li id="leaderboard" data-url="leaderboard" class="noframe" data-desc="Some friendly competition for games on my website!">
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
-							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html">
+							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
 							</li>
-							<li id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe">
+							<li id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe" data-desc="Join ZaneWesley's Discord server!">
 								<div class="img"><img src="images/discord-icon.png"></div>
 								<div class="name">Discord Server</div>
 							</li>
@@ -1223,15 +1250,15 @@
 					<div class="list2"></div>
 					<div class="list1">
 						<ul>
-							<li id="about" data-url="about">
+							<li id="about" data-url="about" data-desc="Get to know me! Let's connect!">
 								<div class="img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
 								<div class="name">About</div>
 							</li>
-							<li id="archive" data-url="archive">
+							<li id="archive" data-url="archive" data-desc="Archived apps and other random projects I'm embarrased to show.">
 								<div class="img"><img src="images/home-icon.svg"></div>
 								<div class="name">App Archive</div>
 							</li>
-							<li id="beta" data-url="beta" class="noframe">
+							<li id="beta" data-url="beta" class="noframe" data-desc="See what's coming in new updates before they're live!">
 								<div class="img"><img src="images/beta-icon.png"></div>
 								<div class="name">BETA Page</div>
 							</li>
@@ -1358,7 +1385,14 @@
 		document.getElementById('usernameBox').addEventListener('click', function(e) {
 			//triggerPageTransition(function() {window.open('/embed?data-url=leaderboard');});
 			//window.open('/embed?data-url=leaderboard');
-			openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
+			openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace">`, 'Discard', true, 'Save');
+			document.querySelector('header .island-content .button-wrapper .other').onclick = function() {
+				openIslandCheckmark();
+				setTimeout(function() {
+					setUsername();
+					closeIsland();
+				}, 2000);
+			}
 		});
 
 		/*
@@ -1406,20 +1440,72 @@
 		var lastPopup = new Date(localStorage.getItem('z_popup_timestamp'));
 		document.body.onload = function() {
 			setTimeout(function() {
-				if(Math.abs(new Date().getTime() - lastPopup.getTime()) > 604800000) {//604800000 = 1 week
+				if(Math.abs(new Date().getTime() - lastPopup.getTime()) > 604800000 || lastPopup.getTime() < 1686114000000) {//604800000 = 1 week
 					document.querySelector('header').classList.add('island');
 					lastPopup = localStorage.setItem('z_popup_timestamp', new Date());
 				}
 			}, 5000);
 		}
-		function openIsland(title, content, buttonText) {
+		function openIsland(title, content, closeButtonText, otherButton, otherButtonText) {
 			document.querySelector('header .island-content h3').innerHTML = title || "Announcement!";
 			document.querySelector('header .island-content .island-inner').innerHTML = content;
-			document.querySelector('header .island-content .island-close').innerHTML = buttonText || "Got It!";
+			document.querySelector('header .island-content .button-wrapper .island-close').innerHTML = closeButtonText || "Got It!";
+			if(otherButton == true) {
+				document.querySelector('header .island-content .button-wrapper .other').style.display = 'block';
+				document.querySelector('header .island-content .button-wrapper .other').innerHTML = otherButtonText;
+			} else {
+				document.querySelector('header .island-content .button-wrapper .other').style.display = 'none';
+			}
 			document.querySelector('header').classList.add('island');
 		}
 		function closeIsland() {
 			document.querySelector('header').classList.remove('island');
+			document.querySelector('header .island-content .button-wrapper .other').onclick=null;
+			document.querySelector('header .island-content .button-wrapper .island-close').style.display='block';
+		}
+		function openIslandCheckmark() {
+			openIsland(' ',
+				`
+				<svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px">  
+					<g fill="none" stroke="#22AE73" stroke-width="2"> 
+					<circle cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
+					<circle id="colored" fill="#22AE73" cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
+					<polyline class="st0" stroke="#fff" stroke-width="10" points="43.5,77.8 63.7,97.9 112.2,49.4 " style="stroke-dasharray:100px, 100px; stroke-dashoffset: 200px;"/>   
+					</g> 
+				</svg>
+				<style>
+					.island-inner svg polyline {
+						-webkit-animation: checkmark 0.25s ease-in-out 0.7s backwards;
+						animation: checkmark 0.25s ease-in-out 0.7s backwards
+					}
+					.island-inner svg circle {
+						-webkit-animation: checkmark-circle 0.6s ease-in-out backwards;
+						animation: checkmark-circle 0.6s ease-in-out backwards;
+					}
+					.island-inner svg circle#colored {
+						-webkit-animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+						animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+					}
+					@keyframes colored-circle { 
+						0% {
+							opacity:0
+						}
+						100% {
+							opacity:100
+						}
+					}
+					@keyframes checkmark-circle {
+						0% {
+							stroke-dashoffset: 480px 
+						}
+						100% {
+							stroke-dashoffset: 960px
+						}
+					}
+				</style>
+				`,
+			' ');
+			document.querySelector('header .island-content .button-wrapper .island-close').style.display='none';
 		}
 
 		//Offline
@@ -1546,19 +1632,29 @@
 				//add event listener
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
-					updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
-					if(!elem.classList.contains('noframe')) {
-						//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
-						window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
-					} else {
-						//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
-						window.open(elem.getAttribute('data-url'));
+					var _this = this;
+					openIsland(this.querySelector('.name').innerHTML, this.getAttribute('data-desc'), 'Close', true, 'Open <i class="fa-solid fa-arrow-up-right-from-square"></i>');
+					document.querySelector('header .island-content .button-wrapper .other').onclick=function() {
+						openIslandCheckmark();
+						setTimeout(function() {
+							e.preventDefault();
+							updateRecentArr(_this.querySelector('.name').innerHTML, _this.getAttribute('data-url'), _this.querySelector('.img img').src);
+							if(!elem.classList.contains('noframe')) {
+								//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
+								window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
+							} else {
+								//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
+								window.open(elem.getAttribute('data-url'));
+							}
+							gtag('event', 'app_link_click', {
+								'app_name': _this.querySelector('.name').innerHTML
+							});
+							closeIsland();
+						}, 2000);
 					}
-					gtag('event', 'app_link_click', {
-						 'app_name': this.querySelector('.name').innerHTML
-					});
 				});
 			});
+
 			document.querySelectorAll('footer a').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
@@ -1608,13 +1704,13 @@
 				appArr = JSON.parse(localStorage.getItem('z_history'));
 				var appRArr = appArr.reverse();
 				var appHArr = appRArr.filter(by('name'), new Set);
-				document.querySelector('#foryou ul').innerHTML = '';
-				document.querySelector('#foryou ul').innerHTML+=`
-					<li data-url='${appHArr[0].url}'><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>`;
-				if(appHArr[1]){ document.querySelector('#foryou ul').innerHTML+=`
-					<li data-url='${appHArr[1].url}'><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>`;}
-				if(appHArr[2]){ document.querySelector('#foryou ul').innerHTML+=`
-					<li data-url='${appHArr[2].url}'><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>`;}
+				document.querySelector('#foryou #continue ul').innerHTML = '';
+				document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[0].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>`;
+				if(appHArr[1]){ document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[1].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>`;}
+				if(appHArr[2]){ document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[2].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>`;}
 			} else {
 				//
 			}
@@ -1648,7 +1744,12 @@
 
 		document.getElementById('saveuser').addEventListener('click', function(e) {
 			e.preventDefault();
-			setUsername();
+			//setUsername();
+			openIslandCheckmark();
+			setTimeout(function() { 
+				setUsername();
+				closeIsland();
+			}, 2000);
 			//this.parentNode.classList.remove('open');
 		});
 
@@ -1767,7 +1868,7 @@
 			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous inspiration office']},
 			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['miscellaneous games cardio leisure more leaderboard strategy tap']},
 			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous games resources tech log new updates announcements website apps']},
-			{id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous games resources discord server new updates announcements communication apps']},
+			{id: "discord server", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous games resources discord server new updates announcements communication apps']},
 			//More
 			{id: "about", keywords: ['about'], recommendKeys: ['more about zane website communication']},
 			{id: "archive", keywords: ['archive'], recommendKeys: ['more archive website apps']},
@@ -1777,7 +1878,7 @@
 			{id: "resources", keywords: ['resources']},
 			{id: "miscellaneous", keywords: ['miscellaneous']},
 			{id: "more", keywords: ['more']}
-		]
+		];
 
 		/*function findString(str) {
 			str = str.toLowerCase();
@@ -1802,13 +1903,20 @@
 						openIsland('ChangeLog', `<ul><li>Bug fixes, searchbar dynamic island widget.</li><li>2023 Spring Update.</li><li>Discord Server was published.</li></ul>`, 'OK!');
 						break;
 					case 'announcement':
-						openIsland('Bug Fix!', `Stack leaderboard scoring is fixed! New scores should now post to the leaderboard as expected.`, 'OK!');
+						openIsland('New Release!', `Doodle Jump is now out of Beta! <a style="color: #fff;" href="https://zanewesley.github.io/embed?data-url=doodlejump">Play now!</a>`, 'OK!');
 						break;
 					case 'commands':
 						openIsland('Commands', `<ul><code><li>>>announcement</li><li>>>changelog</li><li>>>help</li><li>>>username</li></code></ul>`, 'Got It!');
 						break;
 					case 'username':
-						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
+						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace">`, 'Discard', true, 'Save');
+						document.querySelector('header .island-content .button-wrapper .other').onclick = function() {
+							openIslandCheckmark();
+							setTimeout(function() {
+								setUsername();
+								closeIsland();
+							}, 2000);
+						}
 						break;
 					default:
 						openIsland('No Command Found', `Please try a different command or seach Zane\'s Apps.`, 'OK!');
@@ -1831,7 +1939,26 @@
 		}
 
 		function trainRecommend() {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'));
+				var appRArr = appArr.reverse();
+				var appHArr = appRArr.filter(by('name'), new Set);
+				document.querySelector('#foryou #recommended ul').innerHTML = '';
+				var rec1Name = appHArr[0].name;
+				var rec1 = getPageDataByName(rec1Name).recommendKeys;
+				console.log(rec1);
+			}
+		}
 
+		function getPageDataByName(name) {
+			name = name.toLowerCase();
+			for (let i = 0; i < pageData.length; i++) {
+				if (pageData[i].id === name) {
+				return pageData[i];
+				}
+			}
+			return null; // Return null if no matching object is found
 		}
 
 		/*
@@ -2042,6 +2169,7 @@
 
 		//Trigger Init Functions
 		loadAppHistory();
+		//trainRecommend();
 		setHandlers();
 	</script>
 
