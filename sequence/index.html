@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sequence</title>
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet" />
+    <link href="icon.svg" rel="icon" />
+
+    <style>
+        html {
+        box-sizing: border-box;
+        }
+
+        *,
+        *::after,
+        *::before {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            font-family: 'Rubik', sans-serif;
+            background: rgb(43, 135, 209);
+        }
+
+        .game {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .invisble {
+            visibility: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .heading {
+            font-size: 3em;
+        }
+
+        .squares {
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+            text-align: center;
+            transition: transform 0.3s;
+            transform-origin: center;
+            height: auto;
+        }
+        .squares.shrunk {
+            transform: scale(0);
+            height: 0;
+        }
+        .squares .square {
+            cursor: pointer;
+            display: inline-block;
+            vertical-align: top;
+            width: 132px;
+            height: 132px;
+            border-width: 8.25px;
+            border-radius: 16.5px;
+            background-color: rgb(0, 0, 102);
+            opacity: 0.15;
+            border: 4px solid rgba(0, 0, 0, 0);
+            background-clip: padding-box !important;
+        }
+
+        .square.activated {
+            background-color: #fff;
+            opacity: 1;
+        }
+
+        .unclickable {
+            pointer-events: none;
+        }
+
+        .info-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .start {
+            display: inline-block;
+            height: 38px;
+            padding: 0 30px;
+            color: #000;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 38px;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            white-space: nowrap;
+            background-color: #fff;
+            border-radius: 4px;
+            border: 1px solid #bbb;
+            cursor: pointer;
+            margin-bottom: 25px;
+        }
+
+        .start:hover {
+            color: #333;
+            border-color: #888;
+            outline: 0;
+        }
+
+        .info {
+            font-size: 22px;
+            display: block;
+        }
+
+        @media screen and (max-width: 550px) {
+            .game {
+                width: 100%;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .heading {
+                font-size: 2em;
+            }
+            .squares .square {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+
+  </head>
+  <body>
+    <main class="game">
+        <header>
+            <h1 class="heading">Sequence</h1>
+        </header>
+
+        <div class="squares unclickable shrunk">
+            <div class="square-row">
+                <div class="square" data-tile="tl"></div>
+                <div class="square" data-tile="tm"></div>
+                <div class="square active" data-tile="tr"></div>
+            </div>
+            <div class="square-row">
+                <div class="square" data-tile="ml"></div>
+                <div class="square" data-tile="mm"></div>
+                <div class="square" data-tile="mr"></div>
+            </div>
+            <div class="square-row">
+                <div class="square" data-tile="bl"></div>
+                <div class="square" data-tile="bm"></div>
+                <div class="square" data-tile="br"></div>
+            </div>
+        </div>
+
+        <footer class="info-section">
+            <button class="start">Start</button>
+            <span class="info hidden"></span>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>
