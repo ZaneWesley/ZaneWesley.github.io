@@ -142,6 +142,10 @@
 		.board .name {
 			padding: 1rem;
 			flex-grow: 1;
+			cursor: pointer;
+		}
+		.board .name:hover {
+			color:#64d1ff;
 		}
 		.board .score {
 			white-space: nowrap;
@@ -336,26 +340,14 @@
 	<script src="leaderboard-handler.js"></script>
 
 	<script>
-		function setScores() {
-			/*var tictactoe = getItem('tic-tac-toe-data') || 0;
-			var best2048 = getItem('bestScore') || 0;
-			var hextris = JSON.parse(getItem('highscores')) || 0;
-			var cakeninja = getItem('cakeninja') || 0;
-			var crossyroad = JSON.parse(getItem('lockr_crossyroad_hs')) || 0;
-			var solitaire = JSON.parse(getItem('gamedata_dailysolitare_1_0_0')) || 0;*/
-			/*var tictactoe = getHighScores('tictactoe', 1),
-				best2048 = getHighScores('2048', 1),
-				hextris = getHighScores('hextris', 1),
-				cakeninja = getHighScores('cakeninja', 1),
-				crossyroad = getHighScores('crossyroad', 1),
-				solitaire = getHighScores('solitaire', 1);
+		document.querySelectorAll('.name').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				window.open(`/embed?data-url=${elem.parentNode.id.replace('score-', '')}`);
+			});
+		})
 
-			document.getElementById('tictactoe').querySelector('.score').innerHTML=tictactoe;
-			document.getElementById('2048').querySelector('.score').innerHTML=best2048;
-			document.getElementById('hextris').querySelector('.score').innerHTML=hextris;
-			document.getElementById('cakeninja').querySelector('.score').innerHTML=cakeninja;
-			document.getElementById('crossyroad').querySelector('.score').innerHTML=crossyroad;
-			document.getElementById('solitaire').querySelector('.score').innerHTML=solitaire;*/
+		function setScores() {
 			__getHighScores__('2048', 1);
 			__getHighScores__('cakeninja', 1);
 			__getHighScores__('crossyroad', 1);
