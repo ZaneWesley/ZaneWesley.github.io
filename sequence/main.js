@@ -10,11 +10,6 @@ const heading = document.querySelector('.heading');
 const tileContainer = document.querySelector('.squares');
 
 function resetGame(currLvl) {
-  playing = false;
-  document.body.classList.add('gameOver');
-  setTimeout(function() {
-    document.body.classList.remove('gameOver');
-  }, 200);
   sequence = [];
   humanSequence = [];
   level = 0;
@@ -84,6 +79,12 @@ function handleClick(tile) {
   const remainingTaps = sequence.length - humanSequence.length;
 
   if (humanSequence[index] !== sequence[index]) {
+    playing = false;
+    document.body.classList.add('gameOver');
+    setTimeout(function() {
+      document.body.classList.remove('gameOver');
+    }, 200);
+    if(level > 5) __saveScoreToDatabase__('sequence', level);
     return resetGame(level);
   }
 
