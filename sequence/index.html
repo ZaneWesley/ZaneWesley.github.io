@@ -28,6 +28,21 @@
             font-family: 'Rubik', sans-serif;
             background: rgb(43, 135, 209);
         }
+        body.gameOver {
+            animation: gameOverBg 0.3s;
+        }
+
+        @keyframes gameOverBg {
+            0% {
+                background: rgb(43, 135, 209);
+            }
+            50% {
+                background: rgba(209, 43, 52, 0.5);
+            }
+            100% {
+                background: rgb(43, 135, 209);
+            }
+        }
 
         .game {
             position: absolute;
@@ -47,6 +62,8 @@
         header {
             text-align: center;
             margin-bottom: 50px;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .heading {
@@ -92,6 +109,8 @@
         .info-section {
             text-align: center;
             margin-top: 50px;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .start {
