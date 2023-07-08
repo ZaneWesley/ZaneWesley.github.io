@@ -1,3 +1,4 @@
+let playing = false;
 let sequence = [];
 let humanSequence = [];
 let level = 0;
@@ -9,6 +10,11 @@ const heading = document.querySelector('.heading');
 const tileContainer = document.querySelector('.squares');
 
 function resetGame(currLvl) {
+  playing = false;
+  document.body.classList.add('gameOver');
+  setTimeout(function() {
+    document.body.classList.remove('gameOver');
+  }, 200);
   sequence = [];
   humanSequence = [];
   level = 0;
@@ -41,7 +47,7 @@ function playRound(nextSequence) {
   nextSequence.forEach((id, index) => {
     setTimeout(() => {
       activateTile(id);
-    }, (index + 1) * 600);
+    }, (index + 1) * 1000);
   });
 }
 
@@ -53,6 +59,7 @@ function nextStep() {
 }
 
 function nextRound() {
+  playing = true;
   level += 1;
 
   tileContainer.classList.add('unclickable');
@@ -66,7 +73,7 @@ function nextRound() {
   sequence = [...nextSequence];
   setTimeout(() => {
     humanTurn(level);
-  }, level * 600 + 200);
+  }, level * 600 + 1000);
 }
 
 function handleClick(tile) {
@@ -107,6 +114,7 @@ function startGame() {
 
 startButton.addEventListener('click', startGame);
 tileContainer.addEventListener('click', event => {
+  if(!playing) return;
   const { tile } = event.target.dataset;
 
   if (tile) handleClick(tile);
