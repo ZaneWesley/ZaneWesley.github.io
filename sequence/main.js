@@ -47,7 +47,7 @@ function playRound(nextSequence) {
   nextSequence.forEach((id, index) => {
     setTimeout(() => {
       activateTile(id);
-    }, (index + 1) * 1000);
+    }, (index + 1) * 600);
   });
 }
 
@@ -73,7 +73,7 @@ function nextRound() {
   sequence = [...nextSequence];
   setTimeout(() => {
     humanTurn(level);
-  }, level * 600 + 1000);
+  }, level * 600 + 200);
 }
 
 function handleClick(tile) {
