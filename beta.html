@@ -956,9 +956,10 @@
 				<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
 			</div>
 			<div class="island-content">
-				<h3>Update v9.3.1</h3>
+				<h3>Update v9.3.2</h3>
 				<p class="island-inner">
-					- Apps now have descriptions. Click on them to view
+					- Added Recommendation Section
+					<br>- Apps now have descriptions. Click on them to view
 					<br>- The search bar now has commands. Search <code>>>commands</code> for the list.
 				</p>
 				<div class="button-wrapper">
@@ -1299,58 +1300,6 @@
 		<div class="user"></div>
 	</div>
 
-	<!--<div id="splash">	
-		<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<circle class="backCircle" cx="250" cy="250" r="242.5" stroke="#ccd6f6" stroke-width="15"/>
-			<circle class="mainCircle" cx="250" cy="250" r="242.5" stroke="#64D1FF" stroke-width="15"/>
-			<path class="z" d="M211.034 359.339L359.056 136.36L358.846 101.297H139.647V149.378H287.46L139.227 370.887V407H362.626V359.339H211.034Z" fill="#64D1FF"/>
-		</svg>
-	</div>-->
-
-	<!--<div id="island">
-		<h2>Welcome</h2>
-	</div>
-
-	<style>
-		#island {
-			position: fixed;
-		    left: 0;
-		    top: 0;
-		    right: 0;
-		    display: flex;
-		    overflow: hidden;
-		    width: 31%;/*82%*/
-		    height: 52pt;/*78px*/
-		    margin-top: 28px;
-		    margin-right: auto;
-		    margin-left: auto;
-		    padding: 0;
-		    justify-content: center;
-		    align-items: center;
-		    border-radius: 100px;
-		    background-color: #000000;
-		    color: #ffffff;
-		    z-index: 12;
-		    transition: width 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), height 0.5s ease-out;
-		}
-		#island.bar {
-			width: 69%;/*47%, 82%*/
-		}
-		#island.rectangleSmall {
-			width: 92%;
-			height: 160px;
-		}
-		#island.rectangle {
-			width: 92%;
-			height: 450px;
-		}
-	</style>-->
-
-
-	<div class="transition-layer"></div>
-	<div class="transition-layer transition-layer--2"></div>
-	<div class="transition-layer transition-layer--3"></div>
-
 	<div id="contextmenu">
 		<div class="contextmenu-item context-open">Open</div>
 		<div class="contextmenu-item context-opennew">Open in New Tab</div>
@@ -1643,6 +1592,7 @@
 						setTimeout(function() {
 							e.preventDefault();
 							updateRecentArr(_this.querySelector('.name').innerHTML, _this.getAttribute('data-url'), _this.querySelector('.img img').src);
+							trainRecommend();
 							if(!elem.classList.contains('noframe')) {
 								//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
 								window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
@@ -1654,7 +1604,7 @@
 								'app_name': _this.querySelector('.name').innerHTML
 							});
 							closeIsland();
-						}, 2000);
+						}, 1500);
 					}
 				});
 			});
@@ -1839,50 +1789,60 @@
 
 		var pageData = [
 			//Games
-			{id: "2048", keywords: ['2048'], recommendKeys: ['games leisure 2048 strategy']},
-			{id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja'], recommendKeys: ['games cardio cake fruit ninja tap']},
-			{id: "chess", keywords: ['chess'], recommendKeys: ['games leisure chess strategy']},
-			{id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino'], recommendKeys: ['games cardio chrome dino runner tap']},
-			{id: "colorsplosion", keywords: ['colorsplosion'], recommendKeys: ['games leisure colorsplosion color art']},
-			{id: "colorswirl", keywords: ['colorswirl'], recommendKeys: ['games leisure colorswirl color art']},
-			{id: "crossyroad", keywords: ['crossy road', 'crossyroad'], recommendKeys: ['games cardio crossy road runner tap']},
-			{id: "flappybird", keywords: ['flappy bird', 'flappybird'], recommendKeys: ['games cardio flappy bird tap']},
-			{id: "numberguessing", keywords: ['guess that number', 'guessthatnumber'], recommendKeys: ['games leisure guess that number strategy']},
-			{id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber'], recommendKeys: ['games leisure guess that number 2 strategy']},
-			{id: "hextris", keywords: ['hextris'], recommendKeys: ['games cardio hextris tap strategy']},
-			{id: "pacman", keywords: ['pac man', 'pac-man', 'pacman'], recommendKeys: ['games cardio pacman tap runner']},
-			{id: "santahatmixup", keywords: ['santa hat mixup', 'santa'], recommendKeys: ['games cardio santa hat mixup strategy']},
-			{id: "solitaire", keywords: ['solitaire'], recommendKeys: ['games leisure solitaire strategy']},
-			{id: "stack", keywords: ['stack'], recommendKeys: ['games cardio stack tap']},
-			{id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe'], recommendKeys: ['games leisure tic tac toe strategy']},
-			{id: "towertakedown", keywords: ['tower takedown', 'towertakedown'], recommendKeys: ['games leisure tower takedown strategy tap']},
+			{id: "2048", keywords: ['2048'], recommendKeys: ['game-strategy']},
+			{id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja'], recommendKeys: ['game-cardio']},
+			{id: "chess", keywords: ['chess'], recommendKeys: ['game-strategy']},
+			{id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino'], recommendKeys: ['game-cardio']},
+			{id: "colorsplosion", keywords: ['colorsplosion'], recommendKeys: ['game-leisure']},
+			{id: "colorswirl", keywords: ['colorswirl'], recommendKeys: ['game-leisure']},
+			{id: "crossyroad", keywords: ['crossy road', 'crossyroad'], recommendKeys: ['game-cardio']},
+			{id: "doodlejump", keywords: ['doodle jump runner'], recommendKeys: ['game-cardio']},
+			{id: "flappybird", keywords: ['flappy bird', 'flappybird'], recommendKeys: ['game-cardio']},
+			{id: "numberguessing", keywords: ['guess that number', 'guessthatnumber'], recommendKeys: ['game-strategy']},
+			{id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber'], recommendKeys: ['game-strategy']},
+			{id: "hextris", keywords: ['hextris'], recommendKeys: ['games-cardio']},
+			{id: "pacman", keywords: ['pac man', 'pac-man', 'pacman'], recommendKeys: ['game-cardio']},
+			{id: "santahatmixup", keywords: ['santa hat mixup', 'santa'], recommendKeys: ['game-cardio']},
+			{id: "sequence", keywords: ['sequence simon grid'], recommendKeys: ['game-strategy']},
+			{id: "solitaire", keywords: ['solitaire'], recommendKeys: ['game-leisure']},
+			{id: "stack", keywords: ['stack'], recommendKeys: ['game-cardio']},
+			{id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe'], recommendKeys: ['game-strategy']},
+			{id: "towertakedown", keywords: ['tower takedown', 'towertakedown'], recommendKeys: ['game-leisure']},
 			//Resources
-			{id: 'calculator', keywords: ['calculator'], recommendKeys: ['resources desk calculator math']},
-			{id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms'], recommendKeys: ['resources communication connect mmessaging']},
-			{id: 'assistant', keywords: ['corey 2.0', 'assistant'], recommendKeys: ['resources desk assistant corey']},
-			{id: "corey-3.0", keywords: ['corey 3.0', 'corey'], recommendKeys: ['resources desk assistant corey']},
-			{id: "countdownstudio", keywords: ['countdown studio', 'count down studio'], recommendKeys: ['resources desk countdown studio']},
-			{id: "mmc", keywords: ['molar mass calculator'], recommendKeys: ['resources desk molar mass calculator math']},
-			{id: "notes", keywords: ['notes'], recommendKeys: ['resources desk notes office']},
-			{id: "vividly", keywords: ['vividly', 'facetime', 'video chat'], recommendKeys: ['resources communication vividly video chat']},
-			{id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms'], recommendKeys: ['resources communication web chat messaging']},
-			{id: "whiteboard", keywords: ['whiteboard'], recommendKeys: ['resources desk whiteboard office']},
+			{id: 'calculator', keywords: ['calculator'], recommendKeys: ['resource-desk']},
+			{id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms'], recommendKeys: ['resource-communication']},
+			{id: 'assistant', keywords: ['corey 2.0', 'assistant'], recommendKeys: ['resource-desk']},
+			{id: "corey-3.0", keywords: ['corey 3.0', 'corey'], recommendKeys: ['resource-desk']},
+			{id: "countdownstudio", keywords: ['countdown studio', 'count down studio'], recommendKeys: ['resource-desk']},
+			{id: "mmc", keywords: ['molar mass calculator'], recommendKeys: ['resource-desk']},
+			{id: "notes", keywords: ['notes'], recommendKeys: ['resource-desk']},
+			{id: "vividly", keywords: ['vividly', 'facetime', 'video chat'], recommendKeys: ['resource-communication']},
+			{id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms'], recommendKeys: ['resource-communication']},
+			{id: "whiteboard", keywords: ['whiteboard'], recommendKeys: ['resource-desk']},
 			//Miscellaneous
-			{id: "countdowns", keywords: ['countdowns'], recommendKeys: ['miscellaneous countdowns countdown']},
-			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous inspiration office']},
-			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['miscellaneous games cardio leisure more leaderboard strategy tap']},
-			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous games resources tech log new updates announcements website apps']},
-			{id: "discord server", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous games resources discord server new updates announcements communication apps']},
+			{id: "countdowns", keywords: ['countdowns'], recommendKeys: ['miscellaneous']},
+			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous']},
+			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['game-cardio']},
+			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous']},
+			{id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous']},
 			//More
-			{id: "about", keywords: ['about'], recommendKeys: ['more about zane website communication']},
-			{id: "archive", keywords: ['archive'], recommendKeys: ['more archive website apps']},
-			{id: "beta", keywords: ['beta'], recommendKeys: ['more beta website apps new updates']},
+			{id: "about", keywords: ['about'], recommendKeys: ['more']},
+			{id: "archive", keywords: ['archive'], recommendKeys: ['more']},
+			{id: "beta", keywords: ['beta'], recommendKeys: ['more']},
 			//Section ID
 			{id: "games", keywords: ['games']},
 			{id: "resources", keywords: ['resources']},
 			{id: "miscellaneous", keywords: ['miscellaneous']},
 			{id: "more", keywords: ['more']}
 		];
+
+		var gameStrategyArr = ['2048', 'chess', 'numberguessing', 'guessthatnumber', 'sequence', 'tic-tac-toe'];
+		var gameCardioArr = ['cakeninja', 'chromedino', 'crossyroad', 'doodlejump', 'flappybird', 'hextris', 'pacman', 'santahatmixup', 'stack', 'leaderboard'];
+		var gameLeisureArr = ['colorsplosion', 'colorswirl', 'solitaire', 'towertakedown'];
+		var resourceDeskArr = ['calculator', 'assistant', 'corey-3.0', 'countdownstudio', 'mmc', 'notes', 'whiteboard'];
+		var resourceCommunicationArr = ['connect', 'vivdly', 'webchat'];
+		var miscellaneousArr = ['countdowns', 'inspiration', 'techlog', 'discordserver'];
+		var moreArr = ['about', 'archive', 'beta'];
 
 		/*function findString(str) {
 			str = str.toLowerCase();
@@ -1949,20 +1909,55 @@
 				var appRArr = appArr.reverse();
 				var appHArr = appRArr.filter(by('name'), new Set);
 				document.querySelector('#foryou #recommended ul').innerHTML = '';
-				var rec1Name = appHArr[0].name;
-				var rec1 = getPageDataByName(rec1Name).recommendKeys;
-				console.log(rec1);
+				var rec1Data = appHArr[0], rec2Data = appHArr[1], rec3Data = appHArr[2];
+				var rec1Key = findAppKey(rec1Data.name)[0], rec2Key = findAppKey(rec2Data.name)[0], rec3Key = findAppKey(rec3Data.name)[0];
+				var rec1App = getRecApp(rec1Key), rec2App = getRecApp(rec2Key), rec3App = getRecApp(rec3Key);
+				var rec1AppData = document.getElementById(rec1App), rec2AppData = document.getElementById(rec2App), rec3AppData = document.getElementById(rec3App);
+				document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec1AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[0].name}"><div class='img'><img src='${rec1AppData.querySelector('img').src}'></div><div class='name'>${rec1AppData.innerText}</div></li>`;
+				if(rec2AppData){ document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec2AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[1].name}"><div class='img'><img src='${rec2AppData.querySelector('img').src}'></div><div class='name'>${rec2AppData.innerText}</div></li>`;}
+				if(rec3AppData){ document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec3AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[2].name}"><div class='img'><img src='${rec3AppData.querySelector('img').src}'></div><div class='name'>${rec3AppData.innerText}</div></li>`;}
 			}
 		}
 
-		function getPageDataByName(name) {
-			name = name.toLowerCase();
-			for (let i = 0; i < pageData.length; i++) {
-				if (pageData[i].id === name) {
-				return pageData[i];
+		function findAppKey(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+				for(var i = 0; i<pageData[key].keywords.length; i++) {
+					if (pageData[key].keywords[i].includes(str)) {
+				       return pageData[key].recommendKeys;
+				    }
 				}
+		  }
+		  return 'No match';
+		}
+
+		function getRecApp(name) {
+			switch(name) {
+				case 'game-cardio':
+					return gameCardioArr[Math.floor(Math.random()*gameCardioArr.length)];
+					break;
+				case 'game-leisure':
+					return gameLeisureArr[Math.floor(Math.random()*gameLeisureArr.length)];
+					break;
+				case 'game-strategy':
+					return gameStrategyArr[Math.floor(Math.random()*gameStrategyArr.length)];
+					break;
+				case 'resource-desk':
+					return resourceDeskArr[Math.floor(Math.random()*resourceDeskArr.length)];
+					break;
+				case 'resource-communication':
+					return resourceCommunicationArr[Math.floor(Math.random()*resourceCommunicationArr.length)];
+					break;
+				case 'miscellaneous':
+					return miscellaneousArr[Math.floor(Math.random()*miscellaneousArr.length)];
+					break;
+				case 'more':
+					return moreArr[Math.floor(Math.random()*moreArr.length)];
+					break;
 			}
-			return null; // Return null if no matching object is found
 		}
 
 		/*
@@ -2173,7 +2168,7 @@
 
 		//Trigger Init Functions
 		loadAppHistory();
-		//trainRecommend();
+		trainRecommend();
 		setHandlers();
 	</script>
 
