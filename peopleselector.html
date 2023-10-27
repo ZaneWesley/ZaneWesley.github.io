@@ -1,366 +1,341 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Source Code Pro" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500,700|Roboto:100,300,400,500,700,900&amp;lang=en" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Random Name Selector</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto&display=swap" rel="stylesheet">
 
-	<style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        body, html {
-            width: 100vw;
-            height: 100vh;
-            font-family: 'Roboto', sans-serif;
-            background: #FF8B57;
-            background: linear-gradient(to bottom right, #FF8B57, #FB5656);
-            color: #fff;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-        header {
-            /*text-align: center;
-            border-bottom: 1px solid #ccc;*/
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            padding: 0.5em;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        li {
-            padding: 8px 16px;
-            border-bottom: 1px solid #ddd;
-        }
-        li:last-child {
-            border-bottom: none;
-        }
-        input {
-            border: 1px solid grey;
-            color: #000;
-            background-color: #fff;
-            padding: 8px 16px;
-            outline: none;
-        }
-        button {
-            border: 1px solid #2196F3;
-            color: #000;
-            background-color: #fff;
-            border-radius: 4px;
-            user-select: none;
-            padding: 8px 16px;
-            vertical-align: middle;
-            overflow: hidden;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-        }
-        #setup {
-            position: absolute;
-            top: 5em;
-            left: 0;
-            width: 100%;
-            min-height: calc(100% - 5em);
-            height: auto;
-        }
-        #setup label, #setup h2 {
-            color: #585858;
-            font-size: 1.5em;/*=24px*/
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 0.9375em;/*15px*/
-        }
-        #setup input {
-            width: 100%;
-            color: #898989;
-            background-color: #fff;
-            font-size: 1.25em;
-            font-weight: normal;
-            background-color: white;
-            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
-            border-radius: 5px;
-            padding: 1.25em;/*20px*/
-            border: 1px solid #eee;
-            outline: none;
-            margin-bottom: 20px;/*75px*/
-        }
-        #setup input::placeholder {
-          color: #D9D9D9;
-        }
-        button {
-            color: white;
-            font-size: 1em;/*24px*/
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-decoration: none;
-            padding: 21px;/*21x161px*/
-            width: 80%;
-            background: linear-gradient(to right, #FF8757, #FC5F56);
-            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
-            border-radius: 1000px;
-            display: block;
-            margin: auto;
-            outline: none;
-            border: none;
-            cursor: pointer;
-            margin-bottom: 75px;/*75px*/
-        }
-        .col, .card {
-            position: absolute;
-            width: 48%;
-            padding: 3.125em 2.1875em 3.125em 2.1875em;/*50x35px*/
-            background-color: #fcfcfc;
-            border-radius: 10px;
-            box-shadow: 0px 0px 2.5em rgba(0, 0, 0, 0.15);/*2.5em=40px*/
-            /*display: flex;
-            flex-direction: column;*/
-            animation: fadeIn 0.75s forwards 0s ease;
-            color: #000;
-            height: auto;
-        }
-        .col.left {
-            left: 1em;
-            min-height: 87vh;
-        }
-        .col.right {
-            right: 1em;
-            min-height: 87vh;
-        }
-        #nameDisplay {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-            text-align: center;
-            flex-direction: column;
-            color: #585858;
-            font-size: 1.5em;/*=24px*/
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 0.9375em;/*15px*/
-        }
-        #selectedName {
-            font-size: 3em;
-            text-align: center;
-        }
-        .snackbar {
-          visibility: hidden;
-          min-width: 250px;
-          margin-left: -125px;
-          background-color: #333;
-          color: #fff;
-          text-align: center;
-          border-radius: 2px;
-          padding: 16px;
-          position: fixed;
-          z-index: 5;
-          left: 50%;
-          bottom: 30px;
-          font-size: 17px;
-        }
+        <title>Random Name Picker</title>
 
-        .snackbar.show {
-          visibility: visible;
-          -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-          animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
-        @-webkit-keyframes fadein {
-          from {bottom: 0; opacity: 0;} 
-          to {bottom: 30px; opacity: 1;}
-        }
-
-        @keyframes fadein {
-          from {bottom: 0; opacity: 0;}
-          to {bottom: 30px; opacity: 1;}
-        }
-
-        @-webkit-keyframes fadeout {
-          from {bottom: 30px; opacity: 1;} 
-          to {bottom: 0; opacity: 0;}
-        }
-
-        @keyframes fadeout {
-          from {bottom: 30px; opacity: 1;}
-          to {bottom: 0; opacity: 0;}
-        }
-        @media (max-width: 775px) {
-        	.col, .card {
-                position: static;
-                width: 90%;
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                font-family: 'Roboto', sans-serif;
             }
-            .col.left, .col.right {
-                margin: 0 auto 1em auto;
-                /*height: auto;*/
+            .wrapper {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                background-color: #36454f;
             }
-            .col.right {
-                margin-bottom: 1em;
+            .draw-wrapper {
+                display: none;
+            }
+            .inner {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                flex-direction: column;
+                color: #585858;
+                width: 48%;
+                height: auto;
+                padding: 3.125em 2.1875em 3.125em 2.1875em;
+                background-color: #fcfcfc;
+                font-size: 1.5em;
+                font-weight: 700;
+                letter-spacing: 1px;
+                margin-bottom: 0.9375em;
+                border-radius: 8px;
+                box-shadow: 0px 0px 2.5em rgba(0, 0, 0, 0.15);
+                transition: all 1s;
+            }
+            #namebox {
+                display: none;
+            }
+            /*.left {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 50%;
+                height: 100%;
+            }
+            .right {
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: 50%;
+                height: 100%;
+            }
+            .content {
+                height: calc(100% - 2em);
+                margin: 1em;
+                padding: 1em;
+                background-color: #cccccc;
+                border-radius: 8px;
+            }*/
+            ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            li {
+                padding: 8px 16px;
+                border-bottom: 1px solid #36454f;
+            }
+            li:last-child {
+                border-bottom: none;
+            }
+            input {
+                border: 1px solid grey;
+                color: #000;
+                background-color: #fff;
+                padding: 8px 16px;
+                outline: none;
+                width: 100%;
+                color: #898989;
+                box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.08);
+                border: none;
+                border-bottom: 2px solid #36454f;
+                outline: none;
             }
             button {
-                margin-bottom: 0.5em;
+                color: white;
+                font-size: 1em;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-decoration: none;
+                padding: 16px;
+                width: 50%;
+                background: #36454f;
+                box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+                border-radius: 1000px;
+                display: block;
+                margin: auto;
+                outline: none;
+                border: none;
+                cursor: pointer;
+                margin-bottom: 75px;
             }
-        }
-    </style>
-</head>
-<body>
-	<header>
-        <h1>Select a Person</h1>
-    </header>
-    <div id="setup">
-        <div id="setupContainer" class="col left">
-            <h2>Enter Names</h2>
-            <label for="name">Name:</label>
-            <input id="name" type="text" placeholder="Name" autocomplete="off">
-            <button id="addName" onclick="addName()">Add</button>
-            <button id="startSelection" onclick="startSelection()">Done</button>
-        </div>
-        <div id="nameListContainer" class="col right">
-            <h2>Name Pool</h2>
-            <div id="nameList"></div>
-        </div>
-    </div>
-    <div id="nameDisplay" class="card">
-        <h1 id="selectedName">No Names in Pool</h1>
-        <button id="nextName" onclick="nextName()">Next</button>
-    </div>
+            input::placeholder {
+                color: 	#36454f;
+            }
+            #addName {
+                margin-top: 1em;
+            }
+            #startSelection {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                margin: 1em;
+            }
+            h2 {
+                color: #36454f;/*#585858;*/
+                font-size: 1.5em;/*=24px*/
+                font-weight: 700;
+                letter-spacing: 1px;
+                margin-bottom: 0.9375em;/*15px*/
+                text-align: center;
+            }
+            #back {
+                font-size: 2em;
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                right: 0.25em;
+            }
 
-    <script>
-        var selectedNames = [];
-        var recentSelected=[];
-        var query = window.location.search;
-        var urlParams = new URLSearchParams(query);
-        var shareLink;
-        function init() {
-            if(urlParams.has('pool')) {
-                if(urlParams.get('pool') !== null && urlParams.get('pool') !== "") {
-                    var poolQuery = urlParams.get('pool');
-                    var poolArray = poolQuery.split(',');
-                    /*if(confirm('It looks like you have a saved names pool. Would you like to use it?')) {*/
-                        selectedNames = poolArray;
-                        startSelection();
-                    /*} else {
-                        if(confirm('Would you like to delete the saved name pool?')) {
-                            var URLString = window.location.pathname;
-                            history.pushState('', 'Save Name Pool', URLString);
-                            shareLink = URLString;
-                        } else {
-                            return false;
-                        }
-                    }*/
+            .snackbar {
+                visibility: hidden;
+                min-width: 250px;
+                margin-left: -125px;
+                background-color: #333;
+                color: #fff;
+                text-align: center;
+                border-radius: 2px;
+                padding: 16px;
+                position: fixed;
+                z-index: 5;
+                left: 50%;
+                bottom: 30px;
+                font-size: 17px;
                 }
-            }
-        }
-        $('#name').on('keydown', function(e) {
-            if(e.which === 13) {
-                e.preventDefault();
-                addName();
-            }
-        });
-        function addName() {
-            if($('#name').val() !== null && $('#name').val() !== "" && $('#name').val() !== undefined) {
-                if(!selectedNames.includes($('#name').val())) {
-                    selectedNames.push($('#name').val());
-                    $('#name').val('');
-                    snackbarMessgae('Name added');
-                } else {
-                    if(confirm($('#name').val() + " is already in the name pool. Do you want to add it again?")) {
-                        selectedNames.push($('#name').val());
-                        $('#name').val('');
-                    } else {
-                        $('#name').val('');
+
+                .snackbar.show {
+                visibility: visible;
+                -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+                animation: fadein 0.5s, fadeout 0.5s 2.5s;
+                }
+
+                @-webkit-keyframes fadein {
+                from {bottom: 0; opacity: 0;} 
+                to {bottom: 30px; opacity: 1;}
+                }
+
+                @keyframes fadein {
+                from {bottom: 0; opacity: 0;}
+                to {bottom: 30px; opacity: 1;}
+                }
+
+                @-webkit-keyframes fadeout {
+                from {bottom: 30px; opacity: 1;} 
+                to {bottom: 0; opacity: 0;}
+                }
+
+                @keyframes fadeout {
+                from {bottom: 30px; opacity: 1;}
+                to {bottom: 0; opacity: 0;}
+                }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="inner">
+                <div class="setup-box">
+                    <div class="content">
+                        <h2>Enter Names</h2>
+                        <label for="name">Name:</label>
+                        <input id="name" type="text" placeholder="Enter here" autocomplete="off">
+                        <button id="addName">Add to Pool</button>
+                    </div>
+                    <div class="content">
+                        <h2>Name Pool</h2>
+                        <div id="nameList">
+                            <ul>
+                                <li id="placeholder">No Names yet!</li>
+                            </ul>
+                        </div>
+                        <button id="startSelection">Done</button>
+                    </div>
+                </div>
+
+                <div id="namebox">
+                    <h2 id="selectedName">No Name</h2>
+                    <button id="nextName">Next</button>
+                    <div id="back">&times;</div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var selectedNames = [];
+            var recentSelected=[];
+            var query = window.location.search;
+            var urlParams = new URLSearchParams(query);
+            var shareLink;
+
+            document.getElementById('addName').addEventListener('click', addName);
+            document.getElementById('startSelection').addEventListener('click', startSelection);
+            document.getElementById('nextName').addEventListener('click', nextName);
+            document.getElementById('back').addEventListener('click', goBack);
+            document.getElementById('name').addEventListener('keydown', function(e) {
+                if(e.which === 13) {
+                    e.preventDefault();
+                    addName();
+                }
+            });
+
+            function init() {
+                if(urlParams.has('pool')) {
+                    if(urlParams.get('pool') !== null && urlParams.get('pool') !== "") {
+                        var poolQuery = urlParams.get('pool');
+                        var poolArray = poolQuery.split(',');
+                        /*if(confirm('It looks like you have a saved names pool. Would you like to use it?')) {*/
+                            selectedNames = poolArray;
+                            startSelection();
+                        /*} else {
+                            if(confirm('Would you like to delete the saved name pool?')) {
+                                var URLString = window.location.pathname;
+                                history.pushState('', 'Save Name Pool', URLString);
+                                shareLink = URLString;
+                            } else {
+                                return false;
+                            }
+                        }*/
                     }
                 }
-                $('#nameList').html(makeList(selectedNames));
-            } else {
-                snackbarMessgae('You must put in a name');
-            }
-        }
-
-        function makeList(array) {
-            // Create the list element:
-            var list = document.createElement('ul');
-
-            for (var i = 0; i < array.length; i++) {
-                // Create the list item:
-                var item = document.createElement('li');
-
-                // Set its contents:
-                item.appendChild(document.createTextNode(array[i]));
-
-                // Add it to the list:
-                list.appendChild(item);
             }
 
-            // Finally, return the constructed list:
-            return list;
-        }
+            var nameVal;
 
-        function startSelection() {
-            $('#setup').fadeOut();
-            $('#nameDisplay').fadeIn();
-            createURLString();
-            nextName();
-        }
+            function addName() {
+                nameVal = document.getElementById('name').value;
+                document.querySelector('#placeholder').style.display="none";
+                if(nameVal !== null && nameVal !== "") {
+                    if(!selectedNames.includes(nameVal)) {
+                        selectedNames.push(nameVal);
+                        document.getElementById('name').value = "";
+                        document.querySelector('#nameList ul').innerHTML+=`<li>${nameVal}</li>`;
+                        snackbarMessgae('Name added');
+                    } else {
+                        if(confirm(nameVal + " is already in the name pool. Do you want to add it again?")) {
+                            selectedNames.push(nameVal);
+                            document.getElementById('name').value = "";
+                        } else {
+                            document.getElementById('name').value = "";
+                        }
+                    }
+                } else {
+                    snackbarMessgae('You must put in a name');
+                }
+            }
 
-        function nextName() {
-            $('#selectedName').html(selectName());
-        }
-
-        function selectName() {
-            var nameNum = Math.floor(Math.random()*selectedNames.length);
-            var name = selectedNames[nameNum];
-            if(recentSelected.length === selectedNames.length) {
-                recentSelected=[];
+            function startSelection() {
+               document.querySelector('.setup-box').style.display='none';
+               document.querySelector('#namebox').style.display='block';
+                createURLString();
                 nextName();
-            } else if(recentSelected.includes(name)) {
-                nextName();
-            } else {
-                recentSelected.push(name);
-                console.log(name);
-                return name;
             }
-        }
-        function createURLString() {
-            var URLString = window.location.pathname+'?pool='+selectedNames;
-            history.pushState('', 'Save Name Pool', URLString);
-            shareLink = URLString;
-            CopyToClipboard(URLString);
-            snackbarMessgae('Share link copied to clipboard');
-        }
-        function CopyToClipboard(value) {
-            var tempInput = document.createElement("input");
-            tempInput.value = value;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-        }
-        function snackbarMessgae(msg) {
-            var snackbar = document.createElement("div");
-            snackbar.innerText=msg;
-            snackbar.classList.add('snackbar');
-            snackbar.classList.add('show');
-            document.body.appendChild(snackbar);
-            setTimeout(function(){ 
-                snackbar.remove();
-            }, 3000);
-        }
-        init();
-    </script>
 
-</body>
+            function nextName() {
+                document.getElementById('selectedName').innerHTML = selectName();
+            }
+
+            function selectName() {
+                var nameNum = Math.floor(Math.random()*selectedNames.length);
+                var name = selectedNames[nameNum];
+
+                if(name == recentSelected[recentSelected.length]) {
+                    nextName();
+                } else {
+                    recentSelected.push(name);
+                    console.log(name);
+                    return name;
+                }
+            }
+
+            function goBack() {
+                document.querySelector('.setup-box').style.display='block';
+                document.querySelector('#namebox').style.display='none';  
+            }
+
+
+
+            function createURLString() {
+                var URLString = window.location.pathname+'?pool='+selectedNames;
+                history.pushState('', 'Save Name Pool', URLString);
+                shareLink = URLString;
+                CopyToClipboard(URLString);
+                snackbarMessgae('Pool link copied to clipboard');
+            }
+            function CopyToClipboard(value) {
+                var tempInput = document.createElement("input");
+                tempInput.value = value;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+            }
+            function snackbarMessgae(msg) {
+                var snackbar = document.createElement("div");
+                snackbar.innerText=msg;
+                snackbar.classList.add('snackbar');
+                snackbar.classList.add('show');
+                document.body.appendChild(snackbar);
+                setTimeout(function(){ 
+                    snackbar.remove();
+                }, 3000);
+            }
+            init();
+        </script>
+    </body>
 </html>
