@@ -1,7 +1,7 @@
 <img src="https://zanewesley.github.io/images/github-header.png" width="100%">
 
 # Hey There!
-I'm **Zane Wesley!** I love Jesus, web coding, running and Apple. I specialize in UX and UI development and design and work hard to make sure that all of my projects work flawlessly and are fully accessible.
+I'm **Zane Wesley!** I love Jesus, web coding, running and Apple. I specialize in UX and UI development and design and work hard to make sure that all of my projects work flawlessly and are fully accessible. Due to being a busy college student, updates to the site may be slow.
 
 Want to see what I've been up to? Visit my website to see my projects. [https://zanewesley.github.io](https://zanewesley.github.io)
 
@@ -9,17 +9,10 @@ Have feedback or want to get to know me?  [Contact me!](https://zanewesley.githu
 
 ## What's New
 - 2023 Spring Update
-- ZaneWesley Discord Server! [Join Here](https://discord.gg/4XEWxQ9Yvn)
-- Tower Takedown (Tower Crash 3D Remake)
-- Guess That Number 2
-- Corey 3.0 Release
 
 ## What I'm Working On
-- FLIP memory game
-- Tower Defence Game
-- Piano Tiles 2/Perfect Piano Remake
-- 3d Web platformer game
-- Group messaging webapp
+- All-in-one budget app
+- 2024 Update (in beta)
 
 
 ## Stats
@@ -38,3 +31,5 @@ Have feedback or want to get to know me?  [Contact me!](https://zanewesley.githu
 <a href="https://www.strava.com/athletes/83598166">Strava</a>
 <br>
 <a href="https://discord.gg/4XEWxQ9Yvn">Discord</a>
+<br>
+<a href="https://www.instagram.com/zanewesley27">Instagram</a>
