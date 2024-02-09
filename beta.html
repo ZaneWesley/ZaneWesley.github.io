@@ -1,69 +1,71 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
+	<!-- Inspired by https://steveoni.github.io/v4/ -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
 	<meta name="author" content="Zane Wesley">
 	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
 	<!-- General -->
-	<meta name="theme-color" content="#080808">
-	<meta name="application-name" content="Zane's Apps">
+	<link rel="manifest" href="manifest.json">
+	<meta name="theme-color" content="#111827">
+	<meta name="application-name" content="Zane Wesley">
 	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
 	<link rel="canonical" href="https://www.zanewesley.github.io">
 	<!-- Apple -->
-	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
-	<meta name="apple-mobile-web-app-status-bar-style" content="#080808">
+	<meta name="apple-mobile-web-app-title" content="Zane Wesley">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#111827">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
-	<link rel="mask-icon" href="images/icon.png" color="#080808">
+	<link rel="mask-icon" href="images/icon.png" color="#111827">
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&family=Caveat&family=Anton&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css" crossorigin="anonymous"/>
+	<!-- UI -->
+	<script src="https://unpkg.com/typeit@8.5.4/dist/index.umd.js"></script>
 	<!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
 	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-YEEGMG5QT7');
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>BETA | Zane's Apps | 2024 Update</title>
+	<title>BETA | Zane Wesley | Spring Update</title>
 
 	<style>
 		* {
 			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
-			font-family: 'Roboto', sans-serif;
-			scroll-behavior: smooth;
+			transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
 		}
-		html, body {
-			background-color: #080808;
-			/*background-image: url('images/bg-shapes.svg');*/
-			background-size: 100%;
-			/*background-transform: translate3d(0px, -24.1512%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);*/
-		}
-
-		/* width */
+        html, body {
+            scroll-behavior: smooth;
+			background-color: #111827;
+            font-family: 'Roboto', sans-serif;
+			width: 100%;
+            color: rgba(255, 255, 255, 0.7);
+        }/* width */
 		::-webkit-scrollbar {
 		  width: 12px;
 		}
 
 		/* Track */
 		::-webkit-scrollbar-track {
-		  background: #080808;/*#0a192f*/
+		  background: #111827;/*#0a192f*/
 		}
 
 		/* Handle */
 		::-webkit-scrollbar-thumb {
 		  background: rgba(255, 255, 255, 0.7);/*#ccd6f6;*/
 		  border-radius: 10px;
-		  border: 3px solid #080808;/*#0a192f*/;
+		  border: 3px solid #111827;/*#0a192f*/;
 		}
 
 		/* Handle on hover */
@@ -72,16 +74,22 @@
 		}
 		/* WebKit/Blink Browsers */
 		::selection {
-		  background: rgba(8, 8, 8, 0.7);/*#233554*/
+		  background: rgba(57, 73, 86, 0.7);/*#233554*/
 		  color: #fff;
 		}
 		/* Gecko Browsers */
 		::-moz-selection {
-		  background: rgba(8, 8, 8, 0.7);/*#233554*/
+		  background: rgba(57, 73, 86, 0.7);/*#233554*/
 		  color: #fff;
 		}
-		header {
-			position: absolute;
+
+        img {
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .splash {
+            position: absolute;
 			display: flex;
 			flex-direction: row;
 			justify-content: flex-start;
@@ -94,10 +102,14 @@
 			background: transparent;
 			color: transparent;/* #99D7FF */
 			transition: all 2s;
-			animation: shrinkHead 2s ease-in-out 3s 1 forwards;
-		}
-		header h1 {
-			width: auto;
+            animation: fadeOut 0.5s linear 4.5s both;
+            background-color: #111827;
+            z-index: 2;
+
+            /*display: none;*/
+        }
+        .splash h1 {
+            width: auto;
 			background: 
 				linear-gradient(#99D7FF 0 0) no-repeat,
 				linear-gradient(#99D7FF 0 0) no-repeat;
@@ -106,22 +118,48 @@
 					background-clip: padding-box,text;
 			animation: 
 				t 1.2s .5s both,
-				b 1.2s 1.3s both,
-				fadeOut 1s linear 5.8s both;
+				b 1.2s 1.3s both;
 			margin: 0 1em;
 			transition: all 2s;
+        }
+        .splash-img-wrapper {
+            position: absolute;
+            height: 300px;
+            width: 100%;
+            top: 50%;
+            left: -100%;
+            transform: translateY(-50%);
+            background-color: #111827;
+            animation: slideIn 1s ease-out 3s both;
+        }
+        .splash img {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: #111827;
+            animation: slideCenter 0.5s linear 3.5s both;
+        }
+        @keyframes t {
+			to {background-size: 150% 100%}
 		}
-		header img {
-			width: 50px;
-			height: 50px;
-			margin: 1em;;
-			visibility: hidden;
-			opacity: 0;
-			animation: fadeIn 1s linear 6s forwards;
+		@keyframes b {
+			to {background-position:-200% 0,0 0} 
 		}
+        @keyframes slideIn {
+            to {left: 0%;}
+        }
+        @keyframes slideCenter {
+            to {right: 50%; transform: translate(50%, -50%);}
+        }
+        @keyframes fadeOut {
+            to {opacity: 0; visibility: hidden; }
+        }
 
-		.island-head {
-			position: relative;
+        .island-wrapper {
+		    position: absolute;
 		    top: 1em;
 		    right: 0;
 		    left: 0;
@@ -133,56 +171,25 @@
 		    width: 80px;
 		    height: 52px;
 		    margin: 0 auto;
-			color: #fff;
 		    background: rgba(57, 73, 86, 0.7);
 		    border: 0.2rem solid rgba(57, 73, 86, 1);
 		    -webkit-backdrop-filter: blur(104px);
 		    backdrop-filter: blur(104px);
 		    border-radius: 2rem;
 		    z-index: 11;
-			opacity: 0;
-		    animation: fadeIn 3s linear 3.1s forwards, searchAnim 1s ease 5.6s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
+		    animation: fadeIn 2s linear, searchAnim 1s ease 1.5s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
 		    transition: all 0.5s cubic-bezier(0, 0, 0.61, 1.23);
 		}
-		@keyframes shrinkHead {
-			50% {
-				font-size: 1em;
-			}
-			100% {
-				height: 5em;
-				font-size: 1em;
-				font-weight: 400;
-			}
-		}
-		@keyframes t {
-			to {background-size: 150% 100%}
-		}
-		@keyframes b {
-			to {background-position:-200% 0,0 0} 
-		}
-		@keyframes searchAnim {
-			0% {width: 80px;}
-			100% {width: 50%;}
-		}
-		@keyframes fadeIn {
-			0% {opacity: 0; visibility: visible;}
-			70% {opacity: 0; visibility: visible;}
-			90% {opacity: 0.5; visibility: visible;}
-			100% {opacity: 1; visibility: visible;}
-		}
-		@keyframes fadeOut {
-			0% {opacity: 1; visibility: visible;}
-			90% {visibility: visible;}
-			99% {opacity: 0; visibility: hidden;}
-			100% {opacity: 0; visibility: hidden; display: none;}
-		}
-		.island-head.island {
-			height: 200px;
-		}
-		.island-head.island .search-bar {
+		.island-wrapper.hub-open {
 			display: none;
 		}
-		.island-head.island .island-content {
+		.island-wrapper.island {
+			height: 200px;
+		}
+		.island-wrapper.island ~ main {
+			margin-top: -150px;
+		}
+		.island-wrapper.island .island-content {
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
@@ -191,13 +198,13 @@
 			height: 100%;
 			opacity: 1;
 		}
-		.island-head .island-content {
+		.island-wrapper .island-content {
 			display: none;
 			opacity: 0;
 			transition: 0.5s ease;
     		transition-delay: 0.3s;
 		}
-		.island-head .island-content button {
+		.island-wrapper .island-content button {
 			padding: 15px 30px;
 			border-radius: 8px;
 			border: none;
@@ -206,347 +213,671 @@
 			outline: none;
 			cursor: pointer;
 		}
-		.island-head.island .button-wrapper {
+		.island-wrapper.island .button-wrapper {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
 			width: 50%;
 		}
-		.island-head.island .button-wrapper .other {
+		.island-wrapper.island .button-wrapper .other {
 			background: #44ffc4;
 		}
-		.island-head .search-bar {
-			width: 100%;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
+
+        @keyframes fadeIn {
+			0% {opacity: 0;}
+			70% {opacity: 0;}
+			90% {opacity: 0.5;}
+			100% {opacity: 1;}
 		}
-		.island-head .search-bar input {
-			width: 100%;
-			height: 100%;
-			border: none;
-			outline: none;
-			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
-			font-family: 'Roboto', sans-serif;
-			font-size: 20px;
-			background-color: transparent;
-		}
-		.island-head .search-bar .search-icon {
-			cursor: pointer;
-		}
-		.search-result-highlight {
-			box-shadow: 0px 0px 20px 0px rgba(255,255,255,0.9)!important;
+		@keyframes searchAnim {
+			0% {width: 80px;}
+			100% {width: 50%;}
 		}
 
-		section {
-			position: fixed;
-			width: 100%;
-			min-height: 50%;
-			max-height: 70%;
-			height: 70%;
-			bottom: 0;
-			color: #fff;
-			overflow-x: hidden;
-			opacity: 0;
-			visibility: hidden;
-			animation:
-				fadeIn 2s ease-out 6.5s both,
-				shiftDown 2.2s ease-out 6.5s both;
-			pointer-events: none;
+        .close-btn {
+            position: absolute;
+            top: 0;
+            right: 0.5em;
+            background-image: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            cursor: pointer;
+            font-size: 4em;
+            opacity: 0;
+            visibility: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .close-btn.open {
+            opacity: 1;
+            visibility: visible;
+            z-index: 9;
+            pointer-events: auto;
+        }
+
+        .hub-wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90vh;
+            height: 90vh;
+            /*animation: popOut 1s cubic-bezier(.25,.8,.25,1) 5s;
+            transform-origin: center;*/
+            transition: all 1s cubic-bezier(.25,.8,.25,1);
+        }
+        @keyframes popOut {
+            to {transform: translate(-50%, -50%) scale(1)}
+        }
+        .hub-wrapper div:not(.hub-center) {
+            position: absolute;
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            font-size: 5em;
+            /*background-color: rgba(57, 73, 86, 0.7);*/
+            background-image: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            padding: 0.5em;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .hub-wrapper div:not(.hub-center):hover {
+            background-size: 200%;
+            background-position: right;
+        }
+        .hub-wrapper.open, .hub-center.open {
+            transform: translate(-50%, -50%) scale(1);
+            transform-origin: center;
+        }
+        .hub-center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hub-center img {
+            width: 300px;
+            height: 300px;
+        }
+        .hub-top-left {
+            position: absolute;
+            left: 0;
+            top: 0%;
+            transform: translate(0%, 0%);
+        }
+        .hub-top-right {
+            left: 100%;
+            top: 0;
+            transform: translate(-100%, 0);
+        }
+        .hub-bottom-right {
+            left: 100%;
+            top: 100%;
+            transform: translate(-100%, -100%);
+        }
+        .hub-bottom-left {
+            left: 0%;
+            top: 100%;
+            transform: translate(0, -100%);
+        }
+
+        .section {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 90vh;
+            overflow: auto;
+            opacity: 0;
+            visibility: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .section.open {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+            pointer-events: auto;
+        }
+        .section h2 {
+            font-size: clamp(26px,5vw,32px);
+            font-weight: 600;
+            margin: 10px 0px 40px;
+            padding-left: 10%;
+        }
+        .section h3 {
+            font-size: 1.5em;
+            padding: 1em 0;
+        }
+        .section .inner {
+			display: grid;
+		    grid-template-columns: 3fr 3fr;
+		    gap: 50px;
+		    grid-auto-flow: dense;
+            width: 80%;
+            margin: 0 auto;
 		}
-		@keyframes shiftDown {
-			0% {transform: translate(0, -3em) scale(0.8);}
-			100% {transform: translate(0, 0) scale(1);}
+		.section .inner .list1 {
+			grid-column: 1;
 		}
-		section .left, section .right {
-			position: absolute;
-			width: calc(50% - 24px);
-			height: 100%;
+		.section .inner .list2 {
+			grid-column: 2;
 		}
-		section .left {
-			left: 0;
-			border-radius: 0 48px 0 0;
-			background-color: transparent;
-			margin-right: 24px;
-			background-size: 50%;
-			background-position: center;
-			background-repeat: no-repeat;
-			transition: all 0.5s ease-out;
-		}
-		section .left.activehover {
-			background-color: rgba(57, 73, 86, 0.7);
-			background-size: 60%;
-		}
-		section .right {
-			right: 0;
-			margin-left: 24px;
-			padding-right: 48px;
-			display: flex;
-			overscroll-behavior-x: contain;
-			scroll-snap-type: x mandatory;
-			overflow-x: auto;
-		}
-		section .right .link-section {
-			/*scroll-snap-align: start;*/
-			width: 100%;
-			flex: 0 0 100%;
-			margin-right: 48px;
-			scroll-snap-align: center;
-		}
-		section .right h2 {
-			font-size: 3em;
-			font-family: 'Caveat', cursive;
-		}
-		section .right ul {
+        .section .inner ul {
 			list-style-type: none;
+			width: 100%;
 		}
-		section .right ul li {
-			padding: 1.5em 0;
-			border-top: 2px solid #f3f2f9;
-			font-size: 1.2em;
-			font-family: 'Anton', sans-serif;
-			letter-spacing: 2px;
+		.section .inner li {
+			background-color: rgba(57, 73, 86, 0.7);
+			width: 100%;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
 			cursor: pointer;
-			transition: all 0.5s cubic-bezier(0.645,0.045,0.355,1);
+		    padding: 10px;
+		    text-align: left;
+		    font-size: 20px;
+		    /*transition: all 0.3s;*/
+		    display: flex;
+		    align-items: center;
+		    justify-content: flex-start;
+		    border-radius: 8px;
+		    margin-bottom: 10px;
+		    -webkit-user-select: none;
+			user-select: none;
 		}
-		section .right ul li:hover {
-			padding-left: 2em;
+        .section .inner li:hover {
+			background-color: rgba(57, 73, 86, 0.9);
+			transform: scale(0.9) rotate(-2deg);
 		}
-		.next {
-			position: absolute;
-			right: 0;
-			width: 24px;
-			height: 100%;
+		.section .inner li .img {
+			width: 50px;
+		    height: auto;
+		    min-height: 50px;
+		    margin-right: 10px;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    user-select: none;
+		    -webkit-user-select: none;
+		}
+		.section .inner li .img img {
+			width: 100%;
+    		height: auto;
+		}
+		.section .inner .img img {
+			width: 80%;
+			height: auto;
+		}
+
+        .newgrid-inner .new-list ul {
+			list-style-type: none;
 			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-			z-index: 2;
+			flex-wrap: wrap;
+			overflow: hidden;
+			position: relative;
+			width: 80%;
+            margin: 0 auto;
+			padding: 1em;
 		}
-		.next:hover {
-		    background: rgba(57, 73, 86, 0.7);
+		.newgrid-inner .new-list li {
+			background-color: rgba(57, 73, 86, 0.7);
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+    		cursor: pointer;
+    		border-radius: 15px;
+    		overflow: hidden;
+			margin-bottom: 14px;
+			margin-right: 12px;
+			width: calc(25% - 19px);
+			display: flex;
+			flex-direction: column;
+            font-size: 20px;
+		}
+		.newgrid-inner .new-list li:hover {
+			transform: scale(0.9) rotate(-2deg);
+		}
+		.newgrid-inner .new-list li .img {
+			border-radius: 12px;
+   			width: 100%;
+    		object-fit: cover;
+		}
+		.newgrid-inner .new-list li .img img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+		.newgrid-inner .new-list li .name {
+			padding: 0.25em 1em;
+		}
+
+		.inner .list1 li.new, .inner .list2 li.new, .newgrid-inner .new-list li.new {
+			/*box-shadow: 0 0 8px 8px #48abe0;*/
+			/*box-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #0ba9ca, 0 0 30px #0ba9ca,
+    			0 0 40px #0ba9ca, 0 0 50px #0ba9ca;*/
+    		/*box-shadow: 0px 0px 20px 0px rgba(100,209,255,0.9);*/ /* x y blur range color*/
+    		box-shadow: 0px 0px 20px 0px rgba(0, 141, 255, 0.9);
 		}
 
 
-		@media (max-width: 480px) {
-			header {
-				font-size: clamp(14px,5vw,16px);
-			}
-			.island-head {
-				position: absolute;
-				width: 80px;
+        @media (max-width: 480px) {
+
+            .splash {
+                font-size: 2em;
+            }
+
+            .island-wrapper {
+                width: 80px;
 				margin: 0;
-				left: auto;
-				right: 1em;
-			}
-			@keyframes searchAnim {
+				left: 1em;
+            }
+            @keyframes searchAnim {
 				0% {width: 80px;}
 				100% {width: 75%;}
 			}
-			.island-head.island {
+			.island-wrapper.island {
 				height: 250px;
 			}
-			.island-head.island .button-wrapper {
+			.island-wrapper.island .button-wrapper {
 				width: 100%;
 			}
 
-			section .left {
-				display: none;
+            .hub-wrapper {
+                width: 90vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            .hub-wrapper div:not(.hub-center) {
+                position: static;
+                width: 100%;
+                transform: none;
+            }
+            .hub-wrapper div:nth-child(2) {
+                margin-bottom: 200px;
+            }
+
+            .section .inner {
+				/*display: block;*/
+				grid-template-columns: 1fr;
+				grid-gap: 0;
 			}
-			section .right {
-				left: 0;
-				width: 100%;
+            .section h2 {
+                margin: 40px 0px;
+            }
+			.section .inner .list1, .section .inner .list2 {
+				grid-column: 1;
 			}
-		}
-	</style>
+            .newgrid-inner .new-list ul {
+                padding: 0;
+            }
+            .newgrid-inner .new-list li {
+				width: calc(50% - 19px);
+			}
+
+        }
+        
+    </style>
 </head>
 <body>
-	<header>
-		<h1>Zane Wesley</h1>
-		<img src="images/icon-v4-transparent-blue.png" alt="Z">
-	</header>
 
-	<div class="island-head">
-		<div class="search-bar">
-			<input id="search" type="text" autocomplete="off" placeholder="Search">
-			<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-		</div>
-		<div class="island-content">
-			<h3>Update v9.3.2</h3>
-			<p class="island-inner">
-				- Added Recommendation Section
-				<br>- Apps now have descriptions. Click on them to view
-				<br>- The search bar now has commands. Search <code>>>commands</code> for the list.
-			</p>
-			<div class="button-wrapper">
-				<button class="other" style="display: none">OK!</button>
-				<button class="island-close" onclick="closeIsland()">OK!</button>
-			</div>
-		</div>
-	</div>
+    <div class="splash">
+        <h1>Zane Wesley</h1>
+        <div class="splash-img-wrapper"><img src="images/icon-v4-transparent-blue.png" alt="Z"></div>
+    </div>
 
-	<section class="content">
-		<div class="left"></div>
-		<div class="next" onclick="scrollNextSection()">></div>
-		<div class="right">
-			<div id="foryou" class="link-section">
-				<h2>For You</h2>
-				<ul>
-					<li data-id="sequence" data-url="sequence" data-ico="sequence/icon.svg" data-desc="A simple pattern following game.">Seqence</li>
-					<li daata-id="2048" data-url="2048" data-ico="2048/icon.png" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">2048</li>
-					<li data-id="doodlejump" data-url="doodlejump" data-ico="doodlejump/images/doodle-jump-game-icon-192.png" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">Doodle Jump</li>
-					<li data-id="towertakedown" data-url="towertakedown" data-ico="towertakedown/icon.jpg" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">Tower Takedown</li>
-				</ul>
-			</div>
-			<div id="new" class="link-section">
-				<h2>New & Updated</h2>
-				<ul>
-					<li data-id="sequence" data-url="sequence" data-ico="sequence/icon.svg" data-desc="A simple pattern following game.">Sequence</li>
-					<li data-id="doodlejump" data-url="doodlejump" data-ico="doodlejump/images/doodle-jump-game-icon-192.png" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">Doodle Jump</li>
-					<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" data-ico="images/tech-log-icon.png" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">Tech Log</li>
-					<li data-id="towertakedown" data-url="towertakedown" data-ico="towertakedown/icon.jpg" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">Tower Takedown</li>
-				</ul>
-			</div>
-			<div id="games" class="link-section">
-				<h2>Fast-Paced Games</h2>
-				<ul>
-					<li id="sequence" data-url="sequence" data-ico="sequence/icon.svg" data-desc="A simple pattern following game.">Sequence</li>
-					<li id="doodlejump" data-url="doodlejump" data-ico="doodlejump/images/doodle-jump-game-icon-192.png" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">Doodle Jump</li>
-					<li id="santahatmixup" data-url="santahatmixup" data-ico="santahatmixup/css/favicon.png" data-desc="Follow that Santa! Choose the right hat to level up.">Santa Hat Mixup</li>
-					<li id="pacman" data-url="pacman" data-ico="pacman/icon/ios_icon.png" data-desc="A remake of the classic arcade game. Use the arrow keys or swipe to moev around the maze.">Pac Man</li>
-					<li id="flappybird" data-url="flappybird" data-ico="flappybird/icon.jpg" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes.">Flappy Bird</li>
-					<li id="crossyroad" data-url="crossyroad" data-ico="crossyroad/icon.jpeg" data-desc="A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!">Crossy Road</li>
-					<li id="cakeninja" data-url="cakeninja" data-ico="cakeninja/files/assets/32463581/1/caption.png" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!">Cake Ninja</li>
-					<li id="hextris" data-url="hextris" data-ico="hextris/favicon.ico" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.">Hextris</li>
-					<li id="stack" data-url="stack" data-ico="images/stack-icon.PNG" data-desc="Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!">Stack</li>
-					<li id="chromedino" data-url="chromedino" data-ico="chromedino/200-error-offline.png" data-desc="A remake of the classic Chrome Dino Runner game. Click/tap to jump.">Chrome Dino Runner</li>
-				</ul>
-			</div>
-			<div id="games2" class="link-section">
-				<h2>Leisure Games</h2>
-				<ul>
-					<li id="guessthatnumber"  data-url="guessthatnumber" data-ico="guessthatnumber/icon.png"data-desc="Simple. Guess that number!">Guess That Number 2</li>
-					<li id="towertakedown" data-url="towertakedown" data-ico="towertakedown/icon.jpg" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">Tower Takedown</li>
-					<li id="solitaire" data-url="solitaire" data-ico="solitaire/assets/icon.jpg" data-desc="A remake of the classic card game Solitaire.">Solitaire</li>
-					<li id="chess" data-url="chess" data-ico="chess/img/chess.png" data-desc="Online chess against an AI. Don't get checkmated!">Chess</li>
-					<li id="colorsplosion" data-url="colorsplosion" data-ico="colorsplosion/icon.PNG" data-desc="Some random experiments. Enjoy ;)">Colorsplosion</li>
-					<li id="numberguessing" data-url="numberguessing" data-ico="images/numberguessing-icon.png" data-desc="Simple. Guess that number!">Guess that Number</li>
-					<li id="2048" data-url="2048" data-ico="2048/icon.png" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">2048</li>
-					<li id="tic-tac-toe" data-url="tic-tac-toe" data-ico="images/tic-tac-toe-icon.png" data-desc="Tic-Tac-Toe against an AI. You know what to do.">Tic Tac Toe</li>
-					<li id="colorswirl" data-url="colorswirl/colorswirl" data-ico="colorswirl/icon.jpg" data-desc="Swirl colors around and make beautiful designs in this relaxing app!">Colorswirl</li>
-				</ul>
-			</div>
-			<div id="resources" class="link-section">
-				<h2>Resources</h2>
-				<ul>
-					<li id="corey-3.0" data-url="corey-3.0" data-ico="corey-3.0/icon.png" data-desc="The most recent attempt to make something like ChatGPT before it existed.">Corey 3.0</li>
-					<li id="notes" data-url="notes" data-ico="notes/icon.png" data-desc="A note taking app. Note takers are world changers!">Notes</li>
-					<li id="assistant" data-url="assistant" data-ico="assistant/icon.svg" data-desc="An attempt to something like ChatGPT before it existed.">Corey 2.0</li>
-					<li id="calculator" data-url="calculator" data-ico="images/calculator-icon.png" data-desc="A calculator inspired by Apple.">Calculator</li>
-					<li id="countdownstudio" data-url="countdownstudio" data-ico="images/countdownstudio-icon.svg" data-desc="Make a countdown and watch time pass.">Countdown Studio</li>
-					<li id="mmc" data-url="mmc" data-ico="images/mmc-icon.png" data-desc="Made for Chemistry homework help. Enjoy ;)">Molar Mass Calculator</li>
-					<li id="whiteboard" data-url="whiteboard" data-ico="images/whiteboard-icon.jpg" data-desc="An online whiteboard. Built for a techer during COVID for quaratine classes.">Whiteboard</li>
-					<li id="vividly" data-url="vividly" data-ico="vividly/icon.png" data-desc="Bringing FaceTime to the web before Apple did.">Vividly</li>
-					<li id="connect" data-url="connect" data-ico="connect/splash.svg" data-desc="Online public chat rooms.">Connect</li>
-					<li id="webchat" data-url="webchat/new" data-ico="webchat/logo.ico" data-desc="A video chatting app ran through the web.">WebChat</li>
-				</ul>
-			</div>
-			<div id="miscellaneous" class="link-section">
-				<h2>Miscellaneous</h2>
-				<ul>
-					<li id="countdowns" data-url="countdowns" data-ico="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg" data-desc="A collection of countdowns made for hollidays.">Countdowns</li>
-					<li id="inspiration" data-url="inspiration" data-ico="images/inspiration-icon.png" data-desc="Be inspired by this inspirational quote image generator.">Insperational Quotes Image Generator</li>
-					<li id="leaderboard" data-url="leaderboard" class="noframe" data-ico="images/leaderboard-icon.png" data-desc="Some friendly competition for games on my website!">Leaderboard</li>
-					<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" data-ico="images/tech-log-icon.png" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">Tech Log</li>
-					<li id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe" data-ico="images/discord-icon.png" data-desc="Join ZaneWesley's Discord server!">Discord Server</li>
-				</ul>
-			</div>
-			<div id="more" class="link-section">
-				<h2>More</h2>
-				<ul>
-					<li id="about" data-url="about" data-ico="images/about-icon.png" data-desc="Get to know me! Let's connect!">About</li>
-					<li id="archive" data-url="archive" data-ico="images/home-icon.svg" data-desc="Archived apps and other random projects I'm embarrased to show.">App Archive</li>
-					<li id="beta" data-url="beta" class="noframe" data-ico="images/beta-icon.png" data-desc="See what's coming in new updates before they're live!">BETA Page</li>
-				</ul>
-			</div>
-		</div>
-	</section>
+    <div class="island-wrapper hub-open">
+        <div class="island-content">
+            <h3>Update v9.3.2</h3>
+            <p class="island-inner">
+                - Added Recommendation Section
+                <br>- Apps now have descriptions. Click on them to view
+                <br>- The search bar now has commands. Search <code>>>commands</code> for the list.
+            </p>
+            <div class="button-wrapper">
+                <button class="other" style="display: none">OK!</button>
+                <button class="island-close" onclick="closeIsland()">OK!</button>
+            </div>
+        </div>
+    </div>
 
-	<script>
-		//Set title text to Z for smoother animation
-		setTimeout(function() {
-			document.querySelector('header h1').innerText='Z';
-			setTimeout(function() {
-				document.querySelectorAll('.right #foryou ul li').forEach(function(elem, i) {
-					elem.style.animation=`fadeIn 1s ease-out ${0.5*i}s both`;
+    <div class="hub-center open"><img src="images/icon-v4-transparent-blue.png" alt="Z"></div>
+
+    <div class="hub-wrapper">
+        <div class="hub-top-left" id="foryou-btn" title="Continue"><i class="fa-light fa-play"></i></i></div>
+        <div class="hub-top-right" id="games-btn" title="Games"><i class="fa-light fa-gamepad-modern"></i></div>
+        <div class="hub-bottom-right" id="resources-btn" title="Resources"><i class="fa-light fa-pencil"></i></div>
+        <div class="hub-bottom-left" id="miscellaneous-btn" title="Miscellaneous"><i class="fa-light fa-cubes"></i></div>
+    </div>
+
+    <div class="close-btn"><i class="fa-light fa-xmark"></i></div>
+
+    <div id="foryou" class="section">
+        <h2>New or Updated</h2>
+        <div class="newgrid-inner">
+            <div class="new-list">
+                <ul>
+                    <li data-id="sequence" data-url="sequence" class="li-link new" data-desc="A simple pattern following game.">
+                        <div class="img"><img src="sequence/icon.svg"></div>
+                        <div class="name">Sequence</div>
+                    </li>
+                    <li data-id="doodlejump" data-url="doodlejump" class="li-link new" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
+                        <div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+                        <div class="name">Doodle Jump</div>
+                    </li>
+                    <li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
+                        <div class="img"><img src="images/tech-log-icon.png"></div>
+                        <div class="name">Tech Log</div>
+                    </li>
+                    <li data-id="towertakedown" data-url="towertakedown" class="li-link" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
+                        <div class="img"><img src="towertakedown/icon.jpg"></div>
+                        <div class="name">Tower Takedown</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 style="padding-top: 100px;">For You</h2>
+        <div class="inner">
+            <div id="recommended" class="list1">
+                <h3>Recommended</h3>
+                <ul>
+                    <li data-url="#" class="noframe" style="pointer-events: none;">
+                        <div class="img"><img src="images/icon.png"></div>
+                        <div class="name">Coming Soon!</div></li>
+                </ul>
+            </div>
+            <div id="continue" class="list2">
+                <h3>Continue</h3>
+                <ul>
+                    <li data-url="#" class="noframe" style="pointer-events: none;">
+                        <div class="img"><img src="images/icon.png"></div>
+                        <div class="name">Click around first!</div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="games" class="section">
+        <h2>Games</h2>
+        <div class="inner">
+            <div class="list1">
+                <h3>Cardio</h3>
+                <ul>
+                    <li id="sequence" data-url="sequence" class="li-link new" data-desc="A simple pattern matching game.">
+                        <div class="img"><img src="sequence/icon.svg"></div>
+                        <div class="name">Sequence</div>
+                    </li>
+                    <li id="doodlejump" data-url="doodlejump" class="new" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
+                        <div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+                        <div class="name">Doodle Jump</div>
+                    </li>
+                    <li id="santahatmixup" data-url="santahatmixup" data-desc="Follow that Santa! Choose the right hat to level up.">
+                        <div class="img"><img src="santahatmixup/css/favicon.png"></div>
+                        <div class="name">Santa Hat Mixup</div>
+                    </li>
+                    <li id="pacman" data-url="pacman" data-desc="A remake of the classic arcade game. Use the arrow keys or swipe to moev around the maze.">
+                        <div class="img"><img src="pacman/icon/ios_icon.png"></div>
+                        <div class="name">Pac Man</div>
+                    </li>
+                    <li id="flappybird" data-url="flappybird" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes.">
+                        <div class="img"><img src="flappybird/icon.jpg"></div>
+                        <div class="name">Flappy Bird</div>
+                    </li>
+                    <li id="crossyroad" data-url="crossyroad" data-desc="A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!">
+                        <div class="img"><img src="crossyroad/icon.jpeg"></div>
+                        <div class="name">Crossy Road</div>
+                    </li>
+                    <li id="cakeninja" data-url="cakeninja" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!">
+                        <div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
+                        <div class="name">Cake Ninja</div>
+                    </li>
+                    <li id="hextris" data-url="hextris" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.">
+                        <div class="img"><img src="hextris/favicon.ico"></div>
+                        <div class="name">Hextris</div>
+                    </li>
+                    <li id="stack" data-url="stack" data-desc="Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!">
+                        <div class="img"><img src="images/stack-icon.PNG"></div>
+                        <div class="name">Stack</div>
+                    </li>
+                    <li id="chromedino" data-url="chromedino" data-desc="A remake of the classic Chrome Dino Runner game. Click/tap to jump.">
+                        <div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
+                        <div class="name">Chrome Dino Runner</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="list2">
+                <h3>Leisure</h3>
+                <ul>
+                    <li id="guessthatnumber" data-url="guessthatnumber" data-desc="Simple. Guess that number!">
+                        <div class="img"><img src="guessthatnumber/icon.png"></div>
+                        <div class="name">Guess That Number 2</div>
+                    </li>
+                    <li id="towertakedown" data-url="towertakedown" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
+                        <div class="img"><img src="towertakedown/icon.jpg"></div>
+                        <div class="name">Tower Takedown</div>
+                    </li>
+                    <li id="solitaire" data-url="solitaire" data-desc="A remake of the classic card game Solitaire.">
+                        <div class="img"><img src="solitaire/assets/icon.jpg"></div>
+                        <div class="name">Solitaire</div>
+                    </li>
+                    <li id="chess" data-url="chess" data-desc="Online chess against an AI. Don't get checkmated!">
+                        <div class="img"><img src="chess/img/chess.png"></div>
+                        <div class="name">Chess</div>
+                    </li>
+                    <li id="colorsplosion" data-url="colorsplosion" data-desc="Some random experiments. Enjoy ;)">
+                        <div class="img"><img src="colorsplosion/icon.PNG"></div>
+                        <div class="name">Colorsplosion</div>
+                    </li>
+                    <li id="numberguessing" data-url="numberguessing" data-desc="Simple. Guess that number!">
+                        <div class="img"><img src="images/numberguessing-icon.png"></div>
+                        <div class="name">Guess that Number</div>
+                    </li>
+                    <li id="2048" data-url="2048" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">
+                        <div class="img"><img src="2048/icon.png"></div>
+                        <div class="name">2048</div>
+                    </li>
+                    <li id="tic-tac-toe" data-url="tic-tac-toe" data-desc="Tic-Tac-Toe against an AI. You know what to do.">
+                        <div class="img"><img src="images/tic-tac-toe-icon.png"></div>
+                        <div class="name">Tic Tac Toe</div>
+                    </li>
+                    <li id="colorswirl" data-url="colorswirl/colorswirl" data-desc="Swirl colors around and make beautiful designs in this relaxing app!">
+                        <div class="img"><img src="colorswirl/icon.jpg"></div>
+                        <div class="name">Colorswirl</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="resources" class="section">
+        <h2>Resources</h2>
+        <div class="inner">
+            <div class="list1">
+                <h3>Desk Assistant</h3>
+                <ul>
+                    <li id="corey-3.0" data-url="corey-3.0" data-desc="The most recent attempt to make something like ChatGPT before it existed.">
+                        <div class="img"><img src="corey-3.0/icon.png"></div>
+                        <div class="name">Corey 3.0</div>
+                    </li>
+                    <li id="notes" data-url="notes" data-desc="A note taking app. Note takers are world changers!">
+                        <div class="img"><img src="notes/icon.png"></div>
+                        <div class="name">Notes</div>
+                    </li>
+                    <li id="assistant" data-url="assistant" data-desc="An attempt to something like ChatGPT before it existed.">
+                        <div class="img"><img src="assistant/icon.svg"></div>
+                        <div class="name">Corey 2.0</div>
+                    </li>
+                    <li id="calculator" data-url="calculator" data-desc="A calculator inspired by Apple.">
+                        <div class="img"><img src="images/calculator-icon.png"></div>
+                        <div class="name">Calculator</div>
+                    </li>
+                    <li id="countdownstudio" data-url="countdownstudio" data-desc="Make a countdown and watch time pass.">
+                        <div class="img"><img src="images/countdownstudio-icon.svg"></div>
+                        <div class="name">Countdown Studio</div>
+                    </li>
+                    <li id="mmc" data-url="mmc" data-desc="Made for Chemistry homework help. Enjoy ;)">
+                        <div class="img"><img src="images/mmc-icon.png"></div>
+                        <div class="name">Molar Mass Calculator</div>
+                    </li>
+                    <li id="whiteboard" data-url="whiteboard" data-desc="An online whiteboard. Built for a techer during COVID for quaratine classes.">
+                        <div class="img"><img src="images/whiteboard-icon.jpg"></div>
+                        <div class="name">Whiteboard</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="list2">
+                <h3>Communication</h3>
+                <ul>
+                    <li id="vividly" data-url="vividly" data-desc="Bringing FaceTime to the web before Apple did.">
+                        <div class="img"><img src="vividly/icon.png"></div>
+                        <div class="name">Vividly</div>
+                    </li>
+                    <li id="connect" data-url="connect" data-desc="Online public chat rooms.">
+                        <div class="img"><img src="connect/splash.svg"></div>
+                        <div class="name">Connect</div>
+                    </li>
+                    <li id="webchat" data-url="webchat/new" data-desc="A video chatting app ran through the web.">
+                        <div class="img"><img src="webchat/logo.ico"></div>
+                        <div class="name">WebChat</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="miscellaneous" class="section">
+        <h2>Miscellaneous</h2>
+        <div class="inner">
+            <div class="list1">
+                <ul>
+                    <li id="countdowns" data-url="countdowns" data-desc="A collection of countdowns made for hollidays.">
+                        <div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
+                        <div class="name">Countdowns</div>
+                    </li>
+                    <li id="inspiration" data-url="inspiration" data-desc="Be inspired by this inspirational quote image generator.">
+                        <div class="img"><img src="images/inspiration-icon.png"></div>
+                        <div class="name">Insperational Quotes Image Generator</div>
+                    </li>
+                    <li id="leaderboard" data-url="leaderboard" class="noframe" data-desc="Some friendly competition for games on my website!">
+                        <div class="img"><img src="images/leaderboard-icon.png"></div>
+                        <div class="name">Leaderboard</div>
+                    </li>
+                    <li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
+                        <div class="img"><img src="images/tech-log-icon.png"></div>
+                        <div class="name">Tech Log</div>
+                    </li>
+                    <li id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe" data-desc="Join ZaneWesley's Discord server!">
+                        <div class="img"><img src="images/discord-icon.png"></div>
+                        <div class="name">Discord Server</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="list2"></div>
+    </div>
+
+    <script>
+        /*
+            * Hub Functions *
+        */
+        setTimeout(function() {
+            document.querySelector('.hub-wrapper').classList.add('open');
+        }, 4500);
+
+        function openHub() {
+            document.querySelector('.hub-wrapper').classList.add('open');
+            document.querySelector('.hub-center').classList.add('open');
+            document.querySelectorAll('#foryou, #games, #resources, #miscellaneous, .close-btn').forEach(function(elem) {
+                elem.classList.remove('open');
+            });
+            document.querySelector('.island-wrapper').classList.add('hub-open');
+        }
+        function closeHub() {
+            document.querySelector('.hub-wrapper').classList.remove('open');
+            document.querySelector('.hub-center').classList.remove('open');
+            document.querySelector('.island-wrapper').classList.remove('hub-open');
+        }
+
+        document.querySelectorAll('#foryou-btn, #games-btn, #resources-btn, #miscellaneous-btn').forEach(function(elem) {
+            elem.addEventListener('click', function(e) {
+                e.preventDefault();
+                closeHub();
+                setTimeout(function() {document.querySelector(`#${elem.id.replace('-btn', '')}`).classList.add('open'); document.querySelector('.close-btn').classList.add('open');}, 600);
+            });
+        });
+        document.querySelector('.close-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            openHub();
+        });
+
+        /*
+            * Link Handler *
+        */
+        function setHandlers() {
+			//clear event listeners
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li, footer a').forEach(function(elem) {
+				elem.replaceWith(elem.cloneNode(true));
+			});
+			//set event listeners
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li').forEach(function(elem) {
+				elem.classList.add('listLink');
+				//add event listener
+				elem.addEventListener('click', function(e) {
+					e.preventDefault();
+					var _this = this;
+					openIsland(this.querySelector('.name').innerHTML, this.getAttribute('data-desc'), 'Close', true, 'Open <i class="fa-solid fa-arrow-up-right-from-square"></i>');
+					document.querySelector('.island-wrapper .island-content .button-wrapper .other').onclick=function() {
+						//openIslandCheckmark();
+						setTimeout(function() {
+							e.preventDefault();
+							updateRecentArr(_this.querySelector('.name').innerHTML, _this.getAttribute('data-url'), _this.querySelector('.img img').src);
+							trainRecommend();
+							if(!elem.classList.contains('noframe')) {
+								//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
+								window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
+							} else {
+								//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
+								window.open(elem.getAttribute('data-url'));
+							}
+							gtag('event', 'app_link_click', {
+								'app_name': _this.querySelector('.name').innerHTML
+							});
+							closeIsland();
+						}, 0);//1500
+					}
 				});
-				document.querySelector('section').style.pointerEvents='auto';
-			}, 1300);
-		}, 5700);
-		//Hover event for links
-		document.querySelectorAll('section li').forEach(function(elem) {
-			var bgElem = document.querySelector('.left');
-			elem.addEventListener('mouseenter', function(e) {
-				bgElem.classList.add('activehover');
-				bgElem.style.backgroundImage = `url('${elem.getAttribute('data-ico')}')`;
 			});
-			elem.addEventListener('mouseout', function(e) {
-				bgElem.classList.remove('activehover');
-				bgElem.style.backgroundImage='none';
-			});
-		});
-		function scrollNextSection() {
-			var cUrl = window.location.hash.replace('#', '');
-			var sectArr = ['foryou', 'new', 'games', 'games2', 'resources', 'miscellaneous', 'more'];
-			var newLocation = sectArr.indexOf(cUrl) == sectArr.length-1 ? sectArr[0] : sectArr[sectArr.indexOf(cUrl)+1];
-			location = '#'+newLocation;
-		}
+        }
 
-		//Click handlers
-		document.querySelectorAll('li').forEach(function(elem) {
-			//elem.classList.add('listLink');
-			//add event listener
-			elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				var _this = this;
-				openIsland(this.innerHTML, this.getAttribute('data-desc'), 'Close', true, 'Open <i class="fa-solid fa-arrow-up-right-from-square"></i>');
-				document.querySelector('.island-head .island-content .button-wrapper .other').onclick=function() {
-					openIslandCheckmark();
-					setTimeout(function() {
-						e.preventDefault();
-						if(!elem.classList.contains('noframe')) {
-							//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
-							window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
-						} else {
-							//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
-							window.open(elem.getAttribute('data-url'));
-						}
-						gtag('event', 'app_link_click', {
-							'app_name': _this.innerHTML
-						});
-						closeIsland();
-					}, 0);//1500
-				}
-				});
-			});
+        /*
+            * Island Manager
+        */
 
-		//Island Handlers
-		function openIsland(title, content, closeButtonText, otherButton, otherButtonText) {
-			document.querySelector('.island-head .island-content h3').innerHTML = title || "Announcement!";
-			document.querySelector('.island-head .island-content .island-inner').innerHTML = content;
-			document.querySelector('.island-head .island-content .button-wrapper .island-close').innerHTML = closeButtonText || "Got It!";
+        function openIsland(title, content, closeButtonText, otherButton, otherButtonText) {
+			document.querySelector('.island-wrapper .island-content h3').innerHTML = title || "Announcement!";
+			document.querySelector('.island-wrapper .island-content .island-inner').innerHTML = content;
+			document.querySelector('.island-wrapper .island-content .button-wrapper .island-close').innerHTML = closeButtonText || "Got It!";
 			if(otherButton == true) {
-				document.querySelector('.island-head .island-content .button-wrapper .other').style.display = 'block';
-				document.querySelector('.island-head .island-content .button-wrapper .other').innerHTML = otherButtonText;
+				document.querySelector('.island-wrapper .island-content .button-wrapper .other').style.display = 'block';
+				document.querySelector('.island-wrapper .island-content .button-wrapper .other').innerHTML = otherButtonText;
 			} else {
-				document.querySelector('.island-head .island-content .button-wrapper .other').style.display = 'none';
+				document.querySelector('.island-wrapper .island-content .button-wrapper .other').style.display = 'none';
 			}
-			document.querySelector('.island-head').classList.add('island');
+			document.querySelector('.island-wrapper').classList.add('island');
 		}
 		function closeIsland() {
-			document.querySelector('.island-head').classList.remove('island');
-			document.querySelector('.island-head .island-content .button-wrapper .other').onclick=null;
-			document.querySelector('.island-head .island-content .button-wrapper .island-close').style.display='block';
+			document.querySelector('.island-wrapper').classList.remove('island');
+			document.querySelector('.island-wrapper .island-content .button-wrapper .other').onclick=null;
+			document.querySelector('.island-wrapper .island-content .button-wrapper .island-close').style.display='block'; 
 		}
 		function openIslandCheckmark() {
 			openIsland(' ',
@@ -590,7 +921,7 @@
 				</style>
 				`,
 			' ');
-			document.querySelector('.island-head .island-content .button-wrapper .island-close').style.display='none';
+			document.querySelector('.island-wrapper .island-content .button-wrapper .island-close').style.display='none';
 		}
 
 		//Offline
@@ -600,6 +931,236 @@
 		if(navigator.onLine == false) {
 			openIsland('Offline', `Oops! It looks like you\'re offline. Please restore your internet connection to contine.`, 'OK');
 		}
-	</script>
+
+        /*
+			* HISTORY MANAGEMENT *
+		*/
+		var appArr;
+		function updateRecentArr(app, appUrl, iconUrl) {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'))
+			} else {
+				appArr = [];
+			}
+			var appJ = {
+				name: app,
+				url: appUrl,
+				icon: iconUrl,
+				date: new Date()
+			};
+			appArr.push(appJ);
+			localStorage.setItem('z_history', JSON.stringify(appArr));
+			console.log(appJ);
+			loadAppHistory();
+		}
+		function loadAppHistory() {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'));
+				var appRArr = appArr.reverse();
+				var appHArr = appRArr.filter(by('name'), new Set);
+				document.querySelector('#foryou #continue ul').innerHTML = '';
+				document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[0].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>`;
+				if(appHArr[1]){ document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[1].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>`;}
+				if(appHArr[2]){ document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[2].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>`;}
+			} else {
+				//
+			}
+			setHandlers();
+		}
+
+		const by = property => function (object) { 
+		  const value = object[property]; 
+		  return !(this.has(value) || !this.add(value));
+		};
+
+        /*
+			* PAGE DATA HANDLERS *
+		*/
+
+		var pageData = [
+			//Games
+			{id: "2048", keywords: ['2048'], recommendKeys: ['game-strategy']},
+			{id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja'], recommendKeys: ['game-cardio']},
+			{id: "chess", keywords: ['chess'], recommendKeys: ['game-strategy']},
+			{id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino'], recommendKeys: ['game-cardio']},
+			{id: "colorsplosion", keywords: ['colorsplosion'], recommendKeys: ['game-leisure']},
+			{id: "colorswirl", keywords: ['colorswirl'], recommendKeys: ['game-leisure']},
+			{id: "crossyroad", keywords: ['crossy road', 'crossyroad'], recommendKeys: ['game-cardio']},
+			{id: "doodlejump", keywords: ['doodle jump runner'], recommendKeys: ['game-cardio']},
+			{id: "flappybird", keywords: ['flappy bird', 'flappybird'], recommendKeys: ['game-cardio']},
+			{id: "numberguessing", keywords: ['guess that number', 'guessthatnumber'], recommendKeys: ['game-strategy']},
+			{id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber'], recommendKeys: ['game-strategy']},
+			{id: "hextris", keywords: ['hextris'], recommendKeys: ['games-cardio']},
+			{id: "pacman", keywords: ['pac man', 'pac-man', 'pacman'], recommendKeys: ['game-cardio']},
+			{id: "santahatmixup", keywords: ['santa hat mixup', 'santa'], recommendKeys: ['game-cardio']},
+			{id: "sequence", keywords: ['sequence simon grid'], recommendKeys: ['game-strategy']},
+			{id: "solitaire", keywords: ['solitaire'], recommendKeys: ['game-leisure']},
+			{id: "stack", keywords: ['stack'], recommendKeys: ['game-cardio']},
+			{id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe'], recommendKeys: ['game-strategy']},
+			{id: "towertakedown", keywords: ['tower takedown', 'towertakedown'], recommendKeys: ['game-leisure']},
+			//Resources
+			{id: 'calculator', keywords: ['calculator'], recommendKeys: ['resource-desk']},
+			{id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms'], recommendKeys: ['resource-communication']},
+			{id: 'assistant', keywords: ['corey 2.0', 'assistant'], recommendKeys: ['resource-desk']},
+			{id: "corey-3.0", keywords: ['corey 3.0', 'corey'], recommendKeys: ['resource-desk']},
+			{id: "countdownstudio", keywords: ['countdown studio', 'count down studio'], recommendKeys: ['resource-desk']},
+			{id: "mmc", keywords: ['molar mass calculator'], recommendKeys: ['resource-desk']},
+			{id: "notes", keywords: ['notes'], recommendKeys: ['resource-desk']},
+			{id: "vividly", keywords: ['vividly', 'facetime', 'video chat'], recommendKeys: ['resource-communication']},
+			{id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms'], recommendKeys: ['resource-communication']},
+			{id: "whiteboard", keywords: ['whiteboard'], recommendKeys: ['resource-desk']},
+			//Miscellaneous
+			{id: "countdowns", keywords: ['countdowns'], recommendKeys: ['miscellaneous']},
+			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous']},
+			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['game-cardio']},
+			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous']},
+			{id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous']},
+			//More
+			{id: "about", keywords: ['about'], recommendKeys: ['more']},
+			{id: "archive", keywords: ['archive'], recommendKeys: ['more']},
+			{id: "beta", keywords: ['beta'], recommendKeys: ['more']},
+			//Section ID
+			{id: "games", keywords: ['games']},
+			{id: "resources", keywords: ['resources']},
+			{id: "miscellaneous", keywords: ['miscellaneous']},
+			{id: "more", keywords: ['more']}
+		];
+
+		var gameStrategyArr = ['2048', 'chess', 'numberguessing', 'guessthatnumber', 'sequence', 'tic-tac-toe'];
+		var gameCardioArr = ['cakeninja', 'chromedino', 'crossyroad', 'doodlejump', 'flappybird', 'hextris', 'pacman', 'santahatmixup', 'stack', 'leaderboard'];
+		var gameLeisureArr = ['colorsplosion', 'colorswirl', 'solitaire', 'towertakedown'];
+		var resourceDeskArr = ['calculator', 'assistant', 'corey-3.0', 'countdownstudio', 'mmc', 'notes', 'whiteboard'];
+		var resourceCommunicationArr = ['connect', 'vivdly', 'webchat'];
+		var miscellaneousArr = ['countdowns', 'inspiration', 'techlog', 'discordserver'];
+		var moreArr = ['about', 'archive', 'beta'];
+
+		/*function findString(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+			    for (let innerkey in pageData[key]) {
+			      if (pageData[key][innerkey].includes(str)) {
+			        //return [key, innerkey];
+			        return pageData[key].id;
+			      }
+			    }
+		  }
+		  return 'No match';
+		}*/
+		function runSearchCommand() {
+			var input = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '');
+			if(input.indexOf('>>') >-1) {
+				switch(input.replace('>>', '')) {
+					case 'help':
+						openIsland('Help', `<ul><li>Scroll to explore Zane's apps.</li><li>Search for an app in the search bar.</li><li>Click on a link to open the app.</li></ul>`, 'Got It!');
+						break;
+					case 'changelog':
+						openIsland('ChangeLog', `<ul><li>Bug fixes, searchbar dynamic island widget.</li><li>2023 Spring Update.</li><li>Discord Server was published.</li></ul>`, 'OK!');
+						break;
+					case 'announcement':
+						openIsland('New Release!', `Doodle Jump is now out of Beta! <a style="color: #fff;" href="https://zanewesley.github.io/embed?data-url=doodlejump">Play now!</a>`, 'OK!');
+						break;
+					case 'commands':
+						openIsland('Commands', `<ul><code><li>>>announcement</li><li>>>changelog</li><li>>>help</li><li>>>username</li></code></ul>`, 'Got It!');
+						break;
+					case 'username':
+						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace">`, 'Discard', true, 'Save');
+						document.querySelector('.island-wrapper .island-content .button-wrapper .other').onclick = function() {
+							openIslandCheckmark();
+							setTimeout(function() {
+								setUsername();
+								closeIsland();
+							}, 2000);
+						}
+						break;
+					default:
+						openIsland('No Command Found', `Please try a different command or seach Zane\'s Apps.`, 'OK!');
+						break;
+				}
+			} else {
+				searchPage();
+			}
+		}
+		function findString(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+				for(var i = 0; i<pageData[key].keywords.length; i++) {
+					if (pageData[key].keywords[i].includes(str)) {
+				       return pageData[key].id;
+				    }
+				}
+		  }
+		  return 'No match';
+		}
+
+		function trainRecommend() {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'));
+				var appRArr = appArr.reverse();
+				var appHArr = appRArr.filter(by('name'), new Set);
+				document.querySelector('#foryou #recommended ul').innerHTML = '';
+				var rec1Data = appHArr[0], rec2Data = appHArr[1], rec3Data = appHArr[2];
+				var rec1Key = findAppKey(rec1Data.name)[0], rec2Key = findAppKey(rec2Data.name)[0], rec3Key = findAppKey(rec3Data.name)[0];
+				var rec1App = getRecApp(rec1Key), rec2App = getRecApp(rec2Key), rec3App = getRecApp(rec3Key);
+				var rec1AppData = document.getElementById(rec1App), rec2AppData = document.getElementById(rec2App), rec3AppData = document.getElementById(rec3App);
+				document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec1AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[0].name}"><div class='img'><img src='${rec1AppData.querySelector('img').src}'></div><div class='name'>${rec1AppData.innerText}</div></li>`;
+				if(rec2AppData){ document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec2AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[1].name}"><div class='img'><img src='${rec2AppData.querySelector('img').src}'></div><div class='name'>${rec2AppData.innerText}</div></li>`;}
+				if(rec3AppData){ document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec3AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[2].name}"><div class='img'><img src='${rec3AppData.querySelector('img').src}'></div><div class='name'>${rec3AppData.innerText}</div></li>`;}
+			}
+		}
+
+		function findAppKey(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+				for(var i = 0; i<pageData[key].keywords.length; i++) {
+					if (pageData[key].keywords[i].includes(str)) {
+				       return pageData[key].recommendKeys;
+				    }
+				}
+		  }
+		  return 'No match';
+		}
+
+		function getRecApp(name) {
+			switch(name) {
+				case 'game-cardio':
+					return gameCardioArr[Math.floor(Math.random()*gameCardioArr.length)];
+					break;
+				case 'game-leisure':
+					return gameLeisureArr[Math.floor(Math.random()*gameLeisureArr.length)];
+					break;
+				case 'game-strategy':
+					return gameStrategyArr[Math.floor(Math.random()*gameStrategyArr.length)];
+					break;
+				case 'resource-desk':
+					return resourceDeskArr[Math.floor(Math.random()*resourceDeskArr.length)];
+					break;
+				case 'resource-communication':
+					return resourceCommunicationArr[Math.floor(Math.random()*resourceCommunicationArr.length)];
+					break;
+				case 'miscellaneous':
+					return miscellaneousArr[Math.floor(Math.random()*miscellaneousArr.length)];
+					break;
+				case 'more':
+					return moreArr[Math.floor(Math.random()*moreArr.length)];
+					break;
+			}
+		}
+
+        //Trigger Init Functions
+		loadAppHistory();
+		//trainRecommend();
+		setHandlers();
+
+    </script>
+
 </body>
 </html>
