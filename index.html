@@ -9,12 +9,12 @@
 	<!-- General -->
 	<link rel="manifest" href="manifest.json">
 	<meta name="theme-color" content="#111827">
-	<meta name="application-name" content="Zane's Apps">
+	<meta name="application-name" content="Zane's Wesley">
 	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
 	<link rel="canonical" href="https://www.zanewesley.github.io">
 	<!-- Apple -->
-	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<meta name="apple-mobile-web-app-title" content="Zane's Wesley">
 	<meta name="apple-mobile-web-app-status-bar-style" content="#111827">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
@@ -43,7 +43,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>Zane's Apps | Spring Update</title>
+	<title>Zane Wesley | 2024 Spring Update</title>
 
 	<style>
 		* {
@@ -130,8 +130,8 @@
 		    -webkit-backdrop-filter: blur(104px);
 		    backdrop-filter: blur(104px);
 		    border-radius: 2rem;
-		    z-index: 11;
-		    animation: fadeIn 3s linear, searchAnim 1s ease 2.5s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
+		    z-index: 7;
+		    animation: searchAnim 1s ease 5s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
 		    transition: all 0.5s cubic-bezier(0, 0, 0.61, 1.23);
 		}
 		header.menu-open {
@@ -170,6 +170,25 @@
 			outline: none;
 			cursor: pointer;
 		}
+		header .island-content input {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: 0.2rem solid rgb(72 103 134);
+			outline: none;
+			color: rgba(255, 255, 255, 0.7);
+			font-family: 'Roboto', sans-serif;
+			font-size: 20px;
+			background-color: transparent;
+		}
+		header.island .button-wrapper {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			width: 50%;
+		}
+		header.island .button-wrapper .other {
+			background: #44ffc4;
+		}
 		header .search-bar {
 			width: 100%;
 			display: flex;
@@ -193,7 +212,8 @@
 			box-shadow: 0px 0px 20px 0px rgba(255,255,255,0.9)!important;
 		}
 		#usernameBox, .menu-btn, .down-arrow {
-			animation: fadeIn 3s linear;
+			opacity: 0;
+			animation: fadeIn 3s linear 4s forwards;
 		}
 		.menu-btn {
 			color: #44beff;/*#64d1ff*/
@@ -251,6 +271,7 @@
 		  animation: ease .7s bottom-2 forwards;
 		}
 
+		/* Burger Anim */
 		@keyframes top-1 {
 		  0% {
 		    top: 0;
@@ -331,7 +352,7 @@
 		    transform: scale(1);
 		  }
 		}
-		/**/
+		/* island Anim */
 		@keyframes fadeIn {
 			0% {
 				opacity: 0;
@@ -366,10 +387,38 @@
 			display: flex;
 		    justify-content: center;
 		    flex-direction: column;
+			align-items: center;
+			min-height: 80vh;
+		    padding: 0px;
+		}
+		main section.first img {
+			width: 300px;
+            height: 300px;
+			pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+			position: relative;
+            left: 50vw;
+            top: 50vh;
+            transform: translate(-50vw, -50vh);
+		}
+		main section.first h1 {
+			font-size: clamp(40px, 8vw, 80px);
+    		font-weight: 600;
+    		line-height: 1.1;
+    		color: rgba(255, 255, 255, 0.7);
+    		background-image: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff);
+    		-webkit-text-fill-color: transparent;
+    		-webkit-background-clip: text;
+    		background-clip: text;
+		}
+		/*main section.first {
+			display: flex;
+		    justify-content: center;
+		    flex-direction: column;
 		    align-items: flex-start;
 		    min-height: 80vh;
 		    padding: 0px;
-		    /*animation: growAnim 3s;*/
 		    animation-fill-mode: forwards;
 		}
 		@keyframes growAnim {
@@ -378,7 +427,7 @@
 		}
 		main section.first .intro h1 {
 			margin: 0px 0px 30px 4px;
-		    color: #44beff;/*#64d1ff*/
+		    color: #44beff;
 		    font-size: clamp(14px,5vw,16px);
 		    font-weight: 400;
 		    line-height: 1.1;
@@ -391,7 +440,7 @@
     		font-size: clamp(40px, 8vw, 80px);
     		font-weight: 600;
     		line-height: 1.1;
-    		color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+    		color: rgba(255, 255, 255, 0.7);
     		background-image: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff);
     		-webkit-text-fill-color: transparent;
     		-webkit-background-clip: text;
@@ -414,7 +463,7 @@
 			0% {opacity: 0;}
 			49% {opacity: 0;}
 			50% {opacity: 1;}
-		}
+		}*/
 		.down-arrow .arrows {
 			width: 60px;
 			height: 72px;
@@ -430,6 +479,7 @@
 			animation: arrow 2s infinite;
 			-webkit-animation: arrow 2s infinite; 
 		}
+		/* Arrow Anims */
 		@keyframes arrow {
 			0% {opacity:0}
 			40% {opacity:1}
@@ -540,13 +590,6 @@
 		    -webkit-user-select: none;
 			user-select: none;
 		}
-		/*section .inner li, section .inner li .img, .newgrid-inner .new-list li, .newgrid-inner .new-list li .img img {
-			/*filter: brightness(0.8) hue-rotate(350deg) saturate(3) blur(8px) contrast(0.6);*//*
-			filter: blur(0.2px) brightness(1.1) hue-rotate(5deg) opacity(0.9) saturate(1.3) sepia(0.4) url('#dark-blue-sepia');
-		}
-		section .inner li:hover, .newgrid-inner .new-list li:hover {
-			filter: none;
-		}*/
 		section .inner li:hover {
 			background-color: rgba(57, 73, 86, 0.9);
 			transform: scale(0.9) rotate(-2deg);
@@ -673,81 +716,14 @@
 		    text-align: right;
 		}
 
-		#infobar {
-			position: fixed;
-			right: 0;
-			bottom: 0;
-			border: none;
-			outline: none;
-			background-color: transparent;
-			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
-			height: 37%;
-			width: 25%;
-		}
-		#infobar.bottom {
-			height: 29%;
-		}
-
-		.popup {
-			position: fixed;
-			/*top: 50%;*/
-			bottom: 1em;
-			left: 50%;
-			/*transform: translate(-50%, -50%);*/
-			transform: translateX(-50%);
-			width: 50%;
-			padding: 1em;
-			height: auto;
-			/*min-height: 50%;*/
-			padding-bottom: 3em;
-			background-color: #44beff;/*#64d1ff*/
-			background: linear-gradient(90deg,#fb60d7,#7752ff 75%,#5f98fa 90%,#44beff);/*linear-gradient(169deg, rgba(100,209,255,1) 9%, rgba(10,25,47,1) 100%);*/
-			color: #111827;/*#0a192f*/
-			border-radius: 20px;
-			display: none;
-			z-index: 3;
-		}
-		.popup.open {
-			display: block;
-		}
-		.popup h2 {
-			text-align: center;
-		}
-		.popup input, .island input {
-			padding: 15px 30px;
-		    border-radius: 8px;
-		    border: none;
-		    color: #111827;/*#0a192f*/
-		    background-color: #fff;
-		    margin: 20px 0;
-		    outline: none;
-		}
-		.popup button, .island button {
-			padding: 15px 30px;
-			border-radius: 8px;
-			border: none;
-			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
-			background-color: #111827;/*#0a192f*/
-			outline: none;
-			cursor: pointer;
-		}
-		.popup button#nothanks {
-			position: absolute;
-			bottom: 1em;
-			right: 1em;
-		}
-		.popup #save-loader {
-			display: none;
-		}
 		#usernameBox {
 			position: fixed;
 			left: 0;
 			top: 1em;
 			background-color: rgb(57, 73, 86, 0.7);
 			padding: 0.5em 1em;
-			animation: fadeIn 3s linear;
 			cursor: pointer;
-			z-index: 11;
+			z-index: 7;
 		}
 		#usernameBox .head {
 			font-size: 0.5em;
@@ -765,91 +741,80 @@
 			left: 0;
 		}
 
-		#splash {
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			width: 100vw;
-			height: 100vh;
+		.splash {
+            position: fixed;
 			display: flex;
-			justify-content: center;
+			flex-direction: row;
+			justify-content: flex-start;
 			align-items: center;
-			background-color: #111827;/*#0a192f*/
-			z-index: 20;
-		}
-		#splash svg .mainCircle{
-			stroke-dasharray: 1524;
-			stroke-dashoffset: 1525;
-			animation: loadAnim 1s ease-in-out forwards;
-			animation-delay: 1s;
-		}
-		#splash svg .z {
-			stroke-dasharray: 1444;
-			stroke-dashoffset:1445;
-		}
-		@keyframes loadAnim {
-			100% {stroke-dashoffset: 30;}
-		}
-		@keyframes pulse {
-			/*animation: pulse 2s infinite;*/
-		  0% {
-		    transform: scale(0.9);
-		  }
-		  40% {
-		    transform: scale(1) rotate(5deg);
-		  }
-		  80% {
-		    transform: scale(1) rotate(-5deg);
-		  }
-		  100% {
-		    transform: scale(0.9) rotate(0);
-		  }
-		}
-
-		/* Page Transitions */
-		.transition-layer {
-			position: fixed;
-			width: 100%;
+			font-size: 3em;
 			height: 100%;
-			top: 0;
-			right: -110%;
-			background: #fb60d7;
-			transition: all 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
-			z-index: 99;
-		}
-		.transition-layer.active {
-			right: 110%;
-		}
-		.transition-layer--2 {
-			background: #44beff;
-			transition-delay: 0.2s;
-		}
-		.transition-layer--3 {
-			background: #111827;
-			transition-delay: 0.3s;
-		}
-		.transition-layer--3.active {
-			right: 0;
-		}
+			max-width: 100%;
+			width: 100%;
+			/*background-color: #080808;*/
+			background: transparent;
+			color: transparent;/* #99D7FF */
+			transition: all 2s;
+            animation: fadeOut 0.5s linear 4.5s both;/*0.5s runtime*/
+            background-color: #111827;
+            z-index: 9;
 
-		#contextmenu {
-			background-color: #36454F;
-			box-shadow: 0 0 20px rgba(37, 40, 42, 0.22);
-			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
-			width: 10em;
-			padding: 0;
-			position: fixed;
-			display: none;
+            /*display: none;*/
+        }
+        .splash h1 {
+            width: auto;
+			background: 
+				linear-gradient(#99D7FF 0 0) no-repeat,
+				linear-gradient(#99D7FF 0 0) no-repeat;
+			background-size: 0% 100%;
+			-webkit-background-clip: padding-box,text;
+					background-clip: padding-box,text;
+			animation: 
+				t 1.2s .5s both,
+				b 1.2s 1.3s both;
+			margin: 0 1em;
+			transition: all 2s;
+        }
+        .splash-img-wrapper {
+            position: absolute;
+            height: 300px;
+            width: 100%;
+            top: 50%;
+            left: -100%;
+            transform: translateY(-50%);
+            background-color: #111827;
+            animation: slideIn 1s ease-out 3s both;
+        }
+        .splash img {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: #111827;
+            animation: slideCenter 0.5s linear 3.5s both;
+			pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+		/* Splash Anims */
+        @keyframes t {
+			to {background-size: 150% 100%}
 		}
-		#contextmenu .contextmenu-item {
-			padding: 0.3em 1.2em;
+		@keyframes b {
+			to {background-position:-200% 0,0 0} 
 		}
-		#contextmenu .contextmenu-item:hover {
-			background-color: rgba(44, 141, 247, 0.2);
-			cursor: pointer;
-		}
+        @keyframes slideIn {
+            to {left: 0%;}
+        }
+        @keyframes slideCenter {
+            to {right: 50%; transform: translate(50%, -50%);}
+        }
+        @keyframes fadeOut {
+            to {opacity: 0; visibility: hidden; }
+        }
+
 
 		#news {
 			position: relative;
@@ -890,6 +855,9 @@
 			header.island {
 				height: 250px;
 			}
+			header.island .button-wrapper {
+				width: 100%;
+			}
 			#usernameBox {
 				display: none;
 			}
@@ -913,25 +881,15 @@
 			section .inner .list1, section .inner .list2 {
 				grid-column: 1;
 			}
-			#infobar {
-				width: 100%;
-				background-color: rgba(10, 25, 47, 0.5);
-			}
-			#infobar.bottom {
-				height: 25%;
-			}
 			.newgrid-inner .new-list li {
 				width: calc(50% - 19px);
 			}
 			.menu {
 				width: 100%;
 			}
-			.popup {
-				width: 90%;
-			}
-			.popup input {
-				width: 100%;
-			}
+			.splash {
+                font-size: 2em;
+            }
 		}
 	</style>
 </head>
@@ -944,9 +902,16 @@
 				<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
 			</div>
 			<div class="island-content">
-				<h3>New!</h3>
-				<p class="island-inner">The search bar now has commands! Search <code>>>commands</code> for the list.</p>
-				<button class="island-close" onclick="this.parentNode.parentNode.classList.remove('island')">OK!</button>
+				<h3>Update v912.6.1</h3>
+				<p class="island-inner">
+					- Added Recommendation Section
+					<br>- Minor style changes
+					<br>
+				</p>
+				<div class="button-wrapper">
+					<button class="other" style="display: none">OK!</button>
+					<button class="island-close" onclick="closeIsland()">OK!</button>
+				</div>
 			</div>
 		</header>
 
@@ -973,12 +938,14 @@
 
 		<main>
 			<section class="first">
-				<div class="intro"><h1 class="monospace">Hi, welcome to</h1></div>
+				<!--<div class="intro"><h1 class="monospace">Web Dev</h1></div>
 				<div class="title">
-					<h2>Zane's Apps</h2>
+					<h2>Zane Wesley</h2>
 					<span class="cursor">|</span>
 				</div>
-				<div class="info"><p></p></div>
+				<div class="info"><p></p></div>-->
+				<img src="images/icon-v4-transparent-blue.png" alt="Z">
+				<h1>Zane Wesley</h1>
 			</section>
 
 			<div class="down-arrow"><svg class="arrows"><path class="a1" d="M0 0 L30 32 L60 0"></path><path class="a2" d="M0 20 L30 52 L60 20"></path><path class="a3" d="M0 40 L30 72 L60 40"></path></svg></div>
@@ -988,19 +955,19 @@
 				<div class="newgrid-inner">
 					<div class="new-list">
 						<ul>
-							<li data-id="doodlejump" data-url="doodlejump" class="li-link new">
+							<li data-id="sequence" data-url="sequence" class="li-link new" data-desc="A simple pattern following game.">
+								<div class="img"><img src="sequence/icon.svg"></div>
+								<div class="name">Sequence</div>
+							</li>
+							<li data-id="doodlejump" data-url="doodlejump" class="li-link new" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
 								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
 								<div class="name">Doodle Jump</div>
 							</li>
-							<li data-id="discordserver"data-url="https://discord.gg/MsCmSZx3" class="li-link new noframe">
-								<div class="img"><img src="images/discord-icon.png"></div>
-								<div class="name">Discord Server</div>
-							</li>
-							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link">
+							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
 							</li>
-							<li data-id="towertakedown" data-url="towertakedown" class="li-link">
+							<li data-id="towertakedown" data-url="towertakedown" class="li-link" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
@@ -1019,26 +986,20 @@
 			<section id="foryou">
 				<h2><span class="before">01.</span>For You</h2>
 				<div class="inner">
-					<div class="list2"></div>
-					<div class="list1">
+					<div id="recommended" class="list1">
+						<h3>Recommended</h3>
+						<ul>
+							<li data-url="#" class="noframe" style="pointer-events: none;">
+								<div class="img"><img src="images/icon.png"></div>
+								<div class="name">Coming Soon!</div></li>
+						</ul>
+					</div>
+					<div id="continue" class="list2">
 						<h3>Continue</h3>
 						<ul>
-							<li data-id="doodlejump" data-url="doodlejump" class="new">
-								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
-								<div class="name">Doodle Jump</div>
-							</li>
-							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe">
-								<div class="img"><img src="images/discord-icon.png"></div>
-								<div class="name">Discord Server</div>
-							</li>
-							<li data-id="towertakedown" data-url="towertakedown">
-								<div class="img"><img src="towertakedown/icon.jpg"></div>
-								<div class="name">Tower Takedown</div>
-							</li>
-							<!--<li data-id="cakeninja" data-url="cakeninja">
-								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
-								<div class="name">Cake Ninja</div>
-							</li>-->
+							<li data-url="#" class="noframe" style="pointer-events: none;">
+								<div class="img"><img src="images/icon.png"></div>
+								<div class="name">Click around first!</div></li>
 						</ul>
 					</div>
 				</div>
@@ -1050,39 +1011,39 @@
 					<div class="list1">
 						<h3>Cardio</h3>
 						<ul>
-							<li id="doodlejump" data-url="doodlejump" class="new">
+							<li id="doodlejump" data-url="doodlejump" class="new" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
 								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
 								<div class="name">Doodle Jump</div>
 							</li>
-							<li id="santahatmixup" data-url="santahatmixup">
+							<li id="santahatmixup" data-url="santahatmixup" data-desc="Follow that Santa! Choose the right hat to level up.">
 								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
 								<div class="name">Santa Hat Mixup</div>
 							</li>
-							<li id="pacman" data-url="pacman">
+							<li id="pacman" data-url="pacman" data-desc="A remake of the classic arcade game. Use the arrow keys or swipe to moev around the maze.">
 								<div class="img"><img src="pacman/icon/ios_icon.png"></div>
 								<div class="name">Pac Man</div>
 							</li>
-							<li id="flappybird" data-url="flappybird">
+							<li id="flappybird" data-url="flappybird" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes.">
 								<div class="img"><img src="flappybird/icon.jpg"></div>
 								<div class="name">Flappy Bird</div>
 							</li>
-							<li id="crossyroad" data-url="crossyroad">
+							<li id="crossyroad" data-url="crossyroad" data-desc="A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!">
 								<div class="img"><img src="crossyroad/icon.jpeg"></div>
 								<div class="name">Crossy Road</div>
 							</li>
-							<li id="cakeninja" data-url="cakeninja">
+							<li id="cakeninja" data-url="cakeninja" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!">
 								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
 								<div class="name">Cake Ninja</div>
 							</li>
-							<li id="hextris" data-url="hextris">
+							<li id="hextris" data-url="hextris" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.">
 								<div class="img"><img src="hextris/favicon.ico"></div>
 								<div class="name">Hextris</div>
 							</li>
-							<li id="stack" data-url="stack">
+							<li id="stack" data-url="stack" data-desc="Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!">
 								<div class="img"><img src="images/stack-icon.PNG"></div>
 								<div class="name">Stack</div>
 							</li>
-							<li id="chromedino" data-url="chromedino">
+							<li id="chromedino" data-url="chromedino" data-desc="A remake of the classic Chrome Dino Runner game. Click/tap to jump.">
 								<div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
 								<div class="name">Chrome Dino Runner</div>
 							</li>
@@ -1091,39 +1052,43 @@
 					<div class="list2">
 						<h3>Leisure</h3>
 						<ul>
-							<li id="guessthatnumber" data-url="guessthatnumber">
+							<li id="sequence" data-url="sequence" class="li-link new" data-desc="A simple pattern following game.">
+								<div class="img"><img src="sequence/icon.svg"></div>
+								<div class="name">Sequence</div>
+							</li>
+							<li id="guessthatnumber" data-url="guessthatnumber" data-desc="Simple. Guess that number!">
 								<div class="img"><img src="guessthatnumber/icon.png"></div>
 								<div class="name">Guess That Number 2</div>
 							</li>
-							<li id="towertakedown" data-url="towertakedown">
+							<li id="towertakedown" data-url="towertakedown" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
 								<div class="img"><img src="towertakedown/icon.jpg"></div>
 								<div class="name">Tower Takedown</div>
 							</li>
-							<li id="solitaire" data-url="solitaire">
+							<li id="solitaire" data-url="solitaire" data-desc="A remake of the classic card game Solitaire.">
 								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
 								<div class="name">Solitaire</div>
 							</li>
-							<li id="chess" data-url="chess">
+							<li id="chess" data-url="chess" data-desc="Online chess against an AI. Don't get checkmated!">
 								<div class="img"><img src="chess/img/chess.png"></div>
 								<div class="name">Chess</div>
 							</li>
-							<li id="colorsplosion" data-url="colorsplosion">
+							<li id="colorsplosion" data-url="colorsplosion" data-desc="Some random experiments. Enjoy ;)">
 								<div class="img"><img src="colorsplosion/icon.PNG"></div>
 								<div class="name">Colorsplosion</div>
 							</li>
-							<li id="numberguessing" data-url="numberguessing">
+							<li id="numberguessing" data-url="numberguessing" data-desc="Simple. Guess that number!">
 								<div class="img"><img src="images/numberguessing-icon.png"></div>
 								<div class="name">Guess that Number</div>
 							</li>
-							<li id="2048" data-url="2048">
+							<li id="2048" data-url="2048" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">
 								<div class="img"><img src="2048/icon.png"></div>
 								<div class="name">2048</div>
 							</li>
-							<li id="tic-tac-toe" data-url="tic-tac-toe">
+							<li id="tic-tac-toe" data-url="tic-tac-toe" data-desc="Tic-Tac-Toe against an AI. You know what to do.">
 								<div class="img"><img src="images/tic-tac-toe-icon.png"></div>
 								<div class="name">Tic Tac Toe</div>
 							</li>
-							<li id="colorswirl" data-url="colorswirl/colorswirl">
+							<li id="colorswirl" data-url="colorswirl/colorswirl" data-desc="Swirl colors around and make beautiful designs in this relaxing app!">
 								<div class="img"><img src="colorswirl/icon.jpg"></div>
 								<div class="name">Colorswirl</div>
 							</li>
@@ -1138,31 +1103,31 @@
 					<div class="list1">
 						<h3>Desk Assistant</h3>
 						<ul>
-							<li id="corey-3.0" data-url="corey-3.0">
+							<li id="corey-3.0" data-url="corey-3.0" data-desc="The most recent attempt to make something like ChatGPT before it existed.">
 								<div class="img"><img src="corey-3.0/icon.png"></div>
 								<div class="name">Corey 3.0</div>
 							</li>
-							<li id="notes" data-url="notes">
+							<li id="notes" data-url="notes" data-desc="A note taking app. Note takers are world changers!">
 								<div class="img"><img src="notes/icon.png"></div>
 								<div class="name">Notes</div>
 							</li>
-							<li id="assistant" data-url="assistant">
+							<li id="assistant" data-url="assistant" data-desc="An attempt to something like ChatGPT before it existed.">
 								<div class="img"><img src="assistant/icon.svg"></div>
 								<div class="name">Corey 2.0</div>
 							</li>
-							<li id="calculator" data-url="calculator">
+							<li id="calculator" data-url="calculator" data-desc="A calculator inspired by Apple.">
 								<div class="img"><img src="images/calculator-icon.png"></div>
 								<div class="name">Calculator</div>
 							</li>
-							<li id="countdownstudio" data-url="countdownstudio">
+							<li id="countdownstudio" data-url="countdownstudio" data-desc="Make a countdown and watch time pass.">
 								<div class="img"><img src="images/countdownstudio-icon.svg"></div>
 								<div class="name">Countdown Studio</div>
 							</li>
-							<li id="mmc" data-url="mmc">
+							<li id="mmc" data-url="mmc" data-desc="Made for Chemistry homework help. Enjoy ;)">
 								<div class="img"><img src="images/mmc-icon.png"></div>
 								<div class="name">Molar Mass Calculator</div>
 							</li>
-							<li id="whiteboard" data-url="whiteboard">
+							<li id="whiteboard" data-url="whiteboard" data-desc="An online whiteboard. Built for a techer during COVID for quaratine classes.">
 								<div class="img"><img src="images/whiteboard-icon.jpg"></div>
 								<div class="name">Whiteboard</div>
 							</li>
@@ -1171,15 +1136,15 @@
 					<div class="list2">
 						<h3>Communication</h3>
 						<ul>
-							<li id="vividly" data-url="vividly">
+							<li id="vividly" data-url="vividly" data-desc="Bringing FaceTime to the web before Apple did.">
 								<div class="img"><img src="vividly/icon.png"></div>
 								<div class="name">Vividly</div>
 							</li>
-							<li id="connect" data-url="connect">
+							<li id="connect" data-url="connect" data-desc="Online public chat rooms.">
 								<div class="img"><img src="connect/splash.svg"></div>
 								<div class="name">Connect</div>
 							</li>
-							<li id="webchat" data-url="webchat/new">
+							<li id="webchat" data-url="webchat/new" data-desc="A video chatting app ran through the web.">
 								<div class="img"><img src="webchat/logo.ico"></div>
 								<div class="name">WebChat</div>
 							</li>
@@ -1194,25 +1159,21 @@
 					<div class="list2"></div>
 					<div class="list1">
 						<ul>
-							<li id="countdowns" data-url="countdowns">
+							<li id="countdowns" data-url="countdowns" data-desc="A collection of countdowns made for hollidays.">
 								<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
 								<div class="name">Countdowns</div>
 							</li>
-							<li id="inspiration" data-url="inspiration">
+							<li id="inspiration" data-url="inspiration" data-desc="Be inspired by this inspirational quote image generator.">
 								<div class="img"><img src="images/inspiration-icon.png"></div>
 								<div class="name">Insperational Quotes Image Generator</div>
 							</li>
-							<li id="leaderboard" data-url="leaderboard" class="noframe">
+							<li id="leaderboard" data-url="leaderboard" class="noframe" data-desc="Some friendly competition for games on my website!">
 								<div class="img"><img src="images/leaderboard-icon.png"></div>
 								<div class="name">Leaderboard</div>
 							</li>
-							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html">
+							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
 								<div class="img"><img src="images/tech-log-icon.png"></div>
 								<div class="name">Tech Log</div>
-							</li>
-							<li id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe">
-								<div class="img"><img src="images/discord-icon.png"></div>
-								<div class="name">Discord Server</div>
 							</li>
 						</ul>
 					</div>
@@ -1225,15 +1186,15 @@
 					<div class="list2"></div>
 					<div class="list1">
 						<ul>
-							<li id="about" data-url="about">
+							<li id="about" data-url="about" data-desc="Get to know me! Let's connect!">
 								<div class="img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
 								<div class="name">About</div>
 							</li>
-							<li id="archive" data-url="archive">
+							<li id="archive" data-url="archive" data-desc="Archived apps and other random projects I'm embarrased to show.">
 								<div class="img"><img src="images/home-icon.svg"></div>
 								<div class="name">App Archive</div>
 							</li>
-							<li id="beta" data-url="beta" class="noframe">
+							<li id="beta" data-url="beta" class="noframe" data-desc="See what's coming in new updates before they're live!">
 								<div class="img"><img src="images/beta-icon.png"></div>
 								<div class="name">BETA Page</div>
 							</li>
@@ -1246,88 +1207,21 @@
 
 		<footer>
 			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
-			<p>Copyright &copy; 2023 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
+			<p>Copyright &copy; 2024 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
 			<p>We apprecaite your feedback! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
 		</footer>
 	</div>
 
 	<canvas id="bg-anim"></canvas>
 
-	<!-- Infobar -->
-	<!--<iframe id="infobar" src="infobar.html"></iframe>-->
-
-	<div class="popup">
-		<h2>Want to Get Recognized?</h2>
-		<p>Enter a username below to associate with your scores on the leaderboard!</p>
-		<input type="text" id="username" placeholder="Username" class="monospace">
-		<button id="nothanks">No Thanks</button>
-		<button id="saveuser">Save Username</button>
-		<img id="save-loader" src="images/game-loader.svg" alt="Saving username loader">
-	</div>
+	<div class="splash">
+        <h1>Zane Wesley</h1>
+        <div class="splash-img-wrapper"><img src="images/icon-v4-transparent-blue.png" alt="Z"></div>
+    </div>
 
 	<div id="usernameBox">
 		<div class="head">Username:</div>
 		<div class="user"></div>
-	</div>
-
-	<!--<div id="splash">	
-		<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<circle class="backCircle" cx="250" cy="250" r="242.5" stroke="#ccd6f6" stroke-width="15"/>
-			<circle class="mainCircle" cx="250" cy="250" r="242.5" stroke="#64D1FF" stroke-width="15"/>
-			<path class="z" d="M211.034 359.339L359.056 136.36L358.846 101.297H139.647V149.378H287.46L139.227 370.887V407H362.626V359.339H211.034Z" fill="#64D1FF"/>
-		</svg>
-	</div>-->
-
-	<!--<div id="island">
-		<h2>Welcome</h2>
-	</div>
-
-	<style>
-		#island {
-			position: fixed;
-		    left: 0;
-		    top: 0;
-		    right: 0;
-		    display: flex;
-		    overflow: hidden;
-		    width: 31%;/*82%*/
-		    height: 52pt;/*78px*/
-		    margin-top: 28px;
-		    margin-right: auto;
-		    margin-left: auto;
-		    padding: 0;
-		    justify-content: center;
-		    align-items: center;
-		    border-radius: 100px;
-		    background-color: #000000;
-		    color: #ffffff;
-		    z-index: 12;
-		    transition: width 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), height 0.5s ease-out;
-		}
-		#island.bar {
-			width: 69%;/*47%, 82%*/
-		}
-		#island.rectangleSmall {
-			width: 92%;
-			height: 160px;
-		}
-		#island.rectangle {
-			width: 92%;
-			height: 450px;
-		}
-	</style>-->
-
-
-	<div class="transition-layer"></div>
-	<div class="transition-layer transition-layer--2"></div>
-	<div class="transition-layer transition-layer--3"></div>
-
-	<div id="contextmenu">
-		<div class="contextmenu-item context-open">Open</div>
-		<div class="contextmenu-item context-opennew">Open in New Tab</div>
-		<hr>
-		<div class="contextmenu-item context-copy">Copy URL</div>
-		<div class="contextmenu-item context-copytext">Copy Link Text</div>
 	</div>
 
 	<script>
@@ -1360,14 +1254,21 @@
 		document.getElementById('usernameBox').addEventListener('click', function(e) {
 			//triggerPageTransition(function() {window.open('/embed?data-url=leaderboard');});
 			//window.open('/embed?data-url=leaderboard');
-			openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
+			openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace">`, 'Discard', true, 'Save');
+			document.querySelector('header .island-content .button-wrapper .other').onclick = function() {
+				openIslandCheckmark();
+				setTimeout(function() {
+					setUsername();
+					closeIsland();
+				}, 2000);
+			}
 		});
 
 		/*
 			* UI & Animations *
 		*/
 		//Title
-		var typeInst = new TypeIt(".title h2", {
+		/*var typeInst = new TypeIt(".title h2", {
 			speed: 75,
 			startDelay: 900,
 			waitUntilVisible: true,
@@ -1402,26 +1303,78 @@
 				waitUntilVisible: true,
 				lifeLike: true,
 			}).go();
-		});
+		});*/
 
 		//Searchbar Dynamic Island
 		var lastPopup = new Date(localStorage.getItem('z_popup_timestamp'));
 		document.body.onload = function() {
 			setTimeout(function() {
-				if(Math.abs(new Date().getTime() - lastPopup.getTime()) > 604800000) {//604800000 = 1 week
+				if(Math.abs(new Date().getTime() - lastPopup.getTime()) > 604800000 || lastPopup.getTime() < 1686114000000) {//604800000 = 1 week
 					document.querySelector('header').classList.add('island');
 					lastPopup = localStorage.setItem('z_popup_timestamp', new Date());
 				}
 			}, 5000);
 		}
-		function openIsland(title, content, buttonText) {
+		function openIsland(title, content, closeButtonText, otherButton, otherButtonText) {
 			document.querySelector('header .island-content h3').innerHTML = title || "Announcement!";
 			document.querySelector('header .island-content .island-inner').innerHTML = content;
-			document.querySelector('header .island-content .island-close').innerHTML = buttonText || "Got It!";
+			document.querySelector('header .island-content .button-wrapper .island-close').innerHTML = closeButtonText || "Got It!";
+			if(otherButton == true) {
+				document.querySelector('header .island-content .button-wrapper .other').style.display = 'block';
+				document.querySelector('header .island-content .button-wrapper .other').innerHTML = otherButtonText;
+			} else {
+				document.querySelector('header .island-content .button-wrapper .other').style.display = 'none';
+			}
 			document.querySelector('header').classList.add('island');
 		}
 		function closeIsland() {
 			document.querySelector('header').classList.remove('island');
+			document.querySelector('header .island-content .button-wrapper .other').onclick=null;
+			document.querySelector('header .island-content .button-wrapper .island-close').style.display='block';
+		}
+		function openIslandCheckmark() {
+			openIsland(' ',
+				`
+				<svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px">  
+					<g fill="none" stroke="#22AE73" stroke-width="2"> 
+					<circle cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
+					<circle id="colored" fill="#22AE73" cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
+					<polyline class="st0" stroke="#fff" stroke-width="10" points="43.5,77.8 63.7,97.9 112.2,49.4 " style="stroke-dasharray:100px, 100px; stroke-dashoffset: 200px;"/>   
+					</g> 
+				</svg>
+				<style>
+					.island-inner svg polyline {
+						-webkit-animation: checkmark 0.25s ease-in-out 0.7s backwards;
+						animation: checkmark 0.25s ease-in-out 0.7s backwards
+					}
+					.island-inner svg circle {
+						-webkit-animation: checkmark-circle 0.6s ease-in-out backwards;
+						animation: checkmark-circle 0.6s ease-in-out backwards;
+					}
+					.island-inner svg circle#colored {
+						-webkit-animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+						animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+					}
+					@keyframes colored-circle { 
+						0% {
+							opacity:0
+						}
+						100% {
+							opacity:100
+						}
+					}
+					@keyframes checkmark-circle {
+						0% {
+							stroke-dashoffset: 480px 
+						}
+						100% {
+							stroke-dashoffset: 960px
+						}
+					}
+				</style>
+				`,
+			' ');
+			document.querySelector('header .island-content .button-wrapper .island-close').style.display='none';
 		}
 
 		//Offline
@@ -1432,107 +1385,6 @@
 			openIsland('Offline', `Oops! It looks like you\'re offline. Please restore your internet connection to contine.`, 'OK');
 		}
 
-		/*
-			* Context Menu *
-		*/
-	    /*let events = ["contextmenu", "touchstart"]; //Events for desktop and touch
-	    var timeout; //initial declaration
-	    var lastTap = 0; //for double tap
-	    let contextMenu = document.getElementById("contextmenu"); //refer menu div
-
-	    //same function for both events, event type is a data structure that defines the data contained in an event
-	    events.forEach((eventType) => {
-		    document.addEventListener(eventType, (e) => {
-		    	console.log(e.target);
-		    	e.preventDefault();
-		    	//if(e.target.nodeName == 'LI' || e.target.classList.contains('name') ||(e.target.nodeName=='IMG' && e.target.parentNode.classList.contains('img'))) {
-		    	if(e.target.nodeName == 'LI') {
-		    		console.log('openMenu');
-			        openContextmenu(e);
-		    	}
-		    }, { passive: false });
-	    });
-
-	    //for double tap(works on touch devices)
-	    document.addEventListener("touchend", function (e) {
-	      //current time
-	      var currentTime = new Date().getTime();
-	      //gap between two gaps
-	      var tapLength = currentTime - lastTap;
-	      //clear previous timeouts(if any)
-	      clearTimeout(timeout);
-	      //if user taps twice in 500ms
-	      if (tapLength < 500 && tapLength > 0) {
-	        //hide menu
-	        contextMenu.style.display = "none";
-	        e.preventDefault();
-	      } else {
-	        //timeout if user doesn't tap after 500ms
-	        timeout = setTimeout(function () {
-	          clearTimeout(timeout);
-	        }, 500);
-	      }
-	      //lastTap set to current time
-	      lastTap = currentTime;
-	    });
-
-	    function openContextmenu(e) {
-	    	e.preventDefault();
-			        //x and y position of mouse or touch, mouseX represents the x-coordinate of the mouse
-			        let mouseX = e.clientX || e.touches[0].clientX;
-			        let mouseY = e.clientY || e.touches[0].clientY;
-			        //height and width of menu, getBoundingClientRect() method returns the size of an element and its position relative to the viewport
-			        let menuHeight = contextMenu.getBoundingClientRect().height;
-			        let menuWidth = contextMenu.getBoundingClientRect().width;
-			        //width and height of screen, innerWidth returns the interior width of the window in pixels
-			        let width = window.innerWidth;
-			        let height = window.innerHeight;
-			        //If user clicks/touches near right corner
-			        if (width - mouseX <= 200) {
-				        contextMenu.style.borderRadius = "5px 0 5px 5px";
-				        contextMenu.style.left = width - menuWidth + "px";
-				        contextMenu.style.top = mouseY + "px";
-				        //right bottom
-				        if (height - mouseY <= 200) {
-					        contextMenu.style.top = mouseY - menuHeight + "px";
-					        contextMenu.style.borderRadius = "5px 5px 0 5px";
-				        }
-			        }
-			        //left
-			        else {
-				        contextMenu.style.borderRadius = "0 5px 5px 5px";
-				        contextMenu.style.left = mouseX + "px";
-				        contextMenu.style.top = mouseY + "px";
-				        //left bottom
-				        if (height - mouseY <= 200) {
-					        contextMenu.style.top = mouseY - menuHeight + "px";
-					        contextMenu.style.borderRadius = "5px 5px 5px 0";
-				        }
-			        }
-			        //display the menu
-			        contextMenu.style.display = "block";
-
-			//Menu functions
-			document.querySelector('#contextmenu .context-open').onclick = function(e) {
-				e.target.click();
-			}
-			document.querySelector('#contextmenu .context-opennew').onclick = function(e) {
-				e.target.click();
-			}
-			document.querySelector('#contextmenu .context-copy').onclick = function(e) {
-				console.log(e.target.getAttribute('data-url'));
-			}
-			document.querySelector('#contextmenu .context-copytext').onclick = function(e) {
-				console.log(e.target.querySelector('.name').innerText);
-			}
-	    }
-
-	    //click outside the menu to close it (for click devices)
-	    document.addEventListener("click", function (e) {
-	      if (!contextMenu.contains(e.target)) {
-	        contextMenu.style.display = "none";
-	      }
-	    });*/
 
 		/*
 			* Link Handlers *
@@ -1548,19 +1400,30 @@
 				//add event listener
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
-					updateRecentArr(this.querySelector('.name').innerHTML, this.getAttribute('data-url'), this.querySelector('.img img').src);
-					if(!elem.classList.contains('noframe')) {
-						//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
-						window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
-					} else {
-						//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
-						window.open(elem.getAttribute('data-url'));
+					var _this = this;
+					openIsland(this.querySelector('.name').innerHTML, this.getAttribute('data-desc'), 'Close', true, 'Open <i class="fa-solid fa-arrow-up-right-from-square"></i>');
+					document.querySelector('header .island-content .button-wrapper .other').onclick=function() {
+						openIslandCheckmark();
+						setTimeout(function() {
+							e.preventDefault();
+							updateRecentArr(_this.querySelector('.name').innerHTML, _this.getAttribute('data-url'), _this.querySelector('.img img').src);
+							trainRecommend();
+							if(!elem.classList.contains('noframe')) {
+								//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
+								window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
+							} else {
+								//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
+								window.open(elem.getAttribute('data-url'));
+							}
+							gtag('event', 'app_link_click', {
+								'app_name': _this.querySelector('.name').innerHTML
+							});
+							closeIsland();
+						}, 0);//1500
 					}
-					gtag('event', 'app_link_click', {
-						 'app_name': this.querySelector('.name').innerHTML
-					});
 				});
 			});
+
 			document.querySelectorAll('footer a').forEach(function(elem) {
 				elem.addEventListener('click', function(e) {
 					e.preventDefault();
@@ -1568,18 +1431,6 @@
 					window.open(`/embed?data-url=${this.href}`);
 				});
 			});
-		}
-
-		function triggerPageTransition(callback) {
-			document.querySelectorAll('.transition-layer').forEach(function(elem) {
-				elem.classList.add('active');
-			});
-			setTimeout(function() {
-				callback();
-				document.querySelectorAll('.transition-layer').forEach(function(elem) {
-					elem.classList.remove('active');
-				});
-			}, 1000);
 		}
 
 		/*
@@ -1610,13 +1461,13 @@
 				appArr = JSON.parse(localStorage.getItem('z_history'));
 				var appRArr = appArr.reverse();
 				var appHArr = appRArr.filter(by('name'), new Set);
-				document.querySelector('#foryou ul').innerHTML = '';
-				document.querySelector('#foryou ul').innerHTML+=`
-					<li data-url='${appHArr[0].url}'><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>`;
-				if(appHArr[1]){ document.querySelector('#foryou ul').innerHTML+=`
-					<li data-url='${appHArr[1].url}'><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>`;}
-				if(appHArr[2]){ document.querySelector('#foryou ul').innerHTML+=`
-					<li data-url='${appHArr[2].url}'><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>`;}
+				document.querySelector('#foryou #continue ul').innerHTML = '';
+				document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[0].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>`;
+				if(appHArr[1]){ document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[1].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>`;}
+				if(appHArr[2]){ document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[2].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>`;}
 			} else {
 				//
 			}
@@ -1637,22 +1488,9 @@
 		if(!leaderboardName) {
 			leaderboardName = 'Guest-'+makeId(5);
 			displayUsername(leaderboardName);
-			setTimeout(function() {
-				//document.querySelector('.popup').classList.add('open');
-			}, 5000);
 		} else {
 			displayUsername(leaderboardName);
 		}
-		document.getElementById('nothanks').addEventListener('click', function(e) {
-			e.preventDefault();
-			this.parentNode.classList.remove('open');
-		});
-
-		document.getElementById('saveuser').addEventListener('click', function(e) {
-			e.preventDefault();
-			setUsername();
-			//this.parentNode.classList.remove('open');
-		});
 
 		function setUsername() {
 			if(document.getElementById('username').value != "" && document.getElementById('username').value != null) {
@@ -1666,12 +1504,10 @@
 				localStorage.setItem('z_leaderboard_username', String(document.getElementById('username').value));
 				closeIsland();
 				setTimeout(function() {
-					//document.querySelector('.popup').classList.remove('open');
 					displayUsername(String(document.getElementById('username').value));
 					leaderboardName = String(document.getElementById('username').value);
 				}, 1000);
 			} else {
-				//document.querySelector('.popup p').innerHTML="Please enter a valid username.";
 				document.querySelector('.island .island-content h3').innerHTML="Please enter a valid username.";
 			}
 		}
@@ -1736,50 +1572,60 @@
 
 		var pageData = [
 			//Games
-			{id: "2048", keywords: ['2048'], recommendKeys: ['games leisure 2048 strategy']},
-			{id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja'], recommendKeys: ['games cardio cake fruit ninja tap']},
-			{id: "chess", keywords: ['chess'], recommendKeys: ['games leisure chess strategy']},
-			{id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino'], recommendKeys: ['games cardio chrome dino runner tap']},
-			{id: "colorsplosion", keywords: ['colorsplosion'], recommendKeys: ['games leisure colorsplosion color art']},
-			{id: "colorswirl", keywords: ['colorswirl'], recommendKeys: ['games leisure colorswirl color art']},
-			{id: "crossyroad", keywords: ['crossy road', 'crossyroad'], recommendKeys: ['games cardio crossy road runner tap']},
-			{id: "flappybird", keywords: ['flappy bird', 'flappybird'], recommendKeys: ['games cardio flappy bird tap']},
-			{id: "numberguessing", keywords: ['guess that number', 'guessthatnumber'], recommendKeys: ['games leisure guess that number strategy']},
-			{id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber'], recommendKeys: ['games leisure guess that number 2 strategy']},
-			{id: "hextris", keywords: ['hextris'], recommendKeys: ['games cardio hextris tap strategy']},
-			{id: "pacman", keywords: ['pac man', 'pac-man', 'pacman'], recommendKeys: ['games cardio pacman tap runner']},
-			{id: "santahatmixup", keywords: ['santa hat mixup', 'santa'], recommendKeys: ['games cardio santa hat mixup strategy']},
-			{id: "solitaire", keywords: ['solitaire'], recommendKeys: ['games leisure solitaire strategy']},
-			{id: "stack", keywords: ['stack'], recommendKeys: ['games cardio stack tap']},
-			{id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe'], recommendKeys: ['games leisure tic tac toe strategy']},
-			{id: "towertakedown", keywords: ['tower takedown', 'towertakedown'], recommendKeys: ['games leisure tower takedown strategy tap']},
+			{id: "2048", keywords: ['2048'], recommendKeys: ['game-strategy']},
+			{id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja'], recommendKeys: ['game-cardio']},
+			{id: "chess", keywords: ['chess'], recommendKeys: ['game-strategy']},
+			{id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino'], recommendKeys: ['game-cardio']},
+			{id: "colorsplosion", keywords: ['colorsplosion'], recommendKeys: ['game-leisure']},
+			{id: "colorswirl", keywords: ['colorswirl'], recommendKeys: ['game-leisure']},
+			{id: "crossyroad", keywords: ['crossy road', 'crossyroad'], recommendKeys: ['game-cardio']},
+			{id: "doodlejump", keywords: ['doodle jump runner'], recommendKeys: ['game-cardio']},
+			{id: "flappybird", keywords: ['flappy bird', 'flappybird'], recommendKeys: ['game-cardio']},
+			{id: "numberguessing", keywords: ['guess that number', 'guessthatnumber'], recommendKeys: ['game-strategy']},
+			{id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber'], recommendKeys: ['game-strategy']},
+			{id: "hextris", keywords: ['hextris'], recommendKeys: ['games-cardio']},
+			{id: "pacman", keywords: ['pac man', 'pac-man', 'pacman'], recommendKeys: ['game-cardio']},
+			{id: "santahatmixup", keywords: ['santa hat mixup', 'santa'], recommendKeys: ['game-cardio']},
+			{id: "sequence", keywords: ['sequence simon grid'], recommendKeys: ['game-strategy']},
+			{id: "solitaire", keywords: ['solitaire'], recommendKeys: ['game-leisure']},
+			{id: "stack", keywords: ['stack'], recommendKeys: ['game-cardio']},
+			{id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe'], recommendKeys: ['game-strategy']},
+			{id: "towertakedown", keywords: ['tower takedown', 'towertakedown'], recommendKeys: ['game-leisure']},
 			//Resources
-			{id: 'calculator', keywords: ['calculator'], recommendKeys: ['resources desk calculator math']},
-			{id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms'], recommendKeys: ['resources communication connect mmessaging']},
-			{id: 'assistant', keywords: ['corey 2.0', 'assistant'], recommendKeys: ['resources desk assistant corey']},
-			{id: "corey-3.0", keywords: ['corey 3.0', 'corey'], recommendKeys: ['resources desk assistant corey']},
-			{id: "countdownstudio", keywords: ['countdown studio', 'count down studio'], recommendKeys: ['resources desk countdown studio']},
-			{id: "mmc", keywords: ['molar mass calculator'], recommendKeys: ['resources desk molar mass calculator math']},
-			{id: "notes", keywords: ['notes'], recommendKeys: ['resources desk notes office']},
-			{id: "vividly", keywords: ['vividly', 'facetime', 'video chat'], recommendKeys: ['resources communication vividly video chat']},
-			{id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms'], recommendKeys: ['resources communication web chat messaging']},
-			{id: "whiteboard", keywords: ['whiteboard'], recommendKeys: ['resources desk whiteboard office']},
+			{id: 'calculator', keywords: ['calculator'], recommendKeys: ['resource-desk']},
+			{id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms'], recommendKeys: ['resource-communication']},
+			{id: 'assistant', keywords: ['corey 2.0', 'assistant'], recommendKeys: ['resource-desk']},
+			{id: "corey-3.0", keywords: ['corey 3.0', 'corey'], recommendKeys: ['resource-desk']},
+			{id: "countdownstudio", keywords: ['countdown studio', 'count down studio'], recommendKeys: ['resource-desk']},
+			{id: "mmc", keywords: ['molar mass calculator'], recommendKeys: ['resource-desk']},
+			{id: "notes", keywords: ['notes'], recommendKeys: ['resource-desk']},
+			{id: "vividly", keywords: ['vividly', 'facetime', 'video chat'], recommendKeys: ['resource-communication']},
+			{id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms'], recommendKeys: ['resource-communication']},
+			{id: "whiteboard", keywords: ['whiteboard'], recommendKeys: ['resource-desk']},
 			//Miscellaneous
-			{id: "countdowns", keywords: ['countdowns'], recommendKeys: ['miscellaneous countdowns countdown']},
-			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous inspiration office']},
-			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['miscellaneous games cardio leisure more leaderboard strategy tap']},
-			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous games resources tech log new updates announcements website apps']},
-			{id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous games resources discord server new updates announcements communication apps']},
+			{id: "countdowns", keywords: ['countdowns'], recommendKeys: ['miscellaneous']},
+			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous']},
+			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['game-cardio']},
+			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous']},
+			{id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous']},
 			//More
-			{id: "about", keywords: ['about'], recommendKeys: ['more about zane website communication']},
-			{id: "archive", keywords: ['archive'], recommendKeys: ['more archive website apps']},
-			{id: "beta", keywords: ['beta'], recommendKeys: ['more beta website apps new updates']},
+			{id: "about", keywords: ['about'], recommendKeys: ['more']},
+			{id: "archive", keywords: ['archive'], recommendKeys: ['more']},
+			{id: "beta", keywords: ['beta'], recommendKeys: ['more']},
 			//Section ID
 			{id: "games", keywords: ['games']},
 			{id: "resources", keywords: ['resources']},
 			{id: "miscellaneous", keywords: ['miscellaneous']},
 			{id: "more", keywords: ['more']}
-		]
+		];
+
+		var gameStrategyArr = ['2048', 'chess', 'numberguessing', 'guessthatnumber', 'sequence', 'tic-tac-toe'];
+		var gameCardioArr = ['cakeninja', 'chromedino', 'crossyroad', 'doodlejump', 'flappybird', 'hextris', 'pacman', 'santahatmixup', 'stack', 'leaderboard'];
+		var gameLeisureArr = ['colorsplosion', 'colorswirl', 'solitaire', 'towertakedown'];
+		var resourceDeskArr = ['calculator', 'assistant', 'corey-3.0', 'countdownstudio', 'mmc', 'notes', 'whiteboard'];
+		var resourceCommunicationArr = ['connect', 'vivdly', 'webchat'];
+		var miscellaneousArr = ['countdowns', 'inspiration', 'techlog', 'discordserver'];
+		var moreArr = ['about', 'archive', 'beta'];
 
 		/*function findString(str) {
 			str = str.toLowerCase();
@@ -1804,13 +1650,20 @@
 						openIsland('ChangeLog', `<ul><li>Bug fixes, searchbar dynamic island widget.</li><li>2023 Spring Update.</li><li>Discord Server was published.</li></ul>`, 'OK!');
 						break;
 					case 'announcement':
-						openIsland('Bug Fix!', `Stack leaderboard scoring is fixed! New scores should now post to the leaderboard as expected.`, 'OK!');
+						openIsland('New Release!', `Doodle Jump is now out of Beta! <a style="color: #fff;" href="https://zanewesley.github.io/embed?data-url=doodlejump">Play now!</a>`, 'OK!');
 						break;
 					case 'commands':
 						openIsland('Commands', `<ul><code><li>>>announcement</li><li>>>changelog</li><li>>>help</li><li>>>username</li></code></ul>`, 'Got It!');
 						break;
 					case 'username':
-						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace"><button id="saveuser" onclick="setUsername();">Save Username</button>`, 'Close & Discard');
+						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace">`, 'Discard', true, 'Save');
+						document.querySelector('header .island-content .button-wrapper .other').onclick = function() {
+							openIslandCheckmark();
+							setTimeout(function() {
+								setUsername();
+								closeIsland();
+							}, 2000);
+						}
 						break;
 					default:
 						openIsland('No Command Found', `Please try a different command or seach Zane\'s Apps.`, 'OK!');
@@ -1833,7 +1686,61 @@
 		}
 
 		function trainRecommend() {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'));
+				var appRArr = appArr.reverse();
+				var appHArr = appRArr.filter(by('name'), new Set);
+				document.querySelector('#foryou #recommended ul').innerHTML = '';
+				var rec1Data = appHArr[0], rec2Data = appHArr[1], rec3Data = appHArr[2];
+				var rec1Key = findAppKey(rec1Data.name)[0], rec2Key = findAppKey(rec2Data.name)[0], rec3Key = findAppKey(rec3Data.name)[0];
+				var rec1App = getRecApp(rec1Key), rec2App = getRecApp(rec2Key), rec3App = getRecApp(rec3Key);
+				var rec1AppData = document.getElementById(rec1App), rec2AppData = document.getElementById(rec2App), rec3AppData = document.getElementById(rec3App);
+				document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec1AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[0].name}"><div class='img'><img src='${rec1AppData.querySelector('img').src}'></div><div class='name'>${rec1AppData.innerText}</div></li>`;
+				if(rec2AppData){ document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec2AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[1].name}"><div class='img'><img src='${rec2AppData.querySelector('img').src}'></div><div class='name'>${rec2AppData.innerText}</div></li>`;}
+				if(rec3AppData){ document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec3AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[2].name}"><div class='img'><img src='${rec3AppData.querySelector('img').src}'></div><div class='name'>${rec3AppData.innerText}</div></li>`;}
+			}
+		}
 
+		function findAppKey(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+				for(var i = 0; i<pageData[key].keywords.length; i++) {
+					if (pageData[key].keywords[i].includes(str)) {
+				       return pageData[key].recommendKeys;
+				    }
+				}
+		  }
+		  return 'No match';
+		}
+
+		function getRecApp(name) {
+			switch(name) {
+				case 'game-cardio':
+					return gameCardioArr[Math.floor(Math.random()*gameCardioArr.length)];
+					break;
+				case 'game-leisure':
+					return gameLeisureArr[Math.floor(Math.random()*gameLeisureArr.length)];
+					break;
+				case 'game-strategy':
+					return gameStrategyArr[Math.floor(Math.random()*gameStrategyArr.length)];
+					break;
+				case 'resource-desk':
+					return resourceDeskArr[Math.floor(Math.random()*resourceDeskArr.length)];
+					break;
+				case 'resource-communication':
+					return resourceCommunicationArr[Math.floor(Math.random()*resourceCommunicationArr.length)];
+					break;
+				case 'miscellaneous':
+					return miscellaneousArr[Math.floor(Math.random()*miscellaneousArr.length)];
+					break;
+				case 'more':
+					return moreArr[Math.floor(Math.random()*moreArr.length)];
+					break;
+			}
 		}
 
 		/*
@@ -2037,13 +1944,14 @@
 			mouseOffset.y = e.offsetY;
 		}
 		window.addEventListener('resize', function() {
-			canvas.width = document.body.clientWidth;
-			canvas.height = document.body.clientHeight;
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
 		});
 		setTimeout(function() {window.requestAnimationFrame(animate);}, 3000);
 
 		//Trigger Init Functions
 		loadAppHistory();
+		trainRecommend();
 		setHandlers();
 	</script>
 
