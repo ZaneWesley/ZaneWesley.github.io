@@ -1404,7 +1404,7 @@
 					openIsland(this.querySelector('.name').innerHTML, this.getAttribute('data-desc'), 'Close', true, 'Open <i class="fa-solid fa-arrow-up-right-from-square"></i>');
 					document.querySelector('header .island-content .button-wrapper .other').onclick=function() {
 						openIslandCheckmark();
-						setTimeout(function() {
+						/*setTimeout(function() {
 							e.preventDefault();
 							updateRecentArr(_this.querySelector('.name').innerHTML, _this.getAttribute('data-url'), _this.querySelector('.img img').src);
 							trainRecommend();
@@ -1419,7 +1419,21 @@
 								'app_name': _this.querySelector('.name').innerHTML
 							});
 							closeIsland();
-						}, 0);//1500
+						}, 0);//1500*/
+						e.preventDefault();
+							updateRecentArr(_this.querySelector('.name').innerHTML, _this.getAttribute('data-url'), _this.querySelector('.img img').src);
+							trainRecommend();
+							if(!elem.classList.contains('noframe')) {
+								//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
+								window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
+							} else {
+								//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
+								window.open(elem.getAttribute('data-url'));
+							}
+							gtag('event', 'app_link_click', {
+								'app_name': _this.querySelector('.name').innerHTML
+							});
+							closeIsland();
 					}
 				});
 			});
