@@ -1422,7 +1422,7 @@
 						}, 0);//1500*/
 						e.preventDefault();
 							updateRecentArr(_this.querySelector('.name').innerHTML, _this.getAttribute('data-url'), _this.querySelector('.img img').src);
-							trainRecommend();
+							//trainRecommend();
 							if(!elem.classList.contains('noframe')) {
 								//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
 								window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
@@ -1820,6 +1820,7 @@
 			this.maxRotation = 85;
 			this.rotation = Math.floor(Math.random() * (this.maxRotation - (this.maxRotation * -1))) + (this.maxRotation * -1);
 			this.rotationDirection = 'forward';
+			this.onclick = function() {this.popping = true;}
 
 			// Populate Lines
 			for (var i = 0; i < popLines; i++) {
@@ -1965,7 +1966,7 @@
 
 		//Trigger Init Functions
 		loadAppHistory();
-		trainRecommend();
+		//trainRecommend();
 		setHandlers();
 	</script>
 
