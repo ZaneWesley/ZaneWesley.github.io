@@ -5,18 +5,16 @@ I'm **Zane Wesley!** I love Jesus, web coding, running and Apple. I specialize i
 
 Want to see what I've been up to? Visit my website to see my projects. [https://zanewesley.github.io](https://zanewesley.github.io)
 
+Looking for my dev portfolio? [View it here](https://zanewesley.github.io/portfolio).
+
 Have feedback or want to get to know me?  [Contact me!](https://zanewesley.github.io/feedback)
 
 ## What's New
-- 2023 Spring Update
+- 2024 Spring Update
 
 ## What I'm Working On
-- All-in-one budget app
-- 2024 Update (in beta)
-
-
-## Stats
-[![Zane's Stats](https://github-readme-stats.vercel.app/api?username=zanewesley&layout=compact&hide=prs&show_icons=true)](https://github.com/zanewesley)
+- Dev Portfolio
+- Learning Java
 
 ## Languages
 ![html5](https://img.shields.io/badge/html5-f06529?&style=for-the-badge&logo=html5&logoColor=f06529&colorA=eeeeee&colorB=f06529)
