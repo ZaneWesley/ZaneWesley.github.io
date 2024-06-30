@@ -10,7 +10,7 @@ Looking for my dev portfolio? [View it here](https://zanewesley.github.io/portfo
 Have feedback or want to get to know me?  [Contact me!](https://zanewesley.github.io/feedback)
 
 ## What's New
-- 2024 Spring Update
+- 2024 Fall Update
 
 ## What I'm Working On
 - Dev Portfolio
