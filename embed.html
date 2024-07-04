@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-	<!-- Inspired by https://steveoni.github.io/v4/ -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
 	<meta name="author" content="Zane Wesley">
-	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
+	<meta name="description" content="The place to find all of Zane's games and projects.">
 	<!-- General -->
 	<link rel="manifest" href="manifest.json">
-	<meta name="theme-color" content="#111827">
-	<meta name="application-name" content="Zane's Apps">
+	<meta name="theme-color" content="#0e0e0e">
+	<meta name="application-name" content="Zane Wesley">
 	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
-	<link rel="canonical" href="https://www.zanewesley.github.io">
 	<!-- Apple -->
-	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
-	<meta name="apple-mobile-web-app-status-bar-style" content="#111827">
+	<meta name="apple-mobile-web-app-title" content="Zane Wesley">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#0e0e0e">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
-	<link rel="mask-icon" href="images/icon.png" color="#111827">
+	<link rel="mask-icon" href="images/icon.png" color="#0e0e0e">
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.2.1/css/all.css" crossorigin="anonymous"/>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
 	<!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
@@ -34,27 +32,23 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>Zane's Apps | Embed Player</title>
+	<title>Zane Wesley | Embed Player</title>
 
 	<style>
 		* {
 			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
-			/*overflow-x: hidden;*/
 			transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+			font-family: 'Roboto', sans-serif;
 		}
 		html, body {
 			scroll-behavior: smooth;
-			background-color: #111827;/*#0a192f*/
-			font-family: 'Roboto', sans-serif;
+			background-color: #0e0e0e;
 			width: 100%;
 			height: auto;
 			font-size: 20px;
-			/*color: #8892b0; -- dark*/
-			/*color: #ccd6f6;/*-- light*/
-			/*color: #64d1ff; -- blue*/
-			color: rgba(255, 255, 255, 0.7);
+			color: #ffffff;
 		}
 
 		/* width */
@@ -64,14 +58,14 @@
 
 		/* Track */
 		::-webkit-scrollbar-track {
-		  background: #111827;/*#0a192f*/
+		  background: #0e0e0e;/*#0a192f*/
 		}
 
 		/* Handle */
 		::-webkit-scrollbar-thumb {
 		  background: rgba(255, 255, 255, 0.7);/*#ccd6f6;*/
 		  border-radius: 10px;
-		  border: 3px solid #111827;/*#0a192f*/;
+		  border: 3px solid #0e0e0e;/*#0a192f*/;
 		}
 
 		/* Handle on hover */
@@ -88,6 +82,7 @@
 		  background: rgba(57, 73, 86, 0.7);/*#233554*/
 		  color: #fff;
 		}
+
 		#standalone-frame {
 			position: fixed;
 			overflow-x: hidden;
@@ -112,7 +107,7 @@
 			height: 50px;
 			color: #fff;
 			font-size: 1.5em;
-			background-color: #111827;/*#0a192f*/
+			background-color: #0e0e0e;
 			padding: 12px;
 			display: flex;
 			flex-direction: row;
@@ -129,15 +124,8 @@
 			top: auto;
 			bottom: 0;
 		}
-		/*.bottom-nav .username-wrapper {
-			top: auto;
-			bottom: 50px;
-		}*/
-		/*#standalone-nav .username-wrapper {
-			font-size: 0.5em;
-		}*/
 		.standalone-title, .username-wrapper {
-			color: rgba(255, 255, 255, 0.7);/*#ccd6f6;*/
+			color: #fff;
 			max-width: 50%;
 			text-overflow: ellipsis;
 			overflow: hidden;
@@ -152,32 +140,29 @@
 			justify-content: center;
 			align-items: center;
 			font-size: 20px;
-			color: #44beff;/*#64d1ff*/
+			color: #fff;
+		}
+		.standalone-title .title-text img {
+			width: 50px;
+			height: 50px;
+			object-fit: cover;
 		}
 		.standalone-title .title-icon {
 			display: none;
 		}
 		.icons-wrapper i {
-			color: #ccd6f6;
+			color: #fff;
 			cursor: pointer;
+			margin-right: 0.5em;
 		}
 		.icons-wrapper i:hover {
-			color: #44beff;/*#64d1ff*/
+			color: #fff;
 		}
-		/* - popup box with by icon click styles - .username-wrapper {
-			position: fixed;
-		    right: 0;
-		    top: 50px;
-		    z-index: 3;
-		    background-color: rgba(35, 53, 84, 0.7);
-		    padding: 0.5em 1em;
-		    animation: fadeIn 3s linear;
-		    display: none;
+		#leaderboardBtn {
+			cursor: pointer;
+			font-size: 0.75em;
 		}
-		.username-wrapper.open {
-			display: block;
-		}*/
-		/* centered on nav style */
+
 		.username-wrapper {
 			padding: 12px;
 		}
@@ -190,217 +175,7 @@
 		.username-wrapper i {
 			padding-right: 6px;
 		}
-		.monospace {
-			font-family: 'Roboto Mono', monospace;
-		}
-
-
-		#settingsScreen {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: #111827;
-			z-index: 9;
-			padding: 1em;
-			display: none;
-		}
-		#settingsScreen.open {
-			display: block;
-		}
-		#settingsScreen h2 {
-			text-align: center;
-			padding: 1em;
-		}
-		#settingsScreen #settingsCloseBtn {
-			position: fixed;
-			right: 12px;
-			top: 0;
-			color: #44beff;
-			font-size: 2em;
-			cursor: pointer;
-		}
-		#settingsScreen .settings-wrapper {
-			width: 50%;
-			max-width: 680px;
-    		margin: 0 auto;
-    		/*background-color: rgba(35, 53, 84, 0.7);*/
-		}
-		/*#settingsScreen .settings-wrapper .settings-row:nth-child(odd) {
-			background-color: rgba(255,255,255,.06);
-		}*/
-		#settingsScreen .settings-wrapper .settings-row {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 1em 0;
-		}
-		#settingsScreen .settings-wrapper .settings-row label {
-			cursor: pointer;
-		}
-		#settingsScreen .settings-wrapper .settings-row label:hover {
-			color: #44beff;
-		}
-		#settingsScreen .settings-wrapper .settings-row button {
-			color: #0a192f;
-		    text-decoration: none;
-		    padding: 0.3em;
-		    background-color: #44beff;
-		    font-size: 24px;
-		    outline: none;
-		    border: none;
-		    cursor: pointer;
-		}
-		#settingsScreen .settings-wrapper #shareBtn {
-			/*color: #0a192f;*/
-			color: #ffffff;
-			padding: 1em;
-			/*background-color: #ffffff;*/
-			background-color: transparent;
-			font-size: 24px;
-			font-weight: bold;
-			outline: none;
-			border: 6px solid #44beff;
-			border-radius: 25px;
-			cursor: pointer;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			width: 200px;
-			height: 200px;
-			margin: 1em auto;
-		}
-		#settingsScreen .settings-wrapper #shareBtn img {
-			width: 100%;
-			height: 100%;
-		}
-		#settingsScreen .settings-share-wrapper {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		#settingsScreen .settings-share-wrapper img {
-			width: 200px;
-		}
-		/*toggle switch*/
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch {
-			display: inline-block;
-			cursor: pointer;
-			-webkit-tap-highlight-color: transparent;
-		}
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch i {
-		  position: relative;
-		  display: inline-block;
-		  margin-right: .5rem;
-		  width: 46px;
-		  height: 26px;
-		  /*background-color: #e6e6e6; - ios gray*/
-		  background-color: rgba(57, 73, 86, 0.7);
-		  border-radius: 23px;
-		  vertical-align: text-bottom;
-		  transition: all 0.3s linear;
-		}
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch i::before {
-		  content: "";
-		  position: absolute;
-		  left: 0;
-		  width: 42px;
-		  height: 22px;
-		  /*background-color: #fff;*/
-		  background-color: rgba(255,255,255,.06);
-		  border-radius: 11px;
-		  transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
-		  transition: all 0.25s linear;
-		}
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch i::after {
-		  content: "";
-		  position: absolute;
-		  left: 0;
-		  width: 22px;
-		  height: 22px;
-		  background-color: #fff;
-		  border-radius: 11px;
-		  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
-		  transform: translate3d(2px, 2px, 0);
-		  transition: all 0.2s ease-in-out;
-		}
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch:active i::after {
-		  width: 28px;
-		  transform: translate3d(2px, 2px, 0);
-		}
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch:active input:checked + i::after { transform: translate3d(16px, 2px, 0); }
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch input { display: none; }
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch input:checked + i { /*background-color: #4BD763; - ios green*/ background-color: #44beff;}
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch input:checked + i::before { transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0); }
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch input:checked + i::after { transform: translate3d(22px, 2px, 0); }
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch.disabled i::before {
-			cursor: not-allowed;
-		}
-		#settingsScreen .settings-wrapper .settings-row .toggle-switch.disabled i::after {
-			background-color: transparent;
-			cursor: not-allowed;
-		}
-		/*end toggle switch*/
-
-		.share-popup {
-			position: absolute;
-		    top: 0;
-		    left: 0;
-		    width: 100%;
-		    height: 100%;
-		    background-color: rgba(0,0,0,.49);
-		    /*display: flex;*/
-		    display: none;
-		    flex-direction: row;
-		    justify-content: center;
-		    align-items: center;
-		    z-index: 9;
-		}
-		.share-popup .share-popup-inner {
-			background-color: #111827;/*#1C2C49*/
-		    color: #fff;
-		    padding: 24px;
-		    border-radius: 4px;
-		    max-width: 300px;
-		}
-		.share-popup .share-popup-inner h2 {
-			text-align: center;
-			margin-bottom: 1em;
-		}
-		.share-popup .share-popup-inner p, .share-popup .share-popup-inner .msg-preview {
-			margin-bottom: 1em;
-			font-size: 20px;
-		}
-		.share-popup .share-popup-inner .msg-preview {
-			border: 1px solid #ccd6f6;
-		    border-radius: 8px;
-		    padding: 10px;
-		    overflow-wrap: break-word;
-		}
-		.share-popup .share-popup-inner #copyBtn {
-			color: #0a192f;/*#0a192f*/
-		    text-decoration: none;
-		    padding: 0.3em;
-		    background-color: #44beff;/*#64d1ff*/
-		    font-size: 24px;
-		    outline: none;
-		    border: none;
-		    cursor: pointer;
-		}
-		.share-popup .share-popup-inner #cancelBtn {
-			color: #ffffff;
-		    text-decoration: none;
-		    padding: 0.3em;
-		    background-color: transparent;
-		    font-size: 24px;
-		    outline: none;
-		    border: none;
-		    cursor: pointer;
-		    float: right;
-		}
-
+		
 		#standalone-bg {
 			position: fixed;
 			top: 0;
@@ -410,57 +185,7 @@
 			background-color: #fff;
 			z-index: 2;
 		}
-		.popup {
-			position: fixed;
-			/*top: 50%;*/
-			bottom: 1em;
-			left: 50%;
-			/*transform: translate(-50%, -50%);*/
-			transform: translateX(-50%);
-			width: 50%;
-			padding: 1em;
-			height: auto;
-			/*min-height: 50%;*/
-			padding-bottom: 3em;
-			background-color: #44beff;/*#64d1ff*/
-			background: linear-gradient(90deg,#fb60d7,#7752ff 75%,#5f98fa 90%,#44beff);/*linear-gradient(169deg, rgba(100,209,255,1) 9%, rgba(10,25,47,1) 100%);*/
-			color: #111827;/*#0a192f*/
-			border-radius: 20px;
-			display: none;
-			z-index: 3;
-		}
-		.popup.open {
-			display: block;
-		}
-		.popup h2 {
-			text-align: center;
-		}
-		.popup input {
-			padding: 15px 30px;
-		    border-radius: 8px;
-		    border: none;
-		    color: #111827;/*#0a192f*/
-		    background-color: #fff;
-		    margin: 20px 0;
-		    outline: none;
-		}
-		.popup button {
-			padding: 15px 30px;
-			border-radius: 8px;
-			border: none;
-			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
-			background-color: #111827;/*#0a192f*/
-			outline: none;
-			cursor: pointer;
-		}
-		.popup button#nothanks {
-			position: absolute;
-			bottom: 1em;
-			right: 1em;
-		}
-		.popup #save-loader {
-			display: none;
-		}
+
 
 		#splash {
 			position: fixed;
@@ -469,7 +194,7 @@
 			width: 100%;
 			height: 100%;
 			z-index: 900;
-			background-color: #111827;/*#0a192f*/
+			background-color: #0e0e0e;
 			animation: fadeIn 0.3s ease;
 		}
 		#splash .svg-wrapper {
@@ -483,7 +208,6 @@
 		#splash svg, #splash img {
 			width: 50vh;
 			height: 50vh;
-			/*animation: hover 6s linear infinite;*/
 		}
 		#splash svg .mainCircle {
 			stroke-dasharray: 1524;
@@ -492,7 +216,6 @@
 		}
 		#splash svg.load .mainCircle {
 			animation: loadAnim 1s ease-in-out forwards;
-			/*animation-delay: 1s;*/
 		}
 		#splash svg.loaded .mainCircle {
 			stroke-dashoffset: 0;
@@ -505,11 +228,11 @@
 			100% {stroke-dashoffset: 30;}
 		}
 		#splash .loader-bar-wrapper {
-			background-color: rgba(57, 73, 86, 0.7);/*rgba(35, 53, 84, 0.7);*/
+			background-color: rgba(57, 73, 86, 0.7);
 			width: 100%;
 		}
 		#splash .loader-bar-wrapper .loader-bar {
-			background-color: #44beff;/*#64d1ff;*/
+			background-color: #ffffff;/*#64d1ff;*/
 			width: 0%;
 			height: 30px;
 			/*animation: load 5s ease-in;*/
@@ -536,87 +259,26 @@
 			.standalone-title .title-icon {
 				display: block;
 			}
-			#settingsScreen .settings-wrapper {
-				width: 90%;
-				max-width: 90%;
-			}
-			.popup {
-				width: 90%;
-			}
-			.popup input {
-				width: 100%;
-			}
 		}
 	</style>
 </head>
 <body>
 	<iframe id="standalone-frame" class="standalone-ui" src=""></iframe>
 
-	<div id="standalone-nav" class="standalone-ui monospace">
-		<!--<div class="standalone-icons">
-			<span id="standalone-home" class="icon fa-regular fa-house"></span>
-			<span id="standalone-share" class="icon fa-regular fa-share"></span>
-		</div>-->
-		<div class="standalone-title"><span class="title-text monospace">Zane's Apps</span><span class="title-icon"><i class="fa-solid fa-house"></i></span></div>
-		<div class="username-wrapper"><div class="inner"><i class="fa-solid fa-user"></i> <span id="usernameBox">Guest</span></div></div>
+	<div id="standalone-nav" class="standalone-ui">
+		<div class="standalone-title"><span class="title-text"><img src="images/icon-v4-transparent-white.png"></span><span class="title-icon"><i class="fa-solid fa-house"></i></span></div>
+		<div class="username-wrapper"><div class="inner"><i class="fa-solid fa-user"></i> <span id="usernameBox">No Username</span></div></div>
 		<div class="icons-wrapper">
-			<i id="leaderboardBtn" class="fa-solid fa-ranking-star"></i>
-			<!--<i id="usernameBtn" class="fa-solid fa-user"></i>-->
-			<i id="settingsBtn" class="fa-solid fa-gear"></i>
+			<span id="leaderboardBtn"><i  class="fa-solid fa-ranking-star"></i></span>
 		</div>
-	</div>
-
-	<!--<div class="username-wrapper">Username: <span id="usernameBox">Guest</span></div>-->
-
-	<div id="settingsScreen">
-		<div id="settingsCloseBtn" onclick="this.parentNode.classList.remove('open')"><i class="fa-solid fa-xmark"></i></div>
-		<h2>Settings</h2>
-		<div class="settings-wrapper">
-			<div class="settings-row"><label for="muteToggle">Mute</label><label class="toggle-switch disabled"><input id="muteToggle" type="checkbox" disabled><i></i></label></div>
-			<div class="settings-row"><label for="navbarToggle">Move Bar To Bottom</label><label class="toggle-switch"><input id="navbarToggle" type="checkbox"><i></i></label></div>
-			<div class="settings-row"><label for="changeUsernameBtn">Username</label><button id="changeUsernameBtn">Change</button></div>
-			<div class="settings-row"><label for="feedbackBtn">Report Error or Leave Feedback</label><button id="feedbackBtn">Form</button></div>
-			<button id="shareBtn">
-				<img src="images/icon-v4-transparent-blue.png">
-				Share
-			</button>
-		</div>
-		<!--<h2>Share</h2>
-		<div class="settings-share-wrapper">
-			<img src="images/share-qr.svg">
-		</div>-->
-		
 	</div>
 
 	<div id="standalone-bg" class="standalone-ui"></div>
 
 	<div id="splash">
 		<div class="svg-wrapper">
-			<img src="images/icon-v4-transparent-blue.png">
+			<img src="images/icon-v4-transparent-white.png">
 			<div class="loader-bar-wrapper"><div class="loader-bar"></div></div>
-			<!--<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<circle class="mainCircle" cx="250" cy="250" r="242.5" stroke="#64D1FF" stroke-width="15"/>
-				<path class="z" d="M211.034 359.339L359.056 136.36L358.846 101.297H139.647V149.378H287.46L139.227 370.887V407H362.626V359.339H211.034Z" fill="#64D1FF"/>
-			</svg>-->
-		</div>
-	</div>
-
-	<div class="popup">
-		<h2>Want to Get Recognized?</h2>
-		<p>Enter a username below to associate with your scores on the leaderboard!</p>
-		<input type="text" id="username" placeholder="Username" class="monospace">
-		<button id="nothanks">No Thanks</button>
-		<button id="saveuser">Save Username</button>
-		<img id="save-loader" src="images/game-loader.svg" alt="Saving username loader">
-	</div>
-
-	<div class="share-popup">
-		<div class="share-popup-inner">
-			<h2>Share</h2>
-			<p>Text this link to friends so they can play to beat your score! Here's a preview of what you'll send:</p>
-			<div class="msg-preview"></div>
-			<button id="copyBtn">Copy</button>
-			<button id="cancelBtn">Cancel</button>
 		</div>
 	</div>
 
@@ -625,12 +287,9 @@
 	<script>
 
 		loadBar();
-		//document.querySelector('.svg-wrapper svg').classList.add('load');
 
 		document.body.onload = function() {
 			document.querySelector('.loader-bar').style.width='100%';
-			//document.querySelector('.svg-wrapper svg').classList.remove('load');
-			//document.querySelector('.svg-wrapper svg').classList.add('loaded');
 			setTimeout(function() {
 				document.getElementById('splash').style.display='none';
 			}, 1000);
@@ -639,23 +298,23 @@
 		var leaderboardName = localStorage.getItem('z_leaderboard_username');
 		if(!leaderboardName) {
 			leaderboardName = 'Guest-'+__makeId__(5);
-			setTimeout(function() {
-				document.querySelector('.popup').classList.add('open');
-			}, 5000);
+		} else {
+			document.getElementById('usernameBox').innerHTML = leaderboardName;
 		}
-		document.getElementById('usernameBox').innerHTML = leaderboardName;
+
+		var navbarLocation = localStorage.getItem('z_navbar_location');
+		if(navbarLocation == 'bottom') {
+			document.body.classList.add('bottom-nav');
+			document.getElementById('navbarToggle').checked='true';
+		}
 
 		function loadIFrame(url) {
 			document.getElementById('splash').style.display='block';
 			loadBar();
-			//document.querySelector('.svg-wrapper svg').classList.remove('loaded');
-			//document.querySelector('.svg-wrapper svg').classList.add('load');
 			var iFrame = document.getElementById('standalone-frame');
 			iFrame.src=url;
 			iFrame.onload = function() {
 				document.querySelector('.loader-bar').style.width='100%';
-				//document.querySelector('.svg-wrapper svg').classList.remove('load');
-				//document.querySelector('.svg-wrapper svg').classList.add('loaded');
 				var fdt = iFrame.contentWindow.document.title;
 				if(fdt) document.title = `${fdt}`;
 				setTimeout(function() {
@@ -683,14 +342,6 @@
 			}
 		}
 
-		/*document.getElementById('standalone-frame').addEventListener("DOMAttrModified", function(event) {
-		    if (event.attrName == "src") {
-		       // The "src" attribute changed
-		       document.title = document.getElementById('standalone-frame').contentDocument.title;
-		       console.log('iframe url changed');
-		    }
-		});*/
-
 		let params = new URLSearchParams(document.location.search);
 		let dataUrl = params.get("data-url");
 		if(dataUrl) {
@@ -699,42 +350,10 @@
 			loadIFrame('/');
 		}
 
-		document.getElementById('nothanks').addEventListener('click', function(e) {
-			e.preventDefault();
-			this.parentNode.classList.remove('open');
-		});
-
-		document.getElementById('saveuser').addEventListener('click', function(e) {
-			e.preventDefault();
-			setUsername();
-			//this.parentNode.classList.remove('open');
-		});
 
 		document.querySelector('.standalone-title').addEventListener('click', function(e) {
 			window.location = '/';
 		});
-
-		function setUsername() {
-			if(document.getElementById('username').value != "" && document.getElementById('username').value != null) {
-				document.querySelectorAll('.popup h2, .popup p, .popup input, .popup button').forEach(function(elem) {
-					elem.style.display="none";
-				});
-				document.getElementById('save-loader').style.display="block";
-				localStorage.setItem('z_leaderboard_username', String(document.getElementById('username').value));
-				setTimeout(function() {
-					document.querySelector('.popup').classList.remove('open');
-					document.querySelectorAll('.popup h2, .popup p, .popup input, .popup button').forEach(function(elem) {
-					elem.style.display="block";
-				});
-				document.getElementById('save-loader').style.display="none";
-					displayUsername(String(document.getElementById('username').value));
-					leaderboardName = String(document.getElementById('username').value);
-					document.getElementById('usernameBox').innerHTML = leaderboardName;
-				}, 3000);
-			} else {
-				document.querySelector('.popup p').innerHTML="Please enter a valid username.";
-			}
-		}
 
 		function displayUsername(user) {
 			document.getElementById('usernameBox').innerHTML=user;
@@ -744,134 +363,6 @@
 			e.preventDefault();
 			loadIFrame('leaderboard');
 		});
-		/*document.getElementById('usernameBtn').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.querySelector('.username-wrapper').classList.toggle('open');
-		});*/
-		document.getElementById('settingsBtn').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.querySelector('#settingsScreen').classList.toggle('open');
-		});
-		document.getElementById('muteToggle').addEventListener('change', function(e) {
-			e.preventDefault();
-			var iFrame = document.getElementById('standalone-frame');
-			iFrame.muted=this.checked;
-		});
-		document.getElementById('navbarToggle').addEventListener('change', function(e) {
-			e.preventDefault();
-			document.body.classList.toggle('bottom-nav');
-		});
-		document.getElementById('changeUsernameBtn').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.querySelector('.popup').classList.add('open');
-		});
-		document.getElementById('feedbackBtn').addEventListener('click', function(e) {
-			e.preventDefault();
-			loadIFrame('feedback');
-			document.getElementById('settingsScreen').classList.remove('open');
-		});
-		document.getElementById('shareBtn').addEventListener('click', function(e) {
-			e.preventDefault();
-			var shareURL = document.getElementById('standalone-frame').src || 'https://zanewesley.github.io';
-			var frameTitle = document.getElementById('standalone-frame').contentWindow.document.title || "this game";
-			//if (navigator.share) {
-			try {
-				console.log(shareURL);
-				var shareData = {
-					title: frameTitle,
-					text: `Check out ${frameTitle} from Zane\'s Apps`,//"Check out Zane\'s apps!"
-					url: shareURL
-				}
-			  navigator.share(shareData)
-			  .then(() => console.log('Successful share'))
-			  .catch(error => console.log('Error sharing:', error));
-			} 
-			//else {
-			catch(err) {
-				if(getMobileOperatingSystem() != "unknown") {
-					var a = document.createElement('a');
-					var osLink = getMobileOperatingSystem() == 'iOS' ? `sms:&body=Check out ${frameTitle} from Zane\'s Apps! ${shareURL}` : `sms:?body=Check out ${frameTitle} from Zane\'s Apps! ${shareURL}`;
-					a.href = osLink;
-					document.body.appendChild(a);
-					a.click();
-					a.remove();
-				} else {
-					//alert('Share feature is not supported on this device :/');
-					document.querySelector('.msg-preview').innerHTML=`Check out ${frameTitle} from Zane\'s Apps! ${shareURL}`;
-					document.querySelector('.share-popup').style.display='flex';
-				}
-			}
-		});
-
-		function getMobileOperatingSystem() {
-			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-			// Windows Phone must come first because its UA also contains "Android"
-			if (/windows phone/i.test(userAgent)) {
-				return "Windows Phone";
-			}
-
-			if (/android/i.test(userAgent)) {
-				return "Android";
-			}
-
-			// iOS detection from: http://stackoverflow.com/a/9039885/177710
-			if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-				return "iOS";
-			}
-
-			return "unknown";
-		}
-
-		document.getElementById('copyBtn').addEventListener('click', function(e) {
-			e.preventDefault();
-			var text = document.querySelector('.msg-preview').innerHTML;
-			if(navigator.clipboard) {
-				navigator.clipboard.writeText(text).then(() => {
-					console.log('Copied');
-					document.getElementById('copyBtn').innerHTML="Copied!";
-					setTimeout(function() {
-					  	document.getElementById('copyBtn').innerHTML="Copy";	
-					}, 2000);
-				},() => {
-					console.error('Failed to copy');
-					document.getElementById('copyBtn').innerHTML="Oops";
-					setTimeout(function() {
-					 	document.getElementById('copyBtn').innerHTML="Copy";	
-					}, 2000);
-				});
-			} else {
-				try {
-					CopyToClipboard(text);
-					console.log('Copied');
-					document.getElementById('copyBtn').innerHTML="Copied!";
-					setTimeout(function() {
-					  	document.getElementById('copyBtn').innerHTML="Copy";	
-					}, 2000);
-				} catch {
-					console.error('Failed to copy');
-					document.getElementById('copyBtn').innerHTML="Oops";
-					setTimeout(function() {
-					 	document.getElementById('copyBtn').innerHTML="Copy";	
-					}, 2000);
-				}
-				
-			}
-			
-			document.querySelector('.share-popup').style.display='none';
-		});
-		document.getElementById('cancelBtn').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.querySelector('.share-popup').style.display='none';
-		});
-		function CopyToClipboard(value) {
-            var tempInput = document.createElement("input");
-            tempInput.value = value;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-        }
 	</script>
 </body>
 </html>
