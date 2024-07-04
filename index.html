@@ -807,7 +807,7 @@
 					'app_name': elem.querySelector('h3').innerHTML
 				});
 				if(document.querySelector('#games').contains(elem)) {
-					window.location = '/embed?data-url' + elem.href;
+					window.location = '/embed?data-url=' + elem.href;
 				} else {
 					window.location = elem.href;
 				}
@@ -820,7 +820,7 @@
 				gtag('event', 'app_link_click', {
 					'app_name': elem.querySelector('.ft-name').innerHTML
 				});
-				window.location = '/embed?data-url' + elem.href;
+				window.location = '/embed?data-url=' + elem.href;
 			});
 		});
 
