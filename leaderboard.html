@@ -171,7 +171,7 @@
 		li:hover .date-posted {
 			display: block;
 		}
-		a {
+		a:not(footer a) {
 			color: #0e0e0e;
 			text-decoration: none;
 			padding: 0.3em;
@@ -225,6 +225,27 @@
 			display: none;
 			width: 300px;
 			height: 300px;
+		}
+
+		#sig {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#sig img {
+			width: 400px;
+			height: 400px;
+		}
+
+		footer {
+			padding: 16px;
+			font-weight: 500;
+			font-size: 12px;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+		}
+		footer a {
+			color: #fff;
+			font-weight: bold;
 		}
 
 		@media (max-width: 480px) {
@@ -338,6 +359,16 @@
 			<img id="save-loader" src="images/game-loader.svg" alt="Saving username loader">
 		</div>
 	</div>
+
+	<div class="section" id="sig">
+		<img src="images/icon-v4-transparent-white.png" alt="Z icon">
+	</div>
+
+	<footer>
+		<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
+		<p>Copyright &copy; 2024 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
+		<p>Feedback is appreciated! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
+	</footer>
 
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
