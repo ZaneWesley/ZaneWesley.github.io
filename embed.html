@@ -165,6 +165,7 @@
 
 		.username-wrapper {
 			padding: 12px;
+			cursor: pointer;
 		}
 		.username-wrapper .inner {
 		    background-color: rgb(57, 73, 86, 0.7);
@@ -308,6 +309,7 @@
 			document.getElementById('navbarToggle').checked='true';
 		}
 
+
 		function loadIFrame(url) {
 			document.getElementById('splash').style.display='block';
 			loadBar();
@@ -362,6 +364,10 @@
 		document.getElementById('leaderboardBtn').addEventListener('click', function(e) {
 			e.preventDefault();
 			loadIFrame('leaderboard');
+		});
+		document.querySelector('.username-wrapper').addEventListener('click', function(e) {
+			e.preventDefault();
+			loadIFrame('leaderboard#showUser');
 		});
 	</script>
 </body>
