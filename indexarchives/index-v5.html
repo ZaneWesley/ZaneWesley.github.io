@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
+	<meta name="theme-color" content="#535461">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<link rel="apple-touch-icon" href="images/home-icon.svg">
+	<link rel="shortcut icon" href="images/home-icon.svg">
+	<link rel="manifest" href="manifest.json">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!--<script src="/ui/christmaslights.js"></script>-->
+    <!--https://pixelcog.github.io/parallax.js/-->
+	<link rel="icon" type="icon/png" href="/images/home-icon.svg">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<script defer src="/ui/dark-mode-manager.js"></script>
+	<!--<script defer src="/ui/recommendation.js"></script>-->
+	<script src="/ui/complete.ly.1.0.1.min.js"></script><!-- http://complete-ly.appspot.com/ -->
+	<title>Zane's Apps</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			overflow-x: hidden;
+		}
+		body {
+			background-color: #fff;
+			font-family: Calibri, sans-serif;
+			padding-top: 80%;
+			transition: all 1s;
+			/*background-image: url('https://wallpaperaccess.com/full/3122286.jpg');*/
+			/*background-image: url('https://i.pinimg.com/originals/12/11/17/1211177165c40aa84673897f4f3b367e.jpg');*/
+			/*background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;*/
+		}
+		header {
+			background-image: url('images/header-bg.svg');
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			/*background-sattachment: fixed;*/
+			position: absolute;
+			top:0;
+			left:0;
+			min-height: 100%;
+			height: auto;
+			width: 100%;
+		}
+		header h1 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 6em;
+			color: #f2f2f2;
+			text-align: center;
+			background-color: #3f3d56;
+			padding: 8px;
+			box-shadow: 7px 7px 12px #292838;
+			width: 75%;
+		}
+		#down {
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			bottom: 1em;
+			left: 45%;
+			transform: translateX(-45%);
+			animation: bounce 2s infinite;
+			overflow: hidden;
+			/*box-shadow: 7px 7px 12px #292838;*/
+		}
+		.content {
+			position: absolute;
+			min-height: 100%;
+			height: auto;
+			width: 100%;
+			padding: 16px;
+			padding-left: calc(16px + 1em);
+			/*background-image: url('https://1.bp.blogspot.com/-ew-OwCosX48/Xuoss_UDdPI/AAAAAAAAT6I/6bkTxtlC-L8wL-66-JYvHObWbGnKsHEFwCK4BGAsYHg/w640-h426/ultra-high-resolution-heroscreen.cc-wallpaper-5760x3840.png');
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-attachment: fixed;*/
+		}
+		.split {
+			position: relative;
+			width: 50%;
+			min-height: 100%;
+			height: auto;
+		}
+		.left {
+			float: left;
+		}
+		.right {
+			float: right;
+		}
+		.bg-image {
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+		img {
+			width: 100%;
+		}
+		ul, li {
+			width: 100%;
+		}
+		ul {
+			list-style-type: none;
+			padding-left: 1em;
+		}
+		li {
+			font-size: 20px;
+			cursor: pointer;
+			padding: 5px;
+		}
+		li:hover {
+			border-bottom: 1px solid #00b0ff;
+			animation: headShake;
+			animation-duration: 0.7s;
+		}
+		input, .input {
+			/*background-image: url('http://w3schools.com/css/searchicon.png');
+			background-position: 10px 12px;
+			background-repeat: no-repeat;*/
+			width: 100%;
+			font-size: 16px;
+			padding: 12px 20px 12px 40px;
+			border: 1px solid #ddd;
+			margin-bottom: 12px;
+			outline: none;
+		}
+		.disabled:after {
+			content: ' (Temporarily Unavailable)';
+		}
+		.section {
+			border-bottom: 1px solid #ccc;
+		}
+		.bg-iframe {
+			display: none;
+			position: relative;
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+		#more img {
+			height: 25em;
+		}
+		footer a {
+			color: #000;
+		}
+		#standalone-frame {
+			position: absolute;
+			overflow-x: hidden;
+			overflow-y: auto;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			max-width: 100%;
+			max-height: 100%;
+			border: none;
+		}
+		#standalone-home {
+			position: absolute;
+			z-index: 3;
+			left: 1em;
+			bottom: 1em;
+			color: #ccc;
+			font-size: 2em;
+		}
+		.standalone-ui {
+			display: none;
+		}
+		.cookie-consent {
+			color: rgb(60, 64, 67);
+		    background-color: rgb(255, 255, 255);
+		    max-width: 24em;
+		    flex-direction: column;
+		    bottom: 1em;
+		    left: 1em;
+		    position: fixed;
+		    overflow: hidden;
+		    box-sizing: border-box;
+		    font-size: 16px;
+		    line-height: 1.5em;
+	        display: flex;
+	        flex-wrap: nowrap;
+		    z-index: 9999;
+		    opacity: 1;
+		    transition: opacity 1s ease;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 8px 3px rgba(60,64,67,.15), 0 1px 3px rgba(60,64,67,.3);
+		    padding: 22px 24px!important;
+		    font-weight: 400;
+		}
+		.cc-inner {
+			margin-bottom: 1em;
+		}
+		.cc-inner a {
+			color: #1a73e8!important;
+		    text-decoration: none;
+		    padding-left: 0;
+		    opacity: .8;
+		    display: inline-block;
+		    padding: .2em;
+		    transition: all .2s ease-out;
+		}
+		.cc-btn {
+			flex: 1 0 auto;
+			align-self: flex-end;
+			display: flex;
+			align-items: center;
+			align-content: space-between;
+		}
+		.cc-btn a {
+			flex: 1;
+			font-weight: 400;
+		    padding: 8px 24px;
+		    border-radius: 4px;
+		    font-size: 14px;
+		    line-height: 20px;
+		    height: 36px;
+		    color: rgb(255, 255, 255);
+		    border-color: transparent;
+		    background-color: rgb(26, 115, 232);
+		    display: block;
+		    border-width: 2px;
+		    border-style: solid;
+		    text-align: center;
+		    white-space: nowrap;
+		    cursor: pointer;
+		    transition: all .2s ease-out;
+		    overflow: hidden;
+		    outline: none;
+		    text-decoration: none;
+		}
+		.mobile-hidden {
+			display: inherit;
+		}
+		.mobile-visible {
+			display: none;
+		}
+		.dark {
+			background-color: #131417;
+			color: #fff;
+		}
+		.dark .content {
+			background-color: #1e1f26;
+		}
+		.dark footer a {
+			color: #fff;
+		}
+		.dark .cookie-consent {
+			background-color: #3f3d56;
+			color: #fff;
+		}
+		@media (max-width:755px) {
+			header {
+				background-position: right center;
+				background-attachment: scroll;
+			}
+			header h1 {
+				font-size: 3em;
+			}
+			.split {
+				width: 100%;
+			}
+			.left {
+				float: none;
+			}
+			.right {
+				float: none;
+			}
+			#more img {
+				height: 15em;
+			}
+			.mobile-hidden {
+				display: none;
+			}
+			.mobile-visible {
+				display: block;
+			}
+		}
+	</style>
+</head>
+<body class="">
+	<header>
+		<div id="lights-container"></div>
+		<h1 class="animate__animated animate__zoomInUp">Zane's Apps</h1>
+		<div id="down">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#3f3d56" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path></svg>
+		</div>
+	</header>
+	<div class="content">
+		<div id="recommended" class="section">
+			<!--<h1>For You</h1>
+			<ul id="recommended-li">
+				<li data-url="#recommended">Use some apps to get recommendations!</li>
+			</ul>
+			<div style="padding: 1em"></div>-->
+
+			<h1>Search Apps</h1>
+			<!--<form action="/search">-->
+				<div contenteditable="true" id="query" class="input" type="text" name="q" placeholder="Search for apps..." title="Type in an app name" autocomplete="off"></div>
+			<!--</form>-->
+			<div style="padding: 1em"></div>
+		</div>
+		<div id="games" class="section">
+			<div class="split left">
+				<img src="images/games-bg.svg" class="mobile-visible" alt="Games Image">
+				<h1>Games</h1>
+				<ul id="games-li">
+					<li id="cakeninja" data-url="/cakeninja">
+						Cake Ninja
+					</li>
+					<li id="hextris" data-url="/hextris">
+						Hextris
+					</li>
+					<li id="stack" data-url="/stack">
+						Stack
+					</li>
+					<li id="chromedino" data-url="/chromedino">
+						Chrome Dino Runner
+					</li>
+					<li id="colorsplosion" data-url="/colorsplosion">
+						Colorsplosion
+					</li>
+					<li id="numberguessing" data-url="/numberguessing">
+						Guess that Number
+					</li>
+					<li id="2048" data-url="/2048">
+						2048
+					</li>
+					<li id="tictactoe" data-url="/tic-tac-toe">
+						Tic Tac Toe
+					</li>
+					<li id="colorswirl" data-url="/colorswirl/colorswirl">
+						Color Swirl - Updated
+					</li>
+				</ul>
+			</div>
+			<div class="split right mobile-hidden">
+				<img id="games-bg-img" src="images/games-bg.svg" alt="Games Image">
+				<iframe id="games-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
+			</div>
+		</div>
+		<div id="resources" class="section">
+			<div class="split left">
+				<img id="resources-bg-img" src="images/resources-bg.svg" alt="Resources Image">
+				<iframe id="resources-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
+			</div>
+			<div class="split right">
+				<h1>Resources</h1>
+				<ul id="resources-li">
+					<li id="vividly" data-url="/vividly">
+						Vividly - Video Conferencing App
+					</li>
+					<li id="connect" data-url="/connect">
+						Connect Messaging
+					</li>
+					<li id="assistant" data-url="/assistant">
+						Corey 2.0
+					</li>
+					<li id="calculator" data-url="/calculator">
+						Calculator
+					</li>
+					<li id="countdownstudio" data-url="/countdownstudio">
+						Countdown Studio
+					</li>
+					<li id="mmc" data-url="/mmc">
+						Molar Mass Calculator
+					</li>
+					<li id="webchat" data-url="/webchat/new">
+						Webchat Video Conferencing
+					</li>
+					<li id="whiteboard" data-url="/whiteboard">
+						Whiteboard
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="misc" class="section">
+			<div class="split left">
+				<img src="images/misc-bg.svg" class="mobile-visible" alt="Miscellaneous Image">
+				<h1>Miscellaneous</h1>
+				<ul id="misc-li">
+					<li id="inspiration" data-url="/inspiration">
+						Inspirational Quotes Generator
+					</li>
+					<li id="peace" data-url="/peace">
+						Peace
+					</li>
+					<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
+						Mr. Lang Bucks (This is currently being archived)
+					</li>
+					<li id="corey-chat" data-url="/imessage">
+						Texting Corey (This is currently being archived)
+					</li>
+					<li id="corey" data-url="/corey?ref=home">
+						Corey - Original Virtual Assistant (This is currently being archived)
+					</li>
+				</ul>
+			</div>
+			<div class="split right mobile-hidden">
+				<img id="misc-bg-img" src="images/misc-bg.svg" alt="Miscellaneous Image">
+				<iframe id="misc-bg-iframe" src="" class="bg-iframe">Failed to load preview.</iframe>
+			</div>
+		</div>
+		<div id="more" class="section">
+			<div class="split left">
+				<img src="images/more-bg.svg" alt="More Image">
+			</div>
+			<div class="split right">
+				<h1>More From Zane</h1>
+				<ul>
+					<li id="about" data-url="/about">
+						About Me
+					</li>
+					<li id="archive" data-url="/archive">
+						App Archive
+					</li>
+					<!--<li id="codepen" class="newframe" data-url="https://codepen.io/zanewesley">
+						My CodePen
+					</li>-->
+					<!--<li id="bulletinboard" data-url="/bulletinboard">
+						News and Updates - Zane's Bulletin Board
+					</li>
+					<li id="account" data-url="/account">
+						Your Account
+					</li>-->
+					<li id="contact" class="disabled" data-url="/contact">
+						Contact Me!
+					</li>
+				</ul>
+			</div>
+			<br>
+		</div>
+		<footer>
+			<br>
+			<p>Copyright &copy; Zane Wesley 2021. All rights reserved.</p>
+			<p>
+				<a href="/terms-of-service">Terms of Service</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/license">Code License</a>
+			</p>
+		</footer>
+	</div>
+
+	<iframe id="standalone-frame" class="standalone-ui"></iframe>
+	<div id="standalone-home" class="standalone-ui fas fa-home"></div>
+
+	<div class="cookie-consent">
+		<span class="cc-inner">
+			This website uses cookies to ensure you get the best experience. For more information, read the <a href="/terms-of-service">Terms of Service.</a>
+		</span>
+		<div class="cc-btn">
+			<a href="#">Got It!</a>
+		</div>
+	</div>
+
+	<script>
+		/*navigator.serviceWorker.getRegistrations().then(function(registrations) {
+		 for(let registration of registrations) {
+		  registration.unregister()
+		} });*/
+		function ini() {
+			$('.content').css('top', $('header').css('height'));
+			//christmatize.stringLights('#lights-container');
+			if(localStorage.getItem('consent') == 'true') {
+				$('.cookie-consent').hide();
+			}
+
+			var appsToSearchArray = Array.prototype.slice.call(document.getElementById('games-li').getElementsByTagName('li')).concat(Array.prototype.slice.call(document.getElementById('resources-li').getElementsByTagName('li')), Array.prototype.slice.call(document.getElementById('misc-li').getElementsByTagName('li')));
+			var appsToSearch = [];
+			for (var i = 0; i<appsToSearchArray.length; i++) {
+				appsToSearch.push(appsToSearchArray[i].innerText);
+			}
+			console.log(appsToSearch);
+
+			var aComp = completely(document.getElementById('query'), {
+		    	fontFamily:'sans-serif',
+		    	fontSize:'16px', 
+		    	promptInnerHTML : ''
+		    });
+		    aComp.options = appsToSearch;
+		    aComp.startFrom = 0;
+		    aComp.dropDown.style.display='none';
+		    document.getElementById('query').querySelector('div').style.overflowY = 'hidden';
+		    aComp.onChange = function (text) {
+		    	//aComp.startFrom = text.indexOf(' ')+1;
+		    	aComp.setText(toTitleCase(aComp.getText()));
+		    	aComp.dropDown.style.display='none';
+			    aComp.repaint();
+			};
+			aComp.onEnter = function() {
+				var q = aComp.hint.innerText || aComp.getText();
+				var found;
+				for (var i = 0; i < appsToSearchArray.length; i++) {
+				  if (appsToSearchArray[i].innerText == q) {
+				    found = appsToSearchArray[i].id;
+				    console.log(found);
+				    break;
+				  }
+				}
+				if(found) document.getElementById(found).scrollIntoView({behavior: "smooth"}); aComp.setText('');
+			}
+
+			$('#query').click(function() {
+				aComp.input.focus();
+			})
+		}
+		if (window.matchMedia('(display-mode: standalone)').matches) {
+			$('li').click(function(e) {
+				if(!$(this).hasClass('disabled') && !$(this).hasClass('newframe')) {
+					//updateHistory(this.id);
+					$('#standalone-frame').prop('src', $(this).attr('data-url'));
+					window.scrollTo(0,0);
+					$('.standalone-ui').toggle('slide', {direction: 'right'}, 500);
+					$('header, .content').fadeOut();
+					$('body').css({
+						overflow: 'hidden',
+						padding: 0
+					});
+				} else if($(this).hasClass('newframe')) {
+					//updateHistory(this.id);
+					open($(this).attr('data-url'));
+				}
+			});
+		} else {
+			$('li').click(function(e) {
+				if(!$(this).hasClass('disabled')) {
+					//updateHistory(this.id);
+					window.location=$(this).attr('data-url');
+				}
+			});
+		}
+		$('#games-li li').hover(function(e) {
+			$('#games-bg-img').fadeOut();
+			$('#games-bg-iframe').attr('src', $(this).attr('data-url')).height($('#games-bg-img').height()).fadeIn();
+		});
+		$('#resources-li li').hover(function(e) {
+			$('#resources-bg-img').fadeOut();
+			$('#resources-bg-iframe').attr('src', $(this).attr('data-url')).height($('#resources-bg-img').height()).fadeIn();
+		});
+		$('#misc-li li').hover(function(e) {
+			$('#misc-bg-img').fadeOut();
+			$('#misc-bg-iframe').attr('src', $(this).attr('data-url')).height($('#misc-bg-img').height()).fadeIn();
+		});
+		function toTitleCase(str) {
+		  return str.replace(
+		    /\w\S*/g,
+		    function(txt) {
+		      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+		    }
+		  );
+		}
+		var endPrevTimer;
+		$('li').mouseleave(function(e) {
+			clearTimeout(endPrevTimer);
+			endPrevTimer = setTimeout(function(e) {
+				$('#games-bg-iframe, #resources-bg-iframe, #misc-bg-iframe').fadeOut().attr('src', null);
+				$('#games-bg-img, #resources-bg-img, #misc-bg-img').fadeIn();
+			}, 3000);
+		});
+		$('#standalone-home').click(function(e) {
+			$('#standalone-frame').toggle('slide', {direction: 'right'}, 500, function() {
+				location.reload();
+			});
+		});
+		$('.cc-btn a').click(function(e) {
+			e.preventDefault();
+			this.parentNode.parentNode.style.opacity=0;
+			this.parentNode.parentNode.style.visibility='hidden';
+			localStorage.setItem('consent', 'true');
+		});
+		document.getElementById('games-bg-iframe').contentWindow.window.onerror=function(e) {e.preventDefault()};
+		window.addEventListener('resize', ini);
+		ini();
+	</script>
+</body>
+</html>

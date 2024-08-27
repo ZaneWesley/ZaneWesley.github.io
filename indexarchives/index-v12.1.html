@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
+	<!-- General -->
+	<meta name="theme-color" content="#080808">
+	<meta name="application-name" content="Zane's Apps">
+	<link rel="shortcut icon" href="images/icon.png">
+	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
+	<link rel="canonical" href="https://www.zanewesley.github.io">
+	<!-- Apple -->
+	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#080808">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
+	<link rel="mask-icon" href="images/icon.png" color="#080808">
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&family=Caveat&family=Anton&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
+	<!-- Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-YEEGMG5QT7');
+	</script>
+
+	<title>Zane's Apps | 2024 Update</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			font-family: 'Roboto', sans-serif;
+			scroll-behavior: smooth;
+		}
+		html, body {
+			background-color: #080808;
+			/*background-image: url('images/bg-shapes.svg');*/
+			background-size: 100%;
+			/*background-transform: translate3d(0px, -24.1512%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);*/
+		}
+
+		/* width */
+		::-webkit-scrollbar {
+		  width: 12px;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+		  background: #080808;/*#0a192f*/
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+		  background: rgba(255, 255, 255, 0.7);/*#ccd6f6;*/
+		  border-radius: 10px;
+		  border: 3px solid #080808;/*#0a192f*/;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+		  background: #8892b0;
+		}
+		/* WebKit/Blink Browsers */
+		::selection {
+		  background: rgba(8, 8, 8, 0.7);/*#233554*/
+		  color: #fff;
+		}
+		/* Gecko Browsers */
+		::-moz-selection {
+		  background: rgba(8, 8, 8, 0.7);/*#233554*/
+		  color: #fff;
+		}
+		header {
+			position: absolute;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+			align-items: center;
+			font-size: 3em;
+			height: 100%;
+			max-width: 100%;
+			width: 100%;
+			/*background-color: #080808;*/
+			background: transparent;
+			color: transparent;/* #99D7FF */
+			transition: all 2s;
+			animation: shrinkHead 2s ease-in-out 3s 1 forwards;
+		}
+		header h1 {
+			width: auto;
+			background: 
+				linear-gradient(#99D7FF 0 0) no-repeat,
+				linear-gradient(#99D7FF 0 0) no-repeat;
+			background-size: 0% 100%;
+			-webkit-background-clip: padding-box,text;
+					background-clip: padding-box,text;
+			animation: 
+				t 1.2s .5s both,
+				b 1.2s 1.3s both,
+				fadeOut 1s linear 5.8s both;
+			margin: 0 1em;
+			transition: all 2s;
+		}
+		header img {
+			width: 50px;
+			height: 50px;
+			margin: 1em;;
+			visibility: hidden;
+			opacity: 0;
+			animation: fadeIn 1s linear 6s forwards;
+		}
+
+		.island-head {
+			position: relative;
+		    top: 1em;
+		    right: 0;
+		    left: 0;
+		    padding: 0.5em 1em;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    /*width: 50%;*/
+		    width: 80px;
+		    height: 52px;
+		    margin: 0 auto;
+			color: #fff;
+		    background: rgba(57, 73, 86, 0.7);
+		    border: 0.2rem solid rgba(57, 73, 86, 1);
+		    -webkit-backdrop-filter: blur(104px);
+		    backdrop-filter: blur(104px);
+		    border-radius: 2rem;
+		    z-index: 11;
+			opacity: 0;
+		    animation: fadeIn 3s linear 3.1s forwards, searchAnim 1s ease 5.6s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
+		    transition: all 0.5s cubic-bezier(0, 0, 0.61, 1.23);
+		}
+		@keyframes shrinkHead {
+			50% {
+				font-size: 1em;
+			}
+			100% {
+				height: 5em;
+				font-size: 1em;
+				font-weight: 400;
+			}
+		}
+		@keyframes t {
+			to {background-size: 150% 100%}
+		}
+		@keyframes b {
+			to {background-position:-200% 0,0 0} 
+		}
+		@keyframes searchAnim {
+			0% {width: 80px;}
+			100% {width: 50%;}
+		}
+		@keyframes fadeIn {
+			0% {opacity: 0; visibility: visible;}
+			70% {opacity: 0; visibility: visible;}
+			90% {opacity: 0.5; visibility: visible;}
+			100% {opacity: 1; visibility: visible;}
+		}
+		@keyframes fadeOut {
+			0% {opacity: 1; visibility: visible;}
+			90% {visibility: visible;}
+			99% {opacity: 0; visibility: hidden;}
+			100% {opacity: 0; visibility: hidden; display: none;}
+		}
+		.island-head.island {
+			height: 200px;
+		}
+		.island-head.island .search-bar {
+			display: none;
+		}
+		.island-head.island .island-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			opacity: 1;
+		}
+		.island-head .island-content {
+			display: none;
+			opacity: 0;
+			transition: 0.5s ease;
+    		transition-delay: 0.3s;
+		}
+		.island-head .island-content button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: #2C2F33;
+			background-color: #44beff;
+			outline: none;
+			cursor: pointer;
+		}
+		.island-head.island .button-wrapper {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			width: 50%;
+		}
+		.island-head.island .button-wrapper .other {
+			background: #44ffc4;
+		}
+		.island-head .search-bar {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.island-head .search-bar input {
+			width: 100%;
+			height: 100%;
+			border: none;
+			outline: none;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+			font-family: 'Roboto', sans-serif;
+			font-size: 20px;
+			background-color: transparent;
+		}
+		.island-head .search-bar .search-icon {
+			cursor: pointer;
+		}
+		.search-result-highlight {
+			box-shadow: 0px 0px 20px 0px rgba(255,255,255,0.9)!important;
+		}
+
+		section {
+			position: fixed;
+			width: 100%;
+			min-height: 50%;
+			max-height: 70%;
+			height: 70%;
+			bottom: 0;
+			color: #fff;
+			overflow-x: hidden;
+			opacity: 0;
+			visibility: hidden;
+			animation:
+				fadeIn 2s ease-out 6.5s both,
+				shiftDown 2.2s ease-out 6.5s both;
+			pointer-events: none;
+		}
+		@keyframes shiftDown {
+			0% {transform: translate(0, -3em) scale(0.8);}
+			100% {transform: translate(0, 0) scale(1);}
+		}
+		
+		section ul {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(min(100%/2, max(90px, 100%/6)), 2fr));
+			gap: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+		section ul li {
+			transition: all 0.5s cubic-bezier(0.645,0.045,0.355,1);
+			min-width: 64px;
+			min-height: 64px;
+			width: 180px;
+			height: 180px;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			background-image: var(--data-ico);
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+		section ul li span {
+			background-color: rgba(57, 73, 86, 0.9);
+			padding: 1em;
+		}
+		section ul li:hover {
+			transform: scale(1.1);
+			cursor: pointer;
+		}
+		section ul li.large {
+			grid-column: span 2;
+			grid-row: span 2;
+			width: 360px;
+    		height: 360px 
+		}
+		section ul li.small {
+			grid-column: span 0.5;
+			grid-row: span 0.5;
+			width: 90px;
+    		height: 90px; 
+		}
+
+
+		@media (max-width: 480px) {
+			header {
+				font-size: clamp(14px,5vw,16px);
+			}
+			.island-head {
+				position: absolute;
+				width: 80px;
+				margin: 0;
+				left: auto;
+				right: 1em;
+			}
+			@keyframes searchAnim {
+				0% {width: 80px;}
+				100% {width: 75%;}
+			}
+			.island-head.island {
+				height: 250px;
+			}
+			.island-head.island .button-wrapper {
+				width: 100%;
+			}
+
+			section .left {
+				display: none;
+			}
+			section .right {
+				left: 0;
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Zane Wesley</h1>
+		<img src="images/icon-v4-transparent-blue.png" alt="Z">
+	</header>
+
+	<div class="island-head">
+		<div class="search-bar">
+			<input id="search" type="text" autocomplete="off" placeholder="Search">
+			<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+		</div>
+		<div class="island-content">
+			<h3>Update v9.3.2</h3>
+			<p class="island-inner">
+				- Added Recommendation Section
+				<br>- Apps now have descriptions. Click on them to view
+				<br>- The search bar now has commands. Search <code>>>commands</code> for the list.
+			</p>
+			<div class="button-wrapper">
+				<button class="other" style="display: none">OK!</button>
+				<button class="island-close" onclick="closeIsland()">OK!</button>
+			</div>
+		</div>
+	</div>
+
+	<section class="content">
+		
+			<div id="foryou" class="link-section">
+				<h2>For You</h2>
+				<ul>
+					<li data-id="sequence" data-url="sequence" data-ico="sequence/icon.svg" style="--data-ico: url('sequence/icon.svg')" data-desc="A simple pattern following game."><span>Seqence</span></li>
+					<li daata-id="2048" data-url="2048" data-ico="2048/icon.png" style="--data-ico: url('2048/icon.png')" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">2048</li>
+					<li data-id="doodlejump" data-url="doodlejump" data-ico="doodlejump/images/doodle-jump-game-icon-192.png" style="--data-ico: url('doodlejump/images/doodle-jump-game-icon-192.png')" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">Doodle Jump</li>
+					<li data-id="towertakedown" data-url="towertakedown" data-ico="towertakedown/icon.jpg" style="--data-ico: url('towertakedown/icon.jpg')" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">Tower Takedown</li>
+				</ul>
+			</div>
+			<div id="new" class="link-section">
+				<h2>New & Updated</h2>
+				<ul>
+					<li data-id="sequence" data-url="sequence" data-ico="sequence/icon.svg" style="--data-ico: url('sequence/icon.svg')" data-desc="A simple pattern following game.">Sequence</li>
+					<li data-id="doodlejump" data-url="doodlejump" data-ico="doodlejump/images/doodle-jump-game-icon-192.png" style="--data-ico: url('doodlejump/images/doodle-jump-game-icon-192.png')" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">Doodle Jump</li>
+					<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" data-ico="images/tech-log-icon.png" style="--data-ico: url('images/tech-log-icon.png')" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">Tech Log</li>
+					<li data-id="towertakedown" data-url="towertakedown" data-ico="towertakedown/icon.jpg" style="--data-ico: url('towertakedown/icon.jpg')" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">Tower Takedown</li>
+				</ul>
+			</div>
+			<div id="games" class="link-section">
+				<h2>Fast-Paced Games</h2>
+				<ul>
+					<li id="sequence" data-url="sequence" data-ico="sequence/icon.svg" style="--data-ico: url('sequence/icon.svg')" data-desc="A simple pattern following game.">Sequence</li>
+					<li id="doodlejump" data-url="doodlejump" data-ico="doodlejump/images/doodle-jump-game-icon-192.png" style="--data-ico: url('doodlejump/images/doodle-jump-game-icon-192.png')" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">Doodle Jump</li>
+					<li id="santahatmixup" data-url="santahatmixup" data-ico="santahatmixup/css/favicon.png" style="--data-ico: url('santahatmixup/css/favicon.png')" data-desc="Follow that Santa! Choose the right hat to level up.">Santa Hat Mixup</li>
+					<li id="pacman" data-url="pacman" data-ico="pacman/icon/ios_icon.png" style="--data-ico: url('pacman/icon/ios_icon.png')" data-desc="A remake of the classic arcade game. Use the arrow keys or swipe to moev around the maze.">Pac Man</li>
+					<li id="flappybird" data-url="flappybird" data-ico="flappybird/icon.jpg" style="--data-ico: url('flappybird/icon.jpg')" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes.">Flappy Bird</li>
+					<li id="crossyroad" data-url="crossyroad" data-ico="crossyroad/icon.jpeg" style="--data-ico: url('crossyroad/icon.jpeg')" data-desc="A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!">Crossy Road</li>
+					<li id="cakeninja" data-url="cakeninja" data-ico="cakeninja/files/assets/32463581/1/caption.png" style="--data-ico: url('cakeninja/files/assets/32463581/1/caption.png')" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!">Cake Ninja</li>
+					<li id="hextris" data-url="hextris" data-ico="hextris/favicon.ico" style="--data-ico: url('hextris/favicon.ico')" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.">Hextris</li>
+					<li id="stack" data-url="stack" data-ico="images/stack-icon.PNG" style="--data-ico: url('images/stack-icon.PNG')" data-desc="Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!">Stack</li>
+					<li id="chromedino" data-url="chromedino" data-ico="chromedino/200-error-offline.png" style="--data-ico: url('chromedino/200-error-offline.png')" data-desc="A remake of the classic Chrome Dino Runner game. Click/tap to jump.">Chrome Dino Runner</li>
+				</ul>
+			</div>
+			<div id="games2" class="link-section">
+				<h2>Leisure Games</h2>
+				<ul>
+					<li id="guessthatnumber"  data-url="guessthatnumber" data-ico="guessthatnumber/icon.png" style="--data-ico: url('guessthatnumber/icon.png')" data-desc="Simple. Guess that number!">Guess That Number 2</li>
+					<li id="towertakedown" data-url="towertakedown" data-ico="towertakedown/icon.jpg" style="--data-ico: url('towertakedown/icon.jpg')" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">Tower Takedown</li>
+					<li id="solitaire" data-url="solitaire" data-ico="solitaire/assets/icon.jpg" style="--data-ico: url('solitaire/assets/icon.jpg')" data-desc="A remake of the classic card game Solitaire.">Solitaire</li>
+					<li id="chess" data-url="chess" data-ico="chess/img/chess.png" style="--data-ico: url('chess/img/chess.png')" data-desc="Online chess against an AI. Don't get checkmated!">Chess</li>
+					<li id="colorsplosion" data-url="colorsplosion" data-ico="colorsplosion/icon.PNG" style="--data-ico: url('colorsplosion/icon.PNG')" data-desc="Some random experiments. Enjoy ;)">Colorsplosion</li>
+					<li id="numberguessing" data-url="numberguessing" data-ico="images/numberguessing-icon.png" style="--data-ico: url('images/numberguessing-icon.png')" data-desc="Simple. Guess that number!">Guess that Number</li>
+					<li id="2048" data-url="2048" data-ico="2048/icon.png" style="--data-ico: url('2048/icon.png')" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">2048</li>
+					<li id="tic-tac-toe" data-url="tic-tac-toe" data-ico="images/tic-tac-toe-icon.png" style="--data-ico: url('images/tic-tac-toe-icon.png')" data-desc="Tic-Tac-Toe against an AI. You know what to do.">Tic Tac Toe</li>
+					<li id="colorswirl" data-url="colorswirl/colorswirl" data-ico="colorswirl/icon.jpg" style="--data-ico: url('colorswirl/icon.jpg')" data-desc="Swirl colors around and make beautiful designs in this relaxing app!">Colorswirl</li>
+				</ul>
+			</div>
+			<div id="resources" class="link-section">
+				<h2>Resources</h2>
+				<ul>
+					<li id="corey-3.0" data-url="corey-3.0" data-ico="corey-3.0/icon.png" style="--data-ico: url('corey-3.0/icon.png')" data-desc="The most recent attempt to make something like ChatGPT before it existed.">Corey 3.0</li>
+					<li id="notes" data-url="notes" data-ico="notes/icon.png" style="--data-ico: url('notes/icon.png')" data-desc="A note taking app. Note takers are world changers!">Notes</li>
+					<li id="assistant" data-url="assistant" data-ico="assistant/icon.svg" style="--data-ico: url('assistant/icon.svg')" data-desc="An attempt to something like ChatGPT before it existed.">Corey 2.0</li>
+					<li id="calculator" data-url="calculator" data-ico="images/calculator-icon.png" style="--data-ico: url('images/calculator-icon.png')" data-desc="A calculator inspired by Apple.">Calculator</li>
+					<li id="countdownstudio" data-url="countdownstudio" data-ico="images/countdownstudio-icon.svg" style="--data-ico: url('images/countdownstudio-icon.svg')" data-desc="Make a countdown and watch time pass.">Countdown Studio</li>
+					<li id="mmc" data-url="mmc" data-ico="images/mmc-icon.png" style="--data-ico: url('images/mmc-icon.png')" data-desc="Made for Chemistry homework help. Enjoy ;)">Molar Mass Calculator</li>
+					<li id="whiteboard" data-url="whiteboard" data-ico="images/whiteboard-icon.jpg" style="--data-ico: url('images/whiteboard-icon.jpg')" data-desc="An online whiteboard. Built for a techer during COVID for quaratine classes.">Whiteboard</li>
+					<li id="vividly" data-url="vividly" data-ico="vividly/icon.png" style="--data-ico: url('vividly/icon.png')" data-desc="Bringing FaceTime to the web before Apple did.">Vividly</li>
+					<li id="connect" data-url="connect" data-ico="connect/splash.svg" style="--data-ico: url('connect/splash.svg')" data-desc="Online public chat rooms.">Connect</li>
+					<li id="webchat" data-url="webchat/new" data-ico="webchat/logo.ico" style="--data-ico: url('webchat/logo.ico')" data-desc="A video chatting app ran through the web.">WebChat</li>
+				</ul>
+			</div>
+			<div id="miscellaneous" class="link-section">
+				<h2>Miscellaneous</h2>
+				<ul>
+					<li id="countdowns" data-url="countdowns" data-ico="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg" style="--data-ico: url('https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg')" data-desc="A collection of countdowns made for hollidays.">Countdowns</li>
+					<li id="inspiration" data-url="inspiration" data-ico="images/inspiration-icon.png" style="--data-ico: url('images/inspiration-icon.png')" data-desc="Be inspired by this inspirational quote image generator.">Insperational Quotes Image Generator</li>
+					<li id="leaderboard" data-url="leaderboard" class="noframe" data-ico="images/leaderboard-icon.png" style="--data-ico: url('images/leaderboard-icon.png')" data-desc="Some friendly competition for games on my website!">Leaderboard</li>
+					<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" data-ico="images/tech-log-icon.png" style="--data-ico: url('images/tech-log-icon.png')" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">Tech Log</li>
+					<li id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe" data-ico="images/discord-icon.png" style="--data-ico: url('images/discord-icon.png')" data-desc="Join ZaneWesley's Discord server!">Discord Server</li>
+				</ul>
+			</div>
+			<div id="more" class="link-section">
+				<h2>More</h2>
+				<ul>
+					<li id="about" data-url="about" data-ico="images/about-icon.png" style="--data-ico: url('images/about-icon.png')" data-desc="Get to know me! Let's connect!">About</li>
+					<li id="archive" data-url="archive" data-ico="images/home-icon.svg" style="--data-ico: url('images/home-icon.svg')" data-desc="Archived apps and other random projects I'm embarrased to show.">App Archive</li>
+					<li id="beta" data-url="beta" class="noframe" data-ico="images/beta-icon.png" style="--data-ico: url('images/beta-icon.png')" data-desc="See what's coming in new updates before they're live!">BETA Page</li>
+				</ul>
+			</div>
+
+	</section>
+
+	<script>
+		//Set title text to Z for smoother animation
+		setTimeout(function() {
+			document.querySelector('header h1').innerText='Z';
+			setTimeout(function() {
+				document.querySelectorAll('#foryou ul li').forEach(function(elem, i) {
+					elem.style.animation=`fadeIn 1s ease-out ${0.5*i}s both`;
+				});
+				document.querySelector('section').style.pointerEvents='auto';
+			}, 1300);
+		}, 5700);
+
+		//Click handlers
+		document.querySelectorAll('li').forEach(function(elem) {
+			//elem.classList.add('listLink');
+			//add event listener
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				var _this = this;
+				openIsland(this.innerHTML, this.getAttribute('data-desc'), 'Close', true, 'Open <i class="fa-solid fa-arrow-up-right-from-square"></i>');
+				document.querySelector('.island-head .island-content .button-wrapper .other').onclick=function() {
+					openIslandCheckmark();
+					setTimeout(function() {
+						e.preventDefault();
+						if(!elem.classList.contains('noframe')) {
+							//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
+							window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
+						} else {
+							//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
+							window.open(elem.getAttribute('data-url'));
+						}
+						gtag('event', 'app_link_click', {
+							'app_name': _this.innerHTML
+						});
+						closeIsland();
+					}, 0);//1500
+				}
+				});
+			});
+
+		//Island Handlers
+		function openIsland(title, content, closeButtonText, otherButton, otherButtonText) {
+			document.querySelector('.island-head .island-content h3').innerHTML = title || "Announcement!";
+			document.querySelector('.island-head .island-content .island-inner').innerHTML = content;
+			document.querySelector('.island-head .island-content .button-wrapper .island-close').innerHTML = closeButtonText || "Got It!";
+			if(otherButton == true) {
+				document.querySelector('.island-head .island-content .button-wrapper .other').style.display = 'block';
+				document.querySelector('.island-head .island-content .button-wrapper .other').innerHTML = otherButtonText;
+			} else {
+				document.querySelector('.island-head .island-content .button-wrapper .other').style.display = 'none';
+			}
+			document.querySelector('.island-head').classList.add('island');
+		}
+		function closeIsland() {
+			document.querySelector('.island-head').classList.remove('island');
+			document.querySelector('.island-head .island-content .button-wrapper .other').onclick=null;
+			document.querySelector('.island-head .island-content .button-wrapper .island-close').style.display='block';
+		}
+		function openIslandCheckmark() {
+			openIsland(' ',
+				`
+				<svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px">  
+					<g fill="none" stroke="#22AE73" stroke-width="2"> 
+					<circle cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
+					<circle id="colored" fill="#22AE73" cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
+					<polyline class="st0" stroke="#fff" stroke-width="10" points="43.5,77.8 63.7,97.9 112.2,49.4 " style="stroke-dasharray:100px, 100px; stroke-dashoffset: 200px;"/>   
+					</g> 
+				</svg>
+				<style>
+					.island-inner svg polyline {
+						-webkit-animation: checkmark 0.25s ease-in-out 0.7s backwards;
+						animation: checkmark 0.25s ease-in-out 0.7s backwards
+					}
+					.island-inner svg circle {
+						-webkit-animation: checkmark-circle 0.6s ease-in-out backwards;
+						animation: checkmark-circle 0.6s ease-in-out backwards;
+					}
+					.island-inner svg circle#colored {
+						-webkit-animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+						animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+					}
+					@keyframes colored-circle { 
+						0% {
+							opacity:0
+						}
+						100% {
+							opacity:100
+						}
+					}
+					@keyframes checkmark-circle {
+						0% {
+							stroke-dashoffset: 480px 
+						}
+						100% {
+							stroke-dashoffset: 960px
+						}
+					}
+				</style>
+				`,
+			' ');
+			document.querySelector('.island-head .island-content .button-wrapper .island-close').style.display='none';
+		}
+
+		//Offline
+		window.addEventListener("offline", function(e) {
+			openIsland('Offline', `Oops! It looks like you\'re offline. Please restore your internet connection to contine.`, 'OK');
+		});
+		if(navigator.onLine == false) {
+			openIsland('Offline', `Oops! It looks like you\'re offline. Please restore your internet connection to contine.`, 'OK');
+		}
+	</script>
+</body>
+</html>

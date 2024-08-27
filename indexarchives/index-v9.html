@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
+	<!-- General -->
+	<link rel="manifest" href="manifest.json">
+	<meta name="theme-color" content="#232527">
+	<meta name="application-name" content="Zane's Apps">
+	<link rel="shortcut icon" href="images/icon.png">
+	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
+	<link rel="canonical" href="https://www.zanewesley.github.io">
+	<!-- Apple -->
+	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#232527">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
+	<link rel="mask-icon" href="images/icon.png" color="#232527">
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
+	<!-- Animation (topology) -->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>-->
+	<!-- Animation (cells) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js"></script>
+	<!-- UI -->
+	<script src="ui/type.min.js"></script>
+	<!-- Scrolling -->
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<!-- Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-YEEGMG5QT7');
+	</script>
+
+	<title>Zane's Apps | Spring Update</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			/*overflow-x: hidden;*/
+		}
+		html, body {
+			scroll-behavior: smooth;
+			/*background-color: #2d3e50;*/
+			background-color: #232527;
+			font-family: 'Roboto', sans-serif;
+			width: 100%;
+			height: 100%;
+			color: #fff;
+		}
+		.main {
+			height: auto;
+		}
+		.content {
+			/*background:radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0) 0%, rgba(35, 37, 39, 1) 72%);*/
+			background:radial-gradient(ellipse at 100% 0%, rgba(38, 153, 255, 1) 20%, rgba(6, 13, 18, 1) 87%);
+			/*background-color: #050B11;*/
+			/*background: linear-gradient(180deg, rgba(5, 11, 17, 1) 20%, rgba(30, 144, 255, 1) 94%);*/
+			/*background:linear-gradient(180deg, rgba(5, 11, 17, 1) 9%, rgba(30, 144, 255, 1) 50%, rgba(5, 11, 17, 1) 89%);*/
+		}
+		header {
+			height: 100%;
+			width: 100%;
+			color: #fff;
+			background-color: transparent;
+			display: flex;
+			align-items: center;
+			font-family: 'Rajdhani', sans-serif;
+		}
+		header h1 {
+			font-size: 72px;
+			font-weight: 400;
+			margin-left: 50px;
+			color: #fff;
+			/*animation: fadeDown 2s ease-out;
+			animation-delay: 1s;
+			animation-fill-mode: forwards;
+			opacity: 0;*/
+		}
+		nav {
+			position: sticky;
+			position: -webkit-sticky;
+			top: 0;
+			padding: 0.5em;
+			color: #1e90ff;
+			background-color: #232527;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			font-size: 2em;
+			z-index: 2;
+		}
+		nav a {
+			color: #1e90ff;
+			text-decoration: none;
+		}
+		nav i {
+			cursor: pointer;
+			transition: all 0.3s;
+		}
+		nav a:hover {
+			text-shadow: 6px 6px 6px #000;
+			transform: scale(1.1);
+		}
+		h1, h2, h5 {
+			font-family: Inconsolata, sans-serif;
+			letter-spacing: 1px;
+		}
+		.h-title {
+			text-align: center;
+			margin-bottom: 3rem;
+			padding-top: 5rem;
+		}
+		.h-title h2 {
+			font-size: 2.441rem;
+		}
+		.h-title hr {
+			border: 3px solid #fff;
+			border-radius: 20px;
+			width: 10em;
+			margin: 2em auto auto auto;
+		}
+		.grid {
+			width: 90vw;
+			max-width: 1120px;
+			margin: 0px auto 2rem;
+			display: grid;
+			grid-gap: 3rem 2rem;
+			grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+			overflow: hidden;
+		}
+		.grid-item {
+			border-radius: 0.25rem;
+			background: #fff;
+			box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06);
+			transition: 0.3s ease-in-out all;
+			cursor: pointer;
+		}
+		.grid-item:hover {
+			transform: scale(0.9);
+		}
+		.grid-item .grid-img-wrapper {
+			width: 100%;
+			display: block;
+			border-top-left-radius: var(--borderRadius);
+			border-top-right-radius: var(--borderRadius);
+			height: 15rem;
+			object-fit: cover;
+			text-align: center;
+			overflow: hidden;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+		.grid-item .grid-img-wrapper img {
+			/*width: 100%;*/
+			height: 100%;
+			max-height: 100%;
+			object-fit: cover;
+		}
+		.grid-item .grid-title-wrapper {
+			text-align: center;
+			padding: 1rem 1.25rem;
+			background: #fff;
+			border-bottom-left-radius: 0.25rem;
+			border-bottom-right-radius: 0.25rem;
+		}
+		.grid-item .grid-title-wrapper h5 {
+			margin: 0 0 1.38rem;
+			margin-bottom: 0px;
+			color: #0f172a;
+			font-weight: 500;
+			font-size: 1.25rem;
+		}
+		#search {
+			display: none;
+		}
+		#search.open {
+			display: initial;
+		}
+		footer {
+			padding: 16px;
+			font-weight: 500;
+			font-size: 12px;
+			color: #fff;
+		}
+		a {
+			color: #fff;
+		}
+		input[type="text"] {
+			width: 85%;
+			align-items: flex-start;
+			padding: 0.25em;
+			outline: none;
+			border: none;
+			border-radius: 0.25rem;
+			color: #0f172a;
+			font-size: 1.25rem;
+			font-family: Inconsolata, sans-serif;
+			letter-spacing: 1px;
+		}
+		.nav-icon-5{
+		  width: 35px;
+		  height: 30px;
+		  margin: 10px 10px;
+		  position: relative;
+		  cursor: pointer;
+		  display: inline-block;
+		}
+		.nav-icon-5 span{
+		  background-color:#fff;
+		  position: absolute;
+		  border-radius: 2px;
+		  transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+		  width:100%;
+		  height: 4px;
+		  transition-duration: 500ms
+		}
+		.nav-icon-5 span:nth-child(1){
+		  top:0px;
+		  left: 0px;
+		}
+		.nav-icon-5 span:nth-child(2){
+		  top:13px;
+		  left: 0px;
+		  opacity:1;
+		}
+		.nav-icon-5 span:nth-child(3){
+		  bottom:0px;
+		  left: 0px;
+		}
+		.nav-icon-5:not(.open):hover span:nth-child(1){
+		  transform: rotate(-3deg) scaleY(1.1);
+		}
+		.nav-icon-5:not(.open):hover span:nth-child(2){
+		  transform: rotate(3deg) scaleY(1.1);
+		}
+		.nav-icon-5:not(.open):hover span:nth-child(3){
+		  transform: rotate(-4deg) scaleY(1.1);
+		}
+		.nav-icon-5.open span:nth-child(1){
+		  transform: rotate(45deg);
+		  top: 13px;
+		}
+		.nav-icon-5.open span:nth-child(2){
+		  opacity:0;
+		}
+		.nav-icon-5.open span:nth-child(3){
+		  transform: rotate(-45deg);
+		  top: 13px;
+		}
+		.popup {
+			position: fixed;
+			border-radius: 0.25rem;
+			background: #232527;
+			width: 50%;
+			height: 50%;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 4;
+			box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06);
+			display: none;
+		}
+		.popup.open {
+			display: block;
+		}
+		.popup h2 {
+			text-align: center;
+			padding: 0.5em;
+			background-color: #fff;
+			color: #232527;
+			border-top-left-radius: 0.25rem;
+			border-top-right-radius: 0.25rem;
+		}
+		.popup .popup-content {
+			padding: 1em;
+		}
+		.popup p {
+			padding: 0.5em;
+			letter-spacing: 1px;
+			line-height: 30px;
+		}
+		.popup button {
+			border-radius: 0.25rem;
+			background-color: #1e90ff;
+			padding: 0.7em 1em;
+			border: none;
+			outline: none;
+			color: #fff;
+			font-size: 1.1em;
+			float: right;
+			cursor: pointer;
+		}
+
+		/* width */
+		::-webkit-scrollbar {
+		  width: auto;
+		  /*background: #1e90ff;*/
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+		  /*background: #1e90ff;*/
+		  background: linear-gradient(to bottom, #1e90ff, #232527);
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+		  background: rgba(255, 255, 255, 0.5);
+		  border-radius: 25px;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+		  background: rgba(255, 255, 255, 0.9);
+		}
+		/* WebKit/Blink Browsers */
+		::selection {
+		  background: #232527;
+		  color: #fff;
+		}
+		/* Gecko Browsers */
+		::-moz-selection {
+		  background: #232527;
+		  color: #fff;
+		}
+
+		html.standalone-open, body.standalone-open {
+			overflow: hidden;
+		}
+		body.standalone-open #hamburger {
+			display: none;
+		}
+		#standalone-frame {
+			position: fixed;
+			overflow-x: hidden;
+			overflow-y: auto;
+			left: 0;
+			top: 50px;
+			width: 100%;
+			height: calc(100% - 50px);
+			max-width: 100%;
+			max-height: calc(100% - 50px);
+			border: none;
+			z-index: 3;
+		}
+		.standalone-ui {
+			display: none;
+		}
+		#standalone-nav {
+			position: fixed;
+			z-index: 3;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 50px;
+			color: #fff;
+			font-size: 1.5em;
+			background-color: #232527;
+			padding: 12px;
+			/*display: flex;*/
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			overflow: hidden;
+			transition: all 0.3s;
+		}
+		#standalone-home {
+			cursor: pointer;
+		}
+		#standalone-nav .fas:hover {
+			color: #ccc;
+		}
+		#standalone-bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #fff;
+			z-index: 2;
+		}
+		#standalone-nav.fadeIn {
+			display: flex;
+		}
+		.fadeIn {
+			display: block;
+			animation: fadeIn 1s ease-in;
+			animation-fill-mode: forwards;
+		}
+
+		@media (max-width: 480px) {
+			.popup {
+				width: 90%;
+				height: auto;
+			}
+			.popup button {
+				margin-bottom: 0.5em;
+			}
+		}
+		
+	</style>
+</head>
+<body>
+
+	<header id="header">
+		<h1 class="typejs" data-type-period="2000" data-type-loop="false" data-type-cursor="true" data-type-delay="1500" data-type-text='["Zane&#39;s Apps"]'>Zane's Apps</h1>
+	</header>
+
+	<div class="main">
+		<nav>
+			<a href="#games"><i class="fa-thin fa-gamepad-modern"></i></a>
+			<a href="#resources"><i class="fa-thin fa-pen-ruler"></i></a>
+			<a href="#miscellaneous"><i class="fa-thin fa-shapes"></i></a>
+			<a href="#more"><i class="fa-thin fa-ellipsis-stroke"></i></a>
+			<input id="search" type="text" list="app-names">
+			<a href="#search"><i class="fa-thin fa-magnifying-glass"></i></a>
+			<!--<div class="menu-icon nav-icon-5">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>-->
+		</nav>
+		<datalist id="app-names"><!--<option value="Filler"></option>--></datalist>
+		<div class="content">
+			<div id="new" class="section"> <!--data-aos="zoom-in-up" data-aos-duration="1500"-->
+				<div class="h-title">
+					<h2>New Releases</h2>
+					<hr>
+				</div>
+				<div class="grid">
+					<div class="grid-item" style="background-color: rgba(0, 191, 166, 0.1);" data-url="countdowns"><div class="grid-img-wrapper"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="grid-title-wrapper"><h5>Countdowns</h5></div></div>
+					<div class="grid-item" style="background-color: #434144;" data-url="https://fillergame.herokuapp.com"><div class="grid-img-wrapper"><img src="https://fillergame.herokuapp.com/public/icons/board.PNG"></div><div class="grid-title-wrapper"><h5>Filler</h5></div></div>
+					<div class="grid-item" style="background-color: #69CEEC;" data-url="crossyroad"><div class="grid-img-wrapper"><img src="crossyroad/icon.jpeg"></div><div class="grid-title-wrapper"><h5>Crossy Road</h5></div></div>
+				</div>
+			</div>
+
+			<div id="games" class="section">
+				<div class="h-title">
+					<h2>Games</h2>
+					<hr>
+				</div>
+				<div class="grid">
+					<div class="grid-item" style="background-color: #434144;" id="filler" data-url="https://fillergame.herokuapp.com"><div class="grid-img-wrapper"><img src="https://fillergame.herokuapp.com/public/icons/board.PNG"></div><div class="grid-title-wrapper"><h5>Filler</h5></div></div>
+					<div class="grid-item" style="background-color: #69CEEC;" id="crossyroad" data-url="crossyroad"><div class="grid-img-wrapper"><img src="crossyroad/icon.jpeg"></div><div class="grid-title-wrapper"><h5>Crossy Road</h5></div></div>
+					<div class="grid-item" style="background-color: #5A442E;" id="chess" data-url="chess"><div class="grid-img-wrapper"><img src="chess/img/chess.png"></div><div class="grid-title-wrapper"><h5>Chess</h5></div></div>
+					<div class="grid-item" style="background-color: #5257a2;" id="cakeninja" data-url="cakeninja"><div class="grid-img-wrapper"><img src="https://zanewesley.github.io/cakeninja/files/assets/32463581/1/caption.png"></div><div class="grid-title-wrapper"><h5>Cake Ninja</h5></div></div>
+					<div class="grid-item" style="background-color: #2C3E50;" id="hextris" data-url="hextris"><div class="grid-img-wrapper"><img src="hextris/favicon.ico"></div><div class="grid-title-wrapper"><h5>Hextris</h5></div></div>
+					<div class="grid-item" style="background-color: #D0CBC7;" id="stack" data-url="stack"><div class="grid-img-wrapper"><img src="images/stack-icon.PNG"></div><div class="grid-title-wrapper"><h5>Stack</h5></div></div>
+					<div class="grid-item" style="background-color: #D0CBC7;" id="chromedino" data-url="chromedino"><div class="grid-img-wrapper"><img src="chromedino/200-error-offline.png"></div><div class="grid-title-wrapper"><h5>Chrome Dino Runner</h5></div></div>
+					<div class="grid-item" style="background-color: #4279A3;" id="colorsplosion" data-url="colorsplosion"><div class="grid-img-wrapper"><img src="colorsplosion/icon.PNG"></div><div class="grid-title-wrapper"><h5>Colorsplosion</h5></div></div>
+					<div class="grid-item" style="background-color: #f45303;" id="numberguessing" data-url="numberguessing"><div class="grid-img-wrapper"><img src="images/numberguessing-icon.png"></div><div class="grid-title-wrapper"><h5>Guess that Number</h5></div></div>
+					<div class="grid-item" style="background-color: #2b6184;" id="2048" data-url="2048"><div class="grid-img-wrapper"><img src="2048/icon.png"></div><div class="grid-title-wrapper"><h5>2048</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" id="tic-tac-toe" data-url="tic-tac-toe"><div class="grid-img-wrapper"><img src="images/tic-tac-toe-icon.png"></div><div class="grid-title-wrapper"><h5>Tic Tac Toe</h5></div></div>
+					<div class="grid-item" style="background-color: #EADDFF;" id="colorswirl" data-url="colorswirl/colorswirl"><div class="grid-img-wrapper"><img src="colorswirl/icon.jpg"></div><div class="grid-title-wrapper"><h5>Colorswirl</h5></div></div>
+				</div>
+			</div>
+
+			<div id="resources" class="section">
+				<div class="h-title">
+					<h2>Resources</h2>
+					<hr>
+				</div>
+				<div class="grid">
+					<div class="grid-item" style="background-color: #FFCE08;" id="notes" data-url="notes"><div class="grid-img-wrapper"><img src="notes/icon.png"></div><div class="grid-title-wrapper"><h5>Notes</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" id="vividly" data-url="vividly"><div class="grid-img-wrapper"><img src="vividly/icon.png"></div><div class="grid-title-wrapper"><h5>Vividly</h5></div></div>
+					<div class="grid-item" style="background-color: #0288d1;" id="connect" data-url="connect"><div class="grid-img-wrapper"><img src="connect/splash.svg"></div><div class="grid-title-wrapper"><h5>Connect Messaging</h5></div></div>
+					<div class="grid-item" style="background-color: #00B0FF;" id="assistant" data-url="assistant"><div class="grid-img-wrapper"><img src="assistant/icon.svg"></div><div class="grid-title-wrapper"><h5>Corey 2.0</h5></div></div>
+					<div class="grid-item" style="background-color: #D4D4D2;" id="calculator" data-url="calculator"><div class="grid-img-wrapper"><img src="images/calculator-icon.png"></div><div class="grid-title-wrapper"><h5>Calculator</h5></div></div>
+					<div class="grid-item" style="background-color: #1E1E1E;" id="countdownstudio" data-url="countdownstudio"><div class="grid-img-wrapper"><img src="images/countdownstudio-icon.svg" style="filter: invert(1)"></div><div class="grid-title-wrapper"><h5>Countdown Studio</h5></div></div>
+					<div class="grid-item" style="background-color: #009688;" id="mmc" data-url="mmc"><div class="grid-img-wrapper"><img src="images/mmc-icon.png"></div><div class="grid-title-wrapper"><h5>Molar Mass Calculator</h5></div></div>
+					<div class="grid-item" style="background-color: #084049;" id="webchat" data-url="webchat"><div class="grid-img-wrapper"><img src="webchat/logo.ico"></div><div class="grid-title-wrapper"><h5>Web Chat</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" id="whiteboard" data-url="whiteboard"><div class="grid-img-wrapper"><img src="images/whiteboard-icon.jpg"></div><div class="grid-title-wrapper"><h5>Whiteboard</h5></div></div>
+				</div>
+			</div>
+
+			<div id="miscellaneous" class="section">
+				<div class="h-title">
+					<h2>Miscellaneous</h2>
+					<hr>
+				</div>
+				<div class="grid">
+					<div class="grid-item" style="background-color: rgba(0, 191, 166, 0.1);" id="countdowns" data-url="countdowns"><div class="grid-img-wrapper"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div><div class="grid-title-wrapper"><h5>Countdowns</h5></div></div>
+					<div class="grid-item" style="background-color: #ffffff;" id="inspiration" data-url="inspiration"><div class="grid-img-wrapper"><img src="images/inspiration-icon.png"></div><div class="grid-title-wrapper"><h5>Insperational Quotes Image Generator</h5></div></div>
+				</div>
+			</div>
+
+			<div id="more" class="section">
+				<div class="h-title">
+					<h2>More</h2>
+					<hr>
+				</div>
+				<div class="grid">
+					<div class="grid-item" style="background-color: #131417;" id="about" data-url="about"><div class="grid-img-wrapper"><img src="images/about-icon.png" style="filter: invert(1)"></div><div class="grid-title-wrapper"><h5>About Me</h5></div></div>
+					<div class="grid-item" style="background-color: #81D9FF;" id="archive" data-url="archive"><div class="grid-img-wrapper"><img src="images/home-icon.svg"></div><div class="grid-title-wrapper"><h5>App Archive</h5></div></div>
+				</div>
+			</div>
+
+			<footer>
+				<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
+				<p>Copyright &copy; 2021 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page.</p>
+			</footer>
+
+		</div>
+
+	</div>
+
+	<div class="popup open">
+		<h2>Spring Update!</h2>
+		<div class="popup-content">
+			<p>It's that time of year again! Spring cleaning also means cleaning up my apps, you know. My website has a new, fresh look for the spring! Don't worry, everything works the same way it always has.</p>
+			<p>Found a bug? Report it! Have a feature request or a design improvement? Please share! Submit all bugs and requests on my <a href="feedback">Feedback Page</a>.</p>
+			<button onclick="this.parentNode.parentNode.classList.remove('open')">Got It!</button>
+		</div>
+	</div>
+
+	<!-- PWA Elements -->
+	<iframe id="standalone-frame" class="standalone-ui"></iframe>
+	<div id="standalone-nav" class="standalone-ui">
+		<span id="standalone-home" class="fas fa-home-alt"></span>
+		<span style="font-size: 16px;">Zane's Apps</span>
+		<span id="standalone-share" class="fas fa-share"></span>
+	</div>
+	<div id="standalone-bg" class="standalone-ui"></div>
+
+	<script>
+		/*
+			ANIMATION & EFFECTS
+		*/
+		var backAnimation = VANTA.CELLS({
+		  el: "#header",
+		  mouseControls: true,
+		  touchControls: true,
+		  gyroControls: false,
+		  minHeight: 200.00,
+		  minWidth: 200.00,
+		  scale: 1.50,//1.00
+		  color1: 0x232527,
+		  color2: 0x1e90ff,//0x2a3a4a
+		  size: 0.1,//2.5
+		  speed: 0.00//0.00
+		});
+		/*var backAnimation = VANTA.TOPOLOGY({
+		  el: "#header",
+		  mouseControls: true,
+		  touchControls: true,
+		  gyroControls: false,
+		  minHeight: 200.00,
+		  minWidth: 200.00,
+		  scale: 1.00,
+		  scaleMobile: 1.00,
+		  color: 0x1e90ff,
+		  backgroundColor: 0x232527
+		});*/
+		// Color changing script, https://github.com/tengbao/vanta
+		/*var colors = [
+			0x1e90ff, 0x329aff, 0x45a3ff, 0x59adff, 0x6cb7ff, //0x80c0ff, 0x94caff, 0xa7d4ff, 0xbbddff, 0xcfe7ff, // fading white
+			0x6cb7ff, 0x59adff, 0x45a3ff, 0x329aff, 0x1e90ff // fading blue
+			];
+		var colorNum = 0;
+		var colorInterval = setInterval(function() {
+			if(colorNum > colors.length) {
+				colorNum = 0;
+			}
+			backAnimation.setOptions({
+				//color: colors[colorNum]
+				color2: colors[colorNum]
+			});
+			//backAnimation.resize();
+			colorNum++;
+			console.log('Color change');
+		}, 10000);*/
+
+		//Adding animation
+		document.querySelectorAll('.grid-item').forEach(function(elem) {
+			elem.setAttribute('data-aos', 'zoom-in-up');
+			elem.setAttribute('data-aos-duration', '1000');
+		});
+		document.querySelectorAll('.section h2, .section hr').forEach(function(elem) {
+			elem.setAttribute('data-aos', 'fade-up');
+		})
+		AOS.init();
+
+		/*
+			INTERACTION SCRIPT
+		*/
+		document.querySelectorAll('.grid-item').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				if(!isPWA()) {
+					window.open(elem.getAttribute('data-url'));
+					gtag('event', 'app_link_click', {
+						 'app_name': _this.id
+					});
+				} else {
+					var _this = this;
+					//Analytics
+					/*dataLayer.push({
+						'event': 'app_link_click',
+						'app_name': _this.id
+
+					});*/
+					gtag('event', 'app_link_click', {
+						 'pwa_app_name': _this.id
+					});
+					document.getElementById('standalone-frame').src=this.getAttribute('data-url');
+					//updateRecentArr(this.id);
+					//Layer iframe ontop
+					document.getElementById('standalone-frame').classList.add('fadeIn');
+					document.getElementById('standalone-nav').classList.add('fadeIn');
+					window.scrollTo(0,0);
+					document.body.classList.add('standalone-open');
+					document.getElementsByTagName('html')[0].classList.add('standalone-open');
+					document.getElementById('standalone-bg').style.display="block";
+				}
+			});
+		});
+
+		function isPWA() {
+			if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		document.getElementById('standalone-home').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.getElementById('standalone-frame').src=null;
+			//Layer iframe ontop
+			document.getElementById('standalone-frame').classList.remove('fadeIn');
+			document.getElementById('standalone-nav').classList.remove('fadeIn');
+			window.scrollTo(0,0);
+			document.body.classList.remove('standalone-open');
+			document.getElementsByTagName('html')[0].classList.remove('standalone-open');
+			document.getElementById('standalone-bg').style.display="none";
+		});
+
+		document.getElementById('standalone-share').addEventListener('click', function(e) {
+			e.preventDefault();
+			/*if (navigator.share) {
+			  navigator.share({
+				title: document.title,
+				text: "Check out Zane\'s apps!",
+				url: window.location.href
+			  })
+			  .then(() => console.log('Successful share'))
+			  .catch(error => console.log('Error sharing:', error));
+			}*/
+			var a = document.createElement('a');
+			var osLink = getMobileOperatingSystem() == 'iOS' ? 'sms:&body=Check out Zane\'s Apps! https://zanewesley.github.io' : 'sms:?body=Check out Zane\'s Apps! https://zanewesley.github.io';
+			a.href = osLink;
+			document.body.appendChild(a);
+			a.click();
+		});
+
+		function getMobileOperatingSystem() {
+			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+			// Windows Phone must come first because its UA also contains "Android"
+			if (/windows phone/i.test(userAgent)) {
+				return "Windows Phone";
+			}
+
+			if (/android/i.test(userAgent)) {
+				return "Android";
+			}
+
+			// iOS detection from: http://stackoverflow.com/a/9039885/177710
+			if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+				return "iOS";
+			}
+
+			return "unknown";
+		}
+
+		/*
+			Searching
+		*/
+		document.querySelector('a[href="#search"]').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.getElementById('search').classList.toggle('open');
+			toggleActiveNav(document.getElementById('search').classList.contains('open'));
+			if(document.getElementById('search').classList.contains('open')) document.getElementById('search').focus();
+			findString(document.getElementById('search').value);
+		});
+
+		function findString(str) {
+			window.find(str, false);
+		}
+
+		function toggleActiveNav(bool) {
+			if(bool) {
+				document.querySelectorAll('nav a').forEach(function(elem) {
+					if(elem.getAttribute('href') !== "#search") {
+						elem.style.display="none";
+					}
+				});
+			} else {
+				document.querySelectorAll('nav a').forEach(function(elem) {
+					if(elem.getAttribute('href') !== "#search") {
+						elem.style.display="initial";
+					}
+				});
+			}
+		}
+
+		document.querySelectorAll('#games .grid-item, #resources .grid-item, #miscellaneous .grid-item, #more .grid-item').forEach(function(elem) {
+			var opt = document.createElement('option');
+			opt.value=elem.querySelector('.grid-title-wrapper h5').innerHTML;
+			document.querySelector('#app-names').appendChild(opt);
+		});
+
+		document.getElementById('search').addEventListener('keyup', function(e) {
+			e.preventDefault;
+			if(e.which == 13) findString(document.getElementById('search').value);
+		});
+		
+	</script>
+
+</body>
+</html>

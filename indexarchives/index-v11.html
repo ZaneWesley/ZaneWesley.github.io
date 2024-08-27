@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<!-- Inspired by https://steveoni.github.io/v4/ -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
+	<!-- General -->
+	<link rel="manifest" href="manifest.json">
+	<meta name="theme-color" content="#111827">
+	<meta name="application-name" content="Zane's Apps">
+	<link rel="shortcut icon" href="images/icon.png">
+	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
+	<link rel="canonical" href="https://www.zanewesley.github.io">
+	<!-- Apple -->
+	<meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#111827">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
+	<link rel="mask-icon" href="images/icon.png" color="#111827">
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" crossorigin="anonymous"/>
+	<!-- Animation (topology) -->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.topology.min.js"></script>-->
+	<!-- Animation (cells) -->
+	<!-- UI -->
+	<script src="https://unpkg.com/typeit@8.5.4/dist/index.umd.js"></script>
+	<!-- Scrolling -->
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<!-- Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-YEEGMG5QT7');
+	</script>
+
+	<title>Zane's Apps | Spring Update</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			/*overflow-x: hidden;*/
+			transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+		}
+		html, body {
+			scroll-behavior: smooth;
+			background-color: #111827;/*#0a192f*/
+			font-family: 'Roboto', sans-serif;
+			width: 100%;
+			height: auto;
+			font-size: 20px;
+			/*color: #8892b0; -- dark*/
+			/*color: #ccd6f6;-- light*/
+			/*color: #64d1ff; -- blue*/
+			color: rgba(255, 255, 255, 0.7);
+			/*color: #44beff; -- new blue*/;
+			/* color scheme: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff)*/
+		}
+
+		/* width */
+		::-webkit-scrollbar {
+		  width: 12px;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+		  background: #111827;/*#0a192f*/
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+		  background: rgba(255, 255, 255, 0.7);/*#ccd6f6;*/
+		  border-radius: 10px;
+		  border: 3px solid #111827;/*#0a192f*/;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+		  background: #8892b0;
+		}
+		/* WebKit/Blink Browsers */
+		::selection {
+		  background: rgba(57, 73, 86, 0.7);/*#233554*/
+		  color: #fff;
+		}
+		/* Gecko Browsers */
+		::-moz-selection {
+		  background: rgba(57, 73, 86, 0.7);/*#233554*/
+		  color: #fff;
+		}
+
+		.monospace {
+			font-family: 'Roboto Mono', monospace;
+		}
+
+		.content {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+			width: 100%;
+			position: absolute;
+			z-index: 1;
+		}
+		header {
+		    position: sticky;
+		    top: 1em;
+		    right: 0;
+		    left: 0;
+		    padding: 0.5em 1em;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    /*width: 50%;*/
+		    width: 80px;
+		    height: 52px;
+		    margin: 0 auto;
+		    background: rgba(57, 73, 86, 0.7);
+		    border: 0.2rem solid rgba(57, 73, 86, 1);
+		    -webkit-backdrop-filter: blur(104px);
+		    backdrop-filter: blur(104px);
+		    border-radius: 2rem;
+		    z-index: 11;
+		    animation: fadeIn 3s linear, searchAnim 1s ease 2.5s forwards; /* @keyframes name | duration | easing-function | delay |iteration-count | direction | fill-mode | play-state | name */
+		    transition: all 0.5s cubic-bezier(0, 0, 0.61, 1.23);
+		}
+		header.menu-open {
+			display: none;
+		}
+		header.island {
+			height: 200px;
+		}
+		header.island ~ main {
+			margin-top: -150px;
+		}
+		header.island .search-bar {
+			display: none;
+		}
+		header.island .island-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			opacity: 1;
+		}
+		header .island-content {
+			display: none;
+			opacity: 0;
+			transition: 0.5s ease;
+    		transition-delay: 0.3s;
+		}
+		header .island-content button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: #2C2F33;
+			background-color: #44beff;
+			outline: none;
+			cursor: pointer;
+		}
+		header.island .button-wrapper {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			width: 50%;
+		}
+		header.island .button-wrapper .other {
+			background: #44ffc4;
+		}
+		header .search-bar {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		header .search-bar input {
+			width: 100%;
+			height: 100%;
+			border: none;
+			outline: none;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+			font-family: 'Roboto', sans-serif;
+			font-size: 20px;
+			background-color: transparent;
+		}
+		header .search-bar .search-icon {
+			cursor: pointer;
+		}
+		.search-result-highlight {
+			box-shadow: 0px 0px 20px 0px rgba(255,255,255,0.9)!important;
+		}
+		#usernameBox, .menu-btn, .down-arrow {
+			animation: fadeIn 3s linear;
+		}
+		.menu-btn {
+			color: #44beff;/*#64d1ff*/
+			position: fixed;
+			top: 1em;
+			right: 1em;
+			cursor: pointer;
+			width: 50px;
+			height: 50px;
+			z-index: 17;
+			transform: scale(0.5);
+		}
+		.burger {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 80px;
+			cursor: pointer;
+		}
+		.burger span {
+			display: block;
+			  width: 100%;
+			  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.3);
+			  border-radius: 3px;
+			  height: 8px;
+			  background: #fff;
+			  transition: all .3s;
+			  position: relative;
+		}
+		.burger span + span {
+			margin-top: 14px;
+		}
+		.burger.active span:nth-child(1) {
+		  animation: ease .7s top-1 forwards;
+		}
+
+		.burger.not-active span:nth-child(1) {
+		  animation: ease .7s top-2 forwards;
+		}
+
+		.burger.active span:nth-child(2) {
+		  animation: ease .7s scaled forwards;
+		}
+
+		.burger.not-active span:nth-child(2) {
+		  animation: ease .7s scaled-2 forwards;
+		}
+
+		.burger.active span:nth-child(3) {
+		  animation: ease .7s bottom-1 forwards;
+		}
+
+		.burger.not-active span:nth-child(3) {
+		  animation: ease .7s bottom-2 forwards;
+		}
+
+		@keyframes top-1 {
+		  0% {
+		    top: 0;
+		    transform: rotate(0);
+		  }
+		  50% {
+		    top: 22px;
+		    transform: rotate(0);
+		  }
+		  100% {
+		    top: 22px;
+		    transform: rotate(45deg);
+		  }
+		}
+
+		@keyframes top-2 {
+		  0% {
+		    top: 22px;
+		    transform: rotate(45deg);
+		  }
+		  50% {
+		    top: 22px;
+		    transform: rotate(0deg);
+		  }
+		  100% {
+		    top: 0;
+		    transform: rotate(0deg);
+		  }
+		}
+
+		@keyframes bottom-1 {
+		  0% {
+		    bottom: 0;
+		    transform: rotate(0);
+		  }
+		  50% {
+		    bottom: 22px;
+		    transform: rotate(0);
+		  }
+		  100% {
+		    bottom: 22px;
+		    transform: rotate(135deg);
+		  }
+		}
+
+		@keyframes bottom-2 {
+		  0% {
+		    bottom: 22px;
+		    transform: rotate(135deg);
+		  }
+		  50% {
+		    bottom: 22px;
+		    transform: rotate(0);
+		  }
+		  100% {
+		    bottom: 0;
+		    transform: rotate(0);
+		  }
+		}
+
+		@keyframes scaled {
+		  50% {
+		    transform: scale(0);
+		  }
+		  100% {
+		    transform: scale(0);
+		  }
+		}
+
+		@keyframes scaled-2 {
+		  0% {
+		    transform: scale(0);
+		  }
+		  50% {
+		    transform: scale(0);
+		  }
+		  100% {
+		    transform: scale(1);
+		  }
+		}
+		/**/
+		@keyframes fadeIn {
+			0% {
+				opacity: 0;
+			}
+			70% {
+				opacity: 0;
+			}
+			90% {
+				opacity: 0.5;
+			}
+			100% {
+				opacity: 1;
+			}
+		}
+		@keyframes searchAnim {
+			0% {width: 80px;}
+			100% {width: 50%;}
+		}
+
+		main {
+			padding: 0 100px;
+			margin: 0px auto;
+		    width: 100%;
+		    max-width: 1600px;
+		    min-height: 100vh;
+		}
+		main.menu-open {
+			transform: translate(-50%, 0);
+			transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+		}
+		main section.first {
+			display: flex;
+		    justify-content: center;
+		    flex-direction: column;
+		    align-items: flex-start;
+		    min-height: 80vh;
+		    padding: 0px;
+		    /*animation: growAnim 3s;*/
+		    animation-fill-mode: forwards;
+		}
+		@keyframes growAnim {
+			from {min-height: 10vh}
+			to {min-height: 80vh}
+		}
+		main section.first .intro h1 {
+			margin: 0px 0px 30px 4px;
+		    color: #44beff;/*#64d1ff*/
+		    font-size: clamp(14px,5vw,16px);
+		    font-weight: 400;
+		    line-height: 1.1;
+		}
+		main section.first .title {
+			display: flex;
+		}
+		main section.first .title h2, main section.first .title .cursor {
+			margin: 0px;
+    		font-size: clamp(40px, 8vw, 80px);
+    		font-weight: 600;
+    		line-height: 1.1;
+    		color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+    		background-image: linear-gradient(90deg,#fb60d7,#eb69dc 15%,#dc5cff 30%,#c555fe 45%,#a02fff 60%,#7752ff 75%,#5f98fa 90%,#44beff);
+    		-webkit-text-fill-color: transparent;
+    		-webkit-background-clip: text;
+    		background-clip: text;
+		}
+		.ti-cursor {
+			display: none!important;
+		}
+		main section.first .title .cursor {
+			animation: cursorBlink 1s infinite;
+			animation-delay: 500ms;
+			color: #44beff;
+			-webkit-text-fill-color: #44beff;
+    		-webkit-background-clip: text;
+    		background-clip: text;
+			margin-left: -0.125em;
+			margin-right: -0.125em;
+		}
+		@keyframes cursorBlink {
+			0% {opacity: 0;}
+			49% {opacity: 0;}
+			50% {opacity: 1;}
+		}
+		.down-arrow .arrows {
+			width: 60px;
+			height: 72px;
+			position: relative;
+			left: 50%;
+			margin-left: -30px;
+			bottom: 20px;
+		}
+		.down-arrow .arrows path {
+			stroke: #2994D1;
+			fill: transparent;
+			stroke-width: 1px;	
+			animation: arrow 2s infinite;
+			-webkit-animation: arrow 2s infinite; 
+		}
+		@keyframes arrow {
+			0% {opacity:0}
+			40% {opacity:1}
+			80% {opacity:0}
+			100% {opacity:0}
+		}
+		@-webkit-keyframes arrow /*Safari and Chrome*/ {
+			0% {opacity:0}
+			40% {opacity:1}
+			80% {opacity:0}
+			100% {opacity:0}
+		}
+		.down-arrow .arrows path.a1 {
+			animation-delay:-1s;
+			-webkit-animation-delay:-1s; /* Safari 和 Chrome */
+			stroke: #fb60d7;
+		}
+		.down-arrow .arrows path.a2 {
+			animation-delay:-0.5s;
+			-webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+			stroke: #7752ff;
+		}
+		.down-arrow .arrows path.a3 {	
+			animation-delay:0s;
+			-webkit-animation-delay:0s; /* Safari 和 Chrome */
+			stroke: #44beff;
+		}
+		section {
+			margin: 0px auto;
+    		padding: 100px 0px;
+    		max-width: 900px;
+		}
+		section h2 {
+			display: flex;
+		    align-items: center;
+		    position: relative;
+		    margin: 10px 0px 40px;
+		    width: 100%;
+		    font-size: clamp(26px,5vw,32px);
+		    white-space: nowrap;
+		    font-weight: 600;
+		    line-height: 1.1;
+		    color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+		}
+		main section h2:not(.first h2) .before {
+			position: relative;
+		    bottom: 4px;
+		    counter-increment: section 1;
+		    /*content: "0" counter(section) ".";*/
+		    margin-right: 10px;
+		    color: #44beff;/*#64d1ff*/
+		    font-family: 'Roboto Mono', monospace;
+		    font-size: clamp(16px,3vw,20px);
+		    font-weight: 400;
+		}
+		main section h2:not(section.first h2):after {
+			content: "";
+		    display: block;
+		    position: relative;
+		    top: -5px;
+		    width: 300px;
+		    height: 1px;
+		    margin-left: 20px;
+		    background-color: #233554;
+		}
+		section .inner {
+			display: grid;
+		    grid-template-columns: 3fr 3fr;
+		    gap: 50px;
+		    grid-auto-flow: dense;
+		}
+		/*section.reverse .inner {
+			grid-template-columns: 2fr 3fr;
+		}*/
+		section .inner .list1 {
+			grid-column: 1;
+		}
+		section .inner .list2 {
+			grid-column: 2;
+		}
+		/*section.reverse .inner .list {
+			grid-column: 2;
+		}
+		section.reverse .inner .img {
+			grid-column: 1;
+		}*/
+		section .inner h3 {
+			padding: 1em 0;
+		}
+		section .inner ul {
+			list-style-type: none;
+			width: 100%;
+		}
+		section .inner li {
+			background-color: rgba(57, 73, 86, 0.7);
+			width: 100%;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+			cursor: pointer;
+		    padding: 10px;
+		    text-align: left;
+		    font-size: 1em;
+		    /*transition: all 0.3s;*/
+		    display: flex;
+		    align-items: center;
+		    justify-content: flex-start;
+		    border-radius: 8px;
+		    margin-bottom: 10px;
+		    -webkit-user-select: none;
+			user-select: none;
+		}
+		/*section .inner li, section .inner li .img, .newgrid-inner .new-list li, .newgrid-inner .new-list li .img img {
+			/*filter: brightness(0.8) hue-rotate(350deg) saturate(3) blur(8px) contrast(0.6);*//*
+			filter: blur(0.2px) brightness(1.1) hue-rotate(5deg) opacity(0.9) saturate(1.3) sepia(0.4) url('#dark-blue-sepia');
+		}
+		section .inner li:hover, .newgrid-inner .new-list li:hover {
+			filter: none;
+		}*/
+		section .inner li:hover {
+			background-color: rgba(57, 73, 86, 0.9);
+			transform: scale(0.9) rotate(-2deg);
+		}
+		section .inner li .img {
+			width: 50px;
+		    height: auto;
+		    min-height: 50px;
+		    margin-right: 10px;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    user-select: none;
+		    -webkit-user-select: none;
+		}
+		section .inner li .img img {
+			width: 100%;
+    		height: auto;
+		}
+		section .inner .img img {
+			width: 80%;
+			height: auto;
+		}
+
+		.newgrid-inner .new-list ul {
+			list-style-type: none;
+			display: flex;
+			flex-wrap: wrap;
+			overflow: hidden;
+			position: relative;
+			width: 100%;
+			padding: 1em;
+		}
+		.newgrid-inner .new-list li {
+			background-color: rgba(57, 73, 86, 0.7);
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+    		cursor: pointer;
+    		border-radius: 15px;
+    		overflow: hidden;
+			margin-bottom: 14px;
+			margin-right: 12px;
+			width: calc(25% - 19px);
+			display: flex;
+			flex-direction: column;
+		}
+		.newgrid-inner .new-list li:hover {
+			transform: scale(0.9) rotate(-2deg);
+		}
+		.newgrid-inner .new-list li .img {
+			border-radius: 12px;
+   			width: 100%;
+    		object-fit: cover;
+		}
+		.newgrid-inner .new-list li .img img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+		.newgrid-inner .new-list li .name {
+			padding: 0.25em 1em;
+		}
+
+		.inner .list1 li.new, .inner .list2 li.new, .newgrid-inner .new-list li.new {
+			/*box-shadow: 0 0 8px 8px #48abe0;*/
+			/*box-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 20px #0ba9ca, 0 0 30px #0ba9ca,
+    			0 0 40px #0ba9ca, 0 0 50px #0ba9ca;*/
+    		/*box-shadow: 0px 0px 20px 0px rgba(100,209,255,0.9);*/ /* x y blur range color*/
+    		box-shadow: 0px 0px 20px 0px rgba(0, 141, 255, 0.9);
+		}
+
+		footer {
+			padding: 16px;
+			font-weight: 500;
+			font-size: 12px;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+		}
+		footer a {
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+		}
+
+		.menu {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			position: fixed;
+			top: 0;
+			right: -110%;
+			width: 50vw;
+			height: 100vh;
+			background-color: #36454F;/*#112240*/
+			z-index: 15;
+		}
+		.menu.open {
+			right: 0;
+			transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+		}
+		.menu .close {
+			position: absolute;
+			top: 1.5em;
+			right: 1.5em;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+			cursor: pointer;
+		}
+		.menu ol {
+			display: flex;
+			align-items: flex-start;
+			justify-content:space-around;
+			flex-direction: column;
+			height: 50%;
+			list-style: none;
+		}
+		.menu ol li a {
+			text-decoration: none;
+		    color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+		}
+		.menu ol li a:hover {
+			color: #44beff;/*#64d1ff*/
+		}
+		.menu ol li .before {
+		    margin-right: 5px;
+		    color: #44beff;/*#64d1ff*/
+		    font-size: 20px;
+		    text-align: right;
+		}
+
+		#infobar {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+			height: 37%;
+			width: 25%;
+		}
+		#infobar.bottom {
+			height: 29%;
+		}
+
+		.popup {
+			position: fixed;
+			/*top: 50%;*/
+			bottom: 1em;
+			left: 50%;
+			/*transform: translate(-50%, -50%);*/
+			transform: translateX(-50%);
+			width: 50%;
+			padding: 1em;
+			height: auto;
+			/*min-height: 50%;*/
+			padding-bottom: 3em;
+			background-color: #44beff;/*#64d1ff*/
+			background: linear-gradient(90deg,#fb60d7,#7752ff 75%,#5f98fa 90%,#44beff);/*linear-gradient(169deg, rgba(100,209,255,1) 9%, rgba(10,25,47,1) 100%);*/
+			color: #111827;/*#0a192f*/
+			border-radius: 20px;
+			display: none;
+			z-index: 3;
+		}
+		.popup.open {
+			display: block;
+		}
+		.popup h2 {
+			text-align: center;
+		}
+		.popup input, .island input {
+			padding: 15px 30px;
+		    border-radius: 8px;
+		    border: none;
+		    color: #111827;/*#0a192f*/
+		    background-color: #fff;
+		    margin: 20px 0;
+		    outline: none;
+		}
+		.popup button, .island button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+			background-color: #111827;/*#0a192f*/
+			outline: none;
+			cursor: pointer;
+		}
+		.popup button#nothanks {
+			position: absolute;
+			bottom: 1em;
+			right: 1em;
+		}
+		.popup #save-loader {
+			display: none;
+		}
+		#usernameBox {
+			position: fixed;
+			left: 0;
+			top: 1em;
+			background-color: rgb(57, 73, 86, 0.7);
+			padding: 0.5em 1em;
+			animation: fadeIn 3s linear;
+			cursor: pointer;
+			z-index: 11;
+		}
+		#usernameBox .head {
+			font-size: 0.5em;
+		}
+		#usernameBox .user {
+			max-width: 15ch;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		canvas#bg-anim {
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+
+		#splash {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #111827;/*#0a192f*/
+			z-index: 20;
+		}
+		#splash svg .mainCircle{
+			stroke-dasharray: 1524;
+			stroke-dashoffset: 1525;
+			animation: loadAnim 1s ease-in-out forwards;
+			animation-delay: 1s;
+		}
+		#splash svg .z {
+			stroke-dasharray: 1444;
+			stroke-dashoffset:1445;
+		}
+		@keyframes loadAnim {
+			100% {stroke-dashoffset: 30;}
+		}
+		@keyframes pulse {
+			/*animation: pulse 2s infinite;*/
+		  0% {
+		    transform: scale(0.9);
+		  }
+		  40% {
+		    transform: scale(1) rotate(5deg);
+		  }
+		  80% {
+		    transform: scale(1) rotate(-5deg);
+		  }
+		  100% {
+		    transform: scale(0.9) rotate(0);
+		  }
+		}
+
+		/* Page Transitions */
+		.transition-layer {
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			right: -110%;
+			background: #fb60d7;
+			transition: all 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
+			z-index: 99;
+		}
+		.transition-layer.active {
+			right: 110%;
+		}
+		.transition-layer--2 {
+			background: #44beff;
+			transition-delay: 0.2s;
+		}
+		.transition-layer--3 {
+			background: #111827;
+			transition-delay: 0.3s;
+		}
+		.transition-layer--3.active {
+			right: 0;
+		}
+
+		#contextmenu {
+			background-color: #36454F;
+			box-shadow: 0 0 20px rgba(37, 40, 42, 0.22);
+			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
+			width: 10em;
+			padding: 0;
+			position: fixed;
+			display: none;
+		}
+		#contextmenu .contextmenu-item {
+			padding: 0.3em 1.2em;
+		}
+		#contextmenu .contextmenu-item:hover {
+			background-color: rgba(44, 141, 247, 0.2);
+			cursor: pointer;
+		}
+
+		#news {
+			position: relative;
+			width: 100%;
+			padding: 1em;
+			background-color: #a02fff;/*#6A5ACD*/
+			color: #ffffff;
+		}
+		#news h2 {
+			text-align: center;
+			display: block;
+			color: #ffffff;
+		}
+		#news h2:after {
+			content: none;
+		}
+		#news button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: #ffffff;
+			background-color: #2C2F33;
+			outline: none;
+			cursor: pointer;
+		}
+
+		@media (max-width: 480px) {
+			header {
+				/*width: 80%;*/
+				width: 80px;
+				margin: 0;
+				left: 1em;
+			}
+			@keyframes searchAnim {
+				0% {width: 80px;}
+				100% {width: 75%;}
+			}
+			header.island {
+				height: 250px;
+			}
+			header.island .button-wrapper {
+				width: 100%;
+			}
+			#usernameBox {
+				display: none;
+			}
+			main {
+				padding: 0 25px;
+			}
+			section.first {
+				padding-bottom: 10vh;
+			}
+			section.first .intro h1 {
+				margin: 0px 0px 20px 2px;
+			}
+			main section h2:not(section.first h2):after {
+				width: 100%;
+			}
+			section .inner {
+				/*display: block;*/
+				grid-template-columns: 1fr;
+				grid-gap: 0;
+			}
+			section .inner .list1, section .inner .list2 {
+				grid-column: 1;
+			}
+			#infobar {
+				width: 100%;
+				background-color: rgba(10, 25, 47, 0.5);
+			}
+			#infobar.bottom {
+				height: 25%;
+			}
+			.newgrid-inner .new-list li {
+				width: calc(50% - 19px);
+			}
+			.menu {
+				width: 100%;
+			}
+			.popup {
+				width: 90%;
+			}
+			.popup input {
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="content">
+
+		<header>
+			<div class="search-bar">
+				<input id="search" type="text" autocomplete="off" placeholder="Search Zane's Apps">
+				<div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+			</div>
+			<div class="island-content">
+				<h3>Update v9.3.2</h3>
+				<p class="island-inner">
+					- Added Recommendation Section
+					<br>- Apps now have descriptions. Click on them to view
+					<br>- The search bar now has commands. Search <code>>>commands</code> for the list.
+				</p>
+				<div class="button-wrapper">
+					<button class="other" style="display: none">OK!</button>
+					<button class="island-close" onclick="closeIsland()">OK!</button>
+				</div>
+			</div>
+		</header>
+
+		<!--<div class="menu-btn"><i class="fa-regular fa-bars-staggered"></i></div>-->
+		<div class="menu-btn">
+			<div class="burger not-active">
+                <span></span>
+			    <span></span>
+			    <span></span>
+            </div>
+		</div>
+
+		<aside class="menu monospace">
+			<!--<span class="close"><i class="fa-regular fa-xmark"></i></span>-->
+			<ol>
+				<li><span class="before">01.</span><a href="#foryou">For You</a></li>
+				<li><span class="before">02.</span><a href="#games">Games</a></li>
+				<li><span class="before">03.</span><a href="#resources">Resources</a></li>
+				<li><span class="before">04.</span><a href="#miscellaneous">Miscellaneous</a></li>
+				<li><span class="before">05.</span><a href="#more">More</a></li>
+				<li><span class="before"><i class="fa-regular fa-share-from-square"></i></span><a href="leaderboard">Leaderboard</a></li>
+			</ol>
+		</aside>
+
+		<main>
+			<section class="first">
+				<div class="intro"><h1 class="monospace">Hi, welcome to</h1></div>
+				<div class="title">
+					<h2>Zane's Apps</h2>
+					<span class="cursor">|</span>
+				</div>
+				<div class="info"><p></p></div>
+			</section>
+
+			<div class="down-arrow"><svg class="arrows"><path class="a1" d="M0 0 L30 32 L60 0"></path><path class="a2" d="M0 20 L30 52 L60 20"></path><path class="a3" d="M0 40 L30 72 L60 40"></path></svg></div>
+
+			<section id="new">
+				<h2>New or Updated</h2>
+				<div class="newgrid-inner">
+					<div class="new-list">
+						<ul>
+							<li data-id="sequence" data-url="sequence" class="li-link new" data-desc="A simple pattern following game.">
+								<div class="img"><img src="sequence/icon.svg"></div>
+								<div class="name">Sequence</div>
+							</li>
+							<li data-id="doodlejump" data-url="doodlejump" class="li-link new" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li data-id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" class="li-link" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
+								<div class="img"><img src="images/tech-log-icon.png"></div>
+								<div class="name">Tech Log</div>
+							</li>
+							<li data-id="towertakedown" data-url="towertakedown" class="li-link" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!--<section id="news">
+				<h2>News Flash!</h2>
+				<p>ZaneWesley is now on Discord! Join the server to get notified with updates, announcements and to give your feedback in the Community channels!</p>
+				<br>
+				<button data-url="https://discord.gg/4XEWxQ9Yvn" onclick="window.open(this.getAttribute('data-url'))">Join Server</button>
+			</section>-->
+
+			<section id="foryou">
+				<h2><span class="before">01.</span>For You</h2>
+				<div class="inner">
+					<div id="recommended" class="list1">
+						<h3>Recommended</h3>
+						<ul>
+							<li data-url="#" class="noframe" style="pointer-events: none;">
+								<div class="img"><img src="images/icon.png"></div>
+								<div class="name">Coming Soon!</div></li>
+						</ul>
+					</div>
+					<div id="continue" class="list2">
+						<h3>Continue</h3>
+						<ul>
+							<li data-id="sequence" data-url="sequence" class="li-link new" data-desc="A simple pattern following game.">
+								<div class="img"><img src="sequence/icon.svg"></div>
+								<div class="name">Sequence</div>
+							</li>
+							<li data-id="doodlejump" data-url="doodlejump" class="new" data-desc="Description not yet supported in this section. Please refer to the link in the associated section.">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li data-id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe" data-desc="Description not yet supported in this section. Please refer to the link in the associated section.">
+								<div class="img"><img src="images/discord-icon.png"></div>
+								<div class="name">Discord Server</div>
+							</li>
+							<!--<li data-id="cakeninja" data-url="cakeninja">
+								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
+								<div class="name">Cake Ninja</div>
+							</li>-->
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section id="games">
+				<h2><span class="before">02.</span>Games</h2><!--<img src="images/bg/games.svg">-->
+				<div class="inner">
+					<div class="list1">
+						<h3>Cardio</h3>
+						<ul>
+							<li id="sequence" data-url="sequence" class="li-link new" data-desc="A simple pattern following game.">
+								<div class="img"><img src="sequence/icon.svg"></div>
+								<div class="name">Sequence</div>
+							</li>
+							<li id="doodlejump" data-url="doodlejump" class="new" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
+								<div class="img"><img src="doodlejump/images/doodle-jump-game-icon-192.png"></div>
+								<div class="name">Doodle Jump</div>
+							</li>
+							<li id="santahatmixup" data-url="santahatmixup" data-desc="Follow that Santa! Choose the right hat to level up.">
+								<div class="img"><img src="santahatmixup/css/favicon.png"></div>
+								<div class="name">Santa Hat Mixup</div>
+							</li>
+							<li id="pacman" data-url="pacman" data-desc="A remake of the classic arcade game. Use the arrow keys or swipe to moev around the maze.">
+								<div class="img"><img src="pacman/icon/ios_icon.png"></div>
+								<div class="name">Pac Man</div>
+							</li>
+							<li id="flappybird" data-url="flappybird" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes.">
+								<div class="img"><img src="flappybird/icon.jpg"></div>
+								<div class="name">Flappy Bird</div>
+							</li>
+							<li id="crossyroad" data-url="crossyroad" data-desc="A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!">
+								<div class="img"><img src="crossyroad/icon.jpeg"></div>
+								<div class="name">Crossy Road</div>
+							</li>
+							<li id="cakeninja" data-url="cakeninja" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!">
+								<div class="img"><img src="cakeninja/files/assets/32463581/1/caption.png"></div>
+								<div class="name">Cake Ninja</div>
+							</li>
+							<li id="hextris" data-url="hextris" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.">
+								<div class="img"><img src="hextris/favicon.ico"></div>
+								<div class="name">Hextris</div>
+							</li>
+							<li id="stack" data-url="stack" data-desc="Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!">
+								<div class="img"><img src="images/stack-icon.PNG"></div>
+								<div class="name">Stack</div>
+							</li>
+							<li id="chromedino" data-url="chromedino" data-desc="A remake of the classic Chrome Dino Runner game. Click/tap to jump.">
+								<div class="img"><img src="chromedino/200-error-offline.png" style="filter: invert(1)"></div>
+								<div class="name">Chrome Dino Runner</div>
+							</li>
+						</ul>
+					</div>
+					<div class="list2">
+						<h3>Leisure</h3>
+						<ul>
+							<li id="guessthatnumber" data-url="guessthatnumber" data-desc="Simple. Guess that number!">
+								<div class="img"><img src="guessthatnumber/icon.png"></div>
+								<div class="name">Guess That Number 2</div>
+							</li>
+							<li id="towertakedown" data-url="towertakedown" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
+								<div class="img"><img src="towertakedown/icon.jpg"></div>
+								<div class="name">Tower Takedown</div>
+							</li>
+							<li id="solitaire" data-url="solitaire" data-desc="A remake of the classic card game Solitaire.">
+								<div class="img"><img src="solitaire/assets/icon.jpg"></div>
+								<div class="name">Solitaire</div>
+							</li>
+							<li id="chess" data-url="chess" data-desc="Online chess against an AI. Don't get checkmated!">
+								<div class="img"><img src="chess/img/chess.png"></div>
+								<div class="name">Chess</div>
+							</li>
+							<li id="colorsplosion" data-url="colorsplosion" data-desc="Some random experiments. Enjoy ;)">
+								<div class="img"><img src="colorsplosion/icon.PNG"></div>
+								<div class="name">Colorsplosion</div>
+							</li>
+							<li id="numberguessing" data-url="numberguessing" data-desc="Simple. Guess that number!">
+								<div class="img"><img src="images/numberguessing-icon.png"></div>
+								<div class="name">Guess that Number</div>
+							</li>
+							<li id="2048" data-url="2048" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">
+								<div class="img"><img src="2048/icon.png"></div>
+								<div class="name">2048</div>
+							</li>
+							<li id="tic-tac-toe" data-url="tic-tac-toe" data-desc="Tic-Tac-Toe against an AI. You know what to do.">
+								<div class="img"><img src="images/tic-tac-toe-icon.png"></div>
+								<div class="name">Tic Tac Toe</div>
+							</li>
+							<li id="colorswirl" data-url="colorswirl/colorswirl" data-desc="Swirl colors around and make beautiful designs in this relaxing app!">
+								<div class="img"><img src="colorswirl/icon.jpg"></div>
+								<div class="name">Colorswirl</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section id="resources">
+				<h2><span class="before">03.</span>Resources</h2><!--<img src="images/bg/resources.svg">-->
+				<div class="inner">
+					<div class="list1">
+						<h3>Desk Assistant</h3>
+						<ul>
+							<li id="corey-3.0" data-url="corey-3.0" data-desc="The most recent attempt to make something like ChatGPT before it existed.">
+								<div class="img"><img src="corey-3.0/icon.png"></div>
+								<div class="name">Corey 3.0</div>
+							</li>
+							<li id="notes" data-url="notes" data-desc="A note taking app. Note takers are world changers!">
+								<div class="img"><img src="notes/icon.png"></div>
+								<div class="name">Notes</div>
+							</li>
+							<li id="assistant" data-url="assistant" data-desc="An attempt to something like ChatGPT before it existed.">
+								<div class="img"><img src="assistant/icon.svg"></div>
+								<div class="name">Corey 2.0</div>
+							</li>
+							<li id="calculator" data-url="calculator" data-desc="A calculator inspired by Apple.">
+								<div class="img"><img src="images/calculator-icon.png"></div>
+								<div class="name">Calculator</div>
+							</li>
+							<li id="countdownstudio" data-url="countdownstudio" data-desc="Make a countdown and watch time pass.">
+								<div class="img"><img src="images/countdownstudio-icon.svg"></div>
+								<div class="name">Countdown Studio</div>
+							</li>
+							<li id="mmc" data-url="mmc" data-desc="Made for Chemistry homework help. Enjoy ;)">
+								<div class="img"><img src="images/mmc-icon.png"></div>
+								<div class="name">Molar Mass Calculator</div>
+							</li>
+							<li id="whiteboard" data-url="whiteboard" data-desc="An online whiteboard. Built for a techer during COVID for quaratine classes.">
+								<div class="img"><img src="images/whiteboard-icon.jpg"></div>
+								<div class="name">Whiteboard</div>
+							</li>
+						</ul>
+					</div>
+					<div class="list2">
+						<h3>Communication</h3>
+						<ul>
+							<li id="vividly" data-url="vividly" data-desc="Bringing FaceTime to the web before Apple did.">
+								<div class="img"><img src="vividly/icon.png"></div>
+								<div class="name">Vividly</div>
+							</li>
+							<li id="connect" data-url="connect" data-desc="Online public chat rooms.">
+								<div class="img"><img src="connect/splash.svg"></div>
+								<div class="name">Connect</div>
+							</li>
+							<li id="webchat" data-url="webchat/new" data-desc="A video chatting app ran through the web.">
+								<div class="img"><img src="webchat/logo.ico"></div>
+								<div class="name">WebChat</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section id="miscellaneous">
+				<h2><span class="before">04.</span>Miscellaneous</h2><!--<img src="images/bg/miscellaneous.svg">-->
+				<div class="inner">
+					<div class="list2"></div>
+					<div class="list1">
+						<ul>
+							<li id="countdowns" data-url="countdowns" data-desc="A collection of countdowns made for hollidays.">
+								<div class="img"><img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"></div>
+								<div class="name">Countdowns</div>
+							</li>
+							<li id="inspiration" data-url="inspiration" data-desc="Be inspired by this inspirational quote image generator.">
+								<div class="img"><img src="images/inspiration-icon.png"></div>
+								<div class="name">Insperational Quotes Image Generator</div>
+							</li>
+							<li id="leaderboard" data-url="leaderboard" class="noframe" data-desc="Some friendly competition for games on my website!">
+								<div class="img"><img src="images/leaderboard-icon.png"></div>
+								<div class="name">Leaderboard</div>
+							</li>
+							<li id="techlog" data-url="https://trello.com/b/H9M7SfqV.html" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
+								<div class="img"><img src="images/tech-log-icon.png"></div>
+								<div class="name">Tech Log</div>
+							</li>
+							<li id="discordserver" data-url="https://discord.gg/4XEWxQ9Yvn" class="new noframe" data-desc="Join ZaneWesley's Discord server!">
+								<div class="img"><img src="images/discord-icon.png"></div>
+								<div class="name">Discord Server</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section id="more">
+				<h2><span class="before">05.</span>More</h2><!--<img src="images/bg/more.svg">-->
+				<div class="inner">
+					<div class="list2"></div>
+					<div class="list1">
+						<ul>
+							<li id="about" data-url="about" data-desc="Get to know me! Let's connect!">
+								<div class="img"><img src="images/about-icon.png" style="filter: invert(1)"></div>
+								<div class="name">About</div>
+							</li>
+							<li id="archive" data-url="archive" data-desc="Archived apps and other random projects I'm embarrased to show.">
+								<div class="img"><img src="images/home-icon.svg"></div>
+								<div class="name">App Archive</div>
+							</li>
+							<li id="beta" data-url="beta" class="noframe" data-desc="See what's coming in new updates before they're live!">
+								<div class="img"><img src="images/beta-icon.png"></div>
+								<div class="name">BETA Page</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+		</main>
+
+		<footer>
+			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
+			<p>Copyright &copy; 2023 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
+			<p>We apprecaite your feedback! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
+		</footer>
+	</div>
+
+	<canvas id="bg-anim"></canvas>
+
+	<!-- Infobar -->
+	<!--<iframe id="infobar" src="infobar.html"></iframe>-->
+
+	<div class="popup">
+		<h2>Want to Get Recognized?</h2>
+		<p>Enter a username below to associate with your scores on the leaderboard!</p>
+		<input type="text" id="username" placeholder="Username" class="monospace">
+		<button id="nothanks">No Thanks</button>
+		<button id="saveuser">Save Username</button>
+		<img id="save-loader" src="images/game-loader.svg" alt="Saving username loader">
+	</div>
+
+	<div id="usernameBox">
+		<div class="head">Username:</div>
+		<div class="user"></div>
+	</div>
+
+	<div id="contextmenu">
+		<div class="contextmenu-item context-open">Open</div>
+		<div class="contextmenu-item context-opennew">Open in New Tab</div>
+		<hr>
+		<div class="contextmenu-item context-copy">Copy URL</div>
+		<div class="contextmenu-item context-copytext">Copy Link Text</div>
+	</div>
+
+	<script>
+		/*
+			* Menu Functions *
+		*/
+		document.querySelector('.menu-btn').addEventListener('click', function(e) {
+			document.querySelector('.menu').classList.toggle('open');
+			document.querySelector('.burger').classList.toggle('not-active');
+			document.querySelector('.burger').classList.toggle('active');
+			document.querySelector('main').classList.toggle('menu-open');
+			document.querySelector('header').classList.toggle('menu-open');
+			document.querySelector('header').classList.remove('island');
+		});
+		function closeMenu() {
+			document.querySelector('.menu').classList.toggle('open');
+			document.querySelector('.burger').classList.toggle('not-active');
+			document.querySelector('.burger').classList.toggle('active');
+			document.querySelector('main').classList.toggle('menu-open');
+			document.querySelector('header').classList.toggle('menu-open');
+		}
+		/*document.querySelector('.close').addEventListener('click', function(e) {
+			this.parentNode.classList.remove('open');
+		});*/
+		document.querySelectorAll('.menu li').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				closeMenu();
+			});
+		});
+		document.getElementById('usernameBox').addEventListener('click', function(e) {
+			//triggerPageTransition(function() {window.open('/embed?data-url=leaderboard');});
+			//window.open('/embed?data-url=leaderboard');
+			openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace">`, 'Discard', true, 'Save');
+			document.querySelector('header .island-content .button-wrapper .other').onclick = function() {
+				openIslandCheckmark();
+				setTimeout(function() {
+					setUsername();
+					closeIsland();
+				}, 2000);
+			}
+		});
+
+		/*
+			* UI & Animations *
+		*/
+		//Title
+		var typeInst = new TypeIt(".title h2", {
+			speed: 75,
+			startDelay: 900,
+			waitUntilVisible: true,
+			loop: true,
+			lifeLike: true,
+			deleteSpeed: 75,
+		})
+		.pause(3000)
+		.delete(4)
+		.pause(500)
+		.type("Games", {delay: 3000})
+		.delete(5)
+		.pause(500)
+		.type("Resources", {delay: 3000})
+		.delete(9)
+		.pause(500)
+		.type("Miscellaneous", {delay: 3000})
+		.delete(13)
+		.pause(500)
+		.type("More", {delay: 3000})
+		.delete(4)
+		.pause(500)
+		.type("Apps", {delay: 3000})
+		.pause(3000)
+		.go();
+
+		//Headers
+		document.querySelectorAll('#new h2, #foryou h2, #games h2, #resources h2, #miscellaneous h2, #more h2').forEach(function(elem) {
+			new TypeIt(elem, {
+				speed: 75,
+				startDelay: 900,
+				waitUntilVisible: true,
+				lifeLike: true,
+			}).go();
+		});
+
+		//Searchbar Dynamic Island
+		var lastPopup = new Date(localStorage.getItem('z_popup_timestamp'));
+		document.body.onload = function() {
+			setTimeout(function() {
+				if(Math.abs(new Date().getTime() - lastPopup.getTime()) > 604800000 || lastPopup.getTime() < 1686114000000) {//604800000 = 1 week
+					document.querySelector('header').classList.add('island');
+					lastPopup = localStorage.setItem('z_popup_timestamp', new Date());
+				}
+			}, 5000);
+		}
+		function openIsland(title, content, closeButtonText, otherButton, otherButtonText) {
+			document.querySelector('header .island-content h3').innerHTML = title || "Announcement!";
+			document.querySelector('header .island-content .island-inner').innerHTML = content;
+			document.querySelector('header .island-content .button-wrapper .island-close').innerHTML = closeButtonText || "Got It!";
+			if(otherButton == true) {
+				document.querySelector('header .island-content .button-wrapper .other').style.display = 'block';
+				document.querySelector('header .island-content .button-wrapper .other').innerHTML = otherButtonText;
+			} else {
+				document.querySelector('header .island-content .button-wrapper .other').style.display = 'none';
+			}
+			document.querySelector('header').classList.add('island');
+		}
+		function closeIsland() {
+			document.querySelector('header').classList.remove('island');
+			document.querySelector('header .island-content .button-wrapper .other').onclick=null;
+			document.querySelector('header .island-content .button-wrapper .island-close').style.display='block';
+		}
+		function openIslandCheckmark() {
+			openIsland(' ',
+				`
+				<svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px">  
+					<g fill="none" stroke="#22AE73" stroke-width="2"> 
+					<circle cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
+					<circle id="colored" fill="#22AE73" cx="77" cy="77" r="72" style="stroke-dasharray:480px, 480px; stroke-dashoffset: 960px;"></circle>
+					<polyline class="st0" stroke="#fff" stroke-width="10" points="43.5,77.8 63.7,97.9 112.2,49.4 " style="stroke-dasharray:100px, 100px; stroke-dashoffset: 200px;"/>   
+					</g> 
+				</svg>
+				<style>
+					.island-inner svg polyline {
+						-webkit-animation: checkmark 0.25s ease-in-out 0.7s backwards;
+						animation: checkmark 0.25s ease-in-out 0.7s backwards
+					}
+					.island-inner svg circle {
+						-webkit-animation: checkmark-circle 0.6s ease-in-out backwards;
+						animation: checkmark-circle 0.6s ease-in-out backwards;
+					}
+					.island-inner svg circle#colored {
+						-webkit-animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+						animation: colored-circle 0.6s ease-in-out 0.7s backwards;
+					}
+					@keyframes colored-circle { 
+						0% {
+							opacity:0
+						}
+						100% {
+							opacity:100
+						}
+					}
+					@keyframes checkmark-circle {
+						0% {
+							stroke-dashoffset: 480px 
+						}
+						100% {
+							stroke-dashoffset: 960px
+						}
+					}
+				</style>
+				`,
+			' ');
+			document.querySelector('header .island-content .button-wrapper .island-close').style.display='none';
+		}
+
+		//Offline
+		window.addEventListener("offline", function(e) {
+			openIsland('Offline', `Oops! It looks like you\'re offline. Please restore your internet connection to contine.`, 'OK');
+		});
+		if(navigator.onLine == false) {
+			openIsland('Offline', `Oops! It looks like you\'re offline. Please restore your internet connection to contine.`, 'OK');
+		}
+
+		/*
+			* Context Menu *
+		*/
+	    /*let events = ["contextmenu", "touchstart"]; //Events for desktop and touch
+	    var timeout; //initial declaration
+	    var lastTap = 0; //for double tap
+	    let contextMenu = document.getElementById("contextmenu"); //refer menu div
+
+	    //same function for both events, event type is a data structure that defines the data contained in an event
+	    events.forEach((eventType) => {
+		    document.addEventListener(eventType, (e) => {
+		    	console.log(e.target);
+		    	e.preventDefault();
+		    	//if(e.target.nodeName == 'LI' || e.target.classList.contains('name') ||(e.target.nodeName=='IMG' && e.target.parentNode.classList.contains('img'))) {
+		    	if(e.target.nodeName == 'LI') {
+		    		console.log('openMenu');
+			        openContextmenu(e);
+		    	}
+		    }, { passive: false });
+	    });
+
+	    //for double tap(works on touch devices)
+	    document.addEventListener("touchend", function (e) {
+	      //current time
+	      var currentTime = new Date().getTime();
+	      //gap between two gaps
+	      var tapLength = currentTime - lastTap;
+	      //clear previous timeouts(if any)
+	      clearTimeout(timeout);
+	      //if user taps twice in 500ms
+	      if (tapLength < 500 && tapLength > 0) {
+	        //hide menu
+	        contextMenu.style.display = "none";
+	        e.preventDefault();
+	      } else {
+	        //timeout if user doesn't tap after 500ms
+	        timeout = setTimeout(function () {
+	          clearTimeout(timeout);
+	        }, 500);
+	      }
+	      //lastTap set to current time
+	      lastTap = currentTime;
+	    });
+
+	    function openContextmenu(e) {
+	    	e.preventDefault();
+			        //x and y position of mouse or touch, mouseX represents the x-coordinate of the mouse
+			        let mouseX = e.clientX || e.touches[0].clientX;
+			        let mouseY = e.clientY || e.touches[0].clientY;
+			        //height and width of menu, getBoundingClientRect() method returns the size of an element and its position relative to the viewport
+			        let menuHeight = contextMenu.getBoundingClientRect().height;
+			        let menuWidth = contextMenu.getBoundingClientRect().width;
+			        //width and height of screen, innerWidth returns the interior width of the window in pixels
+			        let width = window.innerWidth;
+			        let height = window.innerHeight;
+			        //If user clicks/touches near right corner
+			        if (width - mouseX <= 200) {
+				        contextMenu.style.borderRadius = "5px 0 5px 5px";
+				        contextMenu.style.left = width - menuWidth + "px";
+				        contextMenu.style.top = mouseY + "px";
+				        //right bottom
+				        if (height - mouseY <= 200) {
+					        contextMenu.style.top = mouseY - menuHeight + "px";
+					        contextMenu.style.borderRadius = "5px 5px 0 5px";
+				        }
+			        }
+			        //left
+			        else {
+				        contextMenu.style.borderRadius = "0 5px 5px 5px";
+				        contextMenu.style.left = mouseX + "px";
+				        contextMenu.style.top = mouseY + "px";
+				        //left bottom
+				        if (height - mouseY <= 200) {
+					        contextMenu.style.top = mouseY - menuHeight + "px";
+					        contextMenu.style.borderRadius = "5px 5px 5px 0";
+				        }
+			        }
+			        //display the menu
+			        contextMenu.style.display = "block";
+
+			//Menu functions
+			document.querySelector('#contextmenu .context-open').onclick = function(e) {
+				e.target.click();
+			}
+			document.querySelector('#contextmenu .context-opennew').onclick = function(e) {
+				e.target.click();
+			}
+			document.querySelector('#contextmenu .context-copy').onclick = function(e) {
+				console.log(e.target.getAttribute('data-url'));
+			}
+			document.querySelector('#contextmenu .context-copytext').onclick = function(e) {
+				console.log(e.target.querySelector('.name').innerText);
+			}
+	    }
+
+	    //click outside the menu to close it (for click devices)
+	    document.addEventListener("click", function (e) {
+	      if (!contextMenu.contains(e.target)) {
+	        contextMenu.style.display = "none";
+	      }
+	    });*/
+
+		/*
+			* Link Handlers *
+		*/
+		function setHandlers() {
+			//clear event listeners
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li, footer a').forEach(function(elem) {
+				elem.replaceWith(elem.cloneNode(true));
+			});
+			//set event listeners
+			document.querySelectorAll('.list1 li, .list2 li, .new-list li').forEach(function(elem) {
+				elem.classList.add('listLink');
+				//add event listener
+				elem.addEventListener('click', function(e) {
+					e.preventDefault();
+					var _this = this;
+					openIsland(this.querySelector('.name').innerHTML, this.getAttribute('data-desc'), 'Close', true, 'Open <i class="fa-solid fa-arrow-up-right-from-square"></i>');
+					document.querySelector('header .island-content .button-wrapper .other').onclick=function() {
+						openIslandCheckmark();
+						setTimeout(function() {
+							e.preventDefault();
+							updateRecentArr(_this.querySelector('.name').innerHTML, _this.getAttribute('data-url'), _this.querySelector('.img img').src);
+							trainRecommend();
+							if(!elem.classList.contains('noframe')) {
+								//try{triggerPageTransition(function() {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);});} catch {window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);}
+								window.open(`/embed?data-url=${elem.getAttribute('data-url')}`);
+							} else {
+								//triggerPageTransition(function() {window.open(elem.getAttribute('data-url'));});
+								window.open(elem.getAttribute('data-url'));
+							}
+							gtag('event', 'app_link_click', {
+								'app_name': _this.querySelector('.name').innerHTML
+							});
+							closeIsland();
+						}, 0);//1500
+					}
+				});
+			});
+
+			document.querySelectorAll('footer a').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					e.preventDefault();
+					//triggerPageTransition(function() {window.open(`/embed?data-url=${this.href}`);});
+					window.open(`/embed?data-url=${this.href}`);
+				});
+			});
+		}
+
+		function triggerPageTransition(callback) {
+			document.querySelectorAll('.transition-layer').forEach(function(elem) {
+				elem.classList.add('active');
+			});
+			setTimeout(function() {
+				callback();
+				document.querySelectorAll('.transition-layer').forEach(function(elem) {
+					elem.classList.remove('active');
+				});
+			}, 1000);
+		}
+
+		/*
+			* HISTORY MANAGEMENT *
+		*/
+		var appArr;
+		function updateRecentArr(app, appUrl, iconUrl) {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'))
+			} else {
+				appArr = [];
+			}
+			var appJ = {
+				name: app,
+				url: appUrl,
+				icon: iconUrl,
+				date: new Date()
+			};
+			appArr.push(appJ);
+			localStorage.setItem('z_history', JSON.stringify(appArr));
+			console.log(appJ);
+			loadAppHistory();
+		}
+		function loadAppHistory() {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'));
+				var appRArr = appArr.reverse();
+				var appHArr = appRArr.filter(by('name'), new Set);
+				document.querySelector('#foryou #continue ul').innerHTML = '';
+				document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[0].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[0].icon}'></div><div class='name'>${appHArr[0].name}</div></li>`;
+				if(appHArr[1]){ document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[1].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[1].icon}'></div><div class='name'>${appHArr[1].name}</div></li>`;}
+				if(appHArr[2]){ document.querySelector('#foryou #continue ul').innerHTML+=`
+					<li data-url='${appHArr[2].url}' data-desc="Welcome back! Click Open to continue gaming!"><div class='img'><img src='${appHArr[2].icon}'></div><div class='name'>${appHArr[2].name}</div></li>`;}
+			} else {
+				//
+			}
+			setHandlers();
+		}
+
+		const by = property => function (object) { 
+		  const value = object[property]; 
+		  return !(this.has(value) || !this.add(value));
+		};
+
+		//usage const myFitleredArr = myArr.filter(by('name'), new Set);
+
+		/*
+			* LEADERBOARD USERNAME MANAGEMENT *
+		*/
+		var leaderboardName = localStorage.getItem('z_leaderboard_username');
+		if(!leaderboardName) {
+			leaderboardName = 'Guest-'+makeId(5);
+			displayUsername(leaderboardName);
+			setTimeout(function() {
+				//document.querySelector('.popup').classList.add('open');
+			}, 5000);
+		} else {
+			displayUsername(leaderboardName);
+		}
+		document.getElementById('nothanks').addEventListener('click', function(e) {
+			e.preventDefault();
+			this.parentNode.classList.remove('open');
+		});
+
+		document.getElementById('saveuser').addEventListener('click', function(e) {
+			e.preventDefault();
+			//setUsername();
+			openIslandCheckmark();
+			setTimeout(function() { 
+				setUsername();
+				closeIsland();
+			}, 2000);
+			//this.parentNode.classList.remove('open');
+		});
+
+		function setUsername() {
+			if(document.getElementById('username').value != "" && document.getElementById('username').value != null) {
+				/*document.querySelectorAll('h2, p, input, button').forEach(function(elem) {
+					elem.style.display="none";
+				});
+				document.getElementById('save-loader').style.display="block";*/
+				document.querySelectorAll('#username, #saveuser').forEach(function(elem) {
+					elem.disabled = true;
+				});
+				localStorage.setItem('z_leaderboard_username', String(document.getElementById('username').value));
+				closeIsland();
+				setTimeout(function() {
+					//document.querySelector('.popup').classList.remove('open');
+					displayUsername(String(document.getElementById('username').value));
+					leaderboardName = String(document.getElementById('username').value);
+				}, 1000);
+			} else {
+				//document.querySelector('.popup p').innerHTML="Please enter a valid username.";
+				document.querySelector('.island .island-content h3').innerHTML="Please enter a valid username.";
+			}
+		}
+
+		function makeId(length) {
+	        var result = '';
+	        var characters = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789';
+	        var charactersLength = characters.length;
+	        for ( var i = 0; i < length; i++ ) {
+	        	result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	        }
+	        return result;
+		}
+
+		function displayUsername(username) {
+			document.querySelector('#usernameBox .user').innerHTML = username;
+		}
+
+		/*
+			* SEARCH HANDLER *
+		*/
+		document.getElementById('search').addEventListener('keyup', function(e) {
+			if(e.keyCode == 13 || e.which == 13 || e.key == 'Enter') {
+				//searchPage();
+				runSearchCommand();
+			}
+		});
+		window.addEventListener('keydown', function(e) {
+			if((e.key == 'c' || e.which == 70) && (e.metaKey || e.ctrlKey)) {
+				e.preventDefault();
+				document.getElementById('search').focus();
+			}
+		});
+		//document.querySelector('.search-icon').addEventListener('click', searchPage);
+		document.querySelector('.search-icon').addEventListener('click', runSearchCommand);
+
+		function searchPage() {
+			var searchStr = document.getElementById('search').value.toLowerCase();
+			document.querySelectorAll('li').forEach(function(elem) {
+				elem.classList.remove('search-result-highlight');
+			});
+			var searchRes = findString(searchStr);
+			if(searchRes != 'No match' && searchStr != "") {
+				if(document.getElementById(searchRes).nodeName == "LI") {
+					document.getElementById(searchRes).scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+					document.getElementById(searchRes).classList.add('search-result-highlight');
+				} else {
+					window.location=`#${searchRes}`;
+				}
+			} else if(searchStr == "") {
+				window.location='#';
+			} else {
+				//alert('No App Found');
+				openIsland('No Result', `No matching app found.`, 'Close');
+			}
+			
+		}
+
+		/*
+			* PAGE DATA HANDLERS *
+		*/
+
+		var pageData = [
+			//Games
+			{id: "2048", keywords: ['2048'], recommendKeys: ['game-strategy']},
+			{id: "cakeninja", keywords: ['cake ninja', 'fruit ninja', 'ninja'], recommendKeys: ['game-cardio']},
+			{id: "chess", keywords: ['chess'], recommendKeys: ['game-strategy']},
+			{id: "chromedino", keywords: ['chrome dino runner', 'dino runner', 'dino'], recommendKeys: ['game-cardio']},
+			{id: "colorsplosion", keywords: ['colorsplosion'], recommendKeys: ['game-leisure']},
+			{id: "colorswirl", keywords: ['colorswirl'], recommendKeys: ['game-leisure']},
+			{id: "crossyroad", keywords: ['crossy road', 'crossyroad'], recommendKeys: ['game-cardio']},
+			{id: "doodlejump", keywords: ['doodle jump runner'], recommendKeys: ['game-cardio']},
+			{id: "flappybird", keywords: ['flappy bird', 'flappybird'], recommendKeys: ['game-cardio']},
+			{id: "numberguessing", keywords: ['guess that number', 'guessthatnumber'], recommendKeys: ['game-strategy']},
+			{id: "guessthatnumber", keywords: ['guess that number 2', 'guessthatnumber'], recommendKeys: ['game-strategy']},
+			{id: "hextris", keywords: ['hextris'], recommendKeys: ['games-cardio']},
+			{id: "pacman", keywords: ['pac man', 'pac-man', 'pacman'], recommendKeys: ['game-cardio']},
+			{id: "santahatmixup", keywords: ['santa hat mixup', 'santa'], recommendKeys: ['game-cardio']},
+			{id: "sequence", keywords: ['sequence simon grid'], recommendKeys: ['game-strategy']},
+			{id: "solitaire", keywords: ['solitaire'], recommendKeys: ['game-leisure']},
+			{id: "stack", keywords: ['stack'], recommendKeys: ['game-cardio']},
+			{id: "tic-tac-toe", keywords: ['tic-tac-toe', 'tic tac toe'], recommendKeys: ['game-strategy']},
+			{id: "towertakedown", keywords: ['tower takedown', 'towertakedown'], recommendKeys: ['game-leisure']},
+			//Resources
+			{id: 'calculator', keywords: ['calculator'], recommendKeys: ['resource-desk']},
+			{id: "connect", keywords: ['connect', 'messages', 'online mmessaging', 'chat rooms'], recommendKeys: ['resource-communication']},
+			{id: 'assistant', keywords: ['corey 2.0', 'assistant'], recommendKeys: ['resource-desk']},
+			{id: "corey-3.0", keywords: ['corey 3.0', 'corey'], recommendKeys: ['resource-desk']},
+			{id: "countdownstudio", keywords: ['countdown studio', 'count down studio'], recommendKeys: ['resource-desk']},
+			{id: "mmc", keywords: ['molar mass calculator'], recommendKeys: ['resource-desk']},
+			{id: "notes", keywords: ['notes'], recommendKeys: ['resource-desk']},
+			{id: "vividly", keywords: ['vividly', 'facetime', 'video chat'], recommendKeys: ['resource-communication']},
+			{id: "webchat", keywords: ['web chat', 'webchat', 'online chat', 'chat rooms'], recommendKeys: ['resource-communication']},
+			{id: "whiteboard", keywords: ['whiteboard'], recommendKeys: ['resource-desk']},
+			//Miscellaneous
+			{id: "countdowns", keywords: ['countdowns'], recommendKeys: ['miscellaneous']},
+			{id: 'inspiration', keywords: ['inspiration', 'insperational quotes generator', 'quotes'], recommendKeys: ['miscellaneous']},
+			{id: "leaderboard", keywords: ['leaderboard'], recommendKeys: ['game-cardio']},
+			{id: "techlog", keywords: ['tech log', 'whats new', 'what\'s new'], recommendKeys: ['miscellaneous']},
+			{id: "discordserver", keywords: ['discord server', 'zane\'s server', 'zane\'s discord server'], recommendKeys: ['miscellaneous']},
+			//More
+			{id: "about", keywords: ['about'], recommendKeys: ['more']},
+			{id: "archive", keywords: ['archive'], recommendKeys: ['more']},
+			{id: "beta", keywords: ['beta'], recommendKeys: ['more']},
+			//Section ID
+			{id: "games", keywords: ['games']},
+			{id: "resources", keywords: ['resources']},
+			{id: "miscellaneous", keywords: ['miscellaneous']},
+			{id: "more", keywords: ['more']}
+		];
+
+		var gameStrategyArr = ['2048', 'chess', 'numberguessing', 'guessthatnumber', 'sequence', 'tic-tac-toe'];
+		var gameCardioArr = ['cakeninja', 'chromedino', 'crossyroad', 'doodlejump', 'flappybird', 'hextris', 'pacman', 'santahatmixup', 'stack', 'leaderboard'];
+		var gameLeisureArr = ['colorsplosion', 'colorswirl', 'solitaire', 'towertakedown'];
+		var resourceDeskArr = ['calculator', 'assistant', 'corey-3.0', 'countdownstudio', 'mmc', 'notes', 'whiteboard'];
+		var resourceCommunicationArr = ['connect', 'vivdly', 'webchat'];
+		var miscellaneousArr = ['countdowns', 'inspiration', 'techlog', 'discordserver'];
+		var moreArr = ['about', 'archive', 'beta'];
+
+		/*function findString(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+			    for (let innerkey in pageData[key]) {
+			      if (pageData[key][innerkey].includes(str)) {
+			        //return [key, innerkey];
+			        return pageData[key].id;
+			      }
+			    }
+		  }
+		  return 'No match';
+		}*/
+		function runSearchCommand() {
+			var input = document.getElementById('search').value.toLowerCase().replace(/\s+/g, '');
+			if(input.indexOf('>>') >-1) {
+				switch(input.replace('>>', '')) {
+					case 'help':
+						openIsland('Help', `<ul><li>Scroll to explore Zane's apps.</li><li>Search for an app in the search bar.</li><li>Click on a link to open the app.</li></ul>`, 'Got It!');
+						break;
+					case 'changelog':
+						openIsland('ChangeLog', `<ul><li>Bug fixes, searchbar dynamic island widget.</li><li>2023 Spring Update.</li><li>Discord Server was published.</li></ul>`, 'OK!');
+						break;
+					case 'announcement':
+						openIsland('New Release!', `Doodle Jump is now out of Beta! <a style="color: #fff;" href="https://zanewesley.github.io/embed?data-url=doodlejump">Play now!</a>`, 'OK!');
+						break;
+					case 'commands':
+						openIsland('Commands', `<ul><code><li>>>announcement</li><li>>>changelog</li><li>>>help</li><li>>>username</li></code></ul>`, 'Got It!');
+						break;
+					case 'username':
+						openIsland('Set or Change Username', `<input type="text" id="username" placeholder="Username" class="monospace">`, 'Discard', true, 'Save');
+						document.querySelector('header .island-content .button-wrapper .other').onclick = function() {
+							openIslandCheckmark();
+							setTimeout(function() {
+								setUsername();
+								closeIsland();
+							}, 2000);
+						}
+						break;
+					default:
+						openIsland('No Command Found', `Please try a different command or seach Zane\'s Apps.`, 'OK!');
+						break;
+				}
+			} else {
+				searchPage();
+			}
+		}
+		function findString(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+				for(var i = 0; i<pageData[key].keywords.length; i++) {
+					if (pageData[key].keywords[i].includes(str)) {
+				       return pageData[key].id;
+				    }
+				}
+		  }
+		  return 'No match';
+		}
+
+		function trainRecommend() {
+			var appArrQuery = localStorage.getItem('z_history');
+			if(appArrQuery) {
+				appArr = JSON.parse(localStorage.getItem('z_history'));
+				var appRArr = appArr.reverse();
+				var appHArr = appRArr.filter(by('name'), new Set);
+				document.querySelector('#foryou #recommended ul').innerHTML = '';
+				var rec1Data = appHArr[0], rec2Data = appHArr[1], rec3Data = appHArr[2];
+				var rec1Key = findAppKey(rec1Data.name)[0], rec2Key = findAppKey(rec2Data.name)[0], rec3Key = findAppKey(rec3Data.name)[0];
+				var rec1App = getRecApp(rec1Key), rec2App = getRecApp(rec2Key), rec3App = getRecApp(rec3Key);
+				var rec1AppData = document.getElementById(rec1App), rec2AppData = document.getElementById(rec2App), rec3AppData = document.getElementById(rec3App);
+				document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec1AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[0].name}"><div class='img'><img src='${rec1AppData.querySelector('img').src}'></div><div class='name'>${rec1AppData.innerText}</div></li>`;
+				if(rec2AppData){ document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec2AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[1].name}"><div class='img'><img src='${rec2AppData.querySelector('img').src}'></div><div class='name'>${rec2AppData.innerText}</div></li>`;}
+				if(rec3AppData){ document.querySelector('#foryou #recommended ul').innerHTML+=`
+					<li data-url='${rec3AppData.getAttribute('data-url')}' data-desc="Recommended for you because you opened ${appHArr[2].name}"><div class='img'><img src='${rec3AppData.querySelector('img').src}'></div><div class='name'>${rec3AppData.innerText}</div></li>`;}
+			}
+		}
+
+		function findAppKey(str) {
+			str = str.toLowerCase();
+			for (let key in pageData) {
+				for(var i = 0; i<pageData[key].keywords.length; i++) {
+					if (pageData[key].keywords[i].includes(str)) {
+				       return pageData[key].recommendKeys;
+				    }
+				}
+		  }
+		  return 'No match';
+		}
+
+		function getRecApp(name) {
+			switch(name) {
+				case 'game-cardio':
+					return gameCardioArr[Math.floor(Math.random()*gameCardioArr.length)];
+					break;
+				case 'game-leisure':
+					return gameLeisureArr[Math.floor(Math.random()*gameLeisureArr.length)];
+					break;
+				case 'game-strategy':
+					return gameStrategyArr[Math.floor(Math.random()*gameStrategyArr.length)];
+					break;
+				case 'resource-desk':
+					return resourceDeskArr[Math.floor(Math.random()*resourceDeskArr.length)];
+					break;
+				case 'resource-communication':
+					return resourceCommunicationArr[Math.floor(Math.random()*resourceCommunicationArr.length)];
+					break;
+				case 'miscellaneous':
+					return miscellaneousArr[Math.floor(Math.random()*miscellaneousArr.length)];
+					break;
+				case 'more':
+					return moreArr[Math.floor(Math.random()*moreArr.length)];
+					break;
+			}
+		}
+
+		/*
+			* BACKGROUND ANIMATION *
+		*/
+		var canvas = document.querySelector('#bg-anim');
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		var ctx = canvas.getContext('2d');
+		var count = canvas.height;
+		var bubbles = [];
+		var bubbleCount = 5;//20
+		var bubbleSpeed = 0.5;//1
+		var popLines = 6;//6
+		var popDistance = 100;//40
+		var mouseOffset = {
+			x: 0,
+			y: 0
+		}
+		//Loop
+		function animate() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			//draw bubbles
+			ctx.beginPath();
+			for (var i = 0; i < bubbles.length; i++) {
+			// first num = distance between waves
+			// second num = wave height
+			// third num = move the center of the wave away from the edge
+			bubbles[i].position.x = Math.sin(bubbles[i].count/bubbles[i].distanceBetweenWaves) * 50 + bubbles[i].xOff;
+			bubbles[i].position.y = bubbles[i].count;
+			bubbles[i].render();
+			if(bubbles[i].count < 0 - bubbles[i].radius) {
+				bubbles[i].count = canvas.height + bubbles[i].yOff;
+			} else {
+				bubbles[i].count -= bubbleSpeed;
+			}
+			}
+			//On bubble hover
+			for (var i = 0; i < bubbles.length; i++) {
+				if(mouseOffset.x > bubbles[i].position.x - bubbles[i].radius && mouseOffset.x < bubbles[i].position.x + bubbles[i].radius) {
+					if(mouseOffset.y > bubbles[i].position.y - bubbles[i].radius && mouseOffset.y < bubbles[i].position.y + bubbles[i].radius) {
+						for (var a = 0; a < bubbles[i].lines.length; a++) {
+							popDistance = bubbles[i].radius * 0.5;
+							bubbles[i].lines[a].popping = true;
+							bubbles[i].popping = true;
+						}
+					}
+				}
+			}
+			window.requestAnimationFrame(animate);
+		}
+		//Bubble contructor
+		var createBubble = function() {
+			this.position = {x: 0, y: 0};
+			this.radius = 8 + Math.random() * 6;
+			this.xOff = Math.random() * canvas.width - this.radius;
+			this.yOff = Math.random() * canvas.height;
+			this.distanceBetweenWaves = 50 + Math.random() * 40;
+			this.count = canvas.height + this.yOff;
+			this.color = '#8bc9ee';
+			this.lines = [];
+			this.popping = false;
+			this.maxRotation = 85;
+			this.rotation = Math.floor(Math.random() * (this.maxRotation - (this.maxRotation * -1))) + (this.maxRotation * -1);
+			this.rotationDirection = 'forward';
+
+			// Populate Lines
+			for (var i = 0; i < popLines; i++) {
+			var tempLine = new createLine();
+				tempLine.bubble = this;
+				tempLine.index = i;
+
+			this.lines.push(tempLine);
+			}
+
+			this.resetPosition = function() {
+			this.position = {x: 0, y: 0};
+			this.radius = 8 + Math.random() * 6;
+			this.xOff = Math.random() * canvas.width - this.radius;
+			this.yOff = Math.random() * canvas.height;
+			this.distanceBetweenWaves = 50 + Math.random() * 40;
+			this.count = canvas.height + this.yOff;
+			this.popping = false;
+			}
+
+			// Render the circles
+			this.render = function() {
+			if(this.rotationDirection === 'forward') {
+				if(this.rotation < this.maxRotation) {
+				this.rotation++;
+				} else {
+				this.rotationDirection = 'backward';
+				}
+			} else {
+				if(this.rotation > this.maxRotation * -1) {
+				this.rotation--;
+				} else {
+				this.rotationDirection = 'forward';
+				}
+			}
+
+			ctx.save();
+			ctx.translate(this.position.x, this.position.y);
+			ctx.rotate(this.rotation*Math.PI/180);
+
+			if(!this.popping) {
+				ctx.beginPath();
+				ctx.strokeStyle = '#8bc9ee';
+				ctx.lineWidth = 1;
+				ctx.arc(0, 0, this.radius - 3, 0, Math.PI*1.5, true);
+				ctx.stroke();
+
+				ctx.beginPath();
+				ctx.arc(0, 0, this.radius, 0, Math.PI*2, false);
+				ctx.stroke();
+			}
+			
+			ctx.restore();
+
+			// Draw the lines
+			for (var a = 0; a < this.lines.length; a++) {
+				if(this.lines[a].popping) {
+				if(this.lines[a].lineLength < popDistance && !this.lines[a].inversePop) {
+					this.lines[a].popDistance += 0.06;
+				} else {
+					if(this.lines[a].popDistance >= 0) {
+					this.lines[a].inversePop = true;
+					this.lines[a].popDistanceReturn += 1;
+					this.lines[a].popDistance -= 0.03;
+					} else {
+					this.lines[a].resetValues();
+					this.resetPosition();
+					}
+				}
+
+				this.lines[a].updateValues();
+				this.lines[a].render();
+				}
+			}
+			}
+		}
+		//Populate Bubbles
+		for (var i = 0; i < bubbleCount; i++) {
+			var tempBubble = new createBubble();
+
+			bubbles.push(tempBubble);
+		}
+		//Line Contructor
+		function createLine() {
+			this.lineLength = 0;
+			this.popDistance = 0;
+			this.popDistanceReturn = 0;
+			this.inversePop = false; // When the lines reach full length they need to shrink into the end position
+			this.popping = false;
+
+			this.resetValues = function() {
+			this.lineLength = 0;
+			this.popDistance = 0;
+			this.popDistanceReturn = 0;
+			this.inversePop = false;
+			this.popping = false;
+
+			this.updateValues();
+			}
+
+			this.updateValues = function() {
+			this.x = this.bubble.position.x + (this.bubble.radius + this.popDistanceReturn) * Math.cos(2 * Math.PI * this.index / this.bubble.lines.length);
+			this.y = this.bubble.position.y + (this.bubble.radius + this.popDistanceReturn) * Math.sin(2 * Math.PI * this.index / this.bubble.lines.length);
+			this.lineLength = this.bubble.radius * this.popDistance;
+			this.endX = this.lineLength;
+			this.endY = this.lineLength;
+			}
+
+			this.render = function() {
+			this.updateValues();
+
+			ctx.beginPath();
+			ctx.strokeStyle = '#8bc9ee';
+			ctx.lineWidth = 2;
+			ctx.moveTo(this.x, this.y);
+			if(this.x < this.bubble.position.x) {
+				this.endX = this.lineLength * -1;
+			}
+			if(this.y < this.bubble.position.y) {
+				this.endY = this.lineLength * -1;
+			}
+			if(this.y === this.bubble.position.y) {
+				this.endY = 0;
+			}
+			if(this.x === this.bubble.position.x) {
+				this.endX = 0;
+			}
+			ctx.lineTo(this.x + this.endX, this.y + this.endY);
+			ctx.stroke();
+			};
+		}
+		//Resize event
+		canvas.addEventListener('mousemove', mouseMove);
+		function mouseMove(e) {
+			mouseOffset.x = e.offsetX;
+			mouseOffset.y = e.offsetY;
+		}
+		window.addEventListener('resize', function() {
+			canvas.width = document.body.clientWidth;
+			canvas.height = document.body.clientHeight;
+		});
+		setTimeout(function() {window.requestAnimationFrame(animate);}, 3000);
+
+		//Trigger Init Functions
+		loadAppHistory();
+		trainRecommend();
+		setHandlers();
+	</script>
+
+</body>
+</html>

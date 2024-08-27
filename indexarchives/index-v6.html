@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+	<meta name="author" content="Zane Wesley">
+	<meta name="description" content="The place where you can find all of Zane's apps and projects.">
+	<meta name="theme-color" content="#23153c">
+	<meta name="apple-mobile-web-app-status-bar-style" content="#23153c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Zane's Apps">
+	<link rel="apple-touch-icon" href="images/home-icon.svg">
+	<link rel="shortcut-icon" href="images/home-icon.svg">
+	<link rel="icon" type="icon/png" href="images/home-icon.svg">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+	<title>Zane's Apps</title>
+
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+		::-webkit-scrollbar {
+			width: 14px;
+			height: 18px;
+			background-color: #23153c;
+		}
+
+		::-webkit-scrollbar-thumb {
+			height: 6px;
+			border: 4px solid rgba(0, 0, 0, 0);
+			background-clip: padding-box;
+			background-color: rgba(63, 61, 86,0.5);
+			-webkit-border-radius: 7px;
+			-webkit-box-shadow: inset -1px -1px 0px rgba(63, 61, 86, 0.05),
+				inset 1px 1px 0px rgba(63, 61, 86, 0.05);
+		}
+
+		::-webkit-scrollbar-button {
+			display: none;
+			width: 0;
+			height: 0;
+		}
+
+		::-webkit-scrollbar-corner {
+			background-color: transparent;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+			scroll-behavior: smooth;
+			background-color: #23153c;
+		}
+		body {
+			overflow-x: hidden;
+			font-family: 'Noto Sans JP', sans-serif;
+		}
+		header {
+			position: fixed;
+			top:0;
+			left:0;
+			min-height: 100%;
+			height: auto;
+			width: 100%;
+		}
+		body.standalone-open {
+			padding: 0;
+			overflow: hidden;
+			background-color: #fff;
+			transition: all 0.3s;
+		}
+		.header {
+			position: absolute;
+			z-index: 2;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 3em;
+			color: #f2f2f2;
+			text-align: center;
+			background-color: rgba(63, 61, 86, 0.5);
+			padding: 8px;
+			width: 75%;
+			animation: enterLeft 2s;
+		}
+		.header.big {
+			transform: translate(-50%, -50%) scale(2);
+			transition: all 1s;
+			opacity: 0;
+		}
+		canvas {
+			background-color: #23153c;
+		}
+		#down {
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			bottom: 1em;
+			left: 50%;
+			transform: translateX(-50%);
+			animation: bounce 2s infinite;
+			overflow: hidden;
+			animation-timing-function:cubic-bezier(.215,.61,.355,1);
+			/*box-shadow: 7px 7px 12px #292838;*/
+		}
+		.content {
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			min-height: 100%;
+			height: auto;
+			width: 80%;
+			padding: 20px;
+			background-color: rgba(63, 61, 86, 0.5);
+		}
+		.content h1 {
+			text-align: center;
+			color: #fff;
+			border-bottom: 1px solid #ccc;
+		}
+		.content.fadeout {
+			opacity: 0;
+			visibility: hidden;
+			height: 0;
+			transition: opacity 0.3s;
+		}
+		ul, li {
+			width: 100%;
+		}
+		ul {
+			list-style-type: none;
+			padding-left: 1em;
+		}
+		li {
+			cursor: pointer;
+			padding: 5px;
+			color: #fff;
+			text-align: center;
+			font-size: 2em;
+			transition: all 0.3s;
+		}
+		li:hover {
+			background-color: rgba(63, 61, 86, 0.7);
+		}
+		.apps li {
+			font-size: 1.5em;
+		}
+		.tabs {
+			display: flex;
+			justify-content: space-between;
+		}
+		.tabs span {
+			cursor: pointer;
+			padding: 5px;
+			color: #fff;
+			text-align: center;
+			font-size: 2em;
+			width: 25%;
+			transition: all 0.3s;
+		}
+		.tabs span:hover {
+			background-color: rgba(63, 61, 86, 0.7);
+		}
+		.tabs span.active {
+			background-color: rgba(63, 61, 86, 1);
+		}
+		#miscellaneous-tab {
+			font-size: 1.7em;
+		}
+		.app-section {
+			height: 0;
+			visibility: hidden;
+			opacity: 0;
+			transition: opacity 0.5s;
+		}
+		.app-section.active {
+			height: auto;
+			visibility: visible;
+			opacity: 1;
+		}
+		.apps h1 {
+			display: none;
+		}
+		footer {
+			position: absolute;
+			left: 0;
+			padding: 1em;
+			color: #fff;
+			font-size: 1em;
+			display: none;
+		}
+		footer a  {
+			color: #fff;
+		}
+		#standalone-frame {
+			position: absolute;
+			overflow-x: hidden;
+			overflow-y: auto;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			max-width: 100%;
+			max-height: 100%;
+			border: none;
+			z-index: 2;
+		}
+		.standalone-ui {
+			display: none;
+		}
+		#standalone-home {
+			position: absolute;
+			z-index: 3;
+			left: 1em;
+			bottom: 1em;
+			color: #23153c;
+			font-size: 2em;
+		}
+		#standalone-frame.slideIn {
+			display: block;
+			animation: slideIn 0.5s;
+			animation-fill-mode: forwards ease-in;
+		}
+		#standalone-home.fadeIn {
+			display: block;
+			animation: fadeIn 1s ease-in;
+		}
+
+		@keyframes bounce{0% {transform: translate3d(-50%, 0, 0) scaleY(1);} 60%{transform: translate3d(-50%, -30px, 0) scaleY(.8);} 80%{transform: translate3d(-50%, 0, 0) scaleY(1.1);} 90%{transform: translate3d(-50%, -15px, 0) scaleY(.9);} 99%{transform: translate3d(-50%, 0, 0) scaleY(1);}}
+		@keyframes enterLeft{0%{-webkit-transform:translate3d(-100%,-50%,0) skewX(0deg);transform:translate3d(-100%,-50%,0) skewX(0deg);opacity:0}60%{-webkit-transform:translate3d(-50%,-50%,0) skewX(-20deg);transform:translate3d(-50%,-50%,0) skewX(-20deg);opacity:1}80%{-webkit-transform:translate3d(-50%,-50%,0) skewX(5deg);transform:translate3d(-50%,-50%,0) skewX(5deg)}}
+		@keyframes slideIn{from {left: 100%;} to {left: 0;}}
+		@keyframes fadeIn{from {opacity: 0;} to {opacity: 1;}}
+
+		@media(max-width: 775px) {
+			.header {
+				font-size: 2em;
+			}
+			.tabs {
+				display: block;
+			}
+			.tabs span {
+				display: block;
+				width: 100%;
+			}
+			.apps h1 {
+				display: inherit;
+				padding-top: 1em;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header id="header"></header>
+	<div class="header">
+		<h1>Zane's Apps</h1>
+	</div>
+
+	<div id="down">
+			<svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#3f3d56" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path></svg>
+	</div>
+
+	<div class="content">
+		<h1>Select a Category</h1>
+		<div class="tabs">
+			<span id="games-tab" class="active">Games</span>
+			<span id="resources-tab">Resources</span>
+			<span id="miscellaneous-tab">Miscellaneous</span>
+			<span id="more-tab">More</span>
+		</div>
+
+		<div class="apps">
+			<h1>Apps</h1>
+			<div id="games" class="app-section active">
+				<ul>
+					<li id="cakeninja" data-url="/cakeninja">
+						Cake Ninja
+					</li>
+					<li id="hextris" data-url="/hextris">
+						Hextris
+					</li>
+					<li id="stack" data-url="/stack">
+						Stack
+					</li>
+					<li id="chromedino" data-url="/chromedino">
+						Chrome Dino Runner
+					</li>
+					<li id="colorsplosion" data-url="/colorsplosion">
+						Colorsplosion
+					</li>
+					<li id="numberguessing" data-url="/numberguessing">
+						Guess that Number
+					</li>
+					<li id="2048" data-url="/2048">
+						2048
+					</li>
+					<li id="tictactoe" data-url="/tic-tac-toe">
+						Tic Tac Toe
+					</li>
+					<li id="colorswirl" data-url="/colorswirl/colorswirl">
+						Color Swirl - Updated
+					</li>
+				</ul>
+			</div>
+			<div id="resources" class="app-section">
+				<ul>
+					<li id="vividly" data-url="/vividly">
+						Vividly - Video Conferencing App
+					</li>
+					<li id="connect" data-url="/connect">
+						Connect Messaging
+					</li>
+					<li id="assistant" data-url="/assistant">
+						Corey 2.0
+					</li>
+					<li id="calculator" data-url="/calculator">
+						Calculator
+					</li>
+					<li id="countdownstudio" data-url="/countdownstudio">
+						Countdown Studio
+					</li>
+					<li id="mmc" data-url="/mmc">
+						Molar Mass Calculator
+					</li>
+					<li id="webchat" data-url="/webchat/new">
+						Webchat Video Conferencing
+					</li>
+					<li id="whiteboard" data-url="/whiteboard">
+						Whiteboard
+					</li>
+				</ul>
+			</div>
+			<div id="miscellaneous" class="app-section">
+				<ul>
+					<li id="inspiration" data-url="/inspiration">
+						Inspirational Quotes Generator
+					</li>
+					<li id="peace" data-url="/peace">
+						Peace
+					</li>
+					<li id="mrlangbucks" class="newframe" data-url="https://mrlangbucks.github.io">
+						Mr. Lang Bucks (This is currently being archived)
+					</li>
+					<li id="corey-chat" data-url="/imessage">
+						Texting Corey (This is currently being archived)
+					</li>
+					<li id="corey" data-url="/corey?ref=home">
+						Corey - Original Virtual Assistant (This is currently being archived)
+					</li>
+				</ul>
+			</div>
+			<div id="more" class="app-section">
+				<ul>
+					<li id="about" data-url="/about">
+						About Me
+					</li>
+					<li id="archive" data-url="/archive">
+						App Archive
+					</li>
+					<!--<li id="codepen" class="newframe" data-url="https://codepen.io/zanewesley">
+						My CodePen
+					</li>-->
+					<!--<li id="bulletinboard" data-url="/bulletinboard">
+						News and Updates - Zane's Bulletin Board
+					</li>
+					<li id="account" data-url="/account">
+						Your Account
+					</li>-->
+					<li id="contact" class="disabled" data-url="/contact">
+						Contact Me!
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<p>Copyright &copy; Zane Wesley 2021. All rights reserved.</p>
+		<p>
+			<a href="/terms-of-service">Terms of Service</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/license">Code License</a>
+		</p>
+	</footer>
+
+	<iframe id="standalone-frame" class="standalone-ui"></iframe>
+	<div id="standalone-home" class="standalone-ui fas fa-home"></div>
+
+	<script>
+		VANTA.NET({
+		  el: "#header",
+		  mouseControls: true,
+		  touchControls: true,
+		  gyroControls: false,
+		  minHeight: 200.00,
+		  minWidth: 200.00,
+		  scale: 1.00,
+		  scaleMobile: 1.00,
+		  color: 0x41a1ff
+		});
+
+		document.getElementById('down').addEventListener('click', function(e) {
+			e.preventDefault();
+			document.querySelector('.content').scrollIntoView();
+		});
+
+		document.getElementById('standalone-home').addEventListener('click', function(e) {
+			e.preventDefault();
+			window.location.reload();
+		});
+
+		document.querySelectorAll('.tabs span').forEach(function(elem) {
+			elem.addEventListener('click', function(e) {
+				document.querySelectorAll('.tabs span').forEach(function(elem) {elem.classList.remove('active');});
+				document.querySelectorAll('.app-section').forEach(function(elem) {elem.classList.remove('active');});
+				this.classList.add('active');
+				document.getElementById(this.id.replace('-tab', '')).classList.add('active');
+			});
+		});
+
+		if (window.matchMedia('(display-mode: standalone)').matches) {
+			//event listener for if the page is a PWA
+			document.querySelectorAll('li').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					if(!this.classList.contains('disabled') && !this.classList.contains('newframe')) {
+						document.getElementById('standalone-frame').src=this.getAttribute('data-url');
+						//Layer iframe ontop
+						document.getElementById('standalone-frame').classList.add('slideIn');
+						document.getElementById('standalone-home').classList.add('fadeIn');
+						window.scrollTo(0,0);
+						//hide all page elements
+						document.querySelector('.content').style.display='none';
+						document.querySelector('.header').style.display='none';
+						document.querySelector('header').remove();
+						document.querySelector('#down').style.display='none';
+						document.body.classList.add('standalone-open');
+					} else if(this.classList.contains('newframe')) {
+						open(this.getAttribute('data-url'));
+					}
+				});
+			});
+		} else {
+			//event listener for if it is not a PWA
+			document.querySelectorAll('li').forEach(function(elem) {
+				elem.addEventListener('click', function(e) {
+					if(!this.classList.contains('disabled')) {
+						var _this = this;
+						document.querySelector('.content').classList.add('fadeout');
+						setTimeout(function() {
+							document.querySelector('.header').classList.add('big');
+						}, 500);
+						document.body.scrollTop = 0; // For Safari
+						document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+						setTimeout(function() {
+							window.location=_this.getAttribute('data-url');
+						}, 1000);
+					}
+				});
+			});
+		}
+	</script>
+</body>
+</html>
