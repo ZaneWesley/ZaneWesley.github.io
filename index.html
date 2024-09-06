@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="Zane Wesley">
-	<meta name="description" content="The place to find all of Zane's games and projects.">
+	<meta name="description" content="The place to find all of Zane's online games and projects.">
 	<!-- General -->
 	<link rel="manifest" href="manifest.json">
 	<meta name="theme-color" content="#0e0e0e">
@@ -21,11 +21,14 @@
 	<!-- Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shadows+Into+Light&family=Bebas+Neue&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
 	<!-- Scroll -->
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<!-- UI -->
+	 <!-- https://lokeshdhakar.com/projects/color-thief/ -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js" integrity="sha512-r2yd2GP87iHAsf2K+ARvu01VtR7Bs04la0geDLbFlB/38AruUbA5qfmtXwXx6FZBQGJRogiPtEqtfk/fnQfaYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
@@ -36,7 +39,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>Zane Wesley | 2024 Update</title>
+	<title>Zane Wesley | 2024 Update | Online Games, Web Apps and Portfolio</title>
 
 	<style>
 		* {
@@ -295,11 +298,17 @@
 			text-align: center;
 			/*background-color: #ffffff;
 			color:#0e0e0e;*/
+
+			font-family: 'Shadows Into Light', system-ui;
+			letter-spacing: 7px;
+			line-height: 1em;
+			/*text-shadow: 0 0 7px #fff, 0 0 42px #44beff, 0 0 20px #44beff;*/
 		}
 
 		#featured {
 			padding-bottom: 4em;
 			width: 100vw;
+			margin-bottom: 25%;
 		}
 
 		.ft-wrapper {
@@ -308,10 +317,48 @@
 			align-items: center;
 			width: 100vw;
 			max-width: 1200px;
+			height: 245px;
 			margin: 0 auto;
 			/*padding: 0 1em;*/
+			/*margin-bottom: 4.5em;*/
+			position: absolute;
 		}
 		.ft-link {
+			background-color: rgba(52, 58, 64, 0.7);
+			box-shadow: 0 60px 123px -25px hsla(225, 2%, 62%, .42), 0 35px 75px -35px hsla(225, 2%, 62%, .08);
+			color: rgba(255, 255, 255, 0.7);
+			text-decoration: none;
+			cursor: pointer;
+			border-radius: 15px;
+			overflow: hidden;
+			margin: 0;
+			width: 100px;
+			height: 100px;
+			transition: all 0.3s ease;
+			text-wrap: nowrap;
+			text-align: center;
+			animation: featuredFade 0.8s forwards;
+			opacity: 0;
+		}
+		.ft-link:hover {
+			background-color: rgba(52, 58, 64, 0.7);
+			margin-bottom: 14px;
+			margin-right: 12px;
+			width: 9em;
+			height: auto;
+			display: flex;
+			flex-direction: column;
+		}
+		.ft-link:nth-child(1) {
+			animation-delay: 900ms;
+		}
+		.ft-link:nth-child(2) {
+			animation-delay: 1200ms;
+		}
+		.ft-link:nth-child(3) {
+			animation-delay: 1500ms;
+		}
+		/*.ft-link {
 			background-color: rgba(52, 58, 64, 0.7);
 			box-shadow: 0 60px 123px -25px hsla(225, 2%, 62%, .42), 0 35px 75px -35px hsla(225, 2%, 62%, .08);
 			color: rgba(255, 255, 255, 0.7);
@@ -324,7 +371,7 @@
 			width: 9em;
 			display: flex;
 			flex-direction: column;
-		}
+		}*/
 		.ft-link:last-child {
 			margin-right: 0;
 		}
@@ -345,6 +392,19 @@
 		.ft-name {
 			padding: 0.25em 1em;
 			text-align: center;
+		}
+		@keyframes featuredFade {
+			0% {
+				transform: translate3d(0,100px,0) scale(.6);
+				transition-duration: 0.8s;
+				transition-timing-function: cubic-bezier(.175,.885,.32,1.275);
+				opacity: 0;
+			}
+			100% {
+				opacity: 1;
+				transform: translateZ(0) scale(1);
+			}
+
 		}
 
 		.section:not(#featured) {
@@ -370,6 +430,8 @@
 			top: 50%;
 			transform: translateY(-50%);
 			color: #ffffff;
+			font-family: 'Shadows Into Light', system-ui;
+    		letter-spacing: 7px;
 		}
 		.section h2 .heading-back {
 			color: #8e9a9d;
@@ -440,6 +502,9 @@
 		#games:has(.all-games.open) .games-wrapper, #apps:has(.all-apps.open) .apps-wrapper {
 			display: none;
 		}
+		#games, #apps {
+			transition: background-color 0.9s ease;
+		}
 		#games {
 			background-color: #212529;
 			margin-top: 4em;
@@ -466,6 +531,10 @@
 			width: 150px;
 			height: 150px;
 			object-fit: cover;
+		}
+		.link-wrapper:hover {
+			font-family: 'Shadows Into Light', system-ui;
+    		letter-spacing: 7px;
 		}
 		.link-wrapper:hover img {
 			transform: perspective(800px) rotateY(25deg) scale(.8) rotateX(10deg);
@@ -571,15 +640,15 @@
 
 		<div class="section" id="featured">
 			<div class="ft-wrapper">
-				<a class="ft-link" href="cakeninja" data-aos="zoom-in-up" data-aos-delay="900">
+				<a class="ft-link" href="cakeninja"><!-- data-aos="zoom-in-up" data-aos-delay="900" -->
 					<div class="ft-img"><img src="https://zanewesley.github.io/cakeninja/files/assets/32463581/1/caption.png" alt="cake ninja icon"></div>
 					<div class="ft-name">Cake Ninja</div>
 				</a>
-				<a class="ft-link" href="towertakedown" data-aos="zoom-in-up" data-aos-delay="1200">
+				<a class="ft-link" href="towertakedown"><!-- data-aos="zoom-in-up" data-aos-delay="1200" -->
 					<div class="ft-img"><img src="https://zanewesley.github.io/towertakedown/icon.jpg" alt="tower takedown icon"></div>
 					<div class="ft-name">Tower Takedown</div>
 				</a>
-				<a class="ft-link" href="hextris" data-aos="zoom-in-up" data-aos-delay="1500">
+				<a class="ft-link" href="hextris"><!-- data-aos="zoom-in-up" data-aos-delay="1500" -->
 					<div class="ft-img"><img src="hextris/favicon.png" alt="hextris icon"></div>
 					<div class="ft-name">Hextris</div>
 				</a>
@@ -625,70 +694,70 @@
 				<div>
 					<h3>Up Beat</h3>
 					<a href="doodlejump" class="link-wrapper">
-						<img src="doodlejump/images/doodle-jump-game-icon-192.png" loading="lazy">
+						<img src="doodlejump/images/doodle-jump-game-icon-192.png" alt="Doodle jump icon" loading="lazy">
 						<h3>Doodle Jump</h3>
 					</a>
 					<a class="link-wrapper" href="santahatmixup">
-						<img src="santahatmixup/css/favicon.png" loading="lazy">
+						<img src="santahatmixup/css/favicon.png" alt="Santa Hat icon" loading="lazy">
 						<h3>Santa Hat Mixup</h3>
 					</a>
 					<a class="link-wrapper" href="pacman">
-						<img src="pacman/icon/ios_icon.png" loading="lazy">
+						<img src="pacman/icon/ios_icon.png" alt="Pac Man icon" loading="lazy">
 						<h3>Pac Man</h3>
 					</a>
 					<a class="link-wrapper" href="flappybird">
-						<img src="flappybird/icon.jpg" loading="lazy">
+						<img src="flappybird/icon.jpg" alt="flappybird icon" loading="lazy">
 						<h3>Flappy Bird</h3>
 					</a>
 					<a class="link-wrapper" href="crossyroad">
-						<img src="crossyroad/icon.jpeg" loading="lazy">
+						<img src="crossyroad/icon.jpeg" alt="Crossy Road icon" loading="lazy">
 						<h3>Crossy Road</h3>
 					</a>
 					<a class="link-wrapper" href="cakeninja">
-						<img src="cakeninja/files/assets/32463581/1/caption.png" loading="lazy">
+						<img src="cakeninja/files/assets/32463581/1/caption.png" alt="Cake Ninja icon" loading="lazy">
 						<h3>Cake Ninja</h3>
 					</a>
 					<a class="link-wrapper" href="hextris">
-						<img src="hextris/favicon.png" loading="lazy">
+						<img src="hextris/favicon.png" alt="Hextris icon" loading="lazy">
 						<h3>Hextris</h3>
 					</a>
 					<a class="link-wrapper" href="stack">
-						<img src="images/stack-icon.PNG" loading="lazy">
+						<img src="images/stack-icon.PNG" alt="Stack icon" loading="lazy">
 						<h3>Stack</h3>
 					</a>
 					<a class="link-wrapper" href="chromedino">
-						<img src="chromedino/200-error-offline.png" style="filter: invert(1)" loading="lazy">
+						<img src="chromedino/200-error-offline.png" style="filter: invert(1)" alt="Chrome Dino Runner icon" loading="lazy">
 						<h3>Chrome Dino Runner</h3>
 					</a>
 				</div>
 				<div>
 					<h3>Leisure</h3>
 					<a class="link-wrapper" href="sequence">
-						<img src="sequence/icon.svg" loading="lazy">
+						<img src="sequence/icon.svg" alt="Sequence icon" loading="lazy">
 						<h3>Sequence</h3>
 					</a>
 					<a class="link-wrapper" href="guessthatnumber">
-						<img src="guessthatnumber/icon.png" loading="lazy">
+						<img src="guessthatnumber/icon.png"  alt="Guess that Number icon"loading="lazy">
 						<h3>Guess That Number 2</h3>
 					</a>
 					<a class="link-wrapper" href="towertakedown">
-						<img src="towertakedown/icon.jpg" loading="lazy">
+						<img src="towertakedown/icon.jpg" alt="Tower Takedown icon" loading="lazy">
 						<h3>Tower Takedown</h3>
 					</a>
 					<a class="link-wrapper" href="solitaire">
-						<img src="solitaire/assets/icon.jpg" loading="lazy">
+						<img src="solitaire/assets/icon.jpg" alt="Solitaire icon" loading="lazy">
 						<h3>Solitaire</h3>
 					</a>
 					<a class="link-wrapper" href="2048">
-						<img src="2048/icon.png" loading="lazy">
+						<img src="2048/icon.png"  alt="2048 icon"loading="lazy">
 						<h3>2048</h3>
 					</a>
 					<a class="link-wrapper" href="tic-tac-toe">
-						<img src="images/tic-tac-toe-icon.png" loading="lazy">
+						<img src="images/tic-tac-toe-icon.png"  alt="Tic Tac Toe icon"loading="lazy">
 						<h3>Tic Tac Toe</h3>
 					</a>
 					<a class="link-wrapper" href="colorswirl/colorswirl">
-						<img src="colorswirl/icon.jpg" loading="lazy">
+						<img src="colorswirl/icon.jpg"  alt="Colorswirl icon"loading="lazy">
 						<h3>Colorswirl</h3>
 					</a>
 				</div>
@@ -725,58 +794,58 @@
 				<div>
 					<h3>Desktop</h3>
 					<a class="link-wrapper" href="corey-3.0">
-						<img src="corey-3.0/icon.png" loading="lazy">
+						<img src="corey-3.0/icon.png"  alt="Corey 3.0 icon" loading="lazy">
 						<h3>Corey 3.0</h3>
 					</a>
 					<a class="link-wrapper" href="notes">
-						<img src="notes/icon.png" loading="lazy">
+						<img src="notes/icon.png"  alt="Notes icon"loading="lazy">
 						<h3>Notes</h3>
 					</a>
 					<a class="link-wrapper" href="vividly">
-						<img src="vividly/icon.png" loading="lazy">
+						<img src="vividly/icon.png" alt="Vividly icon" loading="lazy">
 						<h3>Vividly</h3>
 					</a>
 					<a class="link-wrapper" href="calculator">
-						<img src="images/calculator-icon.png" loading="lazy">
+						<img src="images/calculator-icon.png" alt="Calculator icon" loading="lazy">
 						<h3>Calculator</h3>
 					</a>
 					<a class="link-wrapper" href="countdownstudio">
-						<img src="images/countdownstudio-icon.svg" loading="lazy">
+						<img src="images/countdownstudio-icon.svg" alt="Countdown Studio icon" loading="lazy">
 						<h3>Countdown Studio</h3>
 					</a>
 					<a class="link-wrapper" href="mmc">
-						<img src="images/mmc-icon.png" loading="lazy">
+						<img src="images/mmc-icon.png" alt="Molar Mass Calculator icon" loading="lazy">
 						<h3>Molar Mass Calculator</h3>
 					</a>
 					<a class="link-wrapper" href="whiteboard">
-						<img src="images/whiteboard-icon.jpg" loading="lazy">
+						<img src="images/whiteboard-icon.jpg" alt="Whiteboard icon" loading="lazy">
 						<h3>Whiteboard</h3>
 					</a>
 				</div>
 				<div>
 					<h3>Other</h3>
 					<a class="link-wrapper" href="countdowns">
-						<img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg">
+						<img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"  alt="Countdowna icon" loading="lazy">
 						<h3>Countdowns</h3>
 					</a>
 					<a class="link-wrapper" href="inspiration">
-						<img src="images/inspiration-icon.png" loading="lazy">
+						<img src="images/inspiration-icon.png" alt="Insperational Quotes Image Generator icon" loading="lazy">
 						<h3>Insperational Quotes Image Generator</h3>
 					</a>
 					<a class="link-wrapper" href="leaderboard">
-						<img src="images/leaderboard-icon.png" loading="lazy">
+						<img src="images/leaderboard-icon.png" alt="Leaderboard icon" loading="lazy">
 						<h3>Games Leaderboard</h3>
 					</a>
 					<a class="link-wrapper" href="https://trello.com/b/H9M7SfqV.html">
-						<img src="images/tech-log-icon.png" loading="lazy">
+						<img src="images/tech-log-icon.png" alt="Tech log icon" loading="lazy">
 						<h3>My Tech Log</h3>
 					</a>
 					<a class="link-wrapper" href="archive">
-						<img src="images/home-icon.svg" loading="lazy">
-						<h3>App Archive</h3>
+						<img src="images/home-icon.svg" alt="Archive icon" loading="lazy">
+						<h3>Archives</h3>
 					</a>
 					<a class="link-wrapper" href="beta">
-						<img src="images/beta-icon.png" loading="lazy">
+						<img src="images/beta-icon.png" alt="BETA icon" loading="lazy">
 						<h3>BETA Design Page</h3>
 					</a>
 				</div>
@@ -797,6 +866,9 @@
 	</div>
 
 	<script>
+
+		const colorThief = new ColorThief();
+
 		document.querySelectorAll('.link-wrapper').forEach(function(elem) {
 			elem.setAttribute("data-aos-anchor-placement", "center-bottom");
 			elem.addEventListener('click', function(e) {
@@ -810,6 +882,18 @@
 					window.location = elem.href;
 				}
 			});
+			elem.addEventListener('mouseenter', function(e) {
+				var imgCol = colorThief.getColor(elem.querySelector('img'));
+				if(document.querySelector('#games').contains(elem)) {
+					document.querySelector('#games').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
+				} else if(document.querySelector('#apps').contains(elem)) {
+					document.querySelector('#apps').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
+				}
+			});
+			elem.addEventListener('mouseleave', function(e) {
+				document.querySelector('#games').style.backgroundColor = '#212529';
+				document.querySelector('#apps').style.backgroundColor = '#343a40';
+			})
 		});
 		
 		document.querySelectorAll('.ft-link').forEach(function(elem) {
