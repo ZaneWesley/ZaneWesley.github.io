@@ -12,6 +12,7 @@
 	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
 	<link rel="canonical" href="https://www.zanewesley.github.io">
+	<meta name="mobile-web-app-capable" content="yes">
 	<!-- Apple -->
 	<meta name="apple-mobile-web-app-title" content="Zane Wesley">
 	<meta name="apple-mobile-web-app-status-bar-style" content="#0e0e0e">
@@ -504,8 +505,11 @@
 		#games:has(.all-games.open) .games-wrapper, #apps:has(.all-apps.open) .apps-wrapper {
 			display: none;
 		}
+		#games:has(.preview.open) .all-games, #games:has(.preview.open) .games-wrapper, #apps:has(.preview.open) .all-apps, #apps:has(.preview.open) .apps-wrapper {
+			display: none;
+		}
 		#games, #apps {
-			transition: background-color 0.9s ease;
+			transition: background-color 0.3s ease;
 		}
 		#games {
 			background-color: #212529;
@@ -513,6 +517,65 @@
 		}
 		#apps {
 			background-color: #343a40;
+		}
+		.preview{
+			padding: 1em;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+
+			transform: scale(0.5);
+			opacity: 0;
+			visibility: hidden;
+			height: 0;
+		}
+		.preview.open {
+			transform: scale(1);
+			opacity: 1;
+			visibility: visible;
+			height: auto;
+		}
+		#games .preview {
+			background-color: rgba(52, 58, 64, 0.1);
+		}
+		#apps .preview {
+			background-color: rgba(33, 37, 41, 0.2);
+		}
+		.preview img {
+			align-self: center;
+			width: 300px;
+			height: 300px;
+			object-fit: cover;
+			border-radius: 15px;
+		}
+		.preview h3 {
+			font-size: 1.8em;
+			padding: 1em 2em;
+			font-family: 'Shadows Into Light', system-ui;
+			letter-spacing: 7px;
+		}
+		.preview p, .preview div {
+			padding: 2em 4em;
+		}
+		.preview div {
+			display: flex;
+			flex-direction: row;
+			width: 400px;
+			align-items: center;
+			justify-content: space-between;
+		}
+		.preview div button {
+			padding: 15px 30px;
+			border-radius: 8px;
+			border: none;
+			color: #2C2F33;
+			background-color: #60c26a;
+			outline: none;
+			cursor: pointer;
+			font-weight: 600;
+		}
+		.preview div button.close-app {
+			background-color: #ff654a;
 		}
 		.link-wrapper {
 			display: flex;
@@ -581,6 +644,13 @@
 			#menu {
 				display: block;
 			}
+			body:has(#menu.open) .content .nav-wrapper {
+				position: absolute;
+				top: -400px;
+				width: 100%;
+				z-index: 2;
+
+			}
 			.content h1 {
 				margin-top: 4em;
 			}
@@ -606,6 +676,17 @@
 			.all-games div:last-child h3:first-child, .all-apps div:last-child h3:first-child {
 				padding-top: 1em;
 				padding-bottom: 2em;
+			}
+
+			.preview h3 {
+				padding: 1em 0;
+			}
+			.preview p {
+				padding: 2em 0;
+			}
+			.preview div {
+				width: 100%;
+				padding: 0;
 			}
 
 			.link-wrapper img {
@@ -673,27 +754,27 @@
 			</h2>
 			<a class="leaderboard-btn" href="leaderboard"><i class="fa-solid fa-ranking-star"></i> Leaderboard</a>
 			<div class="games-wrapper">
-				<a class="link-wrapper" href="doodlejump" data-aos="zoom-out-right">
+				<a class="link-wrapper" href="doodlejump" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms." data-aos="zoom-out-right">
 					<img src="doodlejump/images/doodle-jump-game-icon-192.png" alt="Doodle jump icon" loading="lazy">	
 					<h3>Doodle Jump</h3>
 				</a>
-				<a class="link-wrapper" href="towertakedown" data-aos="zoom-out-left" data-aos-delay="300">
+				<a class="link-wrapper" href="towertakedown" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!" data-aos="zoom-out-left" data-aos-delay="300">
 					<img src="towertakedown/icon.jpg" alt="Tower Takedown icon" loading="lazy">
 					<h3>Tower Takedown</h3>
 				</a>
-				<a class="link-wrapper" href="flappybird" data-aos="zoom-out-right" data-aos-delay="600">
+				<a class="link-wrapper" href="flappybird" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes." data-aos="zoom-out-right" data-aos-delay="600">
 					<img src="flappybird/icon.jpg" alt="Flappy bird icon" loading="lazy">
 					<h3>Flappy Bird</h3>
 				</a>
-				<a class="link-wrapper" href="cakeninja" data-aos="zoom-out-left" data-aos-delay="300">
+				<a class="link-wrapper" href="cakeninja" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!" data-aos="zoom-out-left" data-aos-delay="300">
 					<img src="cakeninja/files/assets/32463581/1/caption.png" alt="Cake Ninja icon" loading="lazy">
 					<h3>Cake Ninja</h3>
 				</a>
-				<a class="link-wrapper" href="hextris" data-aos="zoom-out-right" data-aos-delay="0">
+				<a class="link-wrapper" href="hextris" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch." data-aos="zoom-out-right" data-aos-delay="0">
 					<img src="hextris/favicon.png" alt="Hextris icon" loading="lazy">
 					<h3>Hextris</h3>
 				</a>
-				<a class="link-wrapper" href="2048" data-aos="zoom-out-left" data-aos-delay="300">
+				<a class="link-wrapper" href="2048"  data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!" data-aos="zoom-out-left" data-aos-delay="300">
 					<img src="2048/icon.png" alt="2048 icon" loading="lazy">
 					<h3>2048</h3>
 				</a>
@@ -701,74 +782,84 @@
 			<div class="all-games">
 				<div>
 					<h3>Up Beat</h3>
-					<a href="doodlejump" class="link-wrapper">
+					<a class="link-wrapper" href="doodlejump" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
 						<img src="doodlejump/images/doodle-jump-game-icon-192.png" alt="Doodle jump icon" loading="lazy">
 						<h3>Doodle Jump</h3>
 					</a>
-					<a class="link-wrapper" href="santahatmixup">
+					<a class="link-wrapper" href="santahatmixup" data-desc="Follow that Santa! Choose the right hat to level up.">
 						<img src="santahatmixup/css/favicon.png" alt="Santa Hat icon" loading="lazy">
 						<h3>Santa Hat Mixup</h3>
 					</a>
-					<a class="link-wrapper" href="pacman">
+					<a class="link-wrapper" href="pacman" data-desc="A remake of the classic arcade game. Use the arrow keys or swipe to move around the maze.">
 						<img src="pacman/icon/ios_icon.png" alt="Pac Man icon" loading="lazy">
 						<h3>Pac Man</h3>
 					</a>
-					<a class="link-wrapper" href="flappybird">
+					<a class="link-wrapper" href="flappybird" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes.">
 						<img src="flappybird/icon.jpg" alt="flappybird icon" loading="lazy">
 						<h3>Flappy Bird</h3>
 					</a>
-					<a class="link-wrapper" href="crossyroad">
+					<a class="link-wrapper" href="crossyroad" data-desc="A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!">
 						<img src="crossyroad/icon.jpeg" alt="Crossy Road icon" loading="lazy">
 						<h3>Crossy Road</h3>
 					</a>
-					<a class="link-wrapper" href="cakeninja">
+					<a class="link-wrapper" href="cakeninja" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!">
 						<img src="cakeninja/files/assets/32463581/1/caption.png" alt="Cake Ninja icon" loading="lazy">
 						<h3>Cake Ninja</h3>
 					</a>
-					<a class="link-wrapper" href="hextris">
+					<a class="link-wrapper" href="hextris" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.">
 						<img src="hextris/favicon.png" alt="Hextris icon" loading="lazy">
 						<h3>Hextris</h3>
 					</a>
-					<a class="link-wrapper" href="stack">
+					<a class="link-wrapper" href="stack" data-desc="Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!">
 						<img src="images/stack-icon.PNG" alt="Stack icon" loading="lazy">
 						<h3>Stack</h3>
 					</a>
-					<a class="link-wrapper" href="chromedino">
+					<a class="link-wrapper" href="chromedino" data-desc="A remake of the classic Chrome Dino Runner game. Click/tap to jump.">
 						<img src="chromedino/200-error-offline.png" style="filter: invert(1)" alt="Chrome Dino Runner icon" loading="lazy">
 						<h3>Chrome Dino Runner</h3>
 					</a>
 				</div>
 				<div>
 					<h3>Leisure</h3>
-					<a class="link-wrapper" href="sequence">
+					<a class="link-wrapper" href="sequence" data-desc="A simple pattern following game. Pay attention!">
 						<img src="sequence/icon.svg" alt="Sequence icon" loading="lazy">
 						<h3>Sequence</h3>
 					</a>
-					<a class="link-wrapper" href="guessthatnumber">
+					<a class="link-wrapper" href="guessthatnumber" data-desc="Simple. Guess that number!">
 						<img src="guessthatnumber/icon.png"  alt="Guess that Number icon"loading="lazy">
 						<h3>Guess That Number 2</h3>
 					</a>
-					<a class="link-wrapper" href="towertakedown">
+					<a class="link-wrapper" href="towertakedown" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
 						<img src="towertakedown/icon.jpg" alt="Tower Takedown icon" loading="lazy">
 						<h3>Tower Takedown</h3>
 					</a>
-					<a class="link-wrapper" href="solitaire">
+					<a class="link-wrapper" href="solitaire" data-desc="A remake of the classic card game Solitaire.">
 						<img src="solitaire/assets/icon.jpg" alt="Solitaire icon" loading="lazy">
 						<h3>Solitaire</h3>
 					</a>
-					<a class="link-wrapper" href="2048">
+					<a class="link-wrapper" href="2048" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">
 						<img src="2048/icon.png"  alt="2048 icon"loading="lazy">
 						<h3>2048</h3>
 					</a>
-					<a class="link-wrapper" href="tic-tac-toe">
+					<a class="link-wrapper" href="tic-tac-toe" data-desc="Tic-Tac-Toe against an AI. You know what to do.">
 						<img src="images/tic-tac-toe-icon.png"  alt="Tic Tac Toe icon"loading="lazy">
 						<h3>Tic Tac Toe</h3>
 					</a>
-					<a class="link-wrapper" href="colorswirl/colorswirl">
+					<a class="link-wrapper" href="colorswirl/colorswirl" data-desc="Swirl colors around and make beautiful designs in this relaxing app!">
 						<img src="colorswirl/icon.jpg"  alt="Colorswirl icon"loading="lazy">
 						<h3>Colorswirl</h3>
 					</a>
 				</div>
+			</div>
+			<div class="preview">
+				<img src="" alt="">
+				<h3></h3>
+				<p></p>
+				<div>
+					<button class="open-app">Open <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+					<button class="close-app">Close</button>
+				</div>
+				
 			</div>
 		</div>
 
@@ -781,19 +872,19 @@
 				<span class="more">All Apps</span>
 			</h2>
 			<div class="apps-wrapper">
-				<a class="link-wrapper" href="corey-3.0" data-aos="zoom-out-right" data-aos-delay="300">
+				<a class="link-wrapper" href="corey-3.0" data-desc="The most recent attempt to make something like ChatGPT before ChatGPT existed." data-aos="zoom-out-right" data-aos-delay="300">
 					<img src="corey-3.0/icon.png" alt="Corey 3.0 icon" loading="lazy">
 					<h3>Corey 3.0</h3>
 				</a>
-				<a class="link-wrapper" href="notes" data-aos="zoom-out-left" data-aos-delay="600">
+				<a class="link-wrapper" href="notes" data-desc="A note taking app. Note takers are world changers!" data-aos="zoom-out-left" data-aos-delay="600">
 					<img src="notes/icon.png" alt="Notes icon" loading="lazy">
 					<h3>Notes</h3>
 				</a>
-				<a class="link-wrapper" href="whiteboard" data-aos="zoom-out-right">
+				<a class="link-wrapper" href="whiteboard" data-desc="An online whiteboard. Built for a techer during COVID-19 for quaratine classes." data-aos="zoom-out-right">
 					<img src="images/whiteboard-icon.jpg" alt="Whiteboard icon" loading="lazy">
 					<h3>Whiteboard</h3>
 				</a>
-				<a class="link-wrapper" href="vividly" data-aos="zoom-out-left" data-aos-delay="300">
+				<a class="link-wrapper" href="vividly" data-desc="Bringing FaceTime to the web before Apple did." data-aos="zoom-out-left" data-aos-delay="300">
 					<img src="vividly/icon.png" alt="Vividly icon" loading="lazy">
 					<h3>Vividly</h3>
 				</a>
@@ -801,62 +892,72 @@
 			<div class="all-apps">
 				<div>
 					<h3>Desktop</h3>
-					<a class="link-wrapper" href="corey-3.0">
+					<a class="link-wrapper" href="corey-3.0"data-desc="The most recent attempt to make something like ChatGPT before ChatGPT existed.">
 						<img src="corey-3.0/icon.png"  alt="Corey 3.0 icon" loading="lazy">
 						<h3>Corey 3.0</h3>
 					</a>
-					<a class="link-wrapper" href="notes">
+					<a class="link-wrapper" href="notes" data-desc="A note taking app. Note takers are world changers!">
 						<img src="notes/icon.png"  alt="Notes icon"loading="lazy">
 						<h3>Notes</h3>
 					</a>
-					<a class="link-wrapper" href="vividly">
+					<a class="link-wrapper" href="vividly" data-desc="Bringing FaceTime to the web before Apple did." >
 						<img src="vividly/icon.png" alt="Vividly icon" loading="lazy">
 						<h3>Vividly</h3>
 					</a>
-					<a class="link-wrapper" href="calculator">
+					<a class="link-wrapper" href="calculator" data-desc="A calculator inspired by Apple.">
 						<img src="images/calculator-icon.png" alt="Calculator icon" loading="lazy">
 						<h3>Calculator</h3>
 					</a>
-					<a class="link-wrapper" href="countdownstudio">
+					<a class="link-wrapper" href="countdownstudio" data-desc="Make a countdown and watch time pass.">
 						<img src="images/countdownstudio-icon.svg" alt="Countdown Studio icon" loading="lazy">
 						<h3>Countdown Studio</h3>
 					</a>
-					<a class="link-wrapper" href="mmc">
+					<a class="link-wrapper" href="mmc" data-desc="Made for Chemistry homework help. Enjoy ;)">
 						<img src="images/mmc-icon.png" alt="Molar Mass Calculator icon" loading="lazy">
 						<h3>Molar Mass Calculator</h3>
 					</a>
-					<a class="link-wrapper" href="whiteboard">
+					<a class="link-wrapper" href="whiteboard" data-desc="An online whiteboard. Built for a techer during COVID-19 for quaratine classes.">
 						<img src="images/whiteboard-icon.jpg" alt="Whiteboard icon" loading="lazy">
 						<h3>Whiteboard</h3>
 					</a>
 				</div>
 				<div>
 					<h3>Other</h3>
-					<a class="link-wrapper" href="countdowns">
+					<a class="link-wrapper" href="countdowns" data-desc="A collection of countdowns made for hollidays.">
 						<img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"  alt="Countdowna icon" loading="lazy">
 						<h3>Countdowns</h3>
 					</a>
-					<a class="link-wrapper" href="inspiration">
+					<a class="link-wrapper" href="inspiration" data-desc="Be inspired by this inspirational quote image generator.">
 						<img src="images/inspiration-icon.png" alt="Insperational Quotes Image Generator icon" loading="lazy">
 						<h3>Insperational Quotes Image Generator</h3>
 					</a>
-					<a class="link-wrapper" href="leaderboard">
+					<a class="link-wrapper" href="leaderboard" data-desc="Some friendly competition for games on my website!">
 						<img src="images/leaderboard-icon.png" alt="Leaderboard icon" loading="lazy">
 						<h3>Games Leaderboard</h3>
 					</a>
-					<a class="link-wrapper" href="https://trello.com/b/H9M7SfqV.html">
+					<a class="link-wrapper" href="https://trello.com/b/H9M7SfqV.html" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
 						<img src="images/tech-log-icon.png" alt="Tech log icon" loading="lazy">
 						<h3>My Tech Log</h3>
 					</a>
-					<a class="link-wrapper" href="archive">
+					<a class="link-wrapper" href="archive" data-desc="Archived pages, apps, and other random projects I'm embarrased to show.">
 						<img src="images/home-icon.svg" alt="Archive icon" loading="lazy">
 						<h3>Archives</h3>
 					</a>
-					<a class="link-wrapper" href="beta">
+					<a class="link-wrapper" href="beta" data-desc="See what's coming in new updates before they're live!">
 						<img src="images/beta-icon.png" alt="BETA icon" loading="lazy">
 						<h3>BETA Design Page</h3>
 					</a>
 				</div>
+			</div>
+			<div class="preview">
+				<img src="" alt="">
+				<h3></h3>
+				<p></p>
+				<div>
+					<button class="open-app">Open <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+					<button class="close-app">Close</button>
+				</div>
+				
 			</div>
 		</div>
 
@@ -877,9 +978,11 @@
 
 		const colorThief = new ColorThief();
 
+		// link click handlers
 		document.querySelectorAll('.link-wrapper').forEach(function(elem) {
 			elem.setAttribute("data-aos-anchor-placement", "center-bottom");
-			elem.addEventListener('click', function(e) {
+			// click with native link
+			/*elem.addEventListener('click', function(e) {
 				e.preventDefault();
 				gtag('event', 'app_link_click', {
 					'app_name': elem.querySelector('h3').innerHTML
@@ -889,8 +992,58 @@
 				} else {
 					window.location = elem.href;
 				}
+			});*/
+
+			//click with link preview
+			elem.addEventListener('click', function(e) {
+				e.preventDefault();
+				var dataLink;
+				var previewElem;
+				var imgCol = colorThief.getColor(elem.querySelector('img'));
+				// if link clicked is in games
+				if(document.querySelector('#games').contains(elem)) {
+					document.querySelector('#games').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
+					dataLink = '/embed?data-url=' + elem.href;
+					previewElem = document.querySelector('#games .preview');
+				}
+				// if link clicked is in apps
+				else if(document.querySelector('#apps').contains(elem)) {
+					document.querySelector('#apps').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
+					dataLink = elem.href;
+					previewElem = document.querySelector('#apps .preview');
+				}
+				//if link clicked is not assigned
+				else {
+					window.location = elem.href;
+				}
+
+				previewElem.classList.add('open');
+				previewElem.querySelector('img').src = elem.querySelector('img').src;
+				previewElem.querySelector('h3').innerText = elem.querySelector('h3').innerText;
+				previewElem.querySelector('p').innerText = elem.getAttribute('data-desc');
+				//previewElem.querySelector('.open-app').setAttribute('data-url', dataLink);
+				previewElem.scrollIntoView({
+					behavior: 'smooth',
+					block: 'center',
+					inline: 'center'
+				});
+
+				previewElem.querySelector('.open-app').onclick = function() {
+					gtag('event', 'app_link_click', {
+						'app_name': elem.querySelector('h3').innerText
+					});
+					window.location = dataLink;
+				}
+
+				previewElem.querySelector('.close-app').onclick = function() {
+					previewElem.classList.remove('open');
+					document.querySelector('#games').style.backgroundColor = '#212529';
+					document.querySelector('#apps').style.backgroundColor = '#343a40';
+				}
 			});
-			elem.addEventListener('mouseenter', function(e) {
+
+			//link hover events
+			/*elem.addEventListener('mouseenter', function(e) {
 				var imgCol = colorThief.getColor(elem.querySelector('img'));
 				if(document.querySelector('#games').contains(elem)) {
 					document.querySelector('#games').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
@@ -901,9 +1054,10 @@
 			elem.addEventListener('mouseleave', function(e) {
 				document.querySelector('#games').style.backgroundColor = '#212529';
 				document.querySelector('#apps').style.backgroundColor = '#343a40';
-			})
+			});*/
 		});
 		
+		//click handler for featured links
 		document.querySelectorAll('.ft-link').forEach(function(elem) {
 			elem.addEventListener('click', function(e) {
 				e.preventDefault();
@@ -915,8 +1069,10 @@
 		});
 
 
+		// init scroll features
 		AOS.init();
 
+		//menu click events
 		document.querySelector('.menu-btn').addEventListener('click', function(e) {
 			e.preventDefault();
 			document.querySelector('.burger').classList.toggle('not-active');
