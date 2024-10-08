@@ -5,7 +5,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
 	<meta name="author" content="Zane Wesley">
 	<!-- General -->
-	<link rel="manifest" href="manifest.json">
 	<meta name="theme-color" content="#000000">
 	<link rel="shortcut icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
@@ -19,7 +18,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+Mono&display=swap" rel="stylesheet">
 
-	<title>Open Source Liscense</title>
+	<title>Content Liscense & Credits | Zane Wesley</title>
 
 	<style>
 		* {
@@ -64,6 +63,7 @@
 			font-size: 2rem;
 			margin: 0 0 1rem 0;
     		line-height: 1.2;
+			cursor: pointer;
 		}
 		a {
 			display: block;
@@ -84,20 +84,29 @@
 				padding: 1em;
 			}
 		}
+
+		/* uCollapse v0.2 Created by Tugzrida(https://gist.github.com/Tugzrida) */
+		.ucollapsible{overflow:hidden;transition:height .3s ease-in-out}.ucollapsible.ucollapsed{height:0}.ucollapse-btn{background:0 0;border:0;border-bottom:1px solid #777;outline:0;width:100%;display:block;text-align:left;color:inherit;font-size:1em;cursor:pointer;padding:.5rem .75rem;margin:1rem 0}.ucollapse-btn::after{content:"\25b2";float:right;transition:transform .3s ease-in-out}.ucollapse-btn.ucollapsed::after{transform:rotate(180deg)}
+
 	</style>
 </head>
 <body>
-	<header><h1>Open Source Licenses</h1></header>
+	<header><h1>Content Liscense & Credits</h1></header>
 	<div class="wrapper">
 		<section>
-			<h2 class="first">Google Fonts</h2>
-			<a href="https://fonts.google.com">https://fonts.google.com</a>
-			<p class="mono">No attribution required.</p>
+			<h2 class="first" data-trigger="ucollapse" data-target="#googlefonts">Google Fonts</h2>
+			
+			<p id="googlefonts" class="mono ucollapsible ucollapsed">
+				<a href="https://fonts.google.com">https://fonts.google.com</a>
+				
+				No attribution required.
+			</p>
 		</section>
 		<section>
-			<h2>Font Awesome</h2>
-			<a href="https://fontawesome.com">https://fontawesome.com</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#fontawesome">Font Awesome</h2>
+			<div id="fontawesome" class="mono ucollapsible ucollapsed">
+				<a href="https://fontawesome.com">https://fontawesome.com</a>
+
 				Fonticons, Inc. (https://fontawesome.com)
 				
 				--------------------------------------------------------------------------------
@@ -266,9 +275,11 @@
 			</div>
 		</section>
 		<section>
-			<h2>VantaJS</h2>
-			<a href="https://www.vantajs.com">https://www.vantajs.com</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#vantajs">VantaJS</h2>
+			
+			<div id="vantajs" class="mono ucollapsible ucollapsed">
+				<a href="https://www.vantajs.com">https://www.vantajs.com</a>
+
 				Copyright 2020 Teng Bao
 				
 				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -278,11 +289,12 @@
 				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			</div>
 			<section>
-			<h2>TypeIt</h2>
-			<a href="https://www.typeitjs.com">https://www.typeitjs.com</a>
-			<div class="mono">
-								                    GNU GENERAL PUBLIC LICENSE
-				                       Version 3, 29 June 2007
+			<h2 data-trigger="ucollapse" data-target="#typeit">TypeIt</h2>
+			<div id="typeit" class="mono ucollapsible ucollapsed">
+				<a href="https://www.typeitjs.com">https://www.typeitjs.com</a>
+
+				GNU GENERAL PUBLIC LICENSE
+				Version 3, 29 June 2007
 
 				 Copyright (C) 2007 Free Software Foundation, Inc. https://fsf.org
 				 Everyone is permitted to copy and distribute verbatim copies
@@ -955,9 +967,10 @@
 			</div>
 		</section>
 		<section>
-			<h2>2048 Game Engine</h2>
-			<a href="https://github.com/gabrielecirulli/2048">https://github.com/gabrielecirulli/2048</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#_2048">2048 Game Engine</h2>
+			<div id="_2048" class="mono ucollapsible ucollapsed">
+				<a href="https://github.com/gabrielecirulli/2048">https://github.com/gabrielecirulli/2048</a>
+				
 				Adapted from <i>gabriele cirulli</i>'s project.
 
 				The MIT License (MIT)
@@ -984,10 +997,12 @@
 			</div>
 		</section>
 		<section>
-			<h2>Chrome Dino Runner</h2>
-			<a href="https://github.com/wayou/t-rex-runner">https://github.com/wayou/t-rex-runner</a><br>
-			Origional file: <a href="https://source.chromium.org/chromium/chromium/src/+/main:components/neterror/resources/offline.js;l=7?q=t-rex%20package:%5Echromium$&ss=chromium">https://source.chromium.org/chromium/chromium/src/+/main:components/neterror/resources/offline.js;l=7?q=t-rex%20package:%5Echromium$&ss=chromium</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#offlinetrex">Chrome Dino Runner</h2>
+			<div id="offlinetrex" class="mono ucollapsible ucollapsed">
+				<a href="https://github.com/wayou/t-rex-runner">https://github.com/wayou/t-rex-runner</a><br>
+				Origional file: <a href="https://source.chromium.org/chromium/chromium/src/+/main:components/neterror/resources/offline.js;l=7?q=t-rex%20package:%5Echromium$&ss=chromium">https://source.chromium.org/chromium/chromium/src/+/main:components/neterror/resources/offline.js;l=7?q=t-rex%20package:%5Echromium$&ss=chromium</a>
+
+
 				// Copyright (c) 2006-2009 The Chromium OS Authors. All rights reserved.
 				//
 				// Redistribution and use in source and binary forms, with or without
@@ -1018,9 +1033,10 @@
 			</div>
 		</section>
 		<section>
-			<h2>Hextris Game Engine</h2>
-			<a href="https://github.com/Hextris/hextris">https://github.com/Hextris/hextris</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#hextris">Hextris Game Engine</h2>
+			<div id="hextris" class="mono ucollapsible ucollapsed">
+				<a href="https://github.com/Hextris/hextris">https://github.com/Hextris/hextris</a>
+
 				Copyright (C) 2018 Logan Engstrom
 
 				This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -1031,16 +1047,18 @@
 			</div>
 		</section>
 		<section>
-			<h2>Cake Ninja Game Engine</h2>
-			<a href="https://gamesnacks.com/embed/games/cakesliceninja">https://gamesnacks.com/embed/games/cakesliceninja</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#cakeninja">Cake Ninja Game Engine</h2>
+			<div id="cakeninja" class="mono ucollapsible ucollapsed">
+				<a href="https://gamesnacks.com/embed/games/cakesliceninja">https://gamesnacks.com/embed/games/cakesliceninja</a>
+				
 				Modified from <i>GameSnacks</i>' Cake Slice Ninja game. No license available.
 			</div>
 		</section>
 		<section>
-			<h2>Chessboard.js</h2>
-			<a href="https://chessboardjs.com">https://chessboardjs.com</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#chessboard">Chessboard.js</h2>
+			<div id="chessboard" class="mono ucollapsible ucollapsed">
+				<a href="https://chessboardjs.com">https://chessboardjs.com</a>
+				
 				Copyright 2019 Chris Oakman
 
 				Permission is hereby granted, free of charge, to any person obtaining
@@ -1064,9 +1082,10 @@
 			</div>
 		</section>
 		<section>
-			<h2>jQuery</h2>
-			<a href="https://jquery.com">https://jquery.com</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#jquery">jQuery</h2>
+			<div id="jquery" class="mono ucollapsible ucollapsed">
+				<a href="https://jquery.com">https://jquery.com</a>
+				
 				Copyright OpenJS Foundation and other contributors, https://openjsf.org/
 
 				Permission is hereby granted, free of charge, to any person obtaining
@@ -1090,9 +1109,10 @@
 			</div>
 		</section>
 		<section>
-			<h2>Spectrum</h2>
-			<a href="https://bgrins.github.io/spectrum">https://bgrins.github.io/spectrum</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#spectrum">Spectrum</h2>
+			<div id="spectrum" class="mono ucollapsible ucollapsed">
+				<a href="https://bgrins.github.io/spectrum">https://bgrins.github.io/spectrum</a>
+				
 				Copyright (c) Brian Grinstead
 
 				Permission is hereby granted, free of charge, to any person obtaining
@@ -1116,9 +1136,10 @@
 			</div>
 		</section>
 		<section>
-			<h2>Three.js</h2>
-			<a href="https://threejs.org">https://threejs.org</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#threejs">Three.js</h2>
+			<div id="threejs" class="mono ucollapsible ucollapsed">
+				<a href="https://threejs.org">https://threejs.org</a>
+				
 				The MIT License
 
 				Copyright © 2010-2022 three.js authors
@@ -1143,9 +1164,10 @@
 			</div>
 		</section>
 		<section>
-			<h2>Draggabilly</h2>
-			<a href="https://draggabilly.desandro.com">https://draggabilly.desandro.com</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#draggabilly">Draggabilly</h2>
+			<div id="draggabilly" class="mono ucollapsible ucollapsed">
+				<a href="https://draggabilly.desandro.com">https://draggabilly.desandro.com</a>
+				
 				Copyright (c) 2013-2021 David DeSandro
 
 				Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -1156,9 +1178,10 @@
 			</div>
 		</section>
 		<section>
-			<h2>Algebra.js</h2>
-			<a href="https://algebra.js.org">https://algebra.js.org</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#algebrajs">Algebra.js</h2>
+			<div id="algebrajs" class="mono ucollapsible ucollapsed">
+				<a href="https://algebra.js.org">https://algebra.js.org</a>
+				
 				The MIT License (MIT)
 
 				Copyright (c) 2017 Nicole White
@@ -1183,19 +1206,97 @@
 			</div>
 		</section>
 		<section>
-			<h2>Filler Game Engine</h2>
-			<a href="https://github.com/jrogers97/filler">https://github.com/jrogers97/filler</a>
-			<div class="mono">
-				Modified from <i>jrogers97</i>'s project. No license available.
-			</div>
-		</section>
-		<section>
-			<h2>Daily Solitaire Game Engine & Graphics</h2>
-			<a href="https://gamesnacks.com/embed/games/dailysolitaire">https://gamesnacks.com/embed/games/dailysolitaire</a>
-			<div class="mono">
+			<h2 data-trigger="ucollapse" data-target="#solitaire">Daily Solitaire Game Engine & Graphics</h2>
+			<div id="solitaire" class="mono ucollapsible ucollapsed">
+				<a href="https://gamesnacks.com/embed/games/dailysolitaire">https://gamesnacks.com/embed/games/dailysolitaire</a>
+				
 				Modified from <i>GameSnacks</i>' Daily Solitaire game. No license available.
 			</div>
 		</section>
+		<section>
+			<h2 data-trigger="ucollapse" data-target="#pacman">Pac Man Game Engine</h2>
+			<div id="pacman" class="mono ucollapsible ucollapsed">
+				<a href="https://github.com/adeyinkaezra123/PacMan">https://github.com/adeyinkaezra123/PacMan</a>
+				
+				// Copyright 2022 Ezra Adeyinka
+				//
+				//  This program is free software: you can redistribute it and/or modify
+				//  it under the terms of the GNU General Public License Version 3 as 
+				//  published by the Free Software Foundation.
+				//
+				//  This program is distributed in the hope that it will be useful,
+				//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+				//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+				//  GNU General Public License for more details.
+
+				// ==========================================================================
+				// PAC-MAN
+				// an accurate remake of the original arcade game
+
+				// Based on original works by Namco, GCC, and Midway.
+				// Research by Jamey Pittman and Bart Grantham
+				// Developed by Ezra Adeyinka
+
+				// ==========================================================================
+			</div>
+		</section>
+		<section>
+			<h2 data-trigger="ucollapse" data-target="#santahat">Santa Hat Mixup Game Engine</h2>
+			<p id="santahat" class="mono ucollapsible ucollapsed">
+				<a href="https://raizensoft.com/test/web-app/sh3d/preview/">https://raizensoft.com/test/web-app/sh3d/preview</a>
+
+				Music and sound effects from opengameart.org. Game logic adapted from a raizensoft.com game engine.
+			</p>
+		</section>
+		<section>
+			<h2 data-trigger="ucollapse" data-target="#towertakedown">Tower Takedown Game & Physics Engine</h2>
+			<p id="towertakedown" class="mono ucollapsible ucollapsed">
+				<a href="https://cdn.gamesnacks.com/@famobi_api2/towercrash3d3/gameCode/index.html">https://cdn.gamesnacks.com/@famobi_api2/towercrash3d3/gameCode/index.html</a>
+
+				Modified from <i>GameSnacks</i> Daily Solitaire game. No license available.
+			</p>
+		</section>
+		<section>
+			<h2 data-trigger="ucollapse" data-target="#doodlejump">Doodle Jump Game & Physics Engine</h2>
+			<p id="doodlejump" class="mono ucollapsible ucollapsed">
+				<a href="https://github.com/gracehuynhh/doodlejump">https://github.com/gracehuynhh/doodlejump</a>
+
+				Modified from <i>gracehuynhh's </i> Doodle Jump game. No license available.
+			</p>
+		</section>
+		<section>
+			<h2 data-trigger="ucollapse" data-target="#colorthief">Color Thief</h2>
+			<div id="colorthief" class="mono ucollapsible ucollapsed">
+				<a href="https://github.com/lokesh/color-thief">https://github.com/lokesh/color-thief</a>
+				
+				The MIT License (MIT)
+
+				Copyright (c) 2015 Lokesh Dhakar
+
+				Permission is hereby granted, free of charge, to any person obtaining a copy
+				of this software and associated documentation files (the "Software"), to deal
+				in the Software without restriction, including without limitation the rights
+				to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+				copies of the Software, and to permit persons to whom the Software is
+				furnished to do so, subject to the following conditions:
+
+				The above copyright notice and this permission notice shall be included in all
+				copies or substantial portions of the Software.
+
+				THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+				IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+				FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+				AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+				LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+				OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+				SOFTWARE.
+			</div>
+		</section>
 	</div>
+
+	<script>
+		// uCollapse v0.2 Created by Tugzrida(https://gist.github.com/Tugzrida) https://gist.github.com/Tugzrida/b7fdafb687799ddbfe9a9dd1b67d20c6
+		document.querySelectorAll("[data-trigger=ucollapse]").forEach(function(e){e.addEventListener("click",function(t){document.querySelectorAll(e.getAttribute("data-target")).forEach(function(t){t.classList.contains("ucollapsed")?(t.style.height=t.scrollHeight+"px",e.classList.remove("ucollapsed"),t.addEventListener("transitionend",function(e){t.classList.remove("ucollapsed"),t.style.height=null},{once:!0})):requestAnimationFrame(function(){t.style.height=t.scrollHeight+"px",requestAnimationFrame(function(){t.style.height="0px",e.classList.add("ucollapsed"),t.classList.add("ucollapsed")})})})})});
+	</script>
 </body>
 </html>
