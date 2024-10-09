@@ -4,12 +4,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="Zane Wesley">
-	<meta name="description" content="The place to find all of Zane's online games and projects.">
+	<meta name="description" content="The place to find Zane's online games, web apps and projects.">
 	<!-- General -->
 	<link rel="manifest" href="manifest.json">
 	<meta name="theme-color" content="#0e0e0e">
 	<meta name="application-name" content="Zane Wesley">
-	<link rel="shortcut icon" href="images/icon.png">
+	<link rel="shortcut-icon" href="images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
 	<link rel="canonical" href="https://www.zanewesley.github.io">
 	<meta name="mobile-web-app-capable" content="yes">
@@ -100,6 +100,8 @@
 			position: absolute;
 			width: 100vw;
 			overflow-x: hidden;
+			/*scroll-snap-type: y mandatory;
+			-webkit-scroll-snap-type: y mandatory;*/
 		}
 		.content header {
 			width: 100vw;
@@ -416,6 +418,10 @@
 
 		}
 
+		.section {
+			scroll-snap-align: start;
+			-webkit-scroll-snap-align: start;
+		}
 		.section:not(#featured) {
 			padding: 4em 100px;
 		}
@@ -479,7 +485,7 @@
 			margin-right: 1em;
 		}
 
-		.games-wrapper, .apps-wrapper {
+		.games-wrapper, .apps-wrapper, .new-wrapper {
 			display: grid;
 			grid-template-columns: calc(50% - 2em) calc(50% - 2em);
 			grid-column-gap: 2em;
@@ -519,10 +525,24 @@
 		}
 		#games {
 			background-color: #212529;
-			margin-top: 4em;
+			/*margin-top: 4em;*/
 		}
 		#apps {
 			background-color: #343a40;
+		}
+		#new {
+			background-color: #1e3041;
+		}
+		#new h2 {
+			/*border-top: 8px solid #212529;
+			margin-top: 4em;*/
+		}
+		#new .new-wrapper {
+			/*border-bottom: 8px solid #212529;*/
+			padding-bottom: 4em;
+		}
+		#new .link-wrapper {
+			background-color: rgba(59, 107, 155, 0.1);
 		}
 		.preview{
 			padding: 1em;
@@ -668,7 +688,7 @@
 				padding-bottom: 2em;
 			}
 
-			.games-wrapper, .apps-wrapper, .all-games, .all-apps {
+			.games-wrapper, .apps-wrapper, .new-wrapper, .all-games, .all-apps {
 				grid-template-columns: 100%;
 				grid-row-gap: 2em;
 			}
@@ -739,6 +759,21 @@
 				<a class="ft-link" href="hextris"><!-- data-aos="zoom-in-up" data-aos-delay="1500" -->
 					<div class="ft-img"><img src="hextris/favicon.png" alt="hextris icon"></div>
 					<div class="ft-name">Hextris</div>
+				</a>
+			</div>
+		</div>
+
+		<div class="section" id="new">
+			<h2>
+				<div class="heading-wrapper">
+					<span class="heading">New</span>
+					<span class="heading-back">New</span>
+				</div>
+			</h2>
+			<div class="new-wrapper">
+				<a class="link-wrapper" href="wordfinder" data-desc="A word search game. Desktop and mobile support!">
+					<img src="wordfinder/media/graphics/promo/icons/favicon.png" alt="Word finder icon" loading="lazy">	
+					<h3>Word Finder</h3>
 				</a>
 			</div>
 		</div>
@@ -820,6 +855,10 @@
 				</div>
 				<div>
 					<h3>Leisure</h3>
+					<a class="link-wrapper" href="wordfinder" data-desc="A word search game. Desktop and mobile support!">
+						<img src="wordfinder/media/graphics/promo/icons/favicon.png" alt="Word finder icon" loading="lazy">	
+						<h3>Word Finder</h3>
+					</a>
 					<a class="link-wrapper" href="sequence" data-desc="A simple pattern following game. Pay attention!">
 						<img src="sequence/icon.svg" alt="Sequence icon" loading="lazy">
 						<h3>Sequence</h3>
@@ -966,7 +1005,7 @@
 
 		<footer>
 			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
-			<p>Copyright &copy; 2024 Zane Wesley. All rights reserved. For more information, please view the <a href="license">license</a> page. All open source projects are listed on the <a href="opensourcelicenses">Open Source Licenses</a> page.</p>
+			<p>Copyright &copy; 2024 Zane Wesley. All rights reserved. All supporting code that is not mine is listed on the <a href="licenses">License and Credits</a> page.</p>
 			<p>Feedback is appreciated! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
 		</footer>
 
@@ -1001,13 +1040,13 @@
 				var imgCol = colorThief.getColor(elem.querySelector('img'));
 				// if link clicked is in games
 				if(document.querySelector('#games').contains(elem)) {
-					document.querySelector('#games').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
+					document.querySelector('#games').style.background = `linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #212529)`;
 					dataLink = '/embed?data-url=' + elem.href;
 					previewElem = document.querySelector('#games .preview');
 				}
 				// if link clicked is in apps
 				else if(document.querySelector('#apps').contains(elem)) {
-					document.querySelector('#apps').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
+					document.querySelector('#apps').style.background = `linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #343a40)`;
 					dataLink = elem.href;
 					previewElem = document.querySelector('#apps .preview');
 				}
@@ -1036,8 +1075,8 @@
 
 				previewElem.querySelector('.close-app').onclick = function() {
 					previewElem.classList.remove('open');
-					document.querySelector('#games').style.backgroundColor = '#212529';
-					document.querySelector('#apps').style.backgroundColor = '#343a40';
+					document.querySelector('#games').style.background = '#212529';
+					document.querySelector('#apps').style.background = '#343a40';
 				}
 			});
 
