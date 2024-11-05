@@ -1169,10 +1169,10 @@
 				});
 				document.body.classList.add('transition');
 					setTimeout(function() {
-						window.location = dataLink;
+						window.location = '/embed?data-url=' + elem.href;
 						document.body.classList.remove('transition');
 					}, 800);
-					//window.location = dataLink;
+					//window.location = '/embed?data-url=' + elem.href;
 			});
 		});
 
