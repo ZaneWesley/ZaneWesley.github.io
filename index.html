@@ -1132,6 +1132,7 @@
 					document.body.classList.add('transition');
 					setTimeout(function() {
 						window.location = dataLink;
+						document.body.classList.remove('transition');
 					}, 800);
 					//window.location = dataLink;
 				}
@@ -1166,7 +1167,12 @@
 				gtag('event', 'app_link_click', {
 					'app_name': elem.querySelector('.ft-name').innerHTML
 				});
-				window.location = '/embed?data-url=' + elem.href;
+				document.body.classList.add('transition');
+					setTimeout(function() {
+						window.location = dataLink;
+						document.body.classList.remove('transition');
+					}, 800);
+					//window.location = dataLink;
 			});
 		});
 
