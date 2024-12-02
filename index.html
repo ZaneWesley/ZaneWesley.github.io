@@ -498,13 +498,13 @@
 			grid-row-gap: 2em;
 			justify-content: space-between;
 		}
-		.all-games div, .all-apps div {
+		.all-games > div, .all-apps > div {
 			display: flex;
 			flex-direction: column;
 			row-gap: 2em;
 		}
 		.all-games .link-wrapper:hover, .all-apps .link-wrapper:hover {
-			background-color: rgba(57, 73, 86, 0.9);
+			/*background-color: rgba(57, 73, 86, 0.9);*/
 			transform: scale(0.9) rotate(-2deg);
 		}
 		.all-games .link-wrapper img, .all-apps .link-wrapper img {
@@ -515,9 +515,6 @@
 			display: grid;
 		}
 		#games:has(.all-games.open) .games-wrapper, #apps:has(.all-apps.open) .apps-wrapper {
-			display: none;
-		}
-		#games:has(.preview.open) .all-games, #games:has(.preview.open) .games-wrapper, #apps:has(.preview.open) .all-apps, #apps:has(.preview.open) .apps-wrapper {
 			display: none;
 		}
 		#games, #apps {
@@ -545,53 +542,39 @@
 		#new .link-wrapper {
 			background-color: rgba(59, 107, 155, 0.1);
 		}
-		.preview{
-			padding: 1em;
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
 
-			transform: scale(0.5);
-			opacity: 0;
-			visibility: hidden;
-			height: 0;
+
+		.preview-wrapper {
+			flex-grow: 1;
+			/*padding: 1em;*/
+			width: 100%;
+			text-align: left;
+			overflow: hidden;
+			animation: previewAnim 0.3s linear forwards;
 		}
-		.preview.open {
-			transform: scale(1);
-			opacity: 1;
-			visibility: visible;
-			height: auto;
+		@keyframes previewAnim {
+			0% {
+				max-height: 0px;
+				padding: 0;
+				opacity: 0.5;
+			}
+			1% {
+				padding: 1em;
+			}
+			100% {
+				max-height: 300px;
+				padding: 1em;
+				opacity: 1;
+			}
 		}
-		#games .preview {
-			background-color: rgba(52, 58, 64, 0.1);
-		}
-		#apps .preview {
-			background-color: rgba(33, 37, 41, 0.2);
-		}
-		.preview img {
-			align-self: center;
-			width: 300px;
-			height: 300px;
-			object-fit: cover;
-			border-radius: 15px;
-		}
-		.preview h3 {
-			font-size: 1.8em;
-			padding: 1em 2em;
-			font-family: 'Shadows Into Light', system-ui;
-			letter-spacing: 7px;
-		}
-		.preview p, .preview div {
-			padding: 2em 4em;
-		}
-		.preview div {
+		.preview-btn-wrapper {
 			display: flex;
 			flex-direction: row;
-			width: 400px;
 			align-items: center;
 			justify-content: space-between;
+			padding-top: 1em;
 		}
-		.preview div button {
+		.preview-btn {
 			padding: 15px 30px;
 			border-radius: 8px;
 			border: none;
@@ -601,18 +584,22 @@
 			cursor: pointer;
 			font-weight: 600;
 		}
-		.preview div button.close-app {
+		.preview-btn.close-app {
 			background-color: #ff654a;
 		}
+
+
 		.link-wrapper {
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
+			flex-wrap: wrap;
 			column-gap: 2em;
 			text-decoration: none;
 			color: #fff;
 			background-color: rgba(52, 58, 64, 0.1);
 			text-align: center;
+			transition: letter-spacing 0.1s linear;
 		}
 		#apps .link-wrapper {
 			background-color: rgba(33, 37, 41, 0.2);
@@ -624,7 +611,10 @@
 			height: 150px;
 			object-fit: cover;
 		}
-		.link-wrapper:hover {
+		.link-wrapper h3 {
+			max-width: 220px;
+		}
+		.link-wrapper:hover h3 {
 			font-family: 'Shadows Into Light', system-ui;
     		letter-spacing: 7px;
 		}
@@ -738,17 +728,6 @@
 			.all-games div:last-child h3:first-child, .all-apps div:last-child h3:first-child {
 				padding-top: 1em;
 				padding-bottom: 2em;
-			}
-
-			.preview h3 {
-				padding: 1em 0;
-			}
-			.preview p {
-				padding: 2em 0;
-			}
-			.preview div {
-				width: 100%;
-				padding: 0;
 			}
 
 			.link-wrapper img {
@@ -936,16 +915,6 @@
 					</a>
 				</div>
 			</div>
-			<div class="preview">
-				<img src="" alt="">
-				<h3></h3>
-				<p></p>
-				<div>
-					<button class="open-app">Open <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-					<button class="close-app">Close</button>
-				</div>
-				
-			</div>
 		</div>
 
 		<div class="section" id="apps">
@@ -1034,16 +1003,6 @@
 					</a>
 				</div>
 			</div>
-			<div class="preview">
-				<img src="" alt="">
-				<h3></h3>
-				<p></p>
-				<div>
-					<button class="open-app">Open <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-					<button class="close-app">Close</button>
-				</div>
-				
-			</div>
 		</div>
 
 		<div class="section" id="sig">
@@ -1075,9 +1034,6 @@
 			// Add necessary scroll info to links
 			elem.setAttribute("data-aos-anchor-placement", "center-bottom");
 
-			// Make app description the title
-			// jk :)
-
 			// click with native link
 			/*elem.addEventListener('click', function(e) {
 				e.preventDefault();
@@ -1091,39 +1047,55 @@
 				}
 			});*/
 
-			//click with link preview
+			// link click with description preview
 			elem.addEventListener('click', function(e) {
 				e.preventDefault();
+
+				// only run code if preview does not exist
+				if(e.target.closest('.preview-btn') || elem.querySelector('.preview-wrapper')) return;
+
+				// remove all potentially open previews
+				document.querySelectorAll('.preview-wrapper').forEach(function(elem) {
+					elem.remove();
+				});
+
+				// Set up new preview
 				var dataLink;
 				var previewElem;
-				var imgCol = colorThief.getColor(elem.querySelector('img'));
+				var imgCol 
+				// can get color do it, otherwise color is not changed
+				try { imgCol = colorThief.getColor(elem.querySelector('img')) } catch {imgCol = e.target.closest('.section').style.backgroundColor;}
 				// if link clicked is in games
 				if(document.querySelector('#games').contains(elem)) {
-					document.querySelector('#games').style.background = `linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #212529)`;
+					//document.querySelector('#games').style.background = `linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #212529)`;// linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #212529)
 					dataLink = '/embed?data-url=' + elem.href;
-					previewElem = document.querySelector('#games .preview');
 				}
 				// if link clicked is in apps
 				else if(document.querySelector('#apps').contains(elem)) {
-					document.querySelector('#apps').style.background = `linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #343a40)`;
+					//document.querySelector('#apps').style.background = `linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #343a40)`;// linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #343a40)
 					dataLink = elem.href;
-					previewElem = document.querySelector('#apps .preview');
+				}
+				// if link clicked is in new
+				else if(document.querySelector('#new').contains(elem)) {
+					dataLink = elem.href;
 				}
 				//if link clicked is not assigned
 				else {
 					window.location = elem.href;
 				}
 
-				previewElem.classList.add('open');
-				previewElem.querySelector('img').src = elem.querySelector('img').src;
-				previewElem.querySelector('h3').innerText = elem.querySelector('h3').innerText;
-				previewElem.querySelector('p').innerText = elem.getAttribute('data-desc');
-				//previewElem.querySelector('.open-app').setAttribute('data-url', dataLink);
-				previewElem.scrollIntoView({
-					behavior: 'smooth',
-					block: 'center',
-					inline: 'center'
-				});
+				previewElem = document.createElement('div');
+				previewElem.classList.add('preview-wrapper');
+				previewElem.innerHTML = `
+					<p>${elem.getAttribute('data-desc')}</p>
+					<div class="preview-btn-wrapper">
+						<button class="preview-btn open-app">Open <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+						<button class="preview-btn close-app">Close</button>
+					</div>
+				`;
+				// <img src="${elem.querySelector('img').src}" alt="${elem.querySelector('img').alt}">
+				// <h3>${elem.querySelector('h3').innerText}</h3>
+				elem.appendChild(previewElem);
 
 				previewElem.querySelector('.open-app').onclick = function() {
 					gtag('event', 'app_link_click', {
@@ -1138,11 +1110,14 @@
 				}
 
 				previewElem.querySelector('.close-app').onclick = function() {
-					previewElem.classList.remove('open');
+					console.log('closing');
 					document.querySelector('#games').style.background = '#212529';
 					document.querySelector('#apps').style.background = '#343a40';
+					previewElem.remove();
 				}
 			});
+
+			
 
 			//link hover events
 			// replaced by click effect in preview (above)
