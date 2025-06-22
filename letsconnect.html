@@ -55,7 +55,7 @@
         <section>
             <form
                 action="https://docs.google.com/forms/d/e/1FAIpQLSdWpVIsyppmD3SInP88XYULccbdIPFifUvqx9tO6EnpU9Ddyg/formResponse"
-                method="POST" target="_blank" onsubmit="handleSubmit(event)" id="connect-form">
+                method="POST" target="hidden_iframe" onsubmit="handleSubmit(event)" id="connect-form">
 
                 <label for="name">What's your name?</label>
                 <input id="name" type="text" name="entry.95990559" required placeholder="I'm Zane!">
@@ -68,7 +68,7 @@
 
                 <button type="submit" class="btn" style="font-size: 18px;">Done</button>
             </form>
-            <!-- <iframe name="hidden_iframe" style="display:none;"></iframe> -->
+            <iframe name="hidden_iframe" style="display:none;"></iframe>
         </section>
 
         <section id="thankyou">
