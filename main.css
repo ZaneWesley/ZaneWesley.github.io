@@ -738,9 +738,18 @@ h3 {
     .link-card,
     .link-card.wide,
     .link-card.wide:nth-child(even) {
-        width: 100%;
-        /* flex-direction: row; */
+        width: calc(50% - 2em);
         flex-direction: column;
+    }
+
+    .link-card img {
+        display: block;
+        height: 100px;
+    }
+
+    .link-card.wide h3, .link-card h3 {
+        padding-top: 0;
+        text-align: center;
     }
 
     .search-wrapper {
