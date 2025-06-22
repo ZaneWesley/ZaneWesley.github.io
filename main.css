@@ -651,14 +651,7 @@ h3 {
     resize: none;
     display: block;
     width: 100%;
-}
-
-#connect-form input {
     margin-bottom: 2em;
-}
-
-#connect-form textarea {
-    margin-bottom: 1em;
 }
 
 #connect-form label {
