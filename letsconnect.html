@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
     <meta name="author" content="Zane Wesley">
-    <meta name="description" content="404. Well, that's embarrasing... This might be a broken link or the page may have been moved.">
-    <meta name="keywords" content="Zane Wesley, Zane Wesley portfolio, Zane Wesley online games, Zane Wesley apps">
+    <meta name="description" content="Let's connect! Fill out the form and I'll get back to you :)">
+    <meta name="keywords" content="Zane Wesley, connect with Zane Wesley, Zane Wesley online games, Zane Wesley apps">
     <link rel="shortcut-icon" href="/images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="/images/icon.png">
     <meta name="mobile-web-app-capable" content="yes">
@@ -30,7 +30,7 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-    <title>404 | Zane Wesley</title>
+    <title>Connect | Zane Wesley</title>
 </head>
 <body>
     
@@ -40,9 +40,9 @@
     </div>
   
 
-    <header style="margin-bottom: 4em;" class="fadeIn">
-        <h1>404</h1>
-        <p>Well, that's embarrasing... This might be a broken link or the page may have been moved.</p>
+    <header class="fadeIn">
+        <h1>Let's Connect!</h1>
+        <p>Let’s Build Something Together</p>
     </header>
 
     <nav class="bubble-menu">
@@ -52,7 +52,31 @@
 
     <main class="fadeIn">
 
-        <a href="/" class="btn" style="margin: 0 auto;">Go Home</a>
+        <section>
+            <form
+                action="https://docs.google.com/forms/d/e/1FAIpQLSdWpVIsyppmD3SInP88XYULccbdIPFifUvqx9tO6EnpU9Ddyg/formResponse"
+                method="POST" target="hidden_iframe" onsubmit="handleSubmit(event)" id="connect-form">
+
+                <label for="name">What's your name?</label>
+                <input id="name" type="text" name="entry.1719234052" required placeholder="I'm Zane!">
+                
+                <label for="email">What's the best way to reach you?</label>
+                <input id="email" type="text" name="entry.1369800781" required placeholder="Your email or phone number">
+
+                <label for="msg">What's on your mind?</label>
+                <textarea id="msg" name="entry.1329437650" rows="5" required placeholder="Share your thoughts"></textarea>
+
+                <button type="submit" class="btn" style="font-size: 18px;">Done</button>
+            </form>
+            <iframe name="hidden_iframe" style="display:none;"></iframe>
+        </section>
+
+        <section id="thankyou">
+            <h2>Thank you!</h2>
+            <p>I’ll get back with you soon :)</p>
+            <a href="/" class="btn" style="margin: 0 auto;">Go Home</a>
+        </section>
+    
         
     </main>
 
@@ -66,6 +90,13 @@
                 setTimeout(function() {document.querySelector('.bubble-menu').classList.remove('open');document.querySelector('.bubble-menu').classList.add('closed');document.querySelector('.menu-btn input').checked = false;}, 200);
             });
         });
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            document.getElementById('connect-form').submit();
+            document.getElementById('connect-form').style.display = 'none';
+            document.getElementById('thankyou').style.display = 'block';
+        }
     </script>
 
 </body>
