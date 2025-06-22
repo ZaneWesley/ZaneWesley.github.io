@@ -1,36 +1,26 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="author" content="Zane Wesley">
-	<meta name="description" content="The place to find Zane's online games, web apps and projects.">
-	<!-- General -->
-	<link rel="manifest" href="manifest.json">
-	<meta name="theme-color" content="#0e0e0e">
-	<meta name="application-name" content="Zane Wesley">
-	<link rel="shortcut-icon" href="images/icon.png">
-	<link rel="icon" type="image/png" sizes="500x500" href="images/icon.png">
-	<link rel="canonical" href="https://www.zanewesley.github.io">
-	<meta name="mobile-web-app-capable" content="yes">
-	<!-- Apple -->
-	<meta name="apple-mobile-web-app-title" content="Zane Wesley">
-	<meta name="apple-mobile-web-app-status-bar-style" content="#0e0e0e">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<link rel="apple-touch-icon" sizes="500x500" href="images/icon.png">
-	<link rel="mask-icon" href="images/icon.png" color="#0e0e0e">
-	<!-- Fonts -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shadows+Into+Light&family=Bebas+Neue&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
-	<!-- Scroll -->
-	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-	<!-- UI -->
-	 <!-- https://lokeshdhakar.com/projects/color-thief/ -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js" integrity="sha512-r2yd2GP87iHAsf2K+ARvu01VtR7Bs04la0geDLbFlB/38AruUbA5qfmtXwXx6FZBQGJRogiPtEqtfk/fnQfaYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<!-- Analytics -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
+    <meta name="author" content="Zane Wesley">
+    <meta name="description" content="Welcome to Zane Wesley's portfolio! Here you can find professional experience, personal projects, and a bio.">
+    <meta name="keywords" content="Zane Wesley, Zane Wesley portfolio, Zane Wesley online games, Zane Wesley apps">
+    <link rel="shortcut-icon" href="/images/icon.png">
+	<link rel="icon" type="image/png" sizes="500x500" href="/images/icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0e0e0e">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0e0e0e">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
+    <link href="main.css" rel="stylesheet">
+
+    <!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
 	<script>
@@ -40,1140 +30,153 @@
 	  gtag('config', 'G-YEEGMG5QT7');
 	</script>
 
-	<title>Zane Wesley | 2024 Update | Online Games, Web Apps and Portfolio</title>
-
-	<style>
-		* {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-			transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
-		}
-		html, body {
-			scroll-behavior: smooth;
-			background-color: #0e0e0e;
-			color: #ffffff;
-			font-family: 'Roboto', sans-serif;
-			width: 100vw;
-			height: auto;
-			font-size: 20px;
-			overflow-x: hidden;
-		}
-
-		/* width */
-		::-webkit-scrollbar {
-		  width: 12px;
-		}
-
-		/* Track */
-		::-webkit-scrollbar-track {
-		  background: #0e0e0e;/*#0a192f*/
-		}
-
-		/* Handle */
-		::-webkit-scrollbar-thumb {
-		  background: rgba(255, 255, 255, 0.7);/*#ccd6f6;*/
-		  border-radius: 10px;
-		  border: 3px solid #0e0e0e;/*#0a192f*/;
-		}
-
-		/* Handle on hover */
-		::-webkit-scrollbar-thumb:hover {
-		  background: #8892b0;
-		}
-		/* WebKit/Blink Browsers */
-		::selection {
-		  background: rgba(57, 73, 86, 0.7);/*#233554*/
-		  color: #fff;
-		}
-		/* Gecko Browsers */
-		::-moz-selection {
-		  background: rgba(57, 73, 86, 0.7);/*#233554*/
-		  color: #fff;
-		}
-
-		.monospace {
-			font-family: 'Roboto Mono', monospace;
-		}
-
-		.content {
-			position: absolute;
-			width: 100vw;
-			overflow-x: hidden;
-			/*scroll-snap-type: y mandatory;
-			-webkit-scroll-snap-type: y mandatory;*/
-		}
-		.content header {
-			width: 100vw;
-			padding: 0 100px 9em 100px;
-		}
-		.content .nav-wrapper {
-			margin: 0 -100px;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-		}
-		.content .nav-wrapper img {
-			width: 80px;
-			height: 80px;
-		}
-		.content .nav-wrapper nav {
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-		}
-		.content .nav-wrapper nav a, #menu nav a {
-			text-decoration: none;
-			color: #fff;
-			font-weight: bold;
-			font-size: 20px;
-			padding: 0 1.5em;
-		}
-		.content .nav-wrapper nav a:hover, #menu nav a:hover {
-			transform: scale(1.1);
-		}
-		#menu {
-			background-color: #343a40;
-			padding: 2em;
-			position: absolute;
-			width: 100%;
-			height: 0;
-			top: -400px;
-			display: none;
-			z-index: 9;
-		}
-		#menu.open {
-			height: 400px;
-			top: 0;
-		}
-		/*body:has(#menu.open) .content {
-			top: 400px;
-			transition: top 0.3s ease-in;
-		}
-		body:has(#menu.open) .content h1 {
-			
-		}*/
-		#menu h2 {
-			padding-bottom: 2em;
-		}
-		#menu nav {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-		}
-		#menu nav a {
-			padding-bottom: 2em;
-		}
-		.menu-btn {
-			cursor: pointer;
-			width: 50px;
-			height: 50px;
-			z-index: 17;
-			transform: scale(0.5);
-			margin: 0 1.5em;
-			display: none;
-		}
-		.burger {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 80px;
-			cursor: pointer;
-			z-index: 11;
-		}
-		.burger span {
-			display: block;
-			  width: 100%;
-			  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.3);
-			  border-radius: 3px;
-			  height: 8px;
-			  background: #fff;
-			  transition: all .3s;
-			  position: relative;
-		}
-		.burger span + span {
-			margin-top: 14px;
-		}
-		.burger.active span:nth-child(1) {
-		  animation: ease .7s top-1 forwards;
-		}
-
-		.burger.not-active span:nth-child(1) {
-		  animation: ease .7s top-2 forwards;
-		}
-
-		.burger.active span:nth-child(2) {
-		  animation: ease .7s scaled forwards;
-		}
-
-		.burger.not-active span:nth-child(2) {
-		  animation: ease .7s scaled-2 forwards;
-		}
-
-		.burger.active span:nth-child(3) {
-		  animation: ease .7s bottom-1 forwards;
-		}
-
-		.burger.not-active span:nth-child(3) {
-		  animation: ease .7s bottom-2 forwards;
-		}
-
-		/* Burger Anim */
-		@keyframes top-1 {
-		  0% {
-		    top: 0;
-		    transform: rotate(0);
-		  }
-		  50% {
-		    top: 22px;
-		    transform: rotate(0);
-		  }
-		  100% {
-		    top: 22px;
-		    transform: rotate(45deg);
-		  }
-		}
-
-		@keyframes top-2 {
-		  0% {
-		    top: 22px;
-		    transform: rotate(45deg);
-		  }
-		  50% {
-		    top: 22px;
-		    transform: rotate(0deg);
-		  }
-		  100% {
-		    top: 0;
-		    transform: rotate(0deg);
-		  }
-		}
-
-		@keyframes bottom-1 {
-		  0% {
-		    bottom: 0;
-		    transform: rotate(0);
-		  }
-		  50% {
-		    bottom: 22px;
-		    transform: rotate(0);
-		  }
-		  100% {
-		    bottom: 22px;
-		    transform: rotate(135deg);
-		  }
-		}
-
-		@keyframes bottom-2 {
-		  0% {
-		    bottom: 22px;
-		    transform: rotate(135deg);
-		  }
-		  50% {
-		    bottom: 22px;
-		    transform: rotate(0);
-		  }
-		  100% {
-		    bottom: 0;
-		    transform: rotate(0);
-		  }
-		}
-
-		@keyframes scaled {
-		  50% {
-		    transform: scale(0);
-		  }
-		  100% {
-		    transform: scale(0);
-		  }
-		}
-
-		@keyframes scaled-2 {
-		  0% {
-		    transform: scale(0);
-		  }
-		  50% {
-		    transform: scale(0);
-		  }
-		  100% {
-		    transform: scale(1);
-		  }
-		}
-		.content h1 {
-			margin-top: 2.5em;
-			font-size: clamp(40px, 8vw, 80px);
-			text-align: center;
-			/*background-color: #ffffff;
-			color:#0e0e0e;*/
-
-			font-family: 'Shadows Into Light', system-ui;
-			letter-spacing: 7px;
-			line-height: 1em;
-			/*text-shadow: 0 0 7px #fff, 0 0 42px #44beff, 0 0 20px #44beff;*/
-		}
-
-		#featured {
-			padding-bottom: 4em;
-			width: 100vw;
-			margin-bottom: 25%;
-		}
-
-		.ft-wrapper {
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-			width: 100vw;
-			max-width: 1200px;
-			height: 245px;
-			margin: 0 auto;
-			/*padding: 0 1em;*/
-			/*margin-bottom: 4.5em;*/
-			position: absolute;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-		.ft-link {
-			background-color: rgba(52, 58, 64, 0.7);
-			box-shadow: 0 60px 123px -25px hsla(225, 2%, 62%, .42), 0 35px 75px -35px hsla(225, 2%, 62%, .08);
-			color: rgba(255, 255, 255, 0.7);
-			text-decoration: none;
-			cursor: pointer;
-			border-radius: 15px;
-			overflow: hidden;
-			margin: 0;
-			width: 100px;
-			height: 100px;
-			transition: all 0.3s ease;
-			text-wrap: nowrap;
-			text-align: center;
-			animation: featuredFade 0.8s forwards;
-			opacity: 0;
-		}
-		.ft-link:hover {
-			background-color: rgba(52, 58, 64, 0.7);
-			margin-bottom: 14px;
-			margin-right: 12px;
-			width: 9em;
-			height: auto;
-			display: flex;
-			flex-direction: column;
-		}
-		.ft-link:nth-child(1) {
-			animation-delay: 900ms;
-		}
-		.ft-link:nth-child(2) {
-			animation-delay: 1200ms;
-		}
-		.ft-link:nth-child(3) {
-			animation-delay: 1500ms;
-		}
-		/*.ft-link {
-			background-color: rgba(52, 58, 64, 0.7);
-			box-shadow: 0 60px 123px -25px hsla(225, 2%, 62%, .42), 0 35px 75px -35px hsla(225, 2%, 62%, .08);
-			color: rgba(255, 255, 255, 0.7);
-			text-decoration: none;
-			cursor: pointer;
-			border-radius: 15px;
-			overflow: hidden;
-			margin-bottom: 14px;
-			margin-right: 12px;
-			width: 9em;
-			display: flex;
-			flex-direction: column;
-		}*/
-		.ft-link:last-child {
-			margin-right: 0;
-		}
-		/*.ft-link:hover {
-			transform: perspective(800px) rotateY(25deg) scale(.8) rotateX(10deg)!important;
-			transition-delay: 0!important;
-		}*/
-		.ft-img {
-			border-radius: 12px;
-			width: 100%;
-			object-fit: cover;
-		}
-		.ft-img img {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-		}
-		.ft-name {
-			padding: 0.25em 1em;
-			text-align: center;
-		}
-		@keyframes featuredFade {
-			0% {
-				transform: translate3d(0,100px,0) scale(.6);
-				transition-duration: 0.8s;
-				transition-timing-function: cubic-bezier(.175,.885,.32,1.275);
-				opacity: 0;
-			}
-			100% {
-				opacity: 1;
-				transform: translateZ(0) scale(1);
-			}
-
-		}
-
-		.section {
-			scroll-snap-align: start;
-			-webkit-scroll-snap-align: start;
-		}
-		.section:not(#featured) {
-			padding: 4em 100px;
-		}
-		.section h2 {
-			padding-bottom: 4em;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
-		.section h2 .heading-wrapper {
-			display: flex;
-			position: relative;
-			text-align: center;
-		}
-		.section h2 .heading {
-			font-weight: 600;
-			/*font-size: 2.25rem;*/
-			line-height: 1.5;
-			width: 100%;
-			position: absolute;
-			top: 50%;
-			transform: translateY(-50%);
-			color: #ffffff;
-			font-family: 'Shadows Into Light', system-ui;
-    		letter-spacing: 7px;
-		}
-		.section h2 .heading-back {
-			color: #8e9a9d;
-			opacity: 0.1;
-			line-height: 1.3;
-			font-size: calc(1.95rem + 4vw) !important;
-			width: 100%;
-			font-weight: 600;
-			font-family: Bebas Neue, sans-serif;
-			letter-spacing: 10px;
-			text-transform: uppercase;
-		}
-		.section h2 .more {
-		    position: relative;
-		    top: -5px;
-		    width: 300px;
-		    height: 1px;
-		    margin-left: 20px;
-		    background-color: #ffffff;
-			text-align: right;
-			font-size: 18px;
-			cursor: pointer;
-		}
-
-		.leaderboard-btn {
-			background-color: rgba(52, 58, 64, 0.5);
-			padding: 1em;
-			margin-bottom: 2em;
-			width: fit-content;
-			cursor: pointer;
-			text-decoration: none;
-			color: #fff;
-			display: block;
-		}
-		.leaderboard-btn i {
-			margin-right: 1em;
-		}
-
-		.games-wrapper, .apps-wrapper, .new-wrapper {
-			display: grid;
-			grid-template-columns: calc(50% - 2em) calc(50% - 2em);
-			grid-column-gap: 2em;
-			grid-row-gap: 4em;
-			justify-content: space-between;
-		}
-		.all-games, .all-apps {
-			display: none;/*grid*/
-			grid-template-columns: calc(50% - 2em) calc(50% - 2em);
-			grid-row-gap: 2em;
-			justify-content: space-between;
-		}
-		.all-games > div, .all-apps > div {
-			display: flex;
-			flex-direction: column;
-			row-gap: 2em;
-		}
-		.all-games .link-wrapper:hover, .all-apps .link-wrapper:hover {
-			/*background-color: rgba(57, 73, 86, 0.9);*/
-			transform: scale(0.9) rotate(-2deg);
-		}
-		.all-games .link-wrapper img, .all-apps .link-wrapper img {
-			width: 75px;
-			height: 75px;
-		}
-		.all-games.open, .all-apps.open {
-			display: grid;
-		}
-		#games:has(.all-games.open) .games-wrapper, #apps:has(.all-apps.open) .apps-wrapper {
-			display: none;
-		}
-		#games, #apps {
-			transition: background-color 0.3s ease;
-		}
-		#games {
-			background-color: #212529;
-			/*margin-top: 4em;*/
-		}
-		#apps {
-			background-color: #343a40;
-		}
-		#new {
-			background-color: #1e3041;
-    		background: linear-gradient(150deg, #1e3041 60%, #2a5f3a);
-		}
-		#new h2 {
-			/*border-top: 8px solid #212529;
-			margin-top: 4em;*/
-		}
-		#new .new-wrapper {
-			/*border-bottom: 8px solid #212529;*/
-			padding-bottom: 4em;
-		}
-		#new .link-wrapper {
-			background-color: rgba(59, 107, 155, 0.1);
-		}
-
-
-		.preview-wrapper {
-			flex-grow: 1;
-			/*padding: 1em;*/
-			width: 100%;
-			text-align: left;
-			overflow: hidden;
-			animation: previewAnim 0.3s linear forwards;
-		}
-		@keyframes previewAnim {
-			0% {
-				max-height: 0px;
-				padding: 0;
-				opacity: 0.5;
-			}
-			1% {
-				padding: 1em;
-			}
-			100% {
-				max-height: 300px;
-				padding: 1em;
-				opacity: 1;
-			}
-		}
-		.preview-btn-wrapper {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
-			padding-top: 1em;
-		}
-		.preview-btn {
-			padding: 15px 30px;
-			border-radius: 8px;
-			border: none;
-			color: #2C2F33;
-			background-color: #60c26a;
-			outline: none;
-			cursor: pointer;
-			font-weight: 600;
-		}
-		.preview-btn.close-app {
-			background-color: #ff654a;
-		}
-
-
-		.link-wrapper {
-			display: flex;
-			justify-content: flex-start;
-			align-items: center;
-			flex-wrap: wrap;
-			column-gap: 2em;
-			text-decoration: none;
-			color: #fff;
-			background-color: rgba(52, 58, 64, 0.1);
-			text-align: center;
-			transition: letter-spacing 0.1s linear;
-		}
-		#apps .link-wrapper {
-			background-color: rgba(33, 37, 41, 0.2);
-		}
-		.link-wrapper img {
-			box-shadow: 0 60px 123px -25px hsla(225, 2%, 62%, .42), 0 35px 75px -35px hsla(225, 2%, 62%, .08);
-			border-radius: 15px;
-			width: 150px;
-			height: 150px;
-			object-fit: cover;
-		}
-		.link-wrapper h3 {
-			max-width: 220px;
-		}
-		.link-wrapper:hover h3 {
-			font-family: 'Shadows Into Light', system-ui;
-    		letter-spacing: 7px;
-		}
-		.link-wrapper:hover img {
-			transform: perspective(800px) rotateY(25deg) scale(.8) rotateX(10deg);
-		}
-
-		#sig {
-			padding: 4em 0;
-			display: flex;
-			justify-content: center;
-			justify-content: center;
-			align-items: center;
-		}
-		#sig img {
-			width: 400px;
-			height: 400px;
-		}
-
-		footer {
-			/*padding: 50px 16px 0 16px;*/
-			padding: 16px;
-			font-weight: 500;
-			font-size: 12px;
-			color: rgba(255, 255, 255, 0.7);/*#ccd6f6*/
-		}
-		footer #socials {
-			display: flex;
-			justify-content: flex-start;
-			align-items: center;
-			margin-bottom: 2em;
-		}
-		footer #socials svg {
-			width: 50px;
-			height: 50px;
-			margin-right: 8px;
-		}
-		footer #socials img {
-			width: 60px;
-			height: 60px;
-		}
-		footer a {
-			color: #fff;
-			font-weight: bold;
-		}
-
-		/* Page Transition Anim */
-		body:before, body:after {
-			content: "";
-			height: 50vh;
-			width: 100%;
-			position: fixed;
-			left: 0;
-			background: #1e3041;
-			z-index: 1;
-			transition: 0.2s ease-out;
-		}
-		body:before {
-			top: 0;
-			transform: translateY(-100%);
-		}
-		body:after {
-			bottom: 0;
-			transform: translateY(100%);
-		}
-		body.transition:before {
-			top: 50%;
-		}
-		body.transition:after {
-			bottom: 50%;
-		}
-
-		@media (max-width: 480px) {
-			.content header {
-				padding: 0 25px 9em 25px;
-			}
-			.content .nav-wrapper nav {
-				display: none;
-			}
-			.content .nav-wrapper {
-				margin: 0 -25px;
-			}
-			.menu-btn {
-				display: block;
-			}
-			#menu {
-				display: block;
-			}
-			.content h1 {
-				margin-top: 4em;
-			}
-
-			.section:not(#featured) {
-				padding: 3em 25px;
-			}
-			#featured {
-				margin-bottom: 35vh;
-			}
-			.ft-wrapper {
-				top: 50vh;
-			}
-
-			.section h2 {
-				padding-bottom: 2em;
-			}
-
-			.games-wrapper, .apps-wrapper, .new-wrapper, .all-games, .all-apps {
-				grid-template-columns: 100%;
-				grid-row-gap: 2em;
-			}
-			.all-games div:last-child h3:first-child, .all-apps div:last-child h3:first-child {
-				padding-top: 1em;
-				padding-bottom: 2em;
-			}
-
-			.link-wrapper img {
-				width: 75px;
-				height: 75px;
-			}
-		}
-	</style>
+    <title>Zane Wesley</title>
 </head>
 <body>
+    
+    <div class="nav-row">
+        <a href="/"><img src="images/icon-v4-transparent-white.png" width="70"></a>
+        <div class="menu-btn"><label><input type="checkbox"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path class="line--1" d="M0 70l28-28c2-2 2-2 7-2h64" /><path class="line--2" d="M0 50h99" /><path class="line--3" d="M0 30l28 28c2 2 2 2 7 2h64" /></svg></label></div>
+    </div>
+  
 
-	<div id="menu">
-		<h2>Menu</h2>
-		<nav>
-			<a href="#games">Games</a>
-			<a href="#apps">Apps</a>
-			<a href="portfolio">Portfolio</a>
-		</nav>
-	</div>
+    <header class="fadeIn">
+        <h1>Hey! I'm Zane.</h1>
+        <p>A <span class="highlight">web developer</span> with a <span class="highlight-u">vision</span> to create engaging user experiences, a <span class="highlight-u">passion</span> for people and <span class="highlight-u">drive</span> for leadership development.</p>
+    </header>
 
-	<div class="content">
-		<header>
-			<div class="nav-wrapper">
-				<img src="images/icon-v4-transparent-white.png" alt="Z icon">
-				<nav>
-					<a href="#games">Games</a>
-					<a href="#apps">Apps</a>
-					<a href="portfolio">Portfolio</a>
-				</nav>
-				<div class="menu-btn">
-					<div class="burger not-active">
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</div>
-			</div>
-			<h1 data-aos="fade-in" data-aos-duration="2000">Zane Wesley</h1>
-		</header>
+    <nav class="bubble-menu">
+        <a href="#about">About</a>
+        <a href="#professional">Professional Work</a>
+        <a href="#personal">Personal Projects</a>
+        <a href="/library">Project Library</a>
+        <!-- <a href="#archive" onclick="viewArchive()">The Archive?</a> -->
+    </nav>
 
-		<div class="section" id="featured">
-			<div class="ft-wrapper">
-				<a class="ft-link" href="cakeninja"><!-- data-aos="zoom-in-up" data-aos-delay="900" -->
-					<div class="ft-img"><img src="https://zanewesley.github.io/cakeninja/files/assets/32463581/1/caption.png" alt="cake ninja icon"></div>
-					<div class="ft-name">Cake Ninja</div>
-				</a>
-				<a class="ft-link" href="towertakedown"><!-- data-aos="zoom-in-up" data-aos-delay="1200" -->
-					<div class="ft-img"><img src="https://zanewesley.github.io/towertakedown/icon.jpg" alt="tower takedown icon"></div>
-					<div class="ft-name">Tower Takedown</div>
-				</a>
-				<a class="ft-link" href="hextris"><!-- data-aos="zoom-in-up" data-aos-delay="1500" -->
-					<div class="ft-img"><img src="hextris/favicon.png" alt="hextris icon"></div>
-					<div class="ft-name">Hextris</div>
-				</a>
-			</div>
-		</div>
+    <main class="fadeIn">
+        <section id="professional">
+            <h2>Professional Work</h2>
 
-		<div class="section" id="new">
-			<h2>
-				<div class="heading-wrapper">
-					<span class="heading">New</span>
-					<span class="heading-back">New</span>
-				</div>
-			</h2>
-			<div class="new-wrapper">
-				<a class="link-wrapper" href="wordfinder" data-desc="A word search game. Desktop and mobile support!">
-					<img src="wordfinder/media/graphics/promo/icons/favicon.png" alt="Word finder icon" loading="lazy">	
-					<h3>Word Finder</h3>
-				</a>
-				<a class="link-wrapper" href="solidify" data-desc="A note taking app designed with flexibility at its core">
-					<img src="solidify/icon.png" alt="Solidify icon" loading="lazy">	
-					<h3>Solidify</h3>
-				</a>
-			</div>
-		</div>
+            <div class="card" id="uuredesign">
+                <div>
+                    <h3>Website Redesign</h3>
+                    <p class="detail">Union University <span>&#x2022;</span> 2025</p>
+                    <p>A front end designer and developer for the redesign of Union University's website.</p>
+                    <a href="https://www.uu.edu" class="btn disabled">Site Under Development</a>
+                </div>
+                <img src="/images/uuwebsite-phone.png" alt="">
+            </div>
 
-		<div class="section" id="games">
-			<h2>
-				<div class="heading-wrapper">
-					<span class="heading">Games</span>
-					<span class="heading-back">Games</span>
-				</div>
-				<span class="more">All Games</span>
-			</h2>
-			<a class="leaderboard-btn" href="leaderboard"><i class="fa-solid fa-ranking-star"></i> Leaderboard</a>
-			<div class="games-wrapper">
-				<a class="link-wrapper" href="doodlejump" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms." data-aos="zoom-out-right">
-					<img src="doodlejump/images/doodle-jump-game-icon-192.png" alt="Doodle jump icon" loading="lazy">	
-					<h3>Doodle Jump</h3>
-				</a>
-				<a class="link-wrapper" href="towertakedown" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!" data-aos="zoom-out-left" data-aos-delay="300">
-					<img src="towertakedown/icon.jpg" alt="Tower Takedown icon" loading="lazy">
-					<h3>Tower Takedown</h3>
-				</a>
-				<a class="link-wrapper" href="flappybird" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes." data-aos="zoom-out-right" data-aos-delay="600">
-					<img src="flappybird/icon.jpg" alt="Flappy bird icon" loading="lazy">
-					<h3>Flappy Bird</h3>
-				</a>
-				<a class="link-wrapper" href="cakeninja" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!" data-aos="zoom-out-left" data-aos-delay="300">
-					<img src="cakeninja/files/assets/32463581/1/caption.png" alt="Cake Ninja icon" loading="lazy">
-					<h3>Cake Ninja</h3>
-				</a>
-				<a class="link-wrapper" href="hextris" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch." data-aos="zoom-out-right" data-aos-delay="0">
-					<img src="hextris/favicon.png" alt="Hextris icon" loading="lazy">
-					<h3>Hextris</h3>
-				</a>
-				<a class="link-wrapper" href="2048"  data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!" data-aos="zoom-out-left" data-aos-delay="300">
-					<img src="2048/icon.png" alt="2048 icon" loading="lazy">
-					<h3>2048</h3>
-				</a>
-			</div>
-			<div class="all-games">
-				<div>
-					<h3>Up Beat</h3>
-					<a class="link-wrapper" href="doodlejump" data-desc="A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.">
-						<img src="doodlejump/images/doodle-jump-game-icon-192.png" alt="Doodle jump icon" loading="lazy">
-						<h3>Doodle Jump</h3>
-					</a>
-					<a class="link-wrapper" href="santahatmixup" data-desc="Follow that Santa! Choose the right hat to level up.">
-						<img src="santahatmixup/css/favicon.png" alt="Santa Hat icon" loading="lazy">
-						<h3>Santa Hat Mixup</h3>
-					</a>
-					<a class="link-wrapper" href="pacman" data-desc="A remake of the classic arcade game. Use the arrow keys or swipe to move around the maze.">
-						<img src="pacman/icon/ios_icon.png" alt="Pac Man icon" loading="lazy">
-						<h3>Pac Man</h3>
-					</a>
-					<a class="link-wrapper" href="flappybird" data-desc="A remake of the classic game. Click/tap the screen to fly between the pipes.">
-						<img src="flappybird/icon.jpg" alt="flappybird icon" loading="lazy">
-						<h3>Flappy Bird</h3>
-					</a>
-					<a class="link-wrapper" href="crossyroad" data-desc="A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!">
-						<img src="crossyroad/icon.jpeg" alt="Crossy Road icon" loading="lazy">
-						<h3>Crossy Road</h3>
-					</a>
-					<a class="link-wrapper" href="cakeninja" data-desc="Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!">
-						<img src="cakeninja/files/assets/32463581/1/caption.png" alt="Cake Ninja icon" loading="lazy">
-						<h3>Cake Ninja</h3>
-					</a>
-					<a class="link-wrapper" href="hextris" data-desc="Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.">
-						<img src="hextris/favicon.png" alt="Hextris icon" loading="lazy">
-						<h3>Hextris</h3>
-					</a>
-					<a class="link-wrapper" href="stack" data-desc="Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!">
-						<img src="images/stack-icon.PNG" alt="Stack icon" loading="lazy">
-						<h3>Stack</h3>
-					</a>
-					<a class="link-wrapper" href="chromedino" data-desc="A remake of the classic Chrome Dino Runner game. Click/tap to jump.">
-						<img src="chromedino/200-error-offline.png" style="filter: invert(1)" alt="Chrome Dino Runner icon" loading="lazy">
-						<h3>Chrome Dino Runner</h3>
-					</a>
-				</div>
-				<div>
-					<h3>Leisure</h3>
-					<a class="link-wrapper" href="wordfinder" data-desc="A word search game. Desktop and mobile support!">
-						<img src="wordfinder/media/graphics/promo/icons/favicon.png" alt="Word finder icon" loading="lazy">	
-						<h3>Word Finder</h3>
-					</a>
-					<a class="link-wrapper" href="sequence" data-desc="A simple pattern following game. Pay attention!">
-						<img src="sequence/icon.svg" alt="Sequence icon" loading="lazy">
-						<h3>Sequence</h3>
-					</a>
-					<a class="link-wrapper" href="guessthatnumber" data-desc="Simple. Guess that number!">
-						<img src="guessthatnumber/icon.png"  alt="Guess that Number icon"loading="lazy">
-						<h3>Guess That Number 2</h3>
-					</a>
-					<a class="link-wrapper" href="towertakedown" data-desc="Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!">
-						<img src="towertakedown/icon.jpg" alt="Tower Takedown icon" loading="lazy">
-						<h3>Tower Takedown</h3>
-					</a>
-					<a class="link-wrapper" href="solitaire" data-desc="A remake of the classic card game Solitaire.">
-						<img src="solitaire/assets/icon.jpg" alt="Solitaire icon" loading="lazy">
-						<h3>Solitaire</h3>
-					</a>
-					<a class="link-wrapper" href="2048" data-desc="A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!">
-						<img src="2048/icon.png"  alt="2048 icon"loading="lazy">
-						<h3>2048</h3>
-					</a>
-					<a class="link-wrapper" href="tic-tac-toe" data-desc="Tic-Tac-Toe against an AI. You know what to do.">
-						<img src="images/tic-tac-toe-icon.png"  alt="Tic Tac Toe icon"loading="lazy">
-						<h3>Tic Tac Toe</h3>
-					</a>
-					<a class="link-wrapper" href="colorswirl/colorswirl" data-desc="Swirl colors around and make beautiful designs in this relaxing app!">
-						<img src="colorswirl/icon.jpg"  alt="Colorswirl icon"loading="lazy">
-						<h3>Colorswirl</h3>
-					</a>
-				</div>
-			</div>
-		</div>
+            <div class="card" id="ltgifts">
+                <div>
+                    <h3>DISC + Spiritual Gifts Survey</h3>
+                    <p class="detail">Love and Truth Church <span>&#x2022;</span> 2024</p>
+                    <p>A full stack project designing a personality survey for the membership program.</p>
+                    <a href="https://lt-gifts.com" class="btn">Take the Survey</a>
+                </div>
+                <img src="/images/ltgifts-browser.png" alt="">
+            </div>
+        </section>
 
-		<div class="section" id="apps">
-			<h2>
-				<div class="heading-wrapper">
-					<span class="heading">Apps</span>
-					<span class="heading-back">Apps</span>
-				</div>
-				<span class="more">All Apps</span>
-			</h2>
-			<div class="apps-wrapper">
-				<a class="link-wrapper" href="corey-3.0" data-desc="The most recent attempt to make something like ChatGPT before ChatGPT existed." data-aos="zoom-out-right" data-aos-delay="300">
-					<img src="corey-3.0/icon.png" alt="Corey 3.0 icon" loading="lazy">
-					<h3>Corey 3.0</h3>
-				</a>
-				<a class="link-wrapper" href="notes" data-desc="A note taking app. Note takers are world changers!" data-aos="zoom-out-left" data-aos-delay="600">
-					<img src="notes/icon.png" alt="Notes icon" loading="lazy">
-					<h3>Notes</h3>
-				</a>
-				<a class="link-wrapper" href="whiteboard" data-desc="An online whiteboard. Built for a techer during COVID-19 for quaratine classes." data-aos="zoom-out-right">
-					<img src="images/whiteboard-icon.jpg" alt="Whiteboard icon" loading="lazy">
-					<h3>Whiteboard</h3>
-				</a>
-				<a class="link-wrapper" href="vividly" data-desc="Bringing FaceTime to the web before Apple did." data-aos="zoom-out-left" data-aos-delay="300">
-					<img src="vividly/icon.png" alt="Vividly icon" loading="lazy">
-					<h3>Vividly</h3>
-				</a>
-			</div>
-			<div class="all-apps">
-				<div>
-					<h3>Desktop</h3>
-					<a class="link-wrapper" href="corey-3.0"data-desc="The most recent attempt to make something like ChatGPT before ChatGPT existed.">
-						<img src="corey-3.0/icon.png"  alt="Corey 3.0 icon" loading="lazy">
-						<h3>Corey 3.0</h3>
-					</a>
-					<a class="link-wrapper" href="notes" data-desc="A note taking app. Note takers are world changers!">
-						<img src="notes/icon.png"  alt="Notes icon"loading="lazy">
-						<h3>Notes</h3>
-					</a>
-					<a class="link-wrapper" href="vividly" data-desc="Bringing FaceTime to the web before Apple did." >
-						<img src="vividly/icon.png" alt="Vividly icon" loading="lazy">
-						<h3>Vividly</h3>
-					</a>
-					<a class="link-wrapper" href="calculator" data-desc="A calculator inspired by Apple.">
-						<img src="images/calculator-icon.png" alt="Calculator icon" loading="lazy">
-						<h3>Calculator</h3>
-					</a>
-					<a class="link-wrapper" href="countdownstudio" data-desc="Make a countdown and watch time pass.">
-						<img src="images/countdownstudio-icon.svg" alt="Countdown Studio icon" loading="lazy">
-						<h3>Countdown Studio</h3>
-					</a>
-					<a class="link-wrapper" href="mmc" data-desc="Made for Chemistry homework help. Enjoy ;)">
-						<img src="images/mmc-icon.png" alt="Molar Mass Calculator icon" loading="lazy">
-						<h3>Molar Mass Calculator</h3>
-					</a>
-					<a class="link-wrapper" href="whiteboard" data-desc="An online whiteboard. Built for a techer during COVID-19 for quaratine classes.">
-						<img src="images/whiteboard-icon.jpg" alt="Whiteboard icon" loading="lazy">
-						<h3>Whiteboard</h3>
-					</a>
-				</div>
-				<div>
-					<h3>Other</h3>
-					<a class="link-wrapper" href="countdowns" data-desc="A collection of countdowns made for hollidays.">
-						<img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"  alt="Countdowna icon" loading="lazy">
-						<h3>Countdowns</h3>
-					</a>
-					<a class="link-wrapper" href="inspiration" data-desc="Be inspired by this inspirational quote image generator.">
-						<img src="images/inspiration-icon.png" alt="Insperational Quotes Image Generator icon" loading="lazy">
-						<h3>Insperational Quotes Image Generator</h3>
-					</a>
-					<a class="link-wrapper" href="leaderboard" data-desc="Some friendly competition for games on my website!">
-						<img src="images/leaderboard-icon.png" alt="Leaderboard icon" loading="lazy">
-						<h3>Games Leaderboard</h3>
-					</a>
-					<a class="link-wrapper" href="https://trello.com/b/H9M7SfqV.html" data-desc="View the logs for changes, what's next, pending ideas, and bugs on the website.">
-						<img src="images/tech-log-icon.png" alt="Tech log icon" loading="lazy">
-						<h3>My Tech Log</h3>
-					</a>
-					<a class="link-wrapper" href="archive" data-desc="Archived pages, apps, and other random projects I'm embarrased to show.">
-						<img src="images/home-icon.svg" alt="Archive icon" loading="lazy">
-						<h3>Archives</h3>
-					</a>
-					<a class="link-wrapper" href="beta" data-desc="See what's coming in new updates before they're live!">
-						<img src="images/beta-icon.png" alt="BETA icon" loading="lazy">
-						<h3>BETA Design Page</h3>
-					</a>
-				</div>
-			</div>
-		</div>
+        <section id="personal">
+            <h2>Personal Projects</h2>
 
-		<div class="section" id="sig">
-			<img src="images/icon-v4-transparent-white.png" alt="Z icon">
-		</div>
+            <div class="link-card-wrapper">
 
-		<footer>
-			<!--<div id="socials">
-				<img src="images/icon-v4-transparent-white.png" alt="Z icon">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#e1306c" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="#ffffff" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-			</div> -->
-			<p>This website uses cookies to ensure you get the best experience. By using this site, you agree to the <a href="terms-of-service">Terms of Service</a>.</p>
-			<p>Copyright &copy; 2024 Zane Wesley. All rights reserved. All supporting code that is not mine is listed on the <a href="licenses">License and Credits</a> page.</p>
-			<p>Feedback is appreciated! Report bugs, give design ideas, and more on the <a href="feedback">feedback</a> page.</p>
-		</footer>
+                <a href="/2048/" class="link-card wide" style="background-color: #EEE4DA;">
+                    <img src="/2048/icon.png" alt="">
+                    <h3>2048</h3>
+                </a>
 
+                <a href="/hextris/" class="link-card" style="background-color: #eceff1;">
+                    <img src="/hextris/favicon.png" alt="">
+                    <h3>Hextris</h3>
+                </a>
 
-	</div>
+                <a href="/flappybird/" class="link-card" style="background-color: #eceff1;">
+                    <img src="/flappybird/icon.jpg" alt="">
+                    <h3>Flappy Bird</h3>
+                </a>
 
+                <a href="/sequence/" class="link-card wide" style="background-color: #4F5D75;">
+                    <img src="/sequence/icon.svg" alt="">
+                    <h3 style="color: #eceff1;">Sequence</h3>
+                </a>
 
+                <a href="/crossyroad/" class="link-card wide" style="background-color: rgba(239, 131, 84, 0.5);">
+                    <img src="/crossyroad/icon.jpeg" alt="">
+                    <h3>Crossy Road</h3>
+                </a>
 
-	<script>
+                <a href="/colorswirl/" class="link-card" style="background-color: #eceff1;">
+                    <img src="/colorswirl/icon.jpg" alt="">
+                    <h3>Color Swirl</h3>
+                </a>
 
-		const colorThief = new ColorThief();
+            </div>
 
-		// link DOM manipulation + click handler
-		document.querySelectorAll('.link-wrapper').forEach(function(elem) {
-			// Add necessary scroll info to links
-			elem.setAttribute("data-aos-anchor-placement", "center-bottom");
+            <a href="/library" class="btn" style="margin: 1em;">View All Projects</a>
 
-			// click with native link
-			/*elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				gtag('event', 'app_link_click', {
-					'app_name': elem.querySelector('h3').innerHTML
-				});
-				if(document.querySelector('#games').contains(elem)) {
-					window.location = '/embed?data-url=' + elem.href;
-				} else {
-					window.location = elem.href;
-				}
-			});*/
+        </section>
 
-			// link click with description preview
-			elem.addEventListener('click', function(e) {
-				e.preventDefault();
+        <section id="about">
+            <h2>About Me</h2>
 
-				// only run code if preview does not exist
-				if(e.target.closest('.preview-btn') || elem.querySelector('.preview-wrapper')) return;
+            <p>Hey, I’m Zane – a front-end web developer passionate about creating beautiful, user-friendly experiences. My mission is to have a positive impact in the life of everyone I encounter through everyday interactions. I’m a Christian, a people person, and a tech enthusiast who finds joy in the little details of web design and development. I specialize in front-end UX and UI design, blending clean code with intentional design to build engaging digital experiences.</p>
+            <p>My journey began in 2019 when I built my first website, inspired by the creative portfolios I saw online. It quickly grew into a passion that has guided my academic and professional path. Since then, I’ve continued to develop my own site as a sandbox for my learning and creativity. Along the way, I’ve also picked up a love for graphic design, often creating visuals for my projects.</p>
+            <p>I’m currently a Computer Science major at Union University (Class of 2027), concentrating in web development with a minor in business marketing. Right now, my focus is on growing my skills, passing my classes, and taking on freelance opportunities when they come my way. Outside of tech, I work at Chick-fil-A and serve on the production team at Love and Truth Church, where I mix broadcast audio and program lighting.</p>
+        </section>
 
-				// remove all potentially open previews
-				document.querySelectorAll('.preview-wrapper').forEach(function(elem) {
-					elem.remove();
-				});
+        <section id="work">
+            <h2>Let’s Build Something Together!</h2>
+            <p>Whether you're launching a new idea, refreshing a brand, or just need a hand bringing a digital project to life, I’d love to hear about it! I enjoy working with people who value aesthetics and intentionality. If you’re looking for someone who cares about the details and brings both creativity and technical skill to the table, I might be a great fit for your next project.</p>
+            <p>Feel free to reach out – I’m always open to new connections, collaborations, and opportunities to grow.</p>
+            <a href="/letsconnect" class="btn">Let's Connect</a>
+        </section>
 
-				// Set up new preview
-				var dataLink;
-				var previewElem;
-				var imgCol 
-				// can get color do it, otherwise color is not changed
-				try { imgCol = colorThief.getColor(elem.querySelector('img')) } catch {imgCol = e.target.closest('.section').style.backgroundColor;}
-				// if link clicked is in games
-				if(document.querySelector('#games').contains(elem)) {
-					//document.querySelector('#games').style.background = `linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #212529)`;// linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #212529)
-					dataLink = '/embed?data-url=' + elem.href;
-				}
-				// if link clicked is in apps
-				else if(document.querySelector('#apps').contains(elem)) {
-					//document.querySelector('#apps').style.background = `linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #343a40)`;// linear-gradient(rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.9), #343a40)
-					dataLink = elem.href;
-				}
-				// if link clicked is in new
-				else if(document.querySelector('#new').contains(elem)) {
-					dataLink = elem.href;
-				}
-				//if link clicked is not assigned
-				else {
-					window.location = elem.href;
-				}
+        <div class="socials">                
+                <a href="https://www.instagram.com/zanewesley27"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--Instagram--><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
+                <a href="https://www.linkedin.com/in/zaneharrison27"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--Linkedin--><path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg></a>
+                <a href="https://github.com/ZaneWesley"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--Github.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> </a>
+                <a href="https://solo.to/zanewesley"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--Links--><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg></a>
+            </div>
+        
+    </main>
 
-				previewElem = document.createElement('div');
-				previewElem.classList.add('preview-wrapper');
-				previewElem.innerHTML = `
-					<p>${elem.getAttribute('data-desc')}</p>
-					<div class="preview-btn-wrapper">
-						<button class="preview-btn open-app">Open <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-						<button class="preview-btn close-app">Close</button>
-					</div>
-				`;
-				// <img src="${elem.querySelector('img').src}" alt="${elem.querySelector('img').alt}">
-				// <h3>${elem.querySelector('h3').innerText}</h3>
-				elem.appendChild(previewElem);
+    <script>
+        document.querySelector('.menu-btn input').addEventListener('change', function(e) {
+            setTimeout(function() {document.querySelector('.bubble-menu').classList.toggle('open'); if(!e.target.checked) {document.querySelector('.bubble-menu').classList.add('closed');} else {document.querySelector('.bubble-menu').classList.remove('closed');}}, 200);
+        });
 
-				previewElem.querySelector('.open-app').onclick = function() {
-					gtag('event', 'app_link_click', {
-						'app_name': elem.querySelector('h3').innerText
-					});
-					document.body.classList.add('transition');
-					setTimeout(function() {
-						window.location = dataLink;
-						document.body.classList.remove('transition');
-					}, 800);
-					//window.location = dataLink;
-				}
+        document.querySelectorAll('.bubble-menu a').forEach(function(elem) {
+            elem.addEventListener('click', function(e) {
+                setTimeout(function() {document.querySelector('.bubble-menu').classList.remove('open');document.querySelector('.bubble-menu').classList.add('closed');document.querySelector('.menu-btn input').checked = false;}, 200);
+            });
+        });
 
-				previewElem.querySelector('.close-app').onclick = function() {
-					console.log('closing');
-					document.querySelector('#games').style.background = '#212529';
-					document.querySelector('#apps').style.background = '#343a40';
-					previewElem.remove();
-				}
-			});
+        function viewArchive() {
+            document.getElementById('archive').style.display='block';
+        }
+    </script>
 
-			
-
-			//link hover events
-			// replaced by click effect in preview (above)
-			/*elem.addEventListener('mouseenter', function(e) {
-				var imgCol = colorThief.getColor(elem.querySelector('img'));
-				if(document.querySelector('#games').contains(elem)) {
-					document.querySelector('#games').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
-				} else if(document.querySelector('#apps').contains(elem)) {
-					document.querySelector('#apps').style.backgroundColor = `rgba(${imgCol[0]},${imgCol[1]},${imgCol[2]}, 0.3)`;
-				}
-			});
-			elem.addEventListener('mouseleave', function(e) {
-				document.querySelector('#games').style.backgroundColor = '#212529';
-				document.querySelector('#apps').style.backgroundColor = '#343a40';
-			});*/
-		});
-		
-		//click handler for featured links
-		document.querySelectorAll('.ft-link').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				e.preventDefault();
-				gtag('event', 'app_link_click', {
-					'app_name': elem.querySelector('.ft-name').innerHTML
-				});
-				document.body.classList.add('transition');
-					setTimeout(function() {
-						window.location = '/embed?data-url=' + elem.href;
-						document.body.classList.remove('transition');
-					}, 800);
-					//window.location = '/embed?data-url=' + elem.href;
-			});
-		});
-
-
-		// init scroll features
-		AOS.init();
-
-		//menu click events
-		document.querySelector('.menu-btn').addEventListener('click', function(e) {
-			e.preventDefault();
-			document.querySelector('.burger').classList.toggle('not-active');
-			document.querySelector('.burger').classList.toggle('active');
-			document.querySelector('#menu').classList.toggle('open');
-		});
-		document.querySelectorAll('#menu a').forEach(function(elem) {
-			elem.addEventListener('click', function(e) {
-				document.querySelector('.menu-btn').click();
-			});
-		});
-		document.querySelector('#games .more').addEventListener('click', function(e) {
-			document.querySelector('.all-games').classList.toggle('open');
-		});
-		document.querySelector('#apps .more').addEventListener('click', function(e) {
-			document.querySelector('.all-apps').classList.toggle('open');
-		});
-	</script>
-
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "Person",
+        "name": "Zane Harrison",
+        "givenName": "Zane",
+        "additionalName": "Wesley",
+        "familyName": "Harrison",
+        "url": "https://zanewesley.github.io/",
+        "image": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/448348588_1423637209037628_6609400080966017139_n.jpg?_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QEDCGVHJp7WLuOaGqgH79Lsx9hzcf3APFKB-ByAoXG7mQnq42uP4S2dDF-Xixj0qoU&_nc_ohc=AXSYxx2WuskQ7kNvwEch2OD&_nc_gid=nCh4HnsFAujGx4G24k3gHQ&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_AfJh9tHbIQd7OBjUy5_Ifoa4BxxuUDi1LwUpJEzeJHZhMw&oe=6827407C&_nc_sid=7d3ac5",
+        "sameAs": [
+            "https://www.instagram.com/zanewesley27",
+            "https://www.linkedin.com/in/zaneharrison27",
+            "https://github.com/zanewesley"
+        ],
+        "jobTitle": "Web Designer and Developer",
+        "brand": "Zane Wesley"
+    }
+    </script>
 </body>
 </html>
