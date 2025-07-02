@@ -1,7 +1,6 @@
 /*
-    Code copyright 2020 Zane Wesley.
+    Code copyright 2025 Zane.
     This code may not be copied, modified, or republished in any manner.
-    View the lisense at https://zanewesley.github.io/license
 */
 'use strict';
 
@@ -12,29 +11,28 @@ var config = {
     SIM_RESOLUTION: 128,//128
     DYE_RESOLUTION: 1024,//1024
     CAPTURE_RESOLUTION: 512,//512
-    DENSITY_DISSIPATION: 0.1,//1
-    VELOCITY_DISSIPATION: 4,//0.2
-    PRESSURE: 0.2,//0.8
+    DENSITY_DISSIPATION: 0.1,//0.1
+    VELOCITY_DISSIPATION: 4,//4 (0.2)
+    PRESSURE: 0.2,//0.2
     PRESSURE_ITERATIONS: 20,//20
-    CURL: 30,//30
+    CURL: 0.1,//30
     SPLAT_RADIUS: 0.25,//0.25
     SPLAT_FORCE: 6000,//6000
     SHADING: true,//true
     COLORFUL: true,//true
-    COLOR_UPDATE_SPEED: 10,//10
+    COLOR_UPDATE_SPEED: 0.5,//0.5
     PAUSED: false,//false
-    /*BACK_COLOR: { r: 0, g: 0, b: 0 },*/
-    BACK_COLOR: { r: 255, g: 255, b: 255 },
+    BACK_COLOR: {r: 255, g: 242, b: 230},
     TRANSPARENT: false,//false
-    BLOOM: false,//true
+    BLOOM: true,//false
     BLOOM_ITERATIONS: 8,//8
     BLOOM_RESOLUTION: 256,//256
-    BLOOM_INTENSITY: 0.2,//0.8
+    BLOOM_INTENSITY: 0.001,//0.2
     BLOOM_THRESHOLD: 0.6,//0.6
     BLOOM_SOFT_KNEE: 0.7,//0.7
     SUNRAYS: true,//true
     SUNRAYS_RESOLUTION: 196,//196
-    SUNRAYS_WEIGHT: 1.0,//1.0
+    SUNRAYS_WEIGHT: 1,//1.0
 }
 
 function pointerPrototype () {
@@ -106,8 +104,6 @@ function getWebGLContext (canvas) {
         formatRG = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
         formatR = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
     }
-
-    ga('send', 'event', isWebGL2 ? 'webgl2' : 'webgl', formatRGBA == null ? 'not supported' : 'supported');
 
     return {
         gl: gl,
