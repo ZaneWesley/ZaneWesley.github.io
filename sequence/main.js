@@ -14,18 +14,26 @@ function resetGame(currLvl) {
   humanSequence = [];
   level = 0;
   tileNum = 4;
-  startButton.textContent = 'Play Again'
-  startButton.classList.remove('hidden');
-  heading.textContent = 'Game Over';
-  //info.classList.add('hidden');
-  info.textContent = `Score: ${currLvl}`;
   tileContainer.classList.add('unclickable');
   tileContainer.classList.add('shrunk');
+  heading.style.opacity = 0;
+  startButton.style.opacity = 0;
+  info.style.opacity = 0;
+  setTimeout(function() {
+      document.body.classList.remove('gameOver');
+      startButton.textContent = 'Play Again'
+      startButton.classList.remove('hidden');
+      heading.textContent = 'Oops!';
+      info.textContent = `Score: ${currLvl}`;
+      heading.style.opacity = 1;
+      startButton.style.opacity = 1;
+      info.style.opacity = 1;
+  }, 700);
 }
 
 function humanTurn(level) {
   tileContainer.classList.remove('unclickable');
-  info.textContent = `Your turn: ${level} tile${level > 1 ? 's' : ''} remaining`;
+  info.textContent = `Tap the sequence: ${level} left`;
 }
 
 function activateTile(id) {
@@ -58,8 +66,8 @@ function nextRound() {
   level += 1;
 
   tileContainer.classList.add('unclickable');
-  info.textContent = 'Watch the pattern...';
-  heading.textContent = `${level} Tile${level > 1 ? 's' : ''}`;
+  info.textContent = 'Watch the sequence...';
+  heading.textContent = `Level ${level}`;
 
   const nextSequence = [...sequence];
   nextSequence.push(nextStep());
@@ -81,9 +89,6 @@ function handleClick(tile) {
   if (humanSequence[index] !== sequence[index]) {
     playing = false;
     document.body.classList.add('gameOver');
-    setTimeout(function() {
-      document.body.classList.remove('gameOver');
-    }, 200);
     if(level > 5) __saveScoreToDatabase__('sequence', level);
     return resetGame(level);
   }
@@ -101,7 +106,7 @@ function handleClick(tile) {
     return;
   }
 
-  info.textContent = `Your turn: ${remainingTaps} tile${ remainingTaps > 1 ? 's' : '' } remaining`;
+  info.textContent = `Tap the sequence: ${remainingTaps} left`;
 }
 
 function startGame() {
@@ -109,6 +114,8 @@ function startGame() {
   info.classList.remove('hidden');
   tileContainer.classList.remove('unclickable');
   tileContainer.classList.remove('shrunk');
+  heading.textContent = 'Sequence';
+  info.textContent = '';
 
   setTimeout(nextRound, 1000);
 }
