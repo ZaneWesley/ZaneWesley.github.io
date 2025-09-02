@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
@@ -8,7 +8,7 @@
     <meta name="keywords" content="Zane Wesley, Zane Wesley portfolio, Zane Wesley online games, Zane Wesley apps, Zane Harrison, Zane Harrison Portfolio">
     <link rel="shortcut-icon" href="/images/icon.png">
 	<link rel="icon" type="image/png" sizes="500x500" href="/images/icon.png">
-	<link rel="canonical" href="https://zanewesley.com" />
+    <link rel="canonical" href="https://zanewesley.com">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0e0e0e">
@@ -36,7 +36,7 @@
 <body>
     
     <div class="nav-row">
-        <a href="/"><img src="images/icon-v4-transparent-white.png" width="70"></a>
+        <a href="/" aria-label="return home"><img src="images/icon-v4-transparent-white.png" width="70" fetchpriority="high" alt="ZW logo"></a>
         <div class="menu-btn"><label><input type="checkbox"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path class="line--1" d="M0 70l28-28c2-2 2-2 7-2h64" /><path class="line--2" d="M0 50h99" /><path class="line--3" d="M0 30l28 28c2 2 2 2 7 2h64" /></svg></label></div>
     </div>
   
@@ -162,24 +162,70 @@
 
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org/",
-        "@type": "Person",
-        "name": "Zane Harrison",
-        "givenName": "Zane",
-        "additionalName": "Wesley",
-        "familyName": "Harrison",
-        "url": "https://zanewesley.github.io/",
-        "image": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/448348588_1423637209037628_6609400080966017139_n.jpg?_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QEDCGVHJp7WLuOaGqgH79Lsx9hzcf3APFKB-ByAoXG7mQnq42uP4S2dDF-Xixj0qoU&_nc_ohc=AXSYxx2WuskQ7kNvwEch2OD&_nc_gid=nCh4HnsFAujGx4G24k3gHQ&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_AfJh9tHbIQd7OBjUy5_Ifoa4BxxuUDi1LwUpJEzeJHZhMw&oe=6827407C&_nc_sid=7d3ac5",
-        "sameAs": [
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "name": "Zane Harrison",
+          "givenName": "Zane",
+          "additionalName": "Wesley",
+          "familyName": "Harrison",
+          "url": "https://zanewesley.com/",
+          "image": "https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/448348588_1423637209037628_6609400080966017139_n.jpg?_nc_ht=scontent-iad3-2.cdninstagram.com&_nc_cat=100&_nc_oc=Q6cZ2QEDCGVHJp7WLuOaGqgH79Lsx9hzcf3APFKB-ByAoXG7mQnq42uP4S2dDF-Xixj0qoU&_nc_ohc=AXSYxx2WuskQ7kNvwEch2OD&_nc_gid=nCh4HnsFAujGx4G24k3gHQ&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_AfJh9tHbIQd7OBjUy5_Ifoa4BxxuUDi1LwUpJEzeJHZhMw&oe=6827407C&_nc_sid=7d3ac5",
+          "sameAs": [
             "https://www.instagram.com/zanewesley27",
             "https://www.linkedin.com/in/zaneharrison27",
             "https://github.com/zanewesley"
-        ],
-        "jobTitle": "Web Designer and Developer",
-        "brand": "Zane Wesley"
+          ],
+          "jobTitle": "Web Designer and Developer",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Zane Wesley"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "url": "https://zanewesley.com/",
+          "name": "Zane Wesley",
+          "publisher": {
+            "@type": "Person",
+            "name": "Zane Harrison"
+          }
+        },
+        {
+          "@type": "Organization",
+          "name": "Zane Wesley",
+          "url": "https://zanewesley.com/",
+          "logo": "https://zanewesley.com/images/icon.png",
+          "sameAs": [
+            "https://www.instagram.com/zanewesley27",
+            "https://www.linkedin.com/in/zaneharrison27",
+            "https://github.com/zanewesley"
+          ]
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "About",
+          "url": "https://zanewesley.com/#about"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Professional",
+          "url": "https://zanewesley.com/#professional"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Personal",
+          "url": "https://zanewesley.com/#personal"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Library",
+          "url": "https://zanewesley.com/library"
+        }
+      ]
     }
     </script>
+
 </body>
 </html>
-
-
