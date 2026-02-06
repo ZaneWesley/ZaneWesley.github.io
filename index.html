@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <link href="/main.css" rel="stylesheet">
+    <link href="/main-beta.css" rel="stylesheet">
 
     <!-- Analytics -->
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -158,6 +158,54 @@
         function viewArchive() {
             document.getElementById('archive').style.display='block';
         }
+
+        /* BETA CODE */
+        document.querySelectorAll('.btn, .link-card, .bubble-menu').forEach(el => {
+            el.classList.add('bg-cursor');
+            el.addEventListener('pointermove', e => {
+                const r = el.getBoundingClientRect();
+                el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                el.style.setProperty('--my', `${e.clientY - r.top}px`);
+            });
+        });
+
+        const sections = [...document.querySelectorAll('section, header')];
+        
+        function updateActiveSection() {
+        const viewportCenter = window.innerHeight * 0.5;
+
+        let closestSection = null;
+        let closestDistance = Infinity;
+
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const sectionCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(viewportCenter - sectionCenter);
+
+            if (distance < closestDistance) {
+            closestDistance = distance;
+            closestSection = section;
+            }
+        });
+
+        sections.forEach(section => {
+            if (section === closestSection) {
+            section.classList.add('is-active');
+            section.classList.remove('is-inactive');
+            } else {
+            section.classList.remove('is-active');
+            section.classList.add('is-inactive');
+            }
+        });
+        }
+
+        window.addEventListener('scroll', () => {
+        window.requestAnimationFrame(updateActiveSection);
+        });
+
+        updateActiveSection();
+
+
     </script>
 
     <script type="application/ld+json">

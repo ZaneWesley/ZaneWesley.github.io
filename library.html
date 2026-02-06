@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0">
     <meta name="author" content="Zane Wesley">
     <meta name="description" content="Zane Wesley's portfolio project library.">
-    <meta name="keywords" content="Zane Wesley, Zane Wesley portfolio, Zane Wesley online games, Zane Wesley apps, Zane Wesley archive, Zane Wesley Project Library">
+    <meta name="keywords"
+        content="Zane Wesley, Zane Wesley portfolio, Zane Wesley online games, Zane Wesley apps, Zane Wesley archive, Zane Wesley Project Library">
     <link rel="shortcut-icon" href="/images/icon.png">
-	<link rel="icon" type="image/png" sizes="500x500" href="/images/icon.png">
+    <link rel="icon" type="image/png" sizes="500x500" href="/images/icon.png">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0e0e0e">
@@ -16,47 +18,58 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"></script>
 
-    <link href="main.css" rel="stylesheet">
+    <link href="/main-beta.css" rel="stylesheet">
 
     <style>
         @media (max-width: 660px) {
             main {
-                padding: 0!important;
+                padding: 0 !important;
             }
 
-            section h2, section h3 {
+            section h2,
+            section h3 {
                 padding: 32px;
             }
         }
     </style>
 
     <!-- Analytics -->
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-	  gtag('config', 'G-YEEGMG5QT7');
-	</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YEEGMG5QT7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YEEGMG5QT7');
+    </script>
 
     <title>The Project Library | Zane Wesley</title>
 </head>
+
 <body>
-    
+
     <div class="nav-row">
-        <a href="/"><img src="images/icon-v4-transparent-white.png" width="70"></a>
-        <div class="menu-btn"><label><input type="checkbox"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path class="line--1" d="M0 70l28-28c2-2 2-2 7-2h64" /><path class="line--2" d="M0 50h99" /><path class="line--3" d="M0 30l28 28c2 2 2 2 7 2h64" /></svg></label></div>
+        <a href="/" aria-label="return home"><img src="images/icon-v4-transparent-white.png" width="70"
+                fetchpriority="high" alt="ZW logo"></a>
+        <div class="menu-btn"><label><input type="checkbox"><svg viewBox="0 0 100 100"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path class="line--1" d="M0 70l28-28c2-2 2-2 7-2h64" />
+                    <path class="line--2" d="M0 50h99" />
+                    <path class="line--3" d="M0 30l28 28c2 2 2 2 7 2h64" />
+                </svg></label></div>
     </div>
-  
+
 
     <header class="fadeIn">
         <h1>The Project Library</h1>
-        <p>Welcome to my Project Library! A growing collection of things I’ve built - past experiments, current work, and ongoing creations. Older, archived projects will likely no longer recieve updates.</p>
+        <p>Welcome to my Project Library! A growing collection of things I’ve built - past experiments, current work,
+            and ongoing creations. Older, archived projects will likely no longer recieve updates.</p>
     </header>
 
     <nav class="bubble-menu">
@@ -71,89 +84,156 @@
         <section>
             <div class="search-wrapper">
                 <input id="search" type="text" placeholder="Search the library" autocomplete="off">
-                <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" fill="rgba(79, 93, 117, 0.4)"/></svg></button>
+                <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30">
+                        <path
+                            d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                            fill="rgba(79, 93, 117, 0.4)" />
+                    </svg></button>
             </div>
         </section>
-        
+
         <section id="games">
             <h2>Games</h2>
 
             <a class="leaderboard-btn" href="/leaderboard">Keep Score on the Game Leaderboard</a>
-            
+
             <div class="link-container">
                 <div>
                     <h3>Up Beat Thrillers</h3>
                     <a class="link-wrapper" href="/doodlejump">
-						<img src="/doodlejump/images/doodle-jump-game-icon-192.png" alt="Doodle jump icon" loading="lazy">
-						<div><h4>Doodle Jump</h4><p>A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up the platforms.</p></div>
-					</a>
-					<a class="link-wrapper" href="/santahatmixup">
-						<img src="/santahatmixup/css/favicon.png" alt="Santa Hat icon" loading="lazy">
-						<div><h4>Santa Hat Mixup</h4><p>Follow that Santa! Choose the right hat to level up.</p></div>
-					</a>
-					<a class="link-wrapper" href="/pacman">
-						<img src="/pacman/icon/ios_icon.png" alt="Pac Man icon" loading="lazy">
-						<div><h4>Pac Man</h4><p>A remake of the classic arcade game. Use the arrow keys or swipe to move around the maze.</p></div>
-					</a>
-					<a class="link-wrapper" href="/flappybird">
-						<img src="/flappybird/icon.jpg" alt="flappybird icon" loading="lazy">
-						<div><h4>Flappy Bird</h4><p>A remake of the classic game. Click/tap the screen to fly between the pipes.</p></div>
-					</a>
-					<a class="link-wrapper" href="/crossyroad">
-						<img src="/crossyroad/icon.jpeg" alt="Crossy Road icon" loading="lazy">
-						<div><h4>Crossy Road</h4><p>A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get hit!</p></div>
-					</a>
-					<a class="link-wrapper" href="/cakeninja">
-						<img src="/cakeninja/files/assets/32463581/1/caption.png" alt="Cake Ninja icon" loading="lazy">
-						<div><h4>Cake Ninja</h4><p>Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to chop the desserts!</p></div>
-					</a>
-					<a class="link-wrapper" href="/hextris">
-						<img src="/hextris/favicon.png" alt="Hextris icon" loading="lazy">
-						<div><h4>Hextris</h4><p>Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.</p></div>
-					</a>
-					<a class="link-wrapper" href="/stack">
-						<img src="/images/stack-icon.PNG" alt="Stack icon" loading="lazy">
-						<div><h4>Stack</h4><p>Click/tap to stack the blocks as high as you can. But line it up, because everything hanging off the edge gets chopped off!</p></div>
-					</a>
-					<a class="link-wrapper" href="/chromedino">
-						<img src="/chromedino/200-error-offline.png" style="filter: invert(1)" alt="Chrome Dino Runner icon" loading="lazy">
-						<div><h4>Chrome Dino Runner</h4><p>A remake of the classic Chrome Dino Runner game. Click/tap to jump.</p></div>
-					</a>
+                        <img src="/doodlejump/images/doodle-jump-game-icon-192.png" alt="Doodle jump icon"
+                            loading="lazy">
+                        <div>
+                            <h4>Doodle Jump</h4>
+                            <p>A remake of the classic arcade game. Use the arrow keys or buttons to move and jump up
+                                the platforms.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/santahatmixup">
+                        <img src="/santahatmixup/css/favicon.png" alt="Santa Hat icon" loading="lazy">
+                        <div>
+                            <h4>Santa Hat Mixup</h4>
+                            <p>Follow that Santa! Choose the right hat to level up.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/pacman">
+                        <img src="/pacman/icon/ios_icon.png" alt="Pac Man icon" loading="lazy">
+                        <div>
+                            <h4>Pac Man</h4>
+                            <p>A remake of the classic arcade game. Use the arrow keys or swipe to move around the maze.
+                            </p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/flappybird">
+                        <img src="/flappybird/icon.jpg" alt="flappybird icon" loading="lazy">
+                        <div>
+                            <h4>Flappy Bird</h4>
+                            <p>A remake of the classic game. Click/tap the screen to fly between the pipes.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/crossyroad">
+                        <img src="/crossyroad/icon.jpeg" alt="Crossy Road icon" loading="lazy">
+                        <div>
+                            <h4>Crossy Road</h4>
+                            <p>A remake of the classic game. Use the arrow keys or swipe to cross the streets. Don't get
+                                hit!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/cakeninja">
+                        <img src="/cakeninja/files/assets/32463581/1/caption.png" alt="Cake Ninja icon" loading="lazy">
+                        <div>
+                            <h4>Cake Ninja</h4>
+                            <p>Inspired by the game Fruit Ninja with my own flair of creativity! Click/tap and swipe to
+                                chop the desserts!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/hextris">
+                        <img src="/hextris/favicon.png" alt="Hextris icon" loading="lazy">
+                        <div>
+                            <h4>Hextris</h4>
+                            <p>Inspired by Tetris, with a surprising twist! Use the arrow keys/swipe to rotate the
+                                hexagon. Clear blocks and get points by making 3 or more blocks of the same color touch.
+                            </p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/stack">
+                        <img src="/images/stack-icon.PNG" alt="Stack icon" loading="lazy">
+                        <div>
+                            <h4>Stack</h4>
+                            <p>Click/tap to stack the blocks as high as you can. But line it up, because everything
+                                hanging off the edge gets chopped off!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/chromedino">
+                        <img src="/chromedino/200-error-offline.png" style="filter: invert(1)"
+                            alt="Chrome Dino Runner icon" loading="lazy">
+                        <div>
+                            <h4>Chrome Dino Runner</h4>
+                            <p>A remake of the classic Chrome Dino Runner game. Click/tap to jump.</p>
+                        </div>
+                    </a>
                 </div>
                 <div>
                     <h3>Leisure Tempo</h3>
                     <a class="link-wrapper" href="/wordfinder">
-						<img src="/wordfinder/media/graphics/promo/icons/favicon.png" alt="Word finder icon" loading="lazy">	
-						<div><h4>Word Finder</h4><p>A word search game. Desktop and mobile support!</p></div>
-					</a>
-					<a class="link-wrapper" href="/sequence">
-						<img src="/sequence/icon.svg" alt="Sequence icon" loading="lazy">
-						<div><h4>Sequence</h4><p>A simple pattern following game. Pay attention!</p></div>
-					</a>
-					<a class="link-wrapper archived" href="/guessthatnumber">
-						<img src="/guessthatnumber/icon.png"  alt="Guess that Number icon"loading="lazy">
-						<div><h4>Guess That Number 2</h4><p>Simple. Guess that number!</p></div>
-					</a>
-					<a class="link-wrapper" href="/towertakedown">
-						<img src="/towertakedown/icon.jpg" alt="Tower Takedown icon" loading="lazy">
-						<div><h4>Tower Takedown</h4><p>Shoot the colored balls at the corresponding colored bricks to take town the tower before you run out!</p></div>
-					</a>
-					<a class="link-wrapper" href="/solitaire">
-						<img src="/solitaire/assets/icon.jpg" alt="Solitaire icon" loading="lazy">
-						<div><h4>Solitaire</h4><p>A remake of the classic card game Solitaire.</p></div>
-					</a>
-					<a class="link-wrapper" href="/2048">
-						<img src="/2048/icon.png"  alt="2048 icon"loading="lazy">
-						<div><h4>2048</h4><p>A remake of the classic 2048 game with new themes and dark mode support. Merge them tiles!</p></div>
-					</a>
-					<a class="link-wrapper archived" href="/tic-tac-toe">
-						<img src="/images/tic-tac-toe-icon.png"  alt="Tic Tac Toe icon"loading="lazy">
-						<div><h4>Tic Tac Toe</h4><p>Tic-Tac-Toe against an AI. You know what to do.</p></div>
-					</a>
-					<a class="link-wrapper" href="/colorswirl/colorswirl">
-						<img src="/colorswirl/icon.jpg"  alt="Colorswirl icon"loading="lazy">
-						<div><h4>Colorswirl</h4><p>Swirl colors around and make beautiful designs in this relaxing app!</p></div>
-					</a>
+                        <img src="/wordfinder/media/graphics/promo/icons/favicon.png" alt="Word finder icon"
+                            loading="lazy">
+                        <div>
+                            <h4>Word Finder</h4>
+                            <p>A word search game. Desktop and mobile support!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/sequence">
+                        <img src="/sequence/icon.svg" alt="Sequence icon" loading="lazy">
+                        <div>
+                            <h4>Sequence</h4>
+                            <p>A simple pattern following game. Pay attention!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper archived" href="/guessthatnumber">
+                        <img src="/guessthatnumber/icon.png" alt="Guess that Number icon" loading="lazy">
+                        <div>
+                            <h4>Guess That Number 2</h4>
+                            <p>Simple. Guess that number!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/towertakedown">
+                        <img src="/towertakedown/icon.jpg" alt="Tower Takedown icon" loading="lazy">
+                        <div>
+                            <h4>Tower Takedown</h4>
+                            <p>Shoot the colored balls at the corresponding colored bricks to take town the tower before
+                                you run out!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/solitaire">
+                        <img src="/solitaire/assets/icon.jpg" alt="Solitaire icon" loading="lazy">
+                        <div>
+                            <h4>Solitaire</h4>
+                            <p>A remake of the classic card game Solitaire.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/2048">
+                        <img src="/2048/icon.png" alt="2048 icon" loading="lazy">
+                        <div>
+                            <h4>2048</h4>
+                            <p>A remake of the classic 2048 game with new themes and dark mode support. Merge them
+                                tiles!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper archived" href="/tic-tac-toe">
+                        <img src="/images/tic-tac-toe-icon.png" alt="Tic Tac Toe icon" loading="lazy">
+                        <div>
+                            <h4>Tic Tac Toe</h4>
+                            <p>Tic-Tac-Toe against an AI. You know what to do.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/colorswirl/colorswirl">
+                        <img src="/colorswirl/icon.jpg" alt="Colorswirl icon" loading="lazy">
+                        <div>
+                            <h4>Colorswirl</h4>
+                            <p>Swirl colors around and make beautiful designs in this relaxing app!</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -163,55 +243,87 @@
 
             <div class="link-container">
                 <div>
-					<h3 style="padding-top: 0;">Desktop Helpers</h3>
-					<a class="link-wrapper" href="/corey-3.0">
-						<img src="/corey-3.0/icon.png"  alt="Corey 3.0 icon" loading="lazy">
-						<div><h4>Corey 3.0</h4><p>The most recent attempt to make something like ChatGPT before ChatGPT existed.</p></div>
-					</a>
-					<a class="link-wrapper" href="/notes">
-						<img src="/notes/icon.png"  alt="Notes icon"loading="lazy">
-						<div><h4>Notes</h4><p>A note taking app. Note takers are world changers!</p></div>
-					</a>
-					<a class="link-wrapper archived" href="/vividly">
-						<img src="/vividly/icon.png" alt="Vividly icon" loading="lazy">
-						<div><h4>Vividly</h4><p>Bringing FaceTime to the web before Apple did.</p></div>
-					</a>
-					<a class="link-wrapper archived" href="/calculator">
-						<img src="/images/calculator-icon.png" alt="Calculator icon" loading="lazy">
-						<div><h4>Calculator</h4><p>A calculator inspired by Apple.</p></div>
-					</a>
-					<a class="link-wrapper archived" href="/countdownstudio">
-						<img src="/images/countdownstudio-icon.svg" alt="Countdown Studio icon" loading="lazy">
-						<div><h4>Countdown Studio</h4><p>Make a countdown and watch time pass.</p></div>
-					</a>
-					<a class="link-wrapper archived" href="/mmc">
-						<img src="/images/mmc-icon.png" alt="Molar Mass Calculator icon" loading="lazy">
-						<div><h4>Molar Mass Calculator</h4><p>Made for Chemistry homework help. Enjoy ;)</p></div>
-					</a>
-					<a class="link-wrapper archived" href="/whiteboard">
-						<img src="/images/whiteboard-icon.jpg" alt="Whiteboard icon" loading="lazy">
-						<div><h4>Whiteboard</h4><p>An online whiteboard. Built for a techer during COVID-19 for quaratine classes.</p></div>
-					</a>
-				</div>
-				<div>
-					<h3>Other Random Stuff</h3>
-					<a class="link-wrapper archived" href="/countdowns">
-						<img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"  alt="Countdowna icon" loading="lazy">
-						<div><h4>Countdowns</h4><p>A collection of countdowns made for hollidays.</p></div>
-					</a>
-					<a class="link-wrapper archived" href="/inspiration">
-						<img src="/images/inspiration-icon.png" alt="Insperational Quotes Image Generator icon" loading="lazy">
-						<div><h4>Insperational Quotes Image Generator</h4><p>Be inspired by this inspirational quote image generator.</p></div>
-					</a>
-					<a class="link-wrapper" href="/leaderboard">
-						<img src="/images/leaderboard-icon.png" alt="Leaderboard icon" loading="lazy">
-						<div><h4>Games Leaderboard</h4><p>Some friendly competition for games on my website!</p></div>
-					</a>
-					<!-- <a class="link-wrapper" href="/https://trello.com/b/H9M7SfqV.html">
+                    <h3 style="padding-top: 0;">Desktop Helpers</h3>
+                    <a class="link-wrapper" href="/corey-3.0">
+                        <img src="/corey-3.0/icon.png" alt="Corey 3.0 icon" loading="lazy">
+                        <div>
+                            <h4>Corey 3.0</h4>
+                            <p>The most recent attempt to make something like ChatGPT before ChatGPT existed.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/notes">
+                        <img src="/notes/icon.png" alt="Notes icon" loading="lazy">
+                        <div>
+                            <h4>Notes</h4>
+                            <p>A note taking app. Note takers are world changers!</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper archived" href="/vividly">
+                        <img src="/vividly/icon.png" alt="Vividly icon" loading="lazy">
+                        <div>
+                            <h4>Vividly</h4>
+                            <p>Bringing FaceTime to the web before Apple did.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper archived" href="/calculator">
+                        <img src="/images/calculator-icon.png" alt="Calculator icon" loading="lazy">
+                        <div>
+                            <h4>Calculator</h4>
+                            <p>A calculator inspired by Apple.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper archived" href="/countdownstudio">
+                        <img src="/images/countdownstudio-icon.svg" alt="Countdown Studio icon" loading="lazy">
+                        <div>
+                            <h4>Countdown Studio</h4>
+                            <p>Make a countdown and watch time pass.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper archived" href="/mmc">
+                        <img src="/images/mmc-icon.png" alt="Molar Mass Calculator icon" loading="lazy">
+                        <div>
+                            <h4>Molar Mass Calculator</h4>
+                            <p>Made for Chemistry homework help. Enjoy ;)</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper archived" href="/whiteboard">
+                        <img src="/images/whiteboard-icon.jpg" alt="Whiteboard icon" loading="lazy">
+                        <div>
+                            <h4>Whiteboard</h4>
+                            <p>An online whiteboard. Built for a techer during COVID-19 for quaratine classes.</p>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <h3>Other Random Stuff</h3>
+                    <a class="link-wrapper archived" href="/countdowns">
+                        <img src="https://raw.githubusercontent.com/ZaneWesley/image-dropbox/665379d228872af8011297e3b24eb9d01b8d7ec1/christmas/tree.svg"
+                            alt="Countdowna icon" loading="lazy">
+                        <div>
+                            <h4>Countdowns</h4>
+                            <p>A collection of countdowns made for hollidays.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper archived" href="/inspiration">
+                        <img src="/images/inspiration-icon.png" alt="Insperational Quotes Image Generator icon"
+                            loading="lazy">
+                        <div>
+                            <h4>Insperational Quotes Image Generator</h4>
+                            <p>Be inspired by this inspirational quote image generator.</p>
+                        </div>
+                    </a>
+                    <a class="link-wrapper" href="/leaderboard">
+                        <img src="/images/leaderboard-icon.png" alt="Leaderboard icon" loading="lazy">
+                        <div>
+                            <h4>Games Leaderboard</h4>
+                            <p>Some friendly competition for games on my website!</p>
+                        </div>
+                    </a>
+                    <!-- <a class="link-wrapper" href="/https://trello.com/b/H9M7SfqV.html">
 						<img src="/images/tech-log-icon.png" alt="Tech log icon" loading="lazy">
 						<div><h4>My Tech Log</h4><p>View the logs for changes, what's next, pending ideas, and bugs on the website.</p></div>
 					</a> -->
-				</div>
+                </div>
             </div>
         </section>
 
@@ -222,67 +334,107 @@
                 <div>
                     <a class="link-wrapper" href="/indexarchive/index-v13">
                         <img src="/images/icon.png" alt="Portfolio icon v4">
-                        <div><h4>Portfolio v13.9.8</h4><p>Last updated in 2024.</p></div>
+                        <div>
+                            <h4>Portfolio v13.9.8</h4>
+                            <p>Last updated in 2024.</p>
+                        </div>
                     </a>
                     <a class="link-wrapper" href="/indexarchive/index-v12.4">
                         <img src="/images/icon-v4.png" alt="Portfolio icon v4">
-                        <div><h4>Portfolio v12.4.7</h4><p>Last updated in 2023.</p></div>
+                        <div>
+                            <h4>Portfolio v12.4.7</h4>
+                            <p>Last updated in 2023.</p>
+                        </div>
                     </a>
                     <a class="link-wrapper" href="/indexarchive/index-v11">
                         <img src="/images/icon-v4.png" alt="Portfolio icon v4">
-                        <div><h4>Portfolio v11.1.7</h4><p>Last updated in 2023.</p></div>
+                        <div>
+                            <h4>Portfolio v11.1.7</h4>
+                            <p>Last updated in 2023.</p>
+                        </div>
                     </a>
                     <a class="link-wrapper" href="/indexarchive/index-v10">
                         <img src="/images/icon-v3.2.png" alt="Portfolio icon v3">
-                        <div><h4>Portfolio v10.0.11</h4><p>Last updated in 2022.</p></div>
+                        <div>
+                            <h4>Portfolio v10.0.11</h4>
+                            <p>Last updated in 2022.</p>
+                        </div>
                     </a>
                     <a class="link-wrapper" href="/indexarchive/index-v9">
                         <img src="/images/icon-v2.png" alt="Portfolio icon v2">
-                        <div><h4>Portfolio v9.0.2</h4><p>Last updated in 2022.</p></div>
+                        <div>
+                            <h4>Portfolio v9.0.2</h4>
+                            <p>Last updated in 2022.</p>
+                        </div>
                     </a>
                     <a class="link-wrapper" href="/indexarchive/index-v8">
                         <img src="/images/icon-v2.png" alt="Portfolio icon v2">
-                        <div><h4>Portfolio v8.4.6</h4><p>Last updated in 2021.</p></div>
+                        <div>
+                            <h4>Portfolio v8.4.6</h4>
+                            <p>Last updated in 2021.</p>
+                        </div>
                     </a>
                     <a class="link-wrapper" href="/indexarchive/index-v7">
                         <img src="/images/icon-v1.png" alt="Portfolio icon v1">
-                        <div><h4>Portfolio v7.9.4</h4><p>Last updated in 2021.</p></div>
+                        <div>
+                            <h4>Portfolio v7.9.4</h4>
+                            <p>Last updated in 2021.</p>
+                        </div>
                     </a>
                     <a class="link-wrapper" href="/indexarchive/index-v3">
                         <img src="/images/home-icon.svg" alt="Portfolio icon v0">
-                        <div><h4>Portfolio v3.2.6</h4><p>Last updated in 2020.</p></div>
+                        <div>
+                            <h4>Portfolio v3.2.6</h4>
+                            <p>Last updated in 2020.</p>
+                        </div>
                     </a>
                 </div>
             </div>
         </section>
 
-        <div class="socials">                
-            <a href="https://www.instagram.com/zanewesley27"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--Instagram--><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
-            <a href="https://www.linkedin.com/in/zaneharrison27"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--Linkedin--><path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg></a>
-            <a href="https://github.com/ZaneWesley"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--Github.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> </a>
-            <a href="https://solo.to/zanewesley"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--Links--><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg></a>
+        <div class="socials">
+            <a href="https://www.instagram.com/zanewesley27"><svg xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"><!--Instagram-->
+                    <path
+                        d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                </svg></a>
+            <a href="https://www.linkedin.com/in/zaneharrison27"><svg xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"><!--Linkedin-->
+                    <path
+                        d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z" />
+                </svg></a>
+            <a href="https://github.com/ZaneWesley"><svg xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 496 512"><!--Github.-->
+                    <path
+                        d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
+                </svg> </a>
+            <a href="https://solo.to/zanewesley"><svg xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 640 512"><!--Links-->
+                    <path
+                        d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z" />
+                </svg></a>
         </div>
-        
+
     </main>
 
     <script>
         /*
             * Menu Styles
         */
-        document.querySelector('.menu-btn input').addEventListener('change', function(e) {
-            setTimeout(function() {document.querySelector('.bubble-menu').classList.toggle('open'); if(!e.target.checked) {document.querySelector('.bubble-menu').classList.add('closed');} else {document.querySelector('.bubble-menu').classList.remove('closed');}}, 200);
+        document.querySelector('.menu-btn input').addEventListener('change', function (e) {
+            setTimeout(function () { document.querySelector('.bubble-menu').classList.toggle('open'); if (!e.target.checked) { document.querySelector('.bubble-menu').classList.add('closed'); } else { document.querySelector('.bubble-menu').classList.remove('closed'); } }, 200);
         });
 
-        document.querySelectorAll('.bubble-menu a').forEach(function(elem) {
-            elem.addEventListener('click', function(e) {
-                setTimeout(function() {document.querySelector('.bubble-menu').classList.remove('open');document.querySelector('.bubble-menu').classList.add('closed');document.querySelector('.menu-btn input').checked = false;}, 200);
+        document.querySelectorAll('.bubble-menu a').forEach(function (elem) {
+            elem.addEventListener('click', function (e) {
+                setTimeout(function () { document.querySelector('.bubble-menu').classList.remove('open'); document.querySelector('.bubble-menu').classList.add('closed'); document.querySelector('.menu-btn input').checked = false; }, 200);
             });
         });
 
 
         /*
             * Background Color Management
-        */  
+        */
         function clamp(value, min, max) {
             return Math.max(min, Math.min(max, value));
         }
@@ -361,8 +513,8 @@
             * Search function
         */
 
-        document.getElementById('search').addEventListener('keyup', function(e) {
-            if(e.keyCode == 13) {
+        document.getElementById('search').addEventListener('keyup', function (e) {
+            if (e.keyCode == 13) {
                 searchLib();
             }
         });
@@ -382,19 +534,31 @@
                     project.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     found = true;
                     project.classList.add('search-highlight');
-                    setTimeout(function() {project.classList.remove('search-highlight');}, 1500);
+                    setTimeout(function () { project.classList.remove('search-highlight'); }, 1500);
                     break;
                 }
             }
 
-            if(found) {
+            if (found) {
                 document.querySelector('.search-wrapper').style.borderColor = "#a3cca3";
-                setTimeout(function() {document.querySelector('.search-wrapper').style.borderColor = "#eceff1";}, 700);
+                setTimeout(function () { document.querySelector('.search-wrapper').style.borderColor = "#eceff1"; }, 700);
             } else {
                 document.querySelector('.search-wrapper').style.borderColor = "#ffa7a7";
-                setTimeout(function() {document.querySelector('.search-wrapper').style.borderColor = "#eceff1";}, 700);
+                setTimeout(function () { document.querySelector('.search-wrapper').style.borderColor = "#eceff1"; }, 700);
             }
         }
+
+
+        /* BETA CODE */
+        document.querySelectorAll('.btn, .link-wrapper, .leaderboard-btn, .search-wrapper, .bubble-menu').forEach(el => {
+            el.classList.add('bg-cursor');
+            el.addEventListener('pointermove', e => {
+                const r = el.getBoundingClientRect();
+                el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+                el.style.setProperty('--my', `${e.clientY - r.top}px`);
+            });
+        });
     </script>
 </body>
+
 </html>
